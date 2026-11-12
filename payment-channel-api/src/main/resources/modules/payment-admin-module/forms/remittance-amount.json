@@ -1,0 +1,46 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "number",
+        "key": "amount",
+        "label": "Montant à envoyer",
+        "input": true,
+        "validate": { "required": true, "min": 1000 }
+      },
+      {
+        "type": "textfield",
+        "key": "currency",
+        "label": "Devise d'envoi",
+        "input": true,
+        "defaultValue": "XOF"
+      },
+      {
+        "type": "textfield",
+        "key": "purpose",
+        "label": "Motif (optionnel)",
+        "input": true
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Montant à envoyer": "Montant à envoyer",
+      "Devise d'envoi": "Devise d'envoi",
+      "Motif (optionnel)": "Motif (optionnel)"
+    },
+    "en": {
+      "Montant à envoyer": "Send amount",
+      "Devise d'envoi": "Send currency",
+      "Motif (optionnel)": "Purpose (optional)"
+    }
+  }
+}

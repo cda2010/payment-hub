@@ -1,0 +1,44 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myCanalCommunicationLabel" data-translate="ptiApp.canalCommunication.home.createOrEditLabel">Create or edit a Canal Communication</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.canalCommunication.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.canalCommunication.id" readonly />
+        </div>
+
+        <div class="form-group">
+            <label data-translate="ptiApp.canalCommunication.facturier" for="field_facturier">Facturier</label>
+            <select class="form-control" id="field_facturier" name="facturier" ng-model="vm.canalCommunication.facturier" ng-options="facturier as facturier.id for facturier in vm.facturiers | orderBy:'id' track by facturier.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="ptiApp.canalCommunication.ftp" for="field_ftp">Ftp</label>
+            <select class="form-control" id="field_ftp" name="ftp" ng-model="vm.canalCommunication.ftp" ng-options="ftp as ftp.id for ftp in vm.ftps | orderBy:'id' track by ftp.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="ptiApp.canalCommunication.recepteurEmail" for="field_recepteurEmail">Recepteur Email</label>
+            <select class="form-control" id="field_recepteurEmail" name="recepteurEmail" ng-model="vm.canalCommunication.recepteurEmail" ng-options="recepteurEmail as recepteurEmail.id for recepteurEmail in vm.recepteuremails | orderBy:'id' track by recepteurEmail.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

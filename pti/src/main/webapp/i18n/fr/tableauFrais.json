@@ -1,0 +1,32 @@
+{
+    "ptiApp": {
+        "tableauFrais": {
+            "home": {
+                "title": "TableauFrais",
+                "createLabel": "Créer un nouveau un Frais",
+                "createOrEditLabel": "Créer ou éditer un  Frais"
+            },
+            "created": "Un nouveau Tableau Frais a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Tableau Frais avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Tableau Frais avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Tableau Frais {{ id }} ?"
+            },
+            "detail": {
+                "title": "Tableau Frais"
+            },
+            "poidsNum": "Poids Num",
+            "ligneFrais": "Ligne Frais",
+            "typeService": "Type Service",
+            "canal": "Canal",
+            "dateDebut": "Date Debut",
+            "dateFin": "Date Fin",
+            "typeUoEmetteur": "Type Uo Emetteur",
+            "typeUoAcquereur": "Type Uo Acquereur",
+            "beneficiaire": "Beneficiaire",
+            "emetteur": "Emetteur",
+            "organisationEm": "Organisation Em",
+            "organisationAcq": "Organisation Acq"
+        }
+    }
+}

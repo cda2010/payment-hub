@@ -1,0 +1,7 @@
+entity LogOperation {
+    dateOperation ZonedDateTime,
+    description String,
+    login String,
+    result String,
+    codeOperation String
+}

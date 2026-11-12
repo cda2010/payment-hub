@@ -1,0 +1,36 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "gabInfo",
+        "tag": "p",
+        "content": "Retrait au GAB : un code de retrait sera généré après confirmation. Vous le saisirez sur le distributeur."
+      },
+      {
+        "type": "textfield",
+        "key": "gabReference",
+        "label": "GAB préféré (optionnel)",
+        "placeholder": "Ex. GAB-OUAGA-01",
+        "input": true,
+        "validate": { "required": false }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "GAB préféré (optionnel)": "GAB préféré (optionnel)"
+    },
+    "en": {
+      "GAB préféré (optionnel)": "Preferred ATM (optional)"
+    }
+  }
+}

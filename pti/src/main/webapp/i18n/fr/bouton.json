@@ -1,0 +1,21 @@
+{
+    "ptiApp": {
+        "bouton" : {
+            "home": {
+                "title": "Boutons",
+                "createLabel": "Créer un nouveau Bouton",
+                "createOrEditLabel": "Créer ou éditer un Bouton"
+            },
+            "created": "Un nouveau Bouton a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Bouton avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Bouton avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Bouton {{ id }} ?"
+            },
+            "detail": {
+                "title": "Bouton"
+            },
+            "action": "Action"
+        }
+    }
+}

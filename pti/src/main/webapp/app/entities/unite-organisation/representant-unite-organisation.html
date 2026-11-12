@@ -1,0 +1,236 @@
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-1 mb5">
+        <fieldset class="mf-fieldset p10 " ng-if="vm.uniteOrganisation.rep">
+            <legend class="text-center">Creation du representant</legend>
+            <div class="form-group" >
+                <label mf-required class="control-label col-sm-4" data-translate="ptiApp.personne.telephone" for="field_telephone">Telephone</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"type="text" class="form-control" ng-disabled="vm.isViewing" name="telephone" id="field_telephone" ng-model="vm.personneE.telephone" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label mf-required class="control-label col-sm-4" data-translate="ptiApp.piece.typePiece" for="field_typePiece">Type Piece</label>
+                <div class="col-sm-6">
+                    <select class="form-control" id="field_typePiece" ng-disabled="vm.isViewing" name="typePiece" ng-model="vm.pieceE.typePieceId" ng-options="typePiece.id as typePiece.libelleTypePiece for typePiece in vm.typepieces">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mf-required class="control-label col-sm-4" data-translate="ptiApp.piece.referencePiece" for="field_referencePiece">Reference Piece</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" type="text" class="form-control" ng-disabled="vm.isViewing" name="referencePiece" id="field_referencePiece" ng-model="vm.pieceE.referencePiece" required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" data-translate="ptiApp.piece.dateDelivrance" for="field_dateDelivrance" >Date Delivrance</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" show-button-bar="false" ng-disabled="vm.isViewing" popup-placement="top"
+                           ng-click="vm.openCalendar('dateDelivranceE')" id="field_dateDelivrance" type="text" class="form-control"
+                           name="dateDelivranceE" uib-datepicker-popup="dd/MM/yyyy" ng-model="vm.pieceE.dateDelivrance"
+                           is-open="vm.datePickerOpenStatus.dateDelivranceE" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" data-translate="ptiApp.piece.dateExpiration" for="field_dateExpiration">Date Expiration</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" id="field_dateExpiration" ng-disabled="vm.isViewing" show-button-bar="false"
+                           popup-placement="top" ng-click="vm.openCalendar('dateExpirationE')" type="text" class="form-control"
+                           name="dateExpirationE" uib-datepicker-popup="dd/MM/yyyy" ng-model="vm.pieceE.dateExpiration"
+                           is-open="vm.datePickerOpenStatus.dateExpirationE" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" data-translate="ptiApp.piece.lieuDelivrance" for="field_lieuDelivrance">Lieu Delivrance</label>
+
+                <div class="col-sm-6">
+                    <input autocomplete="off"type="text" class="form-control " ng-disabled="vm.isViewing" name="lieuDelivrance " id="field_lieuDelivrance " ng-model="vm.pieceE.lieuDelivrance " />
+                </div>
+            </div>
+            <div class="form-group ">
+                <label mf-required class="control-label col-sm-4 " data-translate="ptiApp.personne.typePersonne " for="field_typePersonne ">Type Personne</label>
+                <div class="col-sm-6 ">
+                    <select required class="form-control " ng-disabled="vm.isViewing || vm.personneE.id!=null" name="typePersonne " ng-model="vm.personneE.typePersonne " id="field_typePersonne ">
+                        <option value="PHYSIQUE" data-translate="ptiApp.TypePersonne.PHYSIQUE ">PHYSIQUE</option>
+                        <option value="MORALE" data-translate="ptiApp.TypePersonne.MORALE ">MORALE</option>
+                    </select>
+                </div>
+            </div>
+
+            <div ng-if="vm.personneE.typePersonne=='PHYSIQUE'">
+                <div class="form-group ">
+                    <label mf-required class="col-sm-4 control-label " for="field_nomClient ">Nom</label>
+                    <div class="col-sm-6 ">
+                        <input autocomplete="off"type="text " ng-disabled="vm.isViewing" class="form-control input-xs " name="nomClient " id="field_nomClient " ng-model="vm.personnePhysiqueE.nomClient " required/>
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <label mf-required class="col-sm-4 control-label " for="field_nomClient ">Prénom</label>
+                    <div class="col-sm-6 ">
+                        <input autocomplete="off"type="text " ng-disabled="vm.isViewing" class="form-control input-xs " name="nomClient " id="field_nomClient " ng-model="vm.personnePhysiqueE.prenomClient " required/>
+                    </div>
+                </div>
+                <!--<div class="input-group">-->
+                    <!--<label class="control-label col-sm-4" for="field_dateExpiration">Date Naissance</label>-->
+                    <!--<div class="col-sm-6">-->
+                        <!--<input autocomplete="off"class="form-control date-picker" ng-model="vm.personnePhysiqueE.dateNaissance " id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy">-->
+                        <!--<span class="input-group-addon">-->
+                    <!--<i class="fa fa-calendar"></i>-->
+                    <!--</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="form-group ">
+                    <label class=" col-sm-4 control-label " data-translate="ptiApp.personnePhysique.dateNaissance " for="field_dateNaissance ">Date Naissance</label>
+                    <div class="col-sm-6 ">
+                        <input autocomplete="off"id="field_dateNaissance " ng-disabled="vm.isViewing" show-button-bar="false" type="text " class="form-control input-xs " name="dateNaissance " uib-datepicker-popup="dd/MM/yyyy" ng-click="vm.openCalendar('dateNaissance')" ng-model="vm.personnePhysiqueE.dateNaissance " is-open="vm.datePickerOpenStatus.dateNaissance "
+                        />
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class=" col-sm-4 control-label " data-translate="ptiApp.personnePhysique.personnePrevenir " for="field_personnePrevenir ">Personne Prevenir</label>
+                    <div class="col-sm-6 ">
+                        <input autocomplete="off"type="text " ng-disabled="vm.isViewing" class="form-control input-xs " name="personnePrevenir " id="field_personnePrevenir " ng-model="vm.personnePhysiqueE.personnePrevenir " />
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="col-sm-4 control-label " data-translate="ptiApp.personnePhysique.lieuNaissance " for="field_lieuNaissance ">Lieu Naissance</label>
+                    <div class="col-sm-6 ">
+                        <input autocomplete="off"type="text " ng-disabled="vm.isViewing" class="form-control input-xs " name="lieuNaissance " id="field_lieuNaissance " ng-model="vm.personnePhysiqueE.lieuNaissance " />
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label mf-required class=" col-sm-4 control-label " data-translate="ptiApp.personnePhysique.sexe " for="field_sexe ">Sexe</label>
+                    <div class="col-sm-6 ">
+                        <select required ng-disabled="vm.isViewing" class="form-control input-xs " name="sexe " ng-model="vm.personnePhysiqueE.sexe " id="field_sexe ">
+                            <option value="MASCULIN" data-translate="ptiApp.Sexe.MASCULIN ">MASCULIN</option>
+                            <option value="FEMININ" data-translate="ptiApp.Sexe.FEMININ ">FEMININ</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <label mf-required class=" col-sm-4 control-label " data-translate="ptiApp.personnePhysique.nationalite " for="field_nationalite ">Nationalite</label>
+                    <div class="col-sm-6 ">
+                        <select required ng-disabled="vm.isViewing" class="form-control input-xs " id="field_nationalite " name="nationalite " ng-model="vm.personnePhysiqueE.nationaliteId " ng-options="nationalite.id as nationalite.libelle for nationalite in vm.nationalites ">
+                            <option value=" "></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="vm.personneE.typePersonne=='MORALE'">
+                <div class=" form-group ">
+                    <label mf-required class="control-label col-sm-4 " data-translate="ptiApp.personneMorale.raisonSociale " for="field_raisonSociale ">Raison Sociale</label>
+                    <div class="col-sm-6 ">
+                        <input autocomplete="off"ng-disabled="vm.isViewing" type="text " class="form-control " name="raisonSociale " id="field_raisonSociale " ng-model="vm.personneMoraleE.raisonSociale " required/>
+                    </div>
+
+                </div>
+                <div class="form-group ">
+                    <label mf-required class="control-label col-sm-4 " data-translate="ptiApp.personneMorale.registreCommerce " for="field_registreCommerce ">Registre Commerce</label>
+                    <div class="col-sm-6 ">
+                        <input required autocomplete="off"ng-disabled="vm.isViewing" type="text " class="form-control " name="registreCommerce " id="field_registreCommerce " ng-model="vm.personneMoraleE.registreCommerce " />
+                    </div>
+
+                </div>
+
+                <div class="form-group ">
+                    <label class=" col-sm-4 control-label " for="field_dateRCCM ">Date RCCM</label>
+                    <div class="col-sm-6 ">
+                        <input autocomplete="off" id="field_dateRCCM " ng-disabled="vm.isViewing" show-button-bar="false" type="text " class="form-control input-xs " name="dateRCCM " uib-datepicker-popup="dd/MM/yyyy" ng-click="vm.openCalendar('dateRCCM')" ng-model="vm.personneMoraleE.dateRCCM " is-open="vm.datePickerOpenStatus.dateRCCM "
+                        />
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <label mf-required class="control-label col-sm-4 "  for="field_numreoIfu ">Identité fiscale</label>
+                    <div class="col-sm-6 ">
+                        <input required autocomplete="off"type="text " ng-disabled="vm.isViewing" class="form-control " name="numreoIfu " id="field_numreoIfu " ng-model="vm.personneMoraleE.numreoIfu " />
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <label mf-required class="control-label col-sm-4 "  for="field_dirigeant ">Dirigeant</label>
+                    <div class="col-sm-6 ">
+                        <input required autocomplete="off" type="text " ng-disabled="vm.isViewing" class="form-control " name="dirigeant " id="field_dirigeant " ng-model="vm.personneMoraleE.dirigeant " />
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label mf-required class="control-label col-sm-4 "  for="field_siegeSocial ">Siege Social</label>
+                    <div class="col-sm-6 ">
+                        <input required autocomplete="off" type="text " ng-disabled="vm.isViewing" class="form-control " name="siegeSocial " id="field_siegeSocial " ng-model="vm.personneMoraleE.siegeSocial " />
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+
+        <fieldset  class="mf-fieldset">
+            <label >
+                <input autocomplete="off" type="checkbox" class="checkbox-slider colored-blue checkbox-lg"
+                       ng-model="vm.estLocalite"/>
+                <span class="text">localité ?</span>
+            </label>
+            <div ng-if="vm.estLocalite">
+                <div  class="form-group">
+                    <label class="control-label col-sm-4"
+                           for="field_nomRegion">Region</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off" type="text" class="form-control"
+                               ng-disabled="vm.isViewing"    name="nomRegion" id="field_nomRegion"
+                               ng-model="vm.personneE.localiteRegion" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4"
+                           for="field_province">Province</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off" type="text" class="form-control"
+                               ng-disabled="vm.isViewing"    name="nomProvince" id="field_province"
+                               ng-model="vm.personneE.localiteProvince" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4"
+                           for="field_commune">Commune</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off" type="text" class="form-control"
+                               ng-disabled="vm.isViewing"    name="nomCommune" id="field_commune"
+                               ng-model="vm.personneE.localiteCommune" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4"
+                           for="field_ville1">Ville</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off" type="text" class="form-control"
+                               ng-disabled="vm.isViewing"   name="nomVille" id="field_ville1"
+                               ng-model="vm.personneE.localiteVille" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4"
+                           for="secteur">Secteur</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off" type="text" class="form-control"
+                               ng-disabled="vm.isViewing"    name="nomVille" id="secteur"
+                               ng-model="vm.personneE.localiteSecteur" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4"
+                           for="quartier">Quartier</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off" type="text" class="form-control"
+                               ng-disabled="vm.isViewing"    name="nomVille" id="quartier"
+                               ng-model="vm.personneE.localiteQuartier" />
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+
+    </div>
+
+</div>

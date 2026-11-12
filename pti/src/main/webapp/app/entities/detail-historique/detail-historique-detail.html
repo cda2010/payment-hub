@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span data-translate="ptiApp.detailHistorique.detail.title">Detail Historique</span> {{vm.detailHistorique.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.detailHistorique.numeroCpt">Numero Cpt</span></dt>
+        <dd>
+            <span>{{vm.detailHistorique.numeroCpt}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.detailHistorique.libelle">Libelle</span></dt>
+        <dd>
+            <span>{{vm.detailHistorique.libelle}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.detailHistorique.solde">Solde</span></dt>
+        <dd>
+            <span>{{vm.detailHistorique.solde}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.detailHistorique.historique">Historique</span></dt>
+        <dd>
+            <a ui-sref="historique-detail({id:vm.detailHistorique.historiqueId})">{{vm.detailHistorique.historiqueId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="detail-historique-detail.edit({id:vm.detailHistorique.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

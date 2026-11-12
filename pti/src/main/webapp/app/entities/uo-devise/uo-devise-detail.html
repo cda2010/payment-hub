@@ -1,0 +1,31 @@
+
+<div>
+    <h2><span data-translate="ptiApp.uoDevise.detail.title">Uo Devise</span> {{vm.uoDevise.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.uoDevise.defaultDevise">Default Devise</span></dt>
+        <dd>
+            <span>{{vm.uoDevise.defaultDevise}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.uoDevise.devise">Devise</span></dt>
+        <dd>
+            <a ui-sref="devise-detail({id:vm.uoDevise.deviseId})">{{vm.uoDevise.deviseN}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.uoDevise.uniteOrganisation">Unite Organisation</span></dt>
+        <dd>
+            <a ui-sref="unite-organisation-detail({id:vm.uoDevise.uniteOrganisationId})">{{vm.uoDevise.uniteOrganisationN}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="uo-devise-detail.edit({id:vm.uoDevise.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

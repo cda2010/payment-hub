@@ -1,0 +1,123 @@
+<div class="row mb5 mt5" >
+
+    <div class="row" ng-if="vm.filtrer">
+        <div class="form-group col-sm-3">
+            <label for="field_telephoneE">Téléphone</label>
+            <input autocomplete="off" title="Telephone"
+                   type="text" class="form-control" name="telephone" id="field_telephoneE"
+                   ng-model="vm.itemSearch.telephone" />
+        </div>
+    </div>
+    <div class="row" ng-if="vm.filtrer">
+        <div class="form-group ">
+            <div class="col-sm-3">
+                <button class="btn btn-warnig btn-md" ng-click="vm.initFiltre()">
+                    <span class="glyphicon glyphicon-search">Annuler</span>
+                </button>
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-info btn-md " ng-click="vm.filtre()">
+                    <span class="glyphicon glyphicon-search">Filtrer</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group " ng-if="!vm.filtrer">
+        <div class="col-sm-3">
+            <button class="btn btn-info btn-md" ng-click="vm.filtrer=true">
+                <span class="glyphicon glyphicon-search">Filtrer</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="well with-header">
+        <div class="header bg-blue row">
+            <div class="col-xs-8">
+                <h4 >Liste des evènements</h4>
+            </div>
+            <div class="no-padding-left col-xs-4">
+                <button ng-if="vm.actions.add || vm.actions.add==null" class="btn btn-default  btn-circle btn-xs
+                        " ng-click="vm.addEvenement()">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+                <div class="btn-group mr15" uib-dropdown>
+                    <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                            aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}} éléments par page
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                        <li>
+                            <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <table class="table-responsive table table-hover">
+            <thead>
+            <tr class="">
+                <th><span >Date de création</span></th>
+                <th><span >Montant</span></th>
+                <th><span >Description</span></th>
+                <th><span >Type de service</span></th>
+                <th><span >Est levé ?</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="evenementOperation in vm.datas track by evenementOperation.id">
+                <td>{{evenementOperation.createdDate | date:'dd/MM/yy HH:mm'}} </td>
+                <td>{{evenementOperation.montant}}</td>
+                <td>{{evenementOperation.description}}</td>
+                <td>{{evenementOperation.typeService}} </td>
+                <td>
+                    <button class="btn btn-danger btn-xs"
+                            ng-show="evenementOperation.estLevee=='0'"
+                            >Non
+                    </button>
+                    <button class="btn btn-success btn-xs"
+                            ng-show="evenementOperation.estLevee=='1'"
+                            >Oui
+                    </button>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                       <!-- <button title="Consulter" type="submit" ng-click="vm.detailItem($event,evenementOperation)"
+                                class="btn btn-info btn-xs btn-round">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </button>-->
+                        <button ng-if="evenementOperation.estLevee=='0'" title="Lever evènement" type="submit" ng-click="vm.setActive(1,evenementOperation)"
+                                class="btn btn-success btn-xs btn-round">
+                            <span class="glyphicon glyphicon-envelope"></span>
+                        </button>
+                       <!-- <button title="Modifier" type="submit" ng-click="vm.editItem($event,evenementOperation)"
+                                class="btn btn-warning btn-xs btn-round">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>-->
+                        <!--<button title="Supprimer" type="submit" ng-click="vm.deleteItem($event,evenementOperation)"
+                                class="btn btn-danger btn-xs btn-round">
+                            <span class="glyphicon remove-circle"></span>
+                        </button>
+-->
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="center-block text-center" ng-show="vm.canShowPagination()">
+        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+        </uib-pagination>
+    </div>
+

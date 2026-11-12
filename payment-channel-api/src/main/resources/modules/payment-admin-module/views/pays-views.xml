@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_8.0.xsd">
+
+  <grid name="pays-grid" title="Pays"
+        model="com.gateway.payment.configuration.domain.Pays"
+        edit-form="pays-form" new-action-view="pays-new"
+        rest-resource="/api/v1/pays">
+    <field name="code"/>
+    <field name="nom"/>
+    <field name="indicatif"/>
+    <field name="devise"/>
+    <field name="actif"/>
+    <field name="ordre"/>
+  </grid>
+
+  <form name="pays-form" title="Pays"
+        model="com.gateway.payment.configuration.domain.Pays">
+    <panel name="main" title="Pays">
+      <field name="code" required="true" colSpan="4"/>
+      <field name="nom" required="true" colSpan="8"/>
+      <field name="indicatif" required="true" colSpan="4"/>
+      <field name="devise" required="true" colSpan="4"/>
+      <field name="ordre" colSpan="4"/>
+      <field name="actif" colSpan="4"/>
+    </panel>
+  </form>
+
+</object-views>

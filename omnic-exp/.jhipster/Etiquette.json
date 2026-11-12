@@ -1,0 +1,15 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "codeEtiquette",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180724170139",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "etiquette",
+    "pagination": "no"
+}

@@ -1,0 +1,131 @@
+<div>
+    <div class="well with-header" style="margin-top:10px ">
+        <div class="header bg-blue ">
+            <div class="col-xs-11">
+                <div ng-if="vm.goBack" class="col-xs-1">
+                    <button ui-sref="facturier" class="btn btn-default  btn-circle btn-xs">
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                    </button>
+                </div>
+                <h4 >Liste des factures</h4>
+            </div>
+            <div class="no-padding-left col-xs-1">
+                <button class="btn btn-default  btn-circle btn-xs" ui-sref="facture.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+<!--        filtre-->
+        <div class="row mt5">
+            <div class="row mt5">
+                <div class="form-group col-sm-3"  ng-if="vm.filtrer">
+                    <label for="field_ref_facture">Référence facture</label>
+                    <input autocomplete="off" title="Référence facture"
+                           type="text" class="form-control" name="ReferenceFacture" id="field_ref_facture"
+                           ng-model="vm.itemSearch.refFacture" />
+                </div>
+                <div class="form-group col-sm-3"  ng-if="vm.filtrer">
+                    <label for="field_ref_paiement">Référence paiement</label>
+                    <input autocomplete="off" title="Reference paiement"
+                           type="text" class="form-control" name="ReferencePaiement" id="field_ref_paiement"
+                           ng-model="vm.itemSearch.refPaiement" />
+                </div>
+                <div class="form-group col-sm-3"  ng-if="vm.filtrer">
+                    <label for="field_produit">Produit</label>
+                    <select class="form-control" id="field_produit" name="Produit"
+                            ng-model="vm.itemSearch.produit"
+                            ng-options="produit.id as produit.nomProduit+'( '+produit.facturier.nomFacturier+' )' for produit in vm.produits">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-3" ng-if="vm.filtrer">
+                    <div class="input-group">
+                        <input autocomplete="off" id="dateOperation" show-button-bar="false" placeholder=" Date de paiement"
+                               is-open="vm.datePickerOpenStatus.datePaiement" uib-datepicker-popup="dd/MM/yyyy"
+                               class="form-control" ng-model="vm.itemSearch.datePaiement" name="datePaiement" />
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default btn-xs"
+                                ng-click="vm.openCalendar('datePaiement')"><i
+                                class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row mt5" ng-if="vm.filtrer">
+                <div class="form-group col-sm-12 ">
+                    <div class="col-sm-4" ng-if="vm.export">
+                        <select class=" col-sm-5" id="filed_format" name="format" ng-model="vm.format" >
+                            <option value="">Format</option>
+                            <option value="PDF">PDF</option>
+                            <option value="XLSX">XLSX</option>
+                            <option value="CSV">CSV</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3" ng-if="vm.export">
+                        <button class="btn btn-primary btn-md" ng-click="vm.exporterFacture()">
+                            <span class="glyphicon glyphicon-save">Exporter</span>
+                        </button>
+                    </div>
+                    <div class="col-sm-4 ">
+                        <button class="btn btn-info btn-md " ng-click="vm.filtre()">
+                            <span class="glyphicon glyphicon-search">Chercher</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--            filtre-->
+        <table class="jh-table table table-hover">
+            <thead>
+                <tr>
+<!--                    <th><span data-translate="global.field.id">ID</span></th>-->
+                    <th><span data-translate="ptiApp.facture.referenceFacature">Reference Facture</span></th>
+                    <th><span data-translate="ptiApp.facture.montantFacture">Montant Facture</span></th>
+                    <th><span data-translate="ptiApp.facture.referencePaiement">Reference Paiement</span></th>
+                    <th><span data-translate="ptiApp.facture.datePaiement">Date Paiement</span></th>
+                    <th><span >Produit</span></th>
+                    <th><span >Extra Data</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="facture in vm.datas track by facture.id">
+<!--                    <td><a ui-sref="facture-detail({id:facture.id})">{{facture.id}}</a></td>-->
+                    <td>{{facture.referenceFacature}}</td>
+                    <td>{{facture.montantPaiement}}</td>
+                    <td>{{facture.referencePaiement}}</td>
+                    <td>{{facture.datePaiement |date:'medium'}}</td>
+                    <td>{{facture.produit}}</td>
+                    <td>{{facture.strExtraData}}</td>
+                    <td>
+                        <a ui-sref="facturier-detail({id:facture.facturier.id})">{{facture.facturier.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                           <!-- <button type="submit"
+                                    ui-sref="facture-detail({id:facture.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>-->
+                            <button type="submit"
+                                    ui-sref="facture.edit({id:facture.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="facture.delete({id:facture.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center" ng-show="vm.canShowResultCount">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ></uib-pagination>
+    </div>
+</div>

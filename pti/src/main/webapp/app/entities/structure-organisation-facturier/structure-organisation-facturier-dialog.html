@@ -1,0 +1,52 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myStructureOrganisationFacturierLabel" data-translate="ptiApp.structureOrganisationFacturier.home.createOrEditLabel">Create or edit a Structure Organisation Facturier</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.structureOrganisationFacturier.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.structureOrganisationFacturier.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_niveau">Niveau</label>
+            <input type="number" class="form-control" name="niveau" id="field_niveau"
+                    ng-model="vm.structureOrganisationFacturier.niveau" required
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label"  for="field_niveausup">Niveau supérieur</label>
+            <input type="number" class="form-control" name="niveausup" id="field_niveausup"
+                    ng-model="vm.structureOrganisationFacturier.niveausup" required
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.structureOrganisationFacturier.libelle" for="field_libelle">Libelle</label>
+            <input type="text" class="form-control" name="libelle" id="field_libelle"
+                    ng-model="vm.structureOrganisationFacturier.libelle" required
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_uniteOrganisation">Unite d'organisation</label>
+            <select name="uniteOrganisation" id="field_uniteOrganisation" ng-disabled="vm.isViewing" class="form-control"
+                    ng-model="vm.structureOrganisationFacturier.uniteOrganisation.id"
+                    ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.uniteOrganisations"
+            >
+            </select>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

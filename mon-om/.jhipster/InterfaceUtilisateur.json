@@ -1,0 +1,26 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "constitue",
+            "otherEntityName": "parametreUtiliateur",
+            "otherEntityRelationshipName": "interfaceUtilisateur"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "codeInterface",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "nomInterface",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170404133237",
+    "entityTableName": "interface_utilisateur",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

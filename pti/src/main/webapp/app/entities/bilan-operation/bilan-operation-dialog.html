@@ -1,0 +1,90 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myBilanOperationLabel" data-translate="ptiApp.bilanOperation.home.createOrEditLabel">Create or edit a Bilan Operation</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.bilanOperation.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input autocomplete="off"type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.bilanOperation.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.bilanOperation.nombre" for="field_nombre">Nombre</label>
+            <input autocomplete="off"type="number" class="form-control" name="nombre" id="field_nombre"
+                    ng-model="vm.bilanOperation.nombre"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.bilanOperation.montant" for="field_montant">Montant</label>
+            <input autocomplete="off"type="number" class="form-control" name="montant" id="field_montant"
+                    ng-model="vm.bilanOperation.montant"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.bilanOperation.dateDerniereOperation" for="field_dateDerniereOperation">Date Derniere Operation</label>
+                <div class="input-group">
+                    <input autocomplete="off"id="field_dateDerniereOperation" type="text" class="form-control" name="dateDerniereOperation" uib-datepicker-popup="{{dateformat}}" ng-model="vm.bilanOperation.dateDerniereOperation" is-open="vm.datePickerOpenStatus.dateDerniereOperation"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateDerniereOperation')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+
+        <div class="form-group">
+            <label data-translate="ptiApp.bilanOperation.typeService" for="field_typeService">Type Service</label>
+            <select class="form-control" id="field_typeService" name="typeService" ng-model="vm.bilanOperation.typeServiceId" ng-options="typeService.id as typeService.libelle for typeService in vm.typeservices"            >
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="ptiApp.bilanOperation.canal" for="field_canal">Canal</label>
+            <select class="form-control" id="field_canal" name="canal" ng-model="vm.bilanOperation.canalId" ng-options="canal.id as canal.libelleCanal for canal in vm.canals"            >
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="ptiApp.bilanOperation.beneficiaire" for="field_beneficiaire">Beneficiaire</label>
+            <select class="form-control" id="field_beneficiaire" name="beneficiaire" ng-model="vm.bilanOperation.beneficiaireId" ng-options="client.id as client.codeClient for client in vm.clients"            >
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="ptiApp.bilanOperation.emetteur" for="field_emetteur">Emetteur</label>
+            <select class="form-control" id="field_emetteur" name="emetteur" ng-model="vm.bilanOperation.emetteurId" ng-options="client.id as client.codeClient for client in vm.clients"            >
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="ptiApp.bilanOperation.organisationEm" for="field_organisationEm">Organisation Em</label>
+            <select class="form-control" id="field_organisationEm" name="organisationEm" ng-model="vm.bilanOperation.organisationEmId" ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.uniteorganisations"            >
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="ptiApp.bilanOperation.organisationAcq" for="field_organisationAcq">Organisation Acq</label>
+            <select class="form-control" id="field_organisationAcq" name="organisationAcq" ng-model="vm.bilanOperation.organisationAcqId" ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.uniteorganisations"            >
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="ptiApp.bilanOperation.acteur" for="field_acteur">Acteur</label>
+            <select class="form-control" id="field_acteur" name="acteur" ng-model="vm.bilanOperation.acteurId" ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.uniteorganisations"            >
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,47 @@
+
+<div>
+    <h2><span data-translate="ptiApp.composant.detail.title">Composant</span> {{vm.composant.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.composant.type">Type</span></dt>
+        <dd>
+            <span>{{vm.composant.type}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.composant.label">Label</span></dt>
+        <dd>
+            <span>{{vm.composant.label}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.composant.code">Code</span></dt>
+        <dd>
+            <span>{{vm.composant.code}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.composant.typeComposant">Type Composant</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.TypeComposant.' + vm.composant.typeComposant}}">{{vm.composant.typeComposant}}</span>
+        </dd>
+        <!--<dt><span data-translate="ptiApp.composant."></span></dt>
+        <dd>
+            <a ui-sref="combobox-detail({id:vm.composant..id})">{{vm.composant..id}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.composant."></span></dt>
+        <dd>
+            <a ui-sref="bouton-detail({id:vm.composant..id})">{{vm.composant..id}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.composant."></span></dt>
+        <dd>
+            <a ui-sref="tex-box-detail({id:vm.composant..id})">{{vm.composant..id}}</a>
+        </dd>-->
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="composant-detail.edit({id:vm.composant.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

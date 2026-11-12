@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 mf-select-table-container">
+            <table class="table-responsive table table-hover">
+                <caption>
+                    <input type="text" placeholder="Rechercher..." class="form-control form-control-static" name="filter_field" ng-model="ctrl.query" />
+                </caption>
+                <thead>
+                    <tr class="j-table-header">
+                        <th style="width:7%;">
+                            <span ng-if="ctrl.multiple">
+                                    <input ng-checked="ctrl.toggleAll()" ng-change="ctrl.toggleAll()" ng-model="ctrl.allSelected"  class="colored-success" type="checkbox" />
+                                    <b class="text"></b>
+                            </span>
+                        </th>
+                        <th ng-repeat="(key, col) in ctrl.columns">
+                            <span>{{col.title}} </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ctrl.datas|filter:ctrl.query|orderBy:ctrl.columns[0]" ng-click="ctrl.toggle(item)">
+                        <td style="width:7%;">
+                            <input ng-checked="ctrl.isChecked(item)" class="colored-success" type="checkbox" />
+                            <b class="text"></b>
+                        </td>
+                        <td ng-repeat="(key, col) in ctrl.columns">
+                            <span>{{item[col.name]}} </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row p10">
+        <div class="btn-group btn-group-xs pull-right mb5">
+            <button ng-click="ctrl.cancel()" class="btn btn-danger">Annuler</button>
+            <button ng-if="ctrl.datas.length!=0" ng-click="ctrl.confirm()" class="btn btn-success"><span class="fa fa-check"></span>&nbsp;Valider</button>
+        </div>
+    </div>
+</div>

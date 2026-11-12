@@ -1,0 +1,114 @@
+<div>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel m-b-none" style="border: 2px solid #dbdbe0; border-radius: 5px;">
+                    <div class="panel-body">
+                        <h3 class="m-b-xs text-center m-t-n">
+                            <i class="pe pe-7s-config text-warning m-r-xs"></i> 
+                            <span class="text-primary">Schema d'écriture</span>
+                        </h3>
+                        <hr style="border-top: 2px solid #7485e6;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-5">
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="field_typeService">Type Service</label>
+                    <div class="col-md-9">
+                        <select class="form-control" id="field_typeService" ng-change="vm.changeService(vm.typeService.id)" name="typeService" ng-model="vm.typeService" ng-options="typeService as typeService.libelleTypeService for typeService in vm.typeServices track by typeService.id">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="form-group">
+                    <label class="control-label col-md-6" for="itemsPerPage">Éléments par page</label>
+                    <div class="col-md-6">
+                        <select class="form-control" id="itemsPerPage" ng-model="vm.itemsPerPage" ng-change="vm.transition()">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3 text-right">
+                <button class="btn btn-primary" ui-sref="schema-ecriture.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span>
+                        Nouveau
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover" style="border: 2px solid #dde0ee;">
+            <thead>
+                <tr class="bg-primary">
+                    <th class="text-center text-white"><span>Nom Schema</span></th>
+                    <th class="text-center text-white"><span>Code Groovy</span></th>
+                    <th class="text-center text-white">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="schemaEcriture in vm.schemaEcritures track by schemaEcriture.id">
+                    <td class="text-center">{{schemaEcriture.nomSchema}}</td>
+                    <td class="text-center"><span class="badge badge-info">{{schemaEcriture.codeGroovy}}</span></td>
+                    <td class="text-center">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="schema-ecriture-detail({id:schemaEcriture.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="schema-ecriture.edit({id:schemaEcriture.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="schema-ecriture.delete({id:schemaEcriture.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="ligne-schema-ecriture({idSchema:schemaEcriture.id,typeService:vm.typeService.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-cog"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <div class="row">
+            <div class="col-md-12">
+                <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" 
+                    max-size="5" boundary-links="true" force-ellipses="true"
+                    items-per-page="vm.itemsPerPage" ng-change="vm.transition()"
+                    first-text="&laquo;" previous-text="&lsaquo;" next-text="&rsaquo;" last-text="&raquo;">
+                </uib-pagination>
+            </div>
+        </div>
+    </div>
+</div>

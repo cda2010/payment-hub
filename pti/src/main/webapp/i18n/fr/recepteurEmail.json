@@ -1,0 +1,22 @@
+
+{
+    "ptiApp": {
+        "recepteurEmail" : {
+            "home": {
+                "title": "RecepteurEmails",
+                "createLabel": "Créer un nouveau Recepteur Email",
+                "createOrEditLabel": "Créer ou éditer un Recepteur Email"
+            },
+            "created": "Un nouveau Recepteur Email a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Recepteur Email avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Recepteur Email avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Recepteur Email {{ id }} ?"
+            },
+            "detail": {
+                "title": "Recepteur Email"
+            },
+            "email": "Email"
+        }
+    }
+}

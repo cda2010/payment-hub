@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0021",
+  "providerCodeHint": "FSE_0021",
+  "providerLibelle": "Coris Money TOGO",
+  "participantKindHint": "WALLET",
+  "fseStatut": "NONBANQUE",
+  "groupCode": "ETC",
+  "codeExterne": "0",
+  "typeEtc": "FIL",
+  "api": {
+    "nomApi": "API CORIS MONEY TOGO",
+    "codeApi": "0015",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "9181",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:9181",
+    "authType": "OAUTH2_CLIENT_CREDENTIALS",
+    "clientId": "ptimobile",
+    "tokenUrl": "http://172.27.4.186:9181/oauth/token",
+    "grantType": "client_credentials",
+    "username": "client_credentials"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "CONSULTATIONSOLDE",
+      "codeMethode": "001501",
+      "operationCode": "CONSULTATIONSOLDE",
+      "nom": "api/gateway/solde",
+      "httpMethod": "GET",
+      "path": "api/gateway/solde",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"numeroCompte\": \"${numeroCompte}\", \"codeFse\": \"${codeFse}\"}",
+      "parameters": [
+        {
+          "code": "numeroCompte",
+          "nomExterne": "numeroCompte",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeFse",
+          "nomExterne": "codeFse",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "CONSULTATIONHIST",
+      "codeMethode": "001502",
+      "operationCode": "CONSULTATIONHIST",
+      "nom": "api/gateway/historique",
+      "httpMethod": "POST",
+      "path": "api/gateway/historique",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"numeroCompte\": \"${numeroCompte}\", \"codeFse\": \"${codeFse}\", \"debutPeriode\": \"${debutPeriode}\", \"finPeriode\": \"${finPeriode}\"}",
+      "parameters": [
+        {
+          "code": "numeroCompte",
+          "nomExterne": "numeroCompte",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeFse",
+          "nomExterne": "codeFse",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "debutPeriode",
+          "nomExterne": "debutPeriode",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "finPeriode",
+          "nomExterne": "finPeriode",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "INFOCLIENT",
+      "codeMethode": "001503",
+      "operationCode": "INFOCLIENT",
+      "nom": "api/gateway/infoClientCompte",
+      "httpMethod": "POST",
+      "path": "api/gateway/infoClientCompte",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{}",
+      "parameters": []
+    },
+    {
+      "typeMethode": "TRANSFERT",
+      "codeMethode": "001504",
+      "operationCode": "TRANSFERT",
+      "nom": "api/gateway/virements",
+      "httpMethod": "POST",
+      "path": "api/gateway/virements",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"compteDebiteur\": \"${compteDebiteur}\", \"compteCredit\": \"${compteCredit}\", \"agenceDebit\": \"${agenceDebit}\", \"agenceCredit\": \"${agenceCredit}\", \"codeFseCredit\": \"${codeFseCredit}\", \"nomDonneurOrdre\": \"${nomDonneurOrdre}\", \"codeFseDebit\": \"${codeFseDebit}\", \"montant\": \"${montant}\", \"description\": \"${description}\", \"reference\": \"${reference}\"}",
+      "parameters": [
+        {
+          "code": "compteDebiteur",
+          "nomExterne": "compteDebiteur",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "compteCredit",
+          "nomExterne": "compteCredit",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "agenceDebit",
+          "nomExterne": "agenceDebit",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "agenceCredit",
+          "nomExterne": "agenceCredit",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeFseCredit",
+          "nomExterne": "codeFseCredit",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nomDonneurOrdre",
+          "nomExterne": "nomDonneurOrdre",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeFseDebit",
+          "nomExterne": "codeFseDebit",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "description",
+          "nomExterne": "description",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

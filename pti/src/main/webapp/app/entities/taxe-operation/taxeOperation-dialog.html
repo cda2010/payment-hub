@@ -1,0 +1,103 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myTaxeOperationLabel">Créer ou éditer une taxe sur les opérations </h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" for="field_taxe">Taxe</label>
+            <div class="col-sm-6">
+                <select required class="form-control" id="field_taxe" name="taxe" ng-model="vm.taxeOperation.taxeId" ng-options="taxe.id as taxe.nom for taxe in vm.taxes">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group  ">
+            <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_orgSrc">Orgaisation src </label>
+            <div class="col-xs-6 col-sm-6 col-lg-6">
+                <input autocomplete="off"required disabled type="tex" class="form-control input-xs ft20" name="orgSrc" id="field_orgSrc" ng-model="vm.organisation.libelleUniteOrganisation" />
+            </div>
+            <button  type="button" ng-click="vm.choisirUo()" class="btn-primary col-sm-1">
+                <span>Choisir</span>
+            </button>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" for="field_zone">Zone de destination</label>
+            <div class="col-sm-6">
+                <select required class="form-control" id="field_zone" name="zone" ng-model="vm.taxeOperation.zoneId" ng-options="zone.id as zone.libelleUniteOrganisation for zone in vm.zones">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" for="field_modeCalcul">Mode Calcul</label>
+            <div class="col-sm-6">
+                    <select required class="form-control" name="modeCalcul" ng-model="vm.taxeOperation.modeCalcul" id="field_modeCalcul">
+                            <option value="FIXE" data-translate="ptiApp.TypeTarif.FIXE">FIXE</option>
+                            <option value="POURCENTAGE" data-translate="ptiApp.TypeTarif.POURCENTAGE">POURCENTAGE</option>
+                        </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" for="field_appliqueSur">Applique sur</label>
+            <div class="col-sm-6">
+                    <select  required class="form-control" name="appliqueSur" ng-model="vm.taxeOperation.appliqueSur" id="field_appliqueSur">
+                            <!-- <option value="MONTANT" >MONTANT</option> -->
+                            <option value="FRAIS" >FRAIS</option>
+                            <option value="LIBRE" >LIBRE</option>
+                   </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4"  for="field_valeur">Valeur</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"required type="number" class="form-control" name="valeur" id="field_valeur"
+                    ng-model="vm.taxeOperation.valeur"
+                />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" for="field_typeService">Services</label>
+            <div class="col-sm-6">
+            <select disabled multiple  required class="form-control" id="field_typeService" name="typeService" ng-model="vm.taxeOperation.typeServices" ng-options="typeService as typeService.libelle for typeService in vm.typeservices">
+                <option value=""></option>
+            </select>
+            </div>
+            <i title="Sélectionnez les services" class="btn btn-primary btn-xs"
+               j-select2-dialog
+               j-multiple="true"
+               j-model="vm.taxeOperation.typeServiceIds"
+               j-list="vm.typeservices"
+               j-columns='vm.serviceColumns'
+               j-event-name="onLoadServices">Choisir...</i>
+        </div>
+
+        <div class="form-group">
+            <div class="checkbox col-sm-6 col-sm-offset-4">
+                <label>
+                    <input autocomplete="off"class="colored-success" type="checkbox" name="obligatoire" id="field_obligatoire"
+                        ng-model="vm.taxeOperation.activated" />
+                    <b class="text">Active ?</b>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

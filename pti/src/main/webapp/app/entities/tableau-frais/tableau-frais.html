@@ -1,0 +1,115 @@
+<div class="container-fluid">
+    <div class="mb5">
+        <div class="no-padding-left">
+            <button class="btn btn-primary btn-outline" ng-click="vm.addItem()">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span>
+                    Nouveau
+                </span>
+            </button>
+            <div class="btn-group mr15" uib-dropdown>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}} éléments par page
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                    <li>
+                        <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="text-center">
+                <span class="h4"><u>Liste des frais</u></span>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div>
+            <table class="table-responsive table table-hover">
+                <thead>
+                    <tr class="mf-table-header">
+                        <th ng-click="vm.sortBy('poidsNum')">
+                            <span>Poids num</span>
+                            <span ng-if="vm.isCurrentColumn('poidsNum')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('typeService')">
+                            <span>Type de service</span>
+                            <span ng-if="vm.isCurrentColumn('typeService')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('canal')">
+                            <span>Canal</span>
+                            <span ng-if="vm.isCurrentColumn('typeService')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('typeUoEmetteur')">
+                            <span>Type Uo Emetteur</span>
+                            <span ng-if="vm.isCurrentColumn('typeUoEmetteur')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('typeUoAcquereur')">
+                            <span>Type Uo Emetteur</span>
+                            <span ng-if="vm.isCurrentColumn('typeUoAcquereur')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('beneficiaire')">
+                            <span>Client B</span>
+                            <span ng-if="vm.isCurrentColumn('beneficiaire')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('emetteur')">
+                            <span>Client E</span>
+                            <span ng-if="vm.isCurrentColumn('emetteur')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('organisationEm')">
+                            <span>Organisation E</span>
+                            <span ng-if="vm.isCurrentColumn('organisationEm')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('organisationAcq')">
+                            <span>Organisation Acq</span>
+                            <span ng-if="vm.isCurrentColumn('organisationAcq')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th >
+                            <span>Qui paye?</span>
+                            
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="tableauFrais in vm.datas track by tableauFrais.id">
+                        <td>{{tableauFrais.poidsNum}}</td>
+                        <td>{{tableauFrais.typeServiceLibelle}}</td>
+                        <td>{{tableauFrais.libelle}}</td>
+                        <td>{{tableauFrais.canalLibelleCanal}}</td>
+                        <td>{{tableauFrais.typeUoEmetteurLibelleTypeUO}}</td>
+                        <td>{{tableauFrais.typeUoAcquereurLibelleTypeUO}}</td>
+                        <td>{{tableauFrais.beneficiaireCodeClient}}</td>
+                        <td>{{tableauFrais.emetteurCodeClient}}</td>
+                        <td>{{tableauFrais.organisationEmLibelleUniteOrganisation}}</td>
+                        <td>{{tableauFrais.organisationAcqLibelleUniteOrganisation}}</td>
+                        <td>{{tableauFrais.typeRegle}}</td>
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+                                <button type="submit" ng-click="vm.detailItem($event, tableauFrais)" class="btn btn-primary btn-xs btn-round">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+                                <button type="submit" ng-click="vm.deleteItem($event, tableauFrais)" class="btn btn-danger btn-xs btn-round">
+                                    <span class="glyphicon glyphicon-remove-circle"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="center-block text-center" ng-show="vm.canShowPagination()">
+            <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+            </uib-pagination>
+        </div>
+    </div>
+</div>

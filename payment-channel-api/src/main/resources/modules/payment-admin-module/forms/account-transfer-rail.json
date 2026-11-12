@@ -1,0 +1,38 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "select",
+        "key": "destRail",
+        "label": "Rail / compte destination",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "CORIS_MONEY", "value": "CORIS_MONEY" },
+            { "label": "WAVE", "value": "WAVE" },
+            { "label": "BANK_TRANSFER", "value": "BANK_TRANSFER" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Rail / compte destination": "Rail / compte destination"
+    },
+    "en": {
+      "Rail / compte destination": "Destination rail / account"
+    }
+  }
+}

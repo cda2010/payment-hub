@@ -1,0 +1,63 @@
+
+<div>
+    <h2><span data-translate="ptiApp.operation.detail.title">Operation</span> {{vm.operation.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.operation.montantOp">Montant Op</span></dt>
+        <dd>
+            <span>{{vm.operation.montantOp}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.operation.montantFrais">Montant Frais</span></dt>
+        <dd>
+            <span>{{vm.operation.montantFrais}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.operation.dateOperation">Date Operation</span></dt>
+        <dd>
+            <span>{{vm.operation.dateOperation | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.operation.statut">Statut</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.StatutOperation.' + vm.operation.statut}}">{{vm.operation.statut}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.operation.codeRetrait">Code Retrait</span></dt>
+        <dd>
+            <span>{{vm.operation.codeRetrait}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.operation.typeService">Type Service</span></dt>
+        <dd>
+            <a ui-sref="type-service-detail({id:vm.operation.typeServiceId})">{{vm.operation.code}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.operation.beneficaire">Beneficaire</span></dt>
+        <dd>
+            <a ui-sref="beneficiaire-detail({id:vm.operation.beneficaireId})">{{vm.operation.beneficaireId}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.operation.emetteur">Emetteur</span></dt>
+        <dd>
+            <a ui-sref="emetteur-detail({id:vm.operation.emetteurId})">{{vm.operation.emetteurId}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.operation.pointVente">Point Vente</span></dt>
+        <dd>
+            <a ui-sref="point-vente-detail({id:vm.operation.pointVenteId})">{{vm.operation.pointVenteId}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.operation.pays">Pays</span></dt>
+        <dd>
+            <a ui-sref="pays-detail({id:vm.operation.paysId})">{{vm.operation.paysLibellePays}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.operation.canal">Canal</span></dt>
+        <dd>
+            <a ui-sref="canal-detail({id:vm.operation.canalId})">{{vm.operation.canalLibelleCanal}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="operation-detail.edit({id:vm.operation.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

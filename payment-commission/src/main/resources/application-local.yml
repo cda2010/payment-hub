@@ -1,0 +1,11 @@
+# Profil local : base dédiée docker-compose (commission-postgres, port 5440).
+# Démarrer l'infra : docker compose up -d commission-postgres
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5440/payment_commission
+    username: commission
+    password: commission
+
+logging:
+  level:
+    com.gateway.payment.commission: DEBUG

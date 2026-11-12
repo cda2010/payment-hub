@@ -1,0 +1,1300 @@
+{
+  "realm": "payment",
+  "displayName": "Payment",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "rememberMe": true,
+  "bruteForceProtected": true,
+  "failureFactor": 5,
+  "accessTokenLifespan": 300,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "offlineSessionIdleTimeout": 2592000,
+  "internationalizationEnabled": true,
+  "supportedLocales": [
+    "fr",
+    "en"
+  ],
+  "defaultLocale": "fr",
+  "roles": {
+    "realm": [
+      {
+        "name": "ADMIN",
+        "description": "Administrateur complet",
+        "composite": false
+      },
+      {
+        "name": "CONFIG_MANAGER",
+        "description": "Gestion de la configuration fournisseurs",
+        "composite": false
+      },
+      {
+        "name": "OPERATOR",
+        "description": "Opérateur paiements",
+        "composite": false
+      },
+      {
+        "name": "SUPPORT",
+        "description": "Support / consultation transactions",
+        "composite": false
+      },
+      {
+        "name": "AUDITOR",
+        "description": "Lecture seule audit et supervision",
+        "composite": false
+      },
+      {
+        "name": "CHEF_AGENCE",
+        "description": "Validateur transfert niveau 1",
+        "composite": false
+      },
+      {
+        "name": "RESPONSABLE_OPERATIONS",
+        "description": "Validateur transfert niveau 2",
+        "composite": false
+      },
+      {
+        "name": "DIRECTEUR",
+        "description": "Validateur transfert niveau 3",
+        "composite": false
+      },
+      {
+        "name": "GROUP_ADMIN",
+        "description": "Corporate : administrateur du groupe",
+        "composite": false
+      },
+      {
+        "name": "TREASURER",
+        "description": "Corporate : trésorier (validation)",
+        "composite": false
+      },
+      {
+        "name": "ACCOUNTANT",
+        "description": "Corporate : comptable (saisie)",
+        "composite": false
+      },
+      {
+        "name": "MAKER",
+        "description": "Initiateur (corporate / réseau agents)",
+        "composite": false
+      },
+      {
+        "name": "CHECKER",
+        "description": "Validateur (corporate / réseau agents)",
+        "composite": false
+      },
+      {
+        "name": "VIEWER",
+        "description": "Consultation seule",
+        "composite": false
+      },
+      {
+        "name": "OWNER",
+        "description": "Marchand : propriétaire",
+        "composite": false
+      },
+      {
+        "name": "MANAGER",
+        "description": "Marchand : gérant",
+        "composite": false
+      },
+      {
+        "name": "CASHIER",
+        "description": "Marchand : caissier",
+        "composite": false
+      },
+      {
+        "name": "CUSTOMER",
+        "description": "Client retail (mobile)",
+        "composite": false
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "payment-front",
+      "name": "Back-office payment-2",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "frontchannelLogout": true,
+      "redirectUris": [
+        "http://localhost:4200/*",
+        "http://127.0.0.1:4200/*"
+      ],
+      "webOrigins": [
+        "http://localhost:4200",
+        "http://127.0.0.1:4200"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "+"
+      },
+      "protocolMappers": [
+        {
+          "name": "realm-roles-claim",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "audience-payment-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "payment-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-tenant_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "tenant_id",
+            "claim.name": "tenant_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-party_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "party_id",
+            "claim.name": "party_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "audience",
+            "claim.name": "audience",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "web-app-corporate",
+      "name": "Portail corporate",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "frontchannelLogout": true,
+      "redirectUris": [
+        "http://localhost:4210/*",
+        "http://127.0.0.1:4210/*"
+      ],
+      "webOrigins": [
+        "http://localhost:4210",
+        "http://127.0.0.1:4210"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "+"
+      },
+      "protocolMappers": [
+        {
+          "name": "realm-roles-claim",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "audience-payment-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "payment-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-tenant_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "tenant_id",
+            "claim.name": "tenant_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-party_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "party_id",
+            "claim.name": "party_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "audience",
+            "claim.name": "audience",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "web-app-backoffice",
+      "name": "Console back-office",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "frontchannelLogout": true,
+      "redirectUris": [
+        "http://localhost:4210/*",
+        "http://127.0.0.1:4210/*",
+        "http://localhost:4213/*",
+        "http://127.0.0.1:4213/*"
+      ],
+      "webOrigins": [
+        "http://localhost:4210",
+        "http://127.0.0.1:4210",
+        "http://localhost:4213",
+        "http://127.0.0.1:4213"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "+"
+      },
+      "protocolMappers": [
+        {
+          "name": "realm-roles-claim",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "audience-payment-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "payment-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-tenant_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "tenant_id",
+            "claim.name": "tenant_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-party_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "party_id",
+            "claim.name": "party_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "audience",
+            "claim.name": "audience",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "web-app-agent",
+      "name": "Portail agents / marchands",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "frontchannelLogout": true,
+      "redirectUris": [
+        "http://localhost:4211/*",
+        "http://127.0.0.1:4211/*"
+      ],
+      "webOrigins": [
+        "http://localhost:4211",
+        "http://127.0.0.1:4211"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "+"
+      },
+      "protocolMappers": [
+        {
+          "name": "realm-roles-claim",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "audience-payment-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "payment-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-tenant_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "tenant_id",
+            "claim.name": "tenant_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-party_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "party_id",
+            "claim.name": "party_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "audience",
+            "claim.name": "audience",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "payment2-mobile",
+      "name": "Application mobile retail",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "frontchannelLogout": true,
+      "redirectUris": [
+        "http://localhost:4205/*",
+        "http://127.0.0.1:4205/*",
+        "http://localhost:8100/*",
+        "http://127.0.0.1:8100/*",
+        "com.gateway.payment2.mobile://callback"
+      ],
+      "webOrigins": [
+        "http://localhost:4205",
+        "http://127.0.0.1:4205",
+        "http://localhost:8100",
+        "http://127.0.0.1:8100",
+        "capacitor://localhost",
+        "http://localhost",
+        "https://localhost"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "+##com.gateway.payment2.mobile://logout"
+      },
+      "protocolMappers": [
+        {
+          "name": "realm-roles-claim",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "audience-payment-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "payment-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-tenant_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "tenant_id",
+            "claim.name": "tenant_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-party_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "party_id",
+            "claim.name": "party_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "audience",
+            "claim.name": "audience",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "mobile-agent",
+      "name": "Application mobile agents",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "frontchannelLogout": true,
+      "redirectUris": [
+        "http://localhost:4206/*",
+        "http://127.0.0.1:4206/*",
+        "com.gateway.payment2.agent://callback"
+      ],
+      "webOrigins": [
+        "http://localhost:4206",
+        "http://127.0.0.1:4206",
+        "capacitor://localhost",
+        "http://localhost",
+        "https://localhost"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "+##com.gateway.payment2.agent://logout"
+      },
+      "protocolMappers": [
+        {
+          "name": "realm-roles-claim",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "audience-payment-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "payment-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-tenant_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "tenant_id",
+            "claim.name": "tenant_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-party_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "party_id",
+            "claim.name": "party_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "audience",
+            "claim.name": "audience",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "mobile-marchand",
+      "name": "Application mobile marchands",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "frontchannelLogout": true,
+      "redirectUris": [
+        "http://localhost:4207/*",
+        "http://127.0.0.1:4207/*",
+        "com.gateway.payment2.marchand://callback"
+      ],
+      "webOrigins": [
+        "http://localhost:4207",
+        "http://127.0.0.1:4207",
+        "capacitor://localhost",
+        "http://localhost",
+        "https://localhost"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "+##com.gateway.payment2.marchand://logout"
+      },
+      "protocolMappers": [
+        {
+          "name": "realm-roles-claim",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "audience-payment-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "payment-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-tenant_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "tenant_id",
+            "claim.name": "tenant_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-party_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "party_id",
+            "claim.name": "party_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "audience",
+            "claim.name": "audience",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "payment-api",
+      "name": "API payment-2",
+      "enabled": true,
+      "publicClient": false,
+      "bearerOnly": false,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "secret": "payment-api-not-used"
+    },
+    {
+      "clientId": "payment-dev-tools",
+      "name": "Outils de développement (password grant)",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "protocolMappers": [
+        {
+          "name": "realm-roles-claim",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "audience-payment-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "payment-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-tenant_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "tenant_id",
+            "claim.name": "tenant_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-party_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "party_id",
+            "claim.name": "party_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        },
+        {
+          "name": "attr-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "audience",
+            "claim.name": "audience",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Admin",
+      "lastName": "Gateway",
+      "email": "admin@payment.local",
+      "attributes": {
+        "audience": [
+          "BACKOFFICE"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Admin@123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-payment",
+        "ADMIN"
+      ]
+    },
+    {
+      "username": "chef",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Chef",
+      "lastName": "Agence",
+      "email": "chef@payment.local",
+      "attributes": {
+        "audience": [
+          "BACKOFFICE"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Chef@1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-payment",
+        "CHEF_AGENCE"
+      ]
+    },
+    {
+      "username": "chef1",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Chef",
+      "lastName": "Agence 1",
+      "email": "chef1@payment.local",
+      "attributes": {
+        "audience": [
+          "BACKOFFICE"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Chef@1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-payment",
+        "CHEF_AGENCE"
+      ]
+    },
+    {
+      "username": "ops1",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Responsable",
+      "lastName": "Opérations",
+      "email": "ops1@payment.local",
+      "attributes": {
+        "audience": [
+          "BACKOFFICE"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Ops@1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-payment",
+        "RESPONSABLE_OPERATIONS"
+      ]
+    },
+    {
+      "username": "directeur",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Directeur",
+      "lastName": "Général",
+      "email": "directeur@payment.local",
+      "attributes": {
+        "audience": [
+          "BACKOFFICE"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Dir@1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-payment",
+        "DIRECTEUR"
+      ]
+    },
+    {
+      "username": "auditeur",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Auditeur",
+      "lastName": "Interne",
+      "email": "auditeur@payment.local",
+      "attributes": {
+        "audience": [
+          "BACKOFFICE"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Audit@1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-payment",
+        "AUDITOR"
+      ]
+    },
+    {
+      "username": "jean",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Jean",
+      "lastName": "Kouassi",
+      "email": "jean@payment.local",
+      "attributes": {
+        "audience": [
+          "CORPORATE"
+        ],
+        "tenant_id": [
+          "CORIS_DEMO"
+        ],
+        "party_id": [
+          "a1000001-0000-4000-8000-000000000002"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Jean@1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-payment",
+        "GROUP_ADMIN"
+      ]
+    },
+    {
+      "username": "paul",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Paul",
+      "lastName": "Ouédraogo",
+      "email": "paul@payment.local",
+      "attributes": {
+        "audience": [
+          "CORPORATE"
+        ],
+        "tenant_id": [
+          "CORIS_DEMO"
+        ],
+        "party_id": [
+          "a1000001-0000-4000-8000-000000000003"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Paul@1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-payment",
+        "TREASURER"
+      ]
+    },
+    {
+      "username": "marie",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Marie",
+      "lastName": "Traoré",
+      "email": "marie@payment.local",
+      "attributes": {
+        "audience": [
+          "CORPORATE"
+        ],
+        "tenant_id": [
+          "CORIS_DEMO"
+        ],
+        "party_id": [
+          "a1000001-0000-4000-8000-000000000004"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Marie@1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-payment",
+        "ACCOUNTANT"
+      ]
+    },
+    {
+      "username": "agent1",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Souleymane",
+      "lastName": "Kaboré",
+      "email": "agent1@payment.local",
+      "attributes": {
+        "audience": [
+          "AGENT"
+        ],
+        "tenant_id": [
+          "CORIS_DEMO"
+        ],
+        "party_id": [
+          "a1000001-0000-4000-8000-000000000005"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Agent@1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-payment",
+        "MAKER"
+      ]
+    },
+    {
+      "username": "checker1",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Issa",
+      "lastName": "Traoré",
+      "email": "checker1@payment.local",
+      "attributes": {
+        "audience": [
+          "AGENT"
+        ],
+        "tenant_id": [
+          "CORIS_DEMO"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Check@1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-payment",
+        "CHECKER"
+      ]
+    },
+    {
+      "username": "marchand1",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Aïssata",
+      "lastName": "Ouédraogo",
+      "email": "marchand1@payment.local",
+      "attributes": {
+        "audience": [
+          "MERCHANT"
+        ],
+        "tenant_id": [
+          "CORIS_DEMO"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Marchand@1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-payment",
+        "OWNER"
+      ]
+    },
+    {
+      "username": "caissier",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Moussa",
+      "lastName": "Zongo",
+      "email": "caissier@payment.local",
+      "attributes": {
+        "audience": [
+          "MERCHANT"
+        ],
+        "tenant_id": [
+          "CORIS_DEMO"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Caisse@1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-payment",
+        "CASHIER"
+      ]
+    },
+    {
+      "username": "awa",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Awa",
+      "lastName": "Ouédraogo",
+      "email": "awa@payment.local",
+      "attributes": {
+        "audience": [
+          "RETAIL"
+        ],
+        "tenant_id": [
+          "CORIS_DEMO"
+        ],
+        "party_id": [
+          "a1000001-0000-4000-8000-000000000006"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Awa@1234",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-payment",
+        "CUSTOMER"
+      ]
+    }
+  ]
+}

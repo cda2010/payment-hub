@@ -1,0 +1,88 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel m-b-none" style="border: 2px solid #7485e6; border-radius: 5px;">
+                <div class="panel-body">
+                    <h3 class="m-b-xs text-center m-t-n">
+                        <i class="pe pe-7s-users text-warning m-r-xs"></i>
+                        <span class="text-primary">Gestion des Utilisateurs</span>
+                    </h3>
+                    <hr style="border-top: 2px solid #7485e6;"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-right">
+            <button class="btn btn-primary" ui-sref="user-management.new" style="border-radius: 0px;">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span>Nouveau</span>
+            </button>
+        </div>
+    </div>
+    <br/>
+    <div class="panel panel-filled" style="border-radius: 5px;">
+        <div class="panel-body">
+            <jhi-alert></jhi-alert>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" style="border: 1px solid #7485e6;">
+                    <thead>
+                    <tr class="bg-primary">
+                        <th class="text-center text-white"><span>ID</span><span class="glyphicon glyphicon-sort"></span></th>
+                        <th class="text-center text-white"><span>Login</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th class="text-center text-white"><span>Email</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th class="text-center text-white"></th>
+                        <th class="text-center text-white"><span>Profils</span></th>
+                        <th class="text-center text-white"><span>Date création</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th class="text-center text-white"><span>Modifié par</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th class="text-center text-white"><span>Dernière modification</span> <span class="glyphicon glyphicon-sort"></span></th>
+                        <th class="text-center text-white">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="user in vm.users track by user.id">
+                        <td class="text-center"><a ui-sref="user-management-detail({login:user.login})">{{user.id}}</a></td>
+                        <td class="text-center">{{user.login}}</td>
+                        <td class="text-center">{{user.email}}</td>
+                        <td class="text-center">
+                            <button class="btn btn-danger btn-xs" ng-click="vm.setActive(user, true)" ng-show="!user.activated" style="border-radius: 0px;">Désactivé</button>
+                            <button class="btn btn-success btn-xs" ng-click="vm.setActive(user, false)" ng-show="user.activated" ng-disabled="vm.currentAccount.login==user.login" style="border-radius: 0px;">Activé</button>
+                        </td>
+                        <td class="text-center">
+                            <div ng-repeat="authority in user.authorities">
+                                <span class="badge badge-info" style="border-radius: 0px;">{{ authority }}</span>
+                            </div>
+                        </td>
+                        <td class="text-center">{{user.createdDate | date:'dd/MM/yy HH:mm'}}</td>
+                        <td class="text-center">{{user.lastModifiedBy}}</td>
+                        <td class="text-center">{{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</td>
+                        <td class="text-center">
+                            <div class="btn-group flex-btn-group-container">
+                                <button type="submit"
+                                        ui-sref="user-management-detail({login:user.login})"
+                                        class="btn btn-info btn-sm" style="border-radius: 0px;" title="Voir le détail de l'utilisateur">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+                                <button type="submit"
+                                        ui-sref="user-management.edit({login:user.login})"
+                                        class="btn btn-primary btn-sm" style="border-radius: 0px;" title="Modifier l'utilisateur">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                                <button type="submit"
+                                        ui-sref="user-management.delete({login:user.login})"
+                                        class="btn btn-danger btn-sm" ng-disabled="vm.currentAccount.login==user.login" style="border-radius: 0px;" title="Supprimer l'utilisateur">
+                                    <span class="glyphicon glyphicon-remove-circle"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+                <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_8.0.xsd">
+  <grid name="biller-grid" title="Facturiers"
+        model="com.gateway.payment.billing.domain.Biller"
+        edit-form="biller-form" new-action-view="biller-new"
+        rest-resource="/api/v1/admin/billers">
+    <field name="code"/>
+    <field name="name"/>
+    <field name="provider"/>
+    <field name="defaultCurrency"/>
+    <field name="actif"/>
+    <field name="ordreAffichage"/>
+  </grid>
+
+  <form name="biller-form" title="Facturier"
+        model="com.gateway.payment.billing.domain.Biller">
+    <panel name="main" title="Identité">
+      <field name="code" required="true" colSpan="4"/>
+      <field name="name" required="true" colSpan="8"/>
+      <field name="description" colSpan="12" widget="Text"/>
+      <field name="provider" required="true" colSpan="12"
+                title="Fournisseur FACTURIER"
+                domain="self.participantKind = 'FACTURIER' AND self.actif = true"/>
+      <field name="logoUrl" colSpan="6"/>
+      <field name="defaultCurrency" required="true" colSpan="2"/>
+      <field name="actif" colSpan="2"/>
+      <field name="ordreAffichage" colSpan="2"/>
+    </panel>
+    <panel-related name="productsPanel" title="Produits" field="products"
+                   form-view="biller-product-form" grid-view="biller-product-grid"
+                   canNew="true" canEdit="true" canRemove="false" colSpan="12"/>
+  </form>
+
+</object-views>

@@ -1,0 +1,10 @@
+{
+    "ptiApp": {
+        "PrisEnCharge" : {
+            "null": "",
+            "CLIENT": "CLIENT",
+            "TENEUR_SRC": "TENEUR_SRC",
+            "TENEUR_DEST": "TENEUR_DEST"
+        }
+    }
+}

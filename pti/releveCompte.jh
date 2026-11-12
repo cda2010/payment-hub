@@ -1,0 +1,25 @@
+
+entity ReleveCompte{
+    soldeInitial BigDecimal,
+    dateDebut ZonedDateTime,
+    soldeFinal BigDecimal,
+    dateFin ZonedDateTime,
+}
+
+ entity DetailReleveCompte{
+    date ZonedDateTime,
+    etat String,
+    montant BigDecimal,
+    soldeCourant BigDecimal,
+    soldeApres BigDecimal,
+    type String
+ }
+relationship OneToMany {
+	ReleveCompte to DetailReleveCompte{releve}
+}
+
+paginate all with pagination
+
+dto * with mapstruct
+
+service all with serviceClass

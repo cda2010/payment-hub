@@ -1,0 +1,182 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0029",
+  "providerCodeHint": "FSE_0029",
+  "providerLibelle": "SONABEL PREPAYEE",
+  "participantKindHint": "FACTURIER",
+  "fseStatut": "AUTRE",
+  "groupCode": "ENF",
+  "codeExterne": "0",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "api SONABEL PREPAYE",
+    "codeApi": "0024",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "NONE"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "GETINFOS",
+      "codeMethode": "002401",
+      "operationCode": "GETINFOS",
+      "nom": "/api/sonabel-prepay/checking",
+      "httpMethod": "POST",
+      "path": "api/sonabel-prepay/checking",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"username\": \"${username}\", \"password\": \"${password}\", \"key\": \"${key}\", \"meterNum\": \"${meterNum}\", \"calcMode\": \"${calcMode}\", \"amount\": \"${amount}\"}",
+      "parameters": [
+        {
+          "code": "username",
+          "nomExterne": "username",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "password",
+          "nomExterne": "password",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "key",
+          "nomExterne": "key",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "meterNum",
+          "nomExterne": "meterNum",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "calcMode",
+          "nomExterne": "calcMode",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "amount",
+          "nomExterne": "amount",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "SETTLEMENT",
+      "codeMethode": "002402",
+      "operationCode": "SETTLEMENT",
+      "nom": "/api/sonabel-prepay/vending",
+      "httpMethod": "POST",
+      "path": "api/sonabel-prepay/vending",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"username\": \"${username}\", \"password\": \"${password}\", \"key\": \"${key}\", \"transId\": \"${transId}\", \"meterNum\": \"${meterNum}\", \"calcMode\": \"${calcMode}\", \"amount\": \"${amount}\", \"verifyData\": \"${verifyData}\"}",
+      "parameters": [
+        {
+          "code": "username",
+          "nomExterne": "username",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "password",
+          "nomExterne": "password",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "key",
+          "nomExterne": "key",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "transId",
+          "nomExterne": "transId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "meterNum",
+          "nomExterne": "meterNum",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "calcMode",
+          "nomExterne": "calcMode",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "amount",
+          "nomExterne": "amount",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "verifyData",
+          "nomExterne": "verifyData",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "GETMONTANT",
+      "codeMethode": "002403",
+      "operationCode": "GETMONTANT",
+      "nom": "/api/sonabel-prepay/getmontant",
+      "httpMethod": "POST",
+      "path": "api/sonabel-prepay/getmontant",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"nombre\": \"${nombre}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "VERIFREGLEFACTURIER",
+      "codeMethode": "002404",
+      "operationCode": "VERIFREGLEFACTURIER",
+      "nom": "/api/sonabel-prepay/getregle",
+      "httpMethod": "POST",
+      "path": "api/sonabel-prepay/getregle",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"reference\": \"${reference}\", \"montant\": \"${montant}\"}",
+      "parameters": [
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

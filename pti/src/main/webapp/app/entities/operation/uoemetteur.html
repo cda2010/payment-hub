@@ -1,0 +1,191 @@
+<div class="col-sm-12 col-lg-12 col-xs-12">
+
+    <div class="row" >
+        <div class="col-sm-6">
+            <div class="form-group" >
+                <label  class="control-label col-sm-4"
+                        for="field_libelleOrganisation">Libelle Organisation</label>
+                <div class="col-sm-8">
+                    <input autocomplete="off"  class="form-control" id="field_libelleOrganisation" name="libelleOrganisation"
+                           ng-disabled="vm.isViewing" ng-model="vm.fseSrc.libelleUniteOrganisation" required type="text" />
+                </div>
+            </div>
+
+            <div class="form-group" >
+                <label class="control-label col-sm-4"
+                       for="field_libelleTypeUO">Type Organisation</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input autocomplete="off" class="form-control" id="field_libelleTypeUO" name="libelleTypeUO"
+                               ng-disabled="vm.isViewing" ng-model="vm.fseSrc.typeUO.libelleTypeUO" popup-placement="top" show-button-bar="false"
+                               type="text"
+                        />
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group ">
+                <label  class="control-label col-sm-4" for="field_telephone">Telephone</label>
+                <div class="col-sm-3">
+                    <select class="form-control input-xs" id="field_nationalite"
+                            name="nationalite" ng-disabled="vm.isViewing || !vm.search" ng-model="vm.fseSrc.codePaysTelephone"
+                            ng-options="nationalite.code as nationalite.libelle for nationalite in vm.nationalites">
+                        <option value="">Code</option>
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <span class="input-icon icon-right">
+                        <input autocomplete="off" class="form-control" id="field_telephone" name="telephone"
+                               ng-disabled="vm.isViewing || !vm.search" ng-model="vm.fseSrc.telephone" required
+                               type="text" />
+                        <!-- <span class="fa fa-eye validity"></span> -->
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group" >
+                <label class="control-label col-sm-4"
+                       for="field_email">Email</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input autocomplete="off" class="form-control" id="field_email" name="email"
+                               ng-disabled="vm.isViewing" ng-model="vm.fseSrc.email" popup-placement="top" show-button-bar="false"
+                               type="text"
+                        />
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group" >
+                <label class="control-label col-sm-4"
+                       for="field_adresse">Adresse</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input autocomplete="off" class="form-control" id="field_adresse" name="libelleTypeUO"
+                               ng-disabled="vm.isViewing" ng-model="vm.fseSrc.adresse" popup-placement="top" show-button-bar="false"
+                               type="text"
+                        />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+
+            <div class="form-group" ng-if="vm.fseSrc.representant.typePersonne!==null">
+                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_typePersonne"
+                       mf-required>Type Personne</label>
+                <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                    <select class="form-control" id="field_typePersonne" name="typePersonne"
+                            ng-disabled="vm.isViewing" ng-model="vm.fseSrc.representant.typePersonne">
+                        <option value="PHYSIQUE" >PHYSIQUE</option>
+                        <option value="MORALE" >MORALE</option>
+                    </select>
+                </div>
+            </div>
+
+            <div ng-if="vm.fseSrc.representant.typePersonne=='PHYSIQUE' ">
+                <div class="form-group ">
+                    <label class="col-sm-4 control-label" for="field_nomClient" mf-required>Nom</label>
+                    <div class="col-xs-6 col-sm-6 col-lg-6">
+                        <input autocomplete="off" class="form-control input-xs" id="field_nomClient" name="nomClient" ng-disabled="true"
+                               ng-model="vm.fseSrc.representant.personnePhysique.nomClient" required type="text" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="field_nomClient" mf-required>Prénom</label>
+                    <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                        <input autocomplete="off" class="form-control input-xs" id="field_prenomClient" name="nomClient" ng-disabled="true"
+                               ng-model="vm.fseSrc.representant.personnePhysique.prenomClient" required type="text" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class=" col-sm-4 control-label" data-translate="ptiApp.personnePhysique.dateNaissance"
+                           for="field_dateNaissance">Date Naissance</label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input autocomplete="off" class="form-control input-xs" id="field_dateNaissance" is-open="vm.datePickerOpenStatus.dateNaissance"
+                                   name="dateNaissance" ng-disabled="true" ng-model="vm.fseSrc.representant.personnePhysique.dateNaissance"
+                                   popup-placement="top" show-button-bar="false" show-button-bar="false"
+                                   type="text"
+                                   uib-datepicker-popup="dd/MM/yyyy" uib-datepicker-popup="dd/MM/yyyy" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-default btn-xs" ng-click="vm.openCalendar('dateNaissance')"
+                                        type="button"><i
+                                        class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" data-translate="ptiApp.personnePhysique.lieuNaissance"
+                           for="field_lieuNaissance">Lieu Naissance</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off" class="form-control input-xs" id="field_lieuNaissance" name="lieuNaissance"
+                               ng-disabled="true" ng-model="vm.fseSrc.representant.personnePhysique.lieuNaissance"
+                               type="text" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class=" col-sm-4 control-label" data-translate="ptiApp.personnePhysique.sexe"
+                           for="field_sexe">Sexe</label>
+                    <div class="col-xs-6 col-sm-6 col-lg-6">
+                        <select class="form-control input-xs" id="field_sexe" name="sexe"
+                                ng-disabled="true" ng-model="vm.fseSrc.representant.personnePhysique.sexe">
+                            <option data-translate="ptiApp.Sexe.MASCULIN" value="MASCULIN">MASCULIN</option>
+                            <option data-translate="ptiApp.Sexe.FEMININ" value="FEMININ">FEMININ</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="vm.fseSrc.representant.typePersonne=='MORALE' ">
+
+                <div class="form-group ">
+                    <label class="control-label col-sm-4 col-xs-4 col-lg-4 "
+                           data-translate="ptiApp.personneMorale.raisonSociale " for="field_raisonSociale ">Raison
+                        Sociale</label>
+                    <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                        <input autocomplete="off" class="form-control " id="field_raisonSociale " name="raisonSociale "
+                               ng-disabled="true" ng-model="vm.fseSrc.representant.personneMorale.raisonSociale " required
+                               type="text " />
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <label class="control-label col-sm-4 col-xs-4 col-lg-4 "
+                           data-translate="ptiApp.personneMorale.registreCommerce " for="field_registreCommerce ">Registre
+                        Commerce</label>
+                    <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                        <input autocomplete="off" class="form-control " id="field_registreCommerce " name="registreCommerce "
+                               ng-disabled="true" ng-model="vm.fseSrc.representant.personneMorale.registreCommerce "
+                               type="text " />
+                    </div>
+
+                </div>
+
+                <div class="form-group ">
+                    <label class="control-label col-sm-4 col-xs-4 col-lg-4 "
+                           data-translate="ptiApp.personneMorale.numreoIfu " for="field_numreoIfu ">Numreo Ifu</label>
+                    <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                        <input autocomplete="off" class="form-control " id="field_numreoIfu "
+                               name="numreoIfu " ng-disabled="true" ng-model="vm.fseSrc.representant.personneMorale.numreoIfu "
+                               type="text " />
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+</div>

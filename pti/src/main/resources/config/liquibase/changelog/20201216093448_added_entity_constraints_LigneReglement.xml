@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity LigneReglement.
+    -->
+    <changeSet id="20201216093448-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="reglement_id"
+                                 baseTableName="ligne_reglement"
+                                 constraintName="fk_ligne_reglement_reglement_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="reglement"/>
+
+        <addForeignKeyConstraint baseColumnNames="organisation_id"
+                                 baseTableName="ligne_reglement"
+                                 constraintName="fk_ligne_reglement_organisation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="unite_organisation"/>
+
+    </changeSet>
+</databaseChangeLog>

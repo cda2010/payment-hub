@@ -1,0 +1,34 @@
+{
+    "ptiApp": {
+        "ptiJobDetails" : {
+            "home": {
+                "title": "PtiJobDetails",
+                "createLabel": "Créer un nouveau Pti Job Details",
+                "createOrEditLabel": "Créer ou éditer un Pti Job Details"
+            },
+            "created": "Un nouveau Pti Job Details a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Pti Job Details avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Pti Job Details avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Pti Job Details {{ id }} ?"
+            },
+            "detail": {
+                "title": "Pti Job Details"
+            },
+            "jobName": "Job Name",
+            "displayName": "Display Name",
+            "expressionCron": "Expression Cron",
+            "priorite": "Priorite",
+            "schedulerGroupe": "Scheduler Groupe",
+            "nomGroupe": "Nom Groupe",
+            "dateDerniereExecution": "Date Derniere Execution",
+            "dateProchaineExecution": "Date Prochaine Execution",
+            "jobKey": "Job Key",
+            "erreurExecution": "Erreur Execution",
+            "estActif": "Est Actif",
+            "estEnExecution": "Est En Execution",
+            "fournisseurService": "Fournisseur Service",
+            "histExecutionJob": "Hist Execution Job"
+        }
+    }
+}

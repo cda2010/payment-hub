@@ -1,0 +1,60 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myServiceLabel">Create or edit a Service</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.service.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.service.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_codeService">Code Service</label>
+            <input type="text" class="form-control" name="codeService" id="field_codeService"
+                    ng-model="vm.service.codeService"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_nomService">Nom Service</label>
+            <input type="text" class="form-control" name="nomService" id="field_nomService"
+                    ng-model="vm.service.nomService"
+                    />
+        </div>
+
+        <div class="form-group">
+            <label for="field_fournisseurService">Fournisseur Service</label>
+            <select class="form-control" id="field_fournisseurService" name="fournisseurService" ng-model="vm.service.fournisseurService" ng-options="fournisseurService as fournisseurService.id for fournisseurService in vm.fournisseurservices track by fournisseurService.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_interfaceUtilisateur">Interface Utilisateur</label>
+            <select class="form-control" id="field_interfaceUtilisateur" name="interfaceUtilisateur" ng-model="vm.service.interfaceUtilisateur" ng-options="interfaceUtilisateur as interfaceUtilisateur.id for interfaceUtilisateur in vm.interfaceutilisateurs track by interfaceUtilisateur.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_utilise">Utilise</label>
+            <select class="form-control" id="field_utilise" multiple name="utilise" ng-model="vm.service.utilises" ng-options="methode as methode.id for methode in vm.methodes track by methode.id"></select>
+        </div>
+        <div class="form-group">
+            <label for="field_typeService">Type Service</label>
+            <select class="form-control" id="field_typeService" name="typeService" ng-model="vm.service.typeService" ng-options="typeService as typeService.id for typeService in vm.typeservices track by typeService.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

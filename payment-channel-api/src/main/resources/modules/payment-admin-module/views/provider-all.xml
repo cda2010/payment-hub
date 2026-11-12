@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-view name="provider-all" title="Fournisseurs"
+             model="com.gateway.payment.configuration.domain.PaymentProvider" icon="pi pi-sitemap">
+  <view type="grid" name="provider-grid"/>
+  <view type="form" name="provider-form"/>
+</action-view>

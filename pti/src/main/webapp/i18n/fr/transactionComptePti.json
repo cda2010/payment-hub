@@ -1,0 +1,28 @@
+
+{
+    "ptiApp": {
+        "transactionComptePti" : {
+            "home": {
+                "title": "TransactionComptePtis",
+                "createLabel": "Créer un nouveau Transaction Compte Pti",
+                "createOrEditLabel": "Créer ou éditer un Transaction Compte Pti"
+            },
+            "created": "Un nouveau Transaction Compte Pti a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Transaction Compte Pti avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Transaction Compte Pti avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Transaction Compte Pti {{ id }} ?"
+            },
+            "detail": {
+                "title": "Transaction Compte Pti"
+            },
+            "type": "Type",
+            "etat": "Etat",
+            "date": "Date",
+            "montant": "Montant",
+            "soldeCourant": "Solde Courant",
+            "soldeApres": "Solde Apres",
+            "operation": "Operation"
+        }
+    }
+}

@@ -1,0 +1,21 @@
+
+
+entity TableauCumul{
+  poidsNum Integer,
+  codeRegle String,
+  temps Temps,
+  nombre Integer,
+  montant BigDecimal,
+  action Action
+}
+
+enum Action{
+    BLOQUE,
+    EN_ATTENTE
+}
+
+enum Temps{
+    JOURNALIER,
+    HEBDOMADAIRE,
+    MENSUEL
+}

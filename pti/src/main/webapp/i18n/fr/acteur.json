@@ -1,0 +1,10 @@
+{
+    "ptiApp": {
+        "Acteur" : {
+            "null": "",
+            "COMP": "COMP",
+            "ACQ": "ACQ",
+            "EM": "EM"
+        }
+    }
+}

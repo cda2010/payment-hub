@@ -1,0 +1,45 @@
+
+<div>
+    <h2><span data-translate="ptiApp.profilActeur.detail.title">Profil Acteur</span> {{vm.profilActeur.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.profilActeur.nom">Nom</span></dt>
+        <dd>
+            <span>{{vm.profilActeur.nom}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.profilActeur.description">Description</span></dt>
+        <dd>
+            <span>{{vm.profilActeur.description}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.profilActeur.tableauFrais">Tableau Frais</span></dt>
+        <dd>
+            <span ng-repeat="tableauFrais in vm.profilActeur.tableauFrais">
+                <a ui-sref="tableau-frais-detail({id: tableauFrais.id})">{{tableauFrais.id}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span data-translate="ptiApp.profilActeur.tableauCumul">Tableau Cumul</span></dt>
+        <dd>
+            <span ng-repeat="tableauCumul in vm.profilActeur.tableauCumuls">
+                <a ui-sref="tableau-cumul-detail({id: tableauCumul.id})">{{tableauCumul.id}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span data-translate="ptiApp.profilActeur.tableauRepartitionCommission">Tableau Repartition Commission</span></dt>
+        <dd>
+            <span ng-repeat="tableauRepartitionCommission in vm.profilActeur.tableauRepartitionCommissions">
+                <a ui-sref="tableau-repartition-commission-detail({id: tableauRepartitionCommission.id})">{{tableauRepartitionCommission.id}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="profil-acteur-detail.edit({id:vm.profilActeur.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

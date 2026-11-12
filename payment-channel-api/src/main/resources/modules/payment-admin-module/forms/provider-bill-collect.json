@@ -1,0 +1,48 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "select",
+        "key": "billerCode",
+        "label": "Facturier",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "SONABEL", "value": "SONABEL" },
+            { "label": "ONEA", "value": "ONEA" },
+            { "label": "CANAL+", "value": "CANAL+" },
+            { "label": "IMPOTS", "value": "IMPOTS" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "billReference",
+        "label": "N° contrat / facture",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Facturier": "Facturier",
+      "N° contrat / facture": "N° contrat / facture"
+    },
+    "en": {
+      "Facturier": "Biller",
+      "N° contrat / facture": "Contract / bill number"
+    }
+  }
+}

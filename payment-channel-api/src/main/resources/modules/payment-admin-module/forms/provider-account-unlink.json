@@ -1,0 +1,30 @@
+{
+  "gateway": { "nextAction": "FORM" },
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "phoneNumber",
+        "key": "phoneNumber",
+        "label": "Compte à détacher",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Compte à détacher": "Compte à détacher"
+    },
+    "en": {
+      "Compte à détacher": "Account to unlink"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+    "ptiApp": {
+        "ecran" : {
+            "home": {
+                "title": "Ecrans",
+                "createLabel": "Créer un nouveau Ecran",
+                "createOrEditLabel": "Créer ou éditer un Ecran"
+            },
+            "created": "Un nouveau Ecran a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Ecran avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Ecran avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Ecran {{ id }} ?"
+            },
+            "detail": {
+                "title": "Ecran"
+            },
+            "numeroOrdre": "Numero Ordre",
+            "produit": "Produit"
+        }
+    }
+}

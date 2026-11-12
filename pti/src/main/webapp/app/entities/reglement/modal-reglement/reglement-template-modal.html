@@ -1,0 +1,142 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation class="form-horizontal well">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myDeviseLabel">Reglement</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div id="simplewizard" class="wizard" data-target="#simplewizard-steps">
+                    <ul class="steps">
+                        <li data-target="#simplewizardstep1" ng-repeat="step in vm.steps"
+                            ng-class="{active: $index == vm.getCurrentStepIndex()}">
+                            <span class="step">{{$index + 1}}</span>{{step}}<span class="chevron"></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="step-content" id="simplewizard-steps">
+                    <div ng-if="vm.showOnglet('Information')" class="step-pane active"
+                         ng-class="{active: $index == vm.getCurrentStepIndex()}" id="simplewizardstep1">
+
+                        <fieldset class="mf-fieldset">
+                            <legend>Choisir l'organisation </legend>
+
+                            <div class="form-group">
+                                <label mf-required class="control-label col-sm-4" for="field_fse">Titre</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="Titre" name="Titre"
+                                           ng-model="vm.titre"  />
+                                </div>
+
+     </div>
+
+                                <div class="form-group">
+                                    <label mf-required class="control-label col-sm-4" for="field_fse">FSE propriétaire</label>
+                                    <div class="col-sm-6">
+                                        <select required name="type" id="field_fse"  class="form-control"
+                                                ng-model="vm.appro.pereUoId"
+                                                ng-options="FSE.id as FSE.libelleUniteOrganisation for FSE in vm.FSEs"
+                                                >
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" for="field_typeUoActeur">Critère de recherche</label>
+                                    <div class="col-sm-6">
+                                        <select required class="form-control input-xs" id="critere" name="critere" ng-click="vm.selectTypeRech()" ng-model="vm.typeRecherche" >
+                                            <option value="">Choisir</option>
+                                            <option value="typeActeur">Par type acteur</option>
+                                            <option value="Service"> Par Profil</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-if="vm.selectedTypeAc">
+                                    <label class="control-label col-sm-4" for="field_typeUoActeur">Type acteur</label>
+                                    <div class="col-sm-6">
+                                        <select required name="type" id="field_typeUoActeur"  class="form-control" ng-click="vm.agenceFetch()"
+                                                ng-model="vm.appro.typeUO"
+                                                ng-options="typeUniteOrganisation.libelleTypeUO as typeUniteOrganisation.libelleTypeUO for typeUniteOrganisation in vm.typeuniteorganisations"
+                                                >
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                    <!--                                <div class="col-sm-2">-->
+                                    <!--                                    <button ng-disabled="vm.appro.pereUoId  &&  vm.appro.typeUO==null  " class="btn btn-primary mt5" ng-click="vm.agenceFetch()">-->
+                                    <!--                                        <span class="glyphicon glyphicon-search" >chercher</span></button>-->
+                                    <!--                                </div>-->
+                                </div>
+                                <div class="form-group" ng-if="vm.selectedTypeProf">
+                                    <label class="control-label col-sm-4" for="field_typeUoActeur">Type Service</label>
+                                    <div class="col-sm-6">
+                                        <select required class="form-control "  id="field_serviceProfile" ng-click="vm.uniteOrgFetch()"
+                                                name="seviceProfile"
+                                                ng-model="vm.serviceProfilId"
+                                                ng-options="seviceProfile.id as seviceProfile.nom for seviceProfile in vm.seviceProfiles"
+                                                >
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group"  >
+                                    <label mf-required class="control-label col-sm-4" for="field_agence">Agence</label>
+                                    <div class="col-sm-6">
+                                        <select disabled required class="form-control" id="field_agence" multiple name="agence" ng-model="vm.agenceId"
+                                                ng-options="agents for agents in vm.agents">
+                                        </select>
+                                    </div>
+                                    <i  title="Sélectionnez les organisations" class="btn btn-primary btn-xs"
+                                        j-select2-dialog
+                                        j-multiple="true"
+                                        j-model="vm.agenceIds"
+                                        j-list="vm.agenceList"
+                                        j-columns='vm.organisationColums'
+                                        j-event-name="onLoadRoles"
+                                        >Choisir...</i>
+                                </div>
+                        </fieldset>
+                    </div>
+                    <div class="step-pane active" ng-class="{active: $index == vm.getCurrentStepIndex()}"
+                         id="simplewizardstep2" ng-if="vm.showOnglet('Confirmation')">
+                        <div class="form-group" ng-if="!vm.isViewing">
+                            <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_codeOperation">Code validation</label>
+                            <div class="col-xs-6 col-sm-6 col-lg-6">
+                                <input autocomplete="off"  required type="text" class="form-control input-xs" name="codeOperation" id="field_codeOperation" ng-model="vm.token" />
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_agents">
+                                Récapitulatif des Unités d'organisations</label>
+                            <div class="col-xs-6 col-sm-6 col-lg-6">
+                                <select    class="form-control input-xs" id="field_agents" multiple name="numVersement"
+                                           ng-model="vm.listeAgents"
+                                           ng-options="list for list in vm.verifyListAgence2">
+                                </select> </div>
+                            <!--                            <button type="button" ng-click="vm.getListEvenement(vm.operation.montantOp)" class="btn-info">-->
+                            <!--                                <span class="glyphicon glyphicon-search"></span>-->
+                            <!--                            </button>-->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="footer actions actions-footer" id="simplewizard-actions">
+        <div class="btn-group">
+            <button ng-if="!vm.isViewing" ng-click="vm.clear()" type="button" class="btn btn-default btn-sm btn-prev"
+                    ng-click="vm.precedent()">Annuler</button>
+            <button ng-if="vm.isViewing" ng-click="vm.clear()" type="button" class="btn btn-default btn-sm btn-prev"
+                    ng-click="vm.precedent()">Fermer</button>
+            <button ng-click="vm.decrementStep()" ng-show="vm.hasPreviousStep()" type="button"
+                    class="btn btn-default btn-sm btn-prev" ng-click="vm.precedent()">Precedent</button>
+            <button ng-if="vm.hasNextStep()" ng-click=" vm.incrementStep()" type="button"
+                    class="btn btn-primary btn-sm btn-next" ng-click="vm.suivant()"
+                    ng-disabled="editForm.$invalid || vm.isSaving" data-last="Finish">Suivant</button>
+            <button ng-if="!vm.hasNextStep() && !vm.isViewing" type="submit" class="btn btn-success btn-sm "
+                    ng-click="vm.suivant()" ng-disabled="(editForm.$invalid || vm.isSaving)" data-last="Finish"><span
+                    class="glyphicon glyphicon-save"></span>Valider</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,69 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "hidden",
+        "key": "providerCode",
+        "defaultValue": "WESTERN_UNION",
+        "input": true
+      },
+      {
+        "type": "select",
+        "key": "destinationCountry",
+        "label": "Pays de destination (Western Union)",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "Sénégal", "value": "SN" },
+            { "label": "Côte d'Ivoire", "value": "CI" },
+            { "label": "Mali", "value": "ML" },
+            { "label": "France", "value": "FR" },
+            { "label": "États-Unis", "value": "US" },
+            { "label": "Royaume-Uni", "value": "GB" },
+            { "label": "Espagne", "value": "ES" },
+            { "label": "Italie", "value": "IT" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "select",
+        "key": "receiveCurrency",
+        "label": "Devise de réception",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "XOF", "value": "XOF" },
+            { "label": "EUR", "value": "EUR" },
+            { "label": "USD", "value": "USD" },
+            { "label": "GBP", "value": "GBP" }
+          ]
+        },
+        "defaultValue": "XOF",
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Pays de destination (Western Union)": "Pays de destination (Western Union)",
+      "Devise de réception": "Devise de réception"
+    },
+    "en": {
+      "Pays de destination (Western Union)": "Destination country (Western Union)",
+      "Devise de réception": "Receive currency"
+    }
+  }
+}

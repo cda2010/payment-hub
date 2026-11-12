@@ -1,0 +1,21 @@
+{
+    "ptiApp": {
+        "groupRepartition" : {
+            "home": {
+                "title": "GroupRepartitions",
+                "createLabel": "Créer un nouveau Group Repartition",
+                "createOrEditLabel": "Créer ou éditer un Group Repartition"
+            },
+            "created": "Un nouveau Group Repartition a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Group Repartition avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Group Repartition avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Group Repartition {{ id }} ?"
+            },
+            "detail": {
+                "title": "Group Repartition"
+            },
+            "libelleGroup": "Libelle Group"
+        }
+    }
+}

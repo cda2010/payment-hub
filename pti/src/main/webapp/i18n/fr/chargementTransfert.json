@@ -1,0 +1,25 @@
+{
+    "ptiApp": {
+        "chargementTransfert": {
+            "home": {
+                "title": "ChargementTransferts",
+                "createLabel": "Créer un nouveau Chargement Transfert",
+                "createOrEditLabel": "Créer ou éditer un Chargement Transfert"
+            },
+            "created": "Un nouveau Chargement Transfert a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Chargement Transfert avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Chargement Transfert avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Chargement Transfert {{ id }} ?"
+            },
+            "detail": {
+                "title": "Chargement Transfert"
+            },
+            "nomFichier": "Nom Fichier",
+            "montantTotal": "Montant Total",
+                    "montantCharge": "Montant Chargé",
+                "soldeDebut": "Solde debut ",
+             "soldeFin": "Solde fin "
+        }
+    }
+}

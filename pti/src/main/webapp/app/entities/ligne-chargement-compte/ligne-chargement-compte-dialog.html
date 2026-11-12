@@ -1,0 +1,87 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myLigneChargementCompteLabel" data-translate="ptiApp.ligneChargementCompte.home.createOrEditLabel">Create or edit a Ligne Chargement Compte</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.ligneChargementCompte.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.ligneChargementCompte.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.ligneChargementCompte.nom" for="field_nom">Nom</label>
+            <input type="text" class="form-control" name="nom" id="field_nom"
+                    ng-model="vm.ligneChargementCompte.nom"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.ligneChargementCompte.prenom" for="field_prenom">Prenom</label>
+            <input type="text" class="form-control" name="prenom" id="field_prenom"
+                    ng-model="vm.ligneChargementCompte.prenom"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.ligneChargementCompte.telephone" for="field_telephone">Telephone</label>
+            <input type="text" class="form-control" name="telephone" id="field_telephone"
+                    ng-model="vm.ligneChargementCompte.telephone"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.ligneChargementCompte.dateNaissance" for="field_dateNaissance">Date Naissance</label>
+            <input type="text" class="form-control" name="dateNaissance" id="field_dateNaissance"
+                    ng-model="vm.ligneChargementCompte.dateNaissance"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.ligneChargementCompte.lieuNaissance" for="field_lieuNaissance">Lieu Naissance</label>
+            <input type="text" class="form-control" name="lieuNaissance" id="field_lieuNaissance"
+                    ng-model="vm.ligneChargementCompte.lieuNaissance"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.ligneChargementCompte.nomMere" for="field_nomMere">Nom Mere</label>
+            <input type="text" class="form-control" name="nomMere" id="field_nomMere"
+                    ng-model="vm.ligneChargementCompte.nomMere"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.ligneChargementCompte.personnePrevenir" for="field_personnePrevenir">Personne Prevenir</label>
+            <input type="text" class="form-control" name="personnePrevenir" id="field_personnePrevenir"
+                    ng-model="vm.ligneChargementCompte.personnePrevenir"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.ligneChargementCompte.email" for="field_email">Email</label>
+            <input type="text" class="form-control" name="email" id="field_email"
+                    ng-model="vm.ligneChargementCompte.email"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.ligneChargementCompte.adresse" for="field_adresse">Adresse</label>
+            <input type="text" class="form-control" name="adresse" id="field_adresse"
+                    ng-model="vm.ligneChargementCompte.adresse"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.ligneChargementCompte.typePersonne" for="field_typePersonne">Type Personne</label>
+            <select class="form-control" name="typePersonne" ng-model="vm.ligneChargementCompte.typePersonne" id="field_typePersonne">
+                <option value="PHYSIQUE" data-translate="ptiApp.TypeLignePersonne.PHYSIQUE">PHYSIQUE</option>
+                <option value="MORALE" data-translate="ptiApp.TypeLignePersonne.MORALE">MORALE</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

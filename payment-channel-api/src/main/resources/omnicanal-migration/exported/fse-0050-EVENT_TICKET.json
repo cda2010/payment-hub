@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0050",
+  "providerCodeHint": "FSE_0050",
+  "providerLibelle": "EVENT & TICKET",
+  "participantKindHint": "FACTURIER",
+  "fseStatut": "AUTRE",
+  "groupCode": "ENF",
+  "codeExterne": "0",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "API EVENT & TICKET",
+    "codeApi": "0047",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "NONE"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "GETINFOS",
+      "codeMethode": "004701",
+      "operationCode": "GETINFOS",
+      "nom": "api/event/getInfo",
+      "httpMethod": "POST",
+      "path": "api/event/getInfo",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"nombre\": \"${nombre}\", \"category\": \"${category}\", \"seance\": \"${seance}\"}",
+      "parameters": [
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "category",
+          "nomExterne": "category",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "seance",
+          "nomExterne": "seance",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "SETTLEMENT",
+      "codeMethode": "004702",
+      "operationCode": "SETTLEMENT",
+      "nom": "api/event/payer",
+      "httpMethod": "POST",
+      "path": "api/event/payer",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"telephone\": \"${telephone}\", \"nombre\": \"${nombre}\", \"category\": \"${category}\", \"seance\": \"${seance}\"}",
+      "parameters": [
+        {
+          "code": "telephone",
+          "nomExterne": "telephone",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "category",
+          "nomExterne": "category",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "seance",
+          "nomExterne": "seance",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "CONSULTATIONFACTURE",
+      "codeMethode": "004703",
+      "operationCode": "CONSULTATIONFACTURE",
+      "nom": "api/event/getTickets",
+      "httpMethod": "POST",
+      "path": "api/event/getTickets",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"telephone\": \"${telephone}\", \"seance\": \"${seance}\"}",
+      "parameters": [
+        {
+          "code": "telephone",
+          "nomExterne": "telephone",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "seance",
+          "nomExterne": "seance",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "GETMONTANT",
+      "codeMethode": "004704",
+      "operationCode": "GETMONTANT",
+      "nom": "api/event/getmontant",
+      "httpMethod": "POST",
+      "path": "api/event/getmontant",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"nombre\": \"${nombre}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "VERIFREGLEFACTURIER",
+      "codeMethode": "004705",
+      "operationCode": "VERIFREGLEFACTURIER",
+      "nom": "api/event/getregle",
+      "httpMethod": "POST",
+      "path": "api/event/getregle",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"reference\": \"${reference}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+{
+  "info": {
+    "_postman_id": "c4e8a1b2-7f30-4d6a-9c11-account-transfer-coris",
+    "name": "Payment-2 ACCOUNT_TRANSFER Coris",
+    "description": "Transfert Coris Money → Coris Money exécuté le 2026-11-07 (PAY-20261107-000003-BBBA79).\n\nOrdre réel du parcours : destination → montant → compte source → récap.\n\n1. Login admin\n2. POST /api/v1/gateway/account-transfer\n3. Destination CORIS_MONEY 0011100119801590311 / 22673061292\n4. Montant 1000 XOF\n5. Source CORIS_MONEY 0011000003090\n6. Confirmation du récap",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "accessToken", "value": "" },
+    { "key": "paymentId", "value": "" },
+    { "key": "sourceRail", "value": "CORIS_MONEY" },
+    { "key": "sourceAccount", "value": "0011000003090" },
+    { "key": "destRail", "value": "CORIS_MONEY" },
+    { "key": "destAccount", "value": "0011100119801590311" },
+    { "key": "destPhone", "value": "22673061292" },
+    { "key": "amount", "value": "1000" },
+    { "key": "currency", "value": "XOF" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{accessToken}}", "type": "string" }
+    ]
+  },
+  "item": [
+    {
+      "name": "1. Login (admin)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Login 200', () => pm.response.to.have.status(200));",
+              "const j = pm.response.json();",
+              "pm.expect(j.accessToken, 'accessToken').to.be.a('string').and.not.empty;",
+              "pm.collectionVariables.set('accessToken', j.accessToken);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Admin@123\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/auth/login"
+      }
+    },
+    {
+      "name": "2. Start ACCOUNT_TRANSFER",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Created 201', () => pm.response.to.have.status(201));",
+              "const j = pm.response.json();",
+              "const pid = j.meta && j.meta.paymentId;",
+              "pm.expect(pid, 'paymentId').to.be.a('string').and.not.empty;",
+              "pm.collectionVariables.set('paymentId', pid);",
+              "pm.test('Écran destination', () => {",
+              "  pm.expect(j.type).to.eql('FORM');",
+              "  pm.expect(j.formKey).to.eql('account-transfer-destination');",
+              "  pm.expect(j.meta.currentStep).to.eql('CAPTURE_DESTINATION');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"accessChannel\": \"MOBILE\",\n  \"channel\": \"MOBILE\",\n  \"currency\": \"{{currency}}\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/gateway/account-transfer"
+      }
+    },
+    {
+      "name": "3. Destination",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Destination acceptée', () => pm.response.to.have.status(200));",
+              "const j = pm.response.json();",
+              "pm.test('Écran montant', () => {",
+              "  pm.expect(j.type).to.eql('FORM');",
+              "  pm.expect(j.formKey).to.eql('account-transfer-amount');",
+              "  pm.expect(j.meta.currentStep).to.eql('CAPTURE_AMOUNT');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"destRail\": \"{{destRail}}\",\n    \"destinationProvider\": \"{{destRail}}\",\n    \"destPhone\": \"{{destPhone}}\",\n    \"destAccount\": \"{{destAccount}}\"\n  }\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+      }
+    },
+    {
+      "name": "4. Montant",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Montant accepté', () => pm.response.to.have.status(200));",
+              "const j = pm.response.json();",
+              "pm.test('Écran source', () => {",
+              "  pm.expect(j.type).to.eql('FORM');",
+              "  pm.expect(j.formKey).to.eql('account-transfer-source');",
+              "  pm.expect(j.meta.currentStep).to.eql('SELECT_SOURCE_ACCOUNT');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"amount\": {{amount}},\n    \"currency\": \"{{currency}}\"\n  }\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+      }
+    },
+    {
+      "name": "5. Compte source",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Source acceptée', () => pm.response.to.have.status(200));",
+              "const j = pm.response.json();",
+              "pm.test('Récap', () => {",
+              "  pm.expect(j.type).to.eql('FORM');",
+              "  pm.expect(j.formKey).to.eql('product-recap');",
+              "  pm.expect(j.meta.currentStep).to.eql('CONFIRM');",
+              "  pm.expect(j.data.amount).to.eql(1000);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"sourceRail\": \"{{sourceRail}}\",\n    \"sourceAccount\": \"{{sourceAccount}}\"\n  }\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+      }
+    },
+    {
+      "name": "6. Confirmer le récap",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Confirmation 200', () => pm.response.to.have.status(200));",
+              "const j = pm.response.json();",
+              "pm.test('Paiement réussi', () => {",
+              "  pm.expect(j.type).to.eql('SUCCESS');",
+              "  pm.expect(j.meta.status).to.eql('SUCCESS');",
+              "  pm.expect(j.meta.currentStep).to.eql('NOTIFY');",
+              "  pm.expect(j.meta.paymentId).to.eql(pm.collectionVariables.get('paymentId'));",
+              "});",
+              "console.log('paymentId=', j.meta && j.meta.paymentId, 'message=', j.message);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"confirmRecap\": true,\n    \"confirmTransfer\": true\n  }\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+      }
+    }
+  ]
+}

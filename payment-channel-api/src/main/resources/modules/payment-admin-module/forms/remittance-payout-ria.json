@@ -1,0 +1,62 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "hidden",
+        "key": "providerCode",
+        "defaultValue": "RIA",
+        "input": true
+      },
+      {
+        "type": "select",
+        "key": "payoutMethod",
+        "label": "Mode de réception RIA",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "Retrait cash (agence RIA)", "value": "CASH_PICKUP" },
+            { "label": "Compte bancaire", "value": "BANK_DEPOSIT" },
+            { "label": "Wallet mobile", "value": "WALLET" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "payoutAccount",
+        "label": "Compte / MSISDN (si bank ou wallet)",
+        "input": true,
+        "customConditional": "show = data.payoutMethod === 'BANK_DEPOSIT' || data.payoutMethod === 'WALLET'"
+      },
+      {
+        "type": "textfield",
+        "key": "riaLocationCode",
+        "label": "Code agence RIA (optionnel)",
+        "input": true,
+        "customConditional": "show = data.payoutMethod === 'CASH_PICKUP'"
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Mode de réception RIA": "Mode de réception RIA",
+      "Compte / MSISDN (si bank ou wallet)": "Compte / MSISDN (si bank ou wallet)",
+      "Code agence RIA (optionnel)": "Code agence RIA (optionnel)"
+    },
+    "en": {
+      "Mode de réception RIA": "RIA payout method",
+      "Compte / MSISDN (si bank ou wallet)": "Account / MSISDN (bank or wallet)",
+      "Code agence RIA (optionnel)": "RIA agency code (optional)"
+    }
+  }
+}

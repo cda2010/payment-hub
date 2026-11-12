@@ -1,0 +1,25 @@
+{
+    "ptiApp": {
+        "userControl" : {
+            "home": {
+                "title": "UserControls",
+                "createLabel": "Créer un nouveau User Control",
+                "createOrEditLabel": "Créer ou éditer un User Control"
+            },
+            "created": "Un nouveau User Control a été créé avec l'identifiant {{ param }}",
+            "updated": "Le User Control avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le User Control avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le User Control {{ id }} ?"
+            },
+            "detail": {
+                "title": "User Control"
+            },
+            "action": "Action",
+            "codePays": "Code Pays",
+            "login": "Login",
+            "password": "Password",
+            "typeActeur": "Type Acteur"
+        }
+    }
+}

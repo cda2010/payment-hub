@@ -1,0 +1,43 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "intro",
+        "tag": "p",
+        "content": "Choisissez l'opérateur de transfert d'argent."
+      },
+      {
+        "type": "select",
+        "key": "providerCode",
+        "label": "Opérateur remittance",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "RIA", "value": "RIA" },
+            { "label": "Western Union", "value": "WESTERN_UNION" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Opérateur remittance": "Opérateur remittance"
+    },
+    "en": {
+      "Opérateur remittance": "Remittance provider"
+    }
+  }
+}

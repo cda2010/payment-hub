@@ -1,0 +1,148 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0023",
+  "providerCodeHint": "FSE_0023",
+  "providerLibelle": "Woyofal",
+  "participantKindHint": "FACTURIER",
+  "fseStatut": "AUTRE",
+  "groupCode": "ENF",
+  "codeExterne": "0",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "Woyolfal",
+    "codeApi": "0020",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "OAUTH2_CLIENT_CREDENTIALS",
+    "tokenUrl": "http://172.27.4.186:7930/oauth/token",
+    "grantType": "client_credentials"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "GETINFOS",
+      "codeMethode": "002001",
+      "operationCode": "GETINFOS",
+      "nom": "/api/hexpay/v1/chargeWoyofal",
+      "httpMethod": "POST",
+      "path": "api/hexpay/v1/chargeWoyofal",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"custId\": \"${custId}\", \"meterNo\": \"${meterNo}\", \"utility\": \"${utility}\"}",
+      "parameters": [
+        {
+          "code": "custId",
+          "nomExterne": "custId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "meterNo",
+          "nomExterne": "meterNo",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "utility",
+          "nomExterne": "utility",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "GETMONTANT",
+      "codeMethode": "002002",
+      "operationCode": "GETMONTANT",
+      "nom": "/api/hexpay/v1/getmontant",
+      "httpMethod": "POST",
+      "path": "api/hexpay/v1/getmontant",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"nombre\": \"${nombre}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "SETTLEMENT",
+      "codeMethode": "002003",
+      "operationCode": "SETTLEMENT",
+      "nom": "/api/hexpay/v1/payPower",
+      "httpMethod": "POST",
+      "path": "api/hexpay/v1/payPower",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"meterNo\": \"${meterNo}\", \"utility\": \"${utility}\", \"montant\": \"${montant}\", \"sessionId\": \"${sessionId}\", \"custId\": \"${custId}\"}",
+      "parameters": [
+        {
+          "code": "meterNo",
+          "nomExterne": "meterNo",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "utility",
+          "nomExterne": "utility",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "sessionId",
+          "nomExterne": "sessionId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "custId",
+          "nomExterne": "custId",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "VERIFREGLEFACTURIER",
+      "codeMethode": "002004",
+      "operationCode": "VERIFREGLEFACTURIER",
+      "nom": "/api/hexpay/v1/getregle",
+      "httpMethod": "POST",
+      "path": "api/hexpay/v1/getregle",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"reference\": \"${reference}\", \"montant\": \"${montant}\"}",
+      "parameters": [
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

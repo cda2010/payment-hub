@@ -1,0 +1,27 @@
+
+{
+    "ptiApp": {
+        "commission" : {
+            "home": {
+                "title": "Commissions",
+                "createLabel": "Créer un nouveau Commission",
+                "createOrEditLabel": "Créer ou éditer un Commission"
+            },
+            "created": "Un nouveau Commission a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Commission avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Commission avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Commission {{ id }} ?"
+            },
+            "detail": {
+                "title": "Commission"
+            },
+            "montant": "Montant",
+            "estPaye": "Est Paye",
+            "datePaiement": "Date Paiement",
+            "dateEnregistrement": "Date Enregistrement",
+            "operation": "Operation",
+            "organisation": "Organisation"
+        }
+    }
+}

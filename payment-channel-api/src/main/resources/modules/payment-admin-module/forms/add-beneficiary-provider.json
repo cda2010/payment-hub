@@ -1,0 +1,93 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "intro",
+        "tag": "p",
+        "content": "Choisissez le réseau puis saisissez l'identifiant. Nous rechercherons le titulaire chez le partenaire."
+      },
+      {
+        "type": "select",
+        "key": "destinationProvider",
+        "label": "Réseau",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "Coris Money", "value": "CORIS_MONEY" },
+            { "label": "Orange Money", "value": "ORANGE_MONEY" },
+            { "label": "Wave", "value": "WAVE" },
+            { "label": "Coris Bank", "value": "CORIS_BANK" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "phoneNumber",
+        "key": "phoneNumber",
+        "label": "Numéro de téléphone",
+        "input": true,
+        "placeholder": "22670000000",
+        "validate": { "required": true },
+        "properties": {
+          "rfShowWhen": {
+            "field": "destinationProvider",
+            "in": ["CORIS_MONEY", "ORANGE_MONEY", "WAVE"]
+          }
+        }
+      },
+      {
+        "type": "textfield",
+        "key": "agence",
+        "label": "Code agence",
+        "input": true,
+        "placeholder": "ex. 01001",
+        "validate": { "required": true },
+        "properties": {
+          "rfShowWhen": {
+            "field": "destinationProvider",
+            "equals": "CORIS_BANK"
+          }
+        }
+      },
+      {
+        "type": "textfield",
+        "key": "numeroCompte",
+        "label": "Numéro de compte",
+        "input": true,
+        "placeholder": "N° de compte",
+        "validate": { "required": true },
+        "properties": {
+          "rfShowWhen": {
+            "field": "destinationProvider",
+            "equals": "CORIS_BANK"
+          }
+        }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Rechercher",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Réseau": "Réseau",
+      "Numéro de téléphone": "Numéro de téléphone",
+      "Code agence": "Code agence",
+      "Numéro de compte": "Numéro de compte"
+    },
+    "en": {
+      "Réseau": "Network",
+      "Numéro de téléphone": "Phone number",
+      "Code agence": "Branch code",
+      "Numéro de compte": "Account number"
+    }
+  }
+}

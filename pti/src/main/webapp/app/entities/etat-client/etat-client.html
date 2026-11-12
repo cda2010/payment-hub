@@ -1,0 +1,66 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+    <div class="col-sm-6 col-sm-offset-2">
+        <div class="header bg-blue text-center"><B style="color: white">Etat du nombre de transaction d'un client</B></div>
+        <div class="modal-body ">
+            <form name="editForm" role="form" novalidate>
+            <div class="form-group">
+                <label class="control-label col-sm-4" mf-required>Numero:</label>
+                <div class=" col-sm-7">
+                    <input class="form-control" type="text" placeholder="Téléphone du client" name="idClient"
+                           ng-model="vm.item.idClient" required
+                    />
+                    <br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mf-required="" class="control-label col-sm-4" for="dateOperation">date Debut:</label>
+                <div class=" col-sm-7">
+                    <input required autocomplete="off" id="dateOperation" show-button-bar="false"
+                           placeholder=" Date debut"  popup-placement="top"
+                           is-open="vm.datePickerOpenStatus.dateOperation" uib-datepicker-popup="dd/MM/yyyy"
+                           ng-focus="vm.openCalendar('dateOperation')"  class="form-control"
+                           ng-model="vm.item.dateDebut" name="dateOperation"/>
+                    <br>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="dateFin" mf-required>date Fin:</label>
+                <div class=" col-sm-7">
+                    <input required autocomplete="off" id="dateFin" show-button-bar="false"
+                           placeholder=" Date fin" popup-placement="top"
+                           is-open="vm.datePickerOpenStatus.dateFin" uib-datepicker-popup="dd/MM/yyyy"
+                           ng-focus="vm.openCalendar('dateFin')"  class="form-control"
+                           ng-model="vm.item.dateFin" name="dateFin"/>
+                    <br>
+                </div>
+            </div>
+            <div class="form-group" >
+                <label class="control-label col-sm-4" for="filed_format">Format</label>
+                <div class="col-sm-7">
+                    <select   id="filed_format" name="format" ng-model="vm.format" >
+                        <option value="">Format</option>
+                        <option value="PDF">PDF</option>
+                        <option value="XLSX">XLSX</option>
+                        <option value="CSV">CSV</option>
+                    </select>
+                    <br>
+                </div>
+            </div>
+
+            <button class="btn-primary btn-sm" type="button" ng-disabled="editForm.$invalid || vm.isSaving" ng-click="vm.genererRapport()" >
+                <span class="glyphicon glyphicon-save"></span> <span>Génerer Rapport</span></button>
+            <button type="button" class=" btn-default btn-sm" data-dismiss="modal" ng-click="vm.clear()">
+                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Annuler</span>
+            </button>
+            </form>
+
+        </div>
+    </div>
+

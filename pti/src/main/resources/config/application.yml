@@ -1,0 +1,222 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration will be overridden by the Spring profile you use,
+# for example application-dev.yml if you use the "dev" profile.
+#
+# More information on profiles: https://jhipster.github.io/profiles/
+# More information on configuration properties: https://jhipster.github.io/common-application-properties/
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+logging:
+  level:
+    ROOT: INFO
+    com.m2i.pti: INFO
+   # org.apache.http.impl.conn.PoolingHttpClientConnectionManager: TRACE
+   # org.springframework.transaction.interceptor: TRACE
+    com.zaxxer.hikari: INFO
+    
+   # io.undertow: TRACE
+management:
+  security:
+    roles: ADMIN
+  context-path: /management
+  health:
+    mail:
+      enabled: false #When using the MailService, configure an SMTP server and set this to true
+spring:
+  application:
+    name: pti
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/payment
+  main:
+    lazy-initialization: true  
+  zipkin:
+      base-url: http://localhost:9411
+  profiles:
+    # The commented value for `active` can be replaced with valid Spring profiles to load.
+    # Otherwise, it will be filevled in by maven when building the WAR file
+    # Either way, it can be overridden by `--spring.profiles.active` value passed in the commandline or `-Dspring.profiles.active` set in `JAVA_OPTS`
+ 
+    active: dev
+  cache:
+    jcache:
+       provider: org.ehcache.jsr107.EhcacheCachingProvider
+  jackson:
+    serialization.write_dates_as_timestamps: false
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+  batch:
+    job:
+      enabled: false
+  messages:
+    basename: i18n/messages
+  mvc:
+    favicon:
+      enabled: false
+  thymeleaf:
+    mode: XHTML
+  http:
+        multipart:
+                  max-file-size: 128MB
+                  max-request-size: 128MB
+                  enabled: true
+  kafka:
+    consumer:
+      bootstrapAddress: localhost:9092
+    producer:
+      bootstrapAddress: localhost:9092
+security:
+  basic:
+    enabled: false
+  oauth2:
+    resource:
+      filter-order: 3
+    client:
+      clientId: foo
+      clientSecret: bar
+      accessTokenUri: http://localhost:8080/sso-server/oauth/token
+      userAuthorizationUri: http://localhost:8080/sso-server/oauth/authorize
+server:
+  session:
+    cookie:
+      http-only: true
+  servlet:
+    session:
+       timeout: 120s     
+info:
+  project:
+    version: #project.version#
+jasypt:
+  encryptor:
+    bean: encryptorBean
+    password: ${JASYPT_ENCRYPTOR_PASSWORD:} #La clÃ© de cryptage fournie lors de la gÃ©nÃ©ration de clÃ©
+    property:
+      prefix: "ENC@["
+      suffix: "]"
+
+
+connexionBack:
+  login: 70531413
+  password: 12345
+  url: http://10.214.1.70:8080 #http://10.214.1.70:8080  #http://localhost:9002
+
+gateway:
+   url: http://172.27.4.29:7982
+   code: 0008
+connexionAlloxMachine:
+  url: http://172.27.4.217:8081
+
+   #url: http://localhost:8080
+applicationID:
+  id: CORISMONEY
+connexionOmnicanal:
+  #login: omnicanal
+  #password: system@M2iOc       #P@55w0RdCMniCqnal
+  login: admin
+  password: omnic@n@l19
+  url: http://localhost:5981
+
+ # url: https://10.88.201.1:5980
+  #url: https://10.214.1.73:5980
+ # url: https://10.214.0.190:5980
+  #url: http://172.27.4.60:5980
+  #url: http://172.27.4.60:5980
+ # url: https://10.88.201.1:5980
+  #url: http://172.27.4.60:5981
+
+ # url: https://192.99.145.232:5980
+  #url: https://10.214.1.15:5981
+  #url: http://localhost:5981
+
+  #url: https://10.214.0.190:5980
+  #url: https://172.27.4.186:5980
+ # url: https://172.27.4.186:5980
+ # url: https://172.27.4.186:5980
+  #url: https://172.27.4.186:5980
+ # url: https://172.27.4.186:5980
+#  url: https://172.27.4.186:5980
+  #url: https://172.27.4.186:5980
+
+  #url: https://10.88.201.1:5980
+ # url: https://172.27.4.60:5980
+  #url: https://10.214.0.190:5980
+  #url: https://172.27.4.60:5980
+  #url: https://172.27.4.186:5980
+
+ # url: https://172.27.4.60:5980
+  #url: https://172.27.4.186:5980
+  #url: https://10.214.0.190:5980
+  clientId: Omnicanalapp
+  secretWord: $2a$10$bXAyslP4KRJzwraJCLccpOCWd583.f/U2TGPV6a9WP50FcNNrbaF.
+
+
+minio:
+  endpoint: http://172.27.4.38:9000
+  getURL:   https://172.27.4.186/minio
+  accessKey: minioadmin
+  secretKey: minioadmin
+  bucket: corismoney
+#secretWord: my-secret-token-to-change-in-production
+# ===================================================================
+# JHipster specific properties
+#
+# Full reference is available at: https://jhipster.github.io/common-application-properties/
+# ===================================================================
+
+
+
+jhipster:
+  async:
+    core-pool-size: 5
+    max-pool-size: 10000
+    queue-capacity: 10000
+  # By default CORS is disabled. Uncomment to enable.
+  cors:
+    allowed-origins: "*"
+    allowed-methods: GET, PUT, POST, DELETE, OPTIONS
+    allowed-headers: "*"
+    exposed-headers:
+    allow-credentials: true
+    max-age: 1800
+ # mail:
+  #  from: pti@localhost
+  swagger:
+    default-include-pattern: /api/.*
+    title: pti API
+    description: pti API documentation
+    version: 0.0.1
+    terms-of-service-url:
+    contact-name:
+    contact-url:
+    contact-email:
+    license:
+    license-url:
+  ribbon:
+    display-on-active-profiles: dev
+  
+
+
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the JHipsterProperties above
+#
+# More documentation is available at:
+# https://jhipster.github.io/common-application-properties/
+# ===================================================================
+
+application:

@@ -1,0 +1,33 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "fournisseurService",
+            "otherEntityName": "fournisseurService",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "codeParametre",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "nomParametre",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "valeur",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20171006180942",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "autre_parametre",
+    "pagination": "no"
+}

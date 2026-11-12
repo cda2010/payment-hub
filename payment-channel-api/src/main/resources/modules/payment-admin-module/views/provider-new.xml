@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-view name="provider-new" title="Nouveau fournisseur"
+             model="com.gateway.payment.configuration.domain.PaymentProvider" icon="pi pi-plus">
+  <view type="form" name="provider-form"/>
+</action-view>

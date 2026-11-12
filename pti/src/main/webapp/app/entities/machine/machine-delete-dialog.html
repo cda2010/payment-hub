@@ -1,0 +1,24 @@
+<form name="deleteForm" ng-submit="vm.confirmDelete(vm.machine.id)">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;
+        </button>
+        <h4 class="modal-title" data-translate="entity.delete.title">Confirm delete operation</h4>
+    </div>
+    <div class="modal-body">
+        <div class="text-danger">
+            <span class="fa fa-warning "></span>
+            <span class="h6">Etes vous sûre de vouloir désactiver l'ordinateur de {{vm.machine.prenomDemandeur}} {{vm.machine.nomDemandeur}} ?
+                <span class="label label-danger">Il ne pourra plus se connecter avec cet ordinateur.</span></span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+            data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span>Désactiver</span>
+        </button>
+    </div>
+</form>

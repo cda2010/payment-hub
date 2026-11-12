@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_8.0.xsd">
+<grid name="provider-grid" title="Fournisseurs"
+        model="com.gateway.payment.configuration.domain.PaymentProvider"
+        edit-form="provider-form" new-action-view="provider-new"
+        rest-resource="/api/v1/providers">
+    <field name="code"/>
+    <field name="libelle"/>
+    <field name="paymentMethodType"/>
+    <field name="modeExecution"/>
+    <field name="actif"/>
+    <field name="ordreAffichage"/>
+  </grid>
+
+  <form name="provider-form" title="Fournisseur"
+        model="com.gateway.payment.configuration.domain.PaymentProvider">
+    <panel name="main" title="Identité">
+      <field name="code" required="true" colSpan="4"/>
+      <field name="libelle" required="true" colSpan="8"/>
+      <field name="description" colSpan="12" widget="Text"/>
+      <field name="logoUrl" colSpan="12"/>
+    </panel>
+    <panel name="exec" title="Exécution">
+      <field name="paymentMethodType" required="true" colSpan="4"/>
+      <field name="modeExecution" required="true" colSpan="4"/>
+      <field name="actif" colSpan="2"/>
+      <field name="ordreAffichage" colSpan="2"/>
+    </panel>
+  </form>
+
+</object-views>

@@ -1,0 +1,42 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "fournisseurService",
+            "otherEntityName": "fournisseurService",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "compose",
+            "otherEntityName": "serviceApi",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipName": "typeTraitement",
+            "otherEntityName": "typeTraitement",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "codeTraitement",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "natureTraitement",
+            "fieldType": "NatureTraitement",
+            "fieldValues": "COLLECTION,TRANSACTION,SEQUENCE"
+        }
+    ],
+    "changelogDate": "20170404133237",
+    "javadoc": "Task Traitement.\n@author The JHipster team.",
+    "entityTableName": "traitement",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

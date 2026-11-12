@@ -1,0 +1,55 @@
+
+<div>
+    <h2><span data-translate="ptiApp.tableauFrais.detail.title">Tableau Frais</span> {{vm.tableauFrais.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.tableauFrais.poidsNum">Poids Num</span></dt>
+        <dd>
+            <span>{{vm.tableauFrais.poidsNum}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauFrais.typeService">Type Service</span></dt>
+        <dd>
+            <a ui-sref="type-service-detail({id:vm.tableauFrais.typeServiceId})">{{vm.tableauFrais.typeServiceLibelle}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauFrais.canal">Canal</span></dt>
+        <dd>
+            <a ui-sref="canal-detail({id:vm.tableauFrais.canalId})">{{vm.tableauFrais.canalLibelleCanal}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauFrais.typeUoEmetteur">Type Uo Emetteur</span></dt>
+        <dd>
+            <a ui-sref="type-unite-organisation-detail({id:vm.tableauFrais.typeUoEmetteurId})">{{vm.tableauFrais.typeUoEmetteurLibelleTypeUO}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauFrais.typeUoAcquereur">Type Uo Acquereur</span></dt>
+        <dd>
+            <a ui-sref="type-unite-organisation-detail({id:vm.tableauFrais.typeUoAcquereurId})">{{vm.tableauFrais.typeUoAcquereurLibelleTypeUO}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauFrais.beneficiaire">Beneficiaire</span></dt>
+        <dd>
+            <a ui-sref="client-detail({id:vm.tableauFrais.beneficiaireId})">{{vm.tableauFrais.beneficiaireCodeClient}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauFrais.emetteur">Emetteur</span></dt>
+        <dd>
+            <a ui-sref="client-detail({id:vm.tableauFrais.emetteurId})">{{vm.tableauFrais.emetteurCodeClient}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauFrais.organisationEm">Organisation Em</span></dt>
+        <dd>
+            <a ui-sref="unite-organisation-detail({id:vm.tableauFrais.organisationEmId})">{{vm.tableauFrais.organisationEmLibelleUniteOrganisation}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauFrais.organisationAcq">Organisation Acq</span></dt>
+        <dd>
+            <a ui-sref="unite-organisation-detail({id:vm.tableauFrais.organisationAcqId})">{{vm.tableauFrais.organisationAcqLibelleUniteOrganisation}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="tableau-frais-detail.edit({id:vm.tableauFrais.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

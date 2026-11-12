@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity RegleCommission.
+    -->
+    <changeSet id="20190402111646-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="type_service_id"
+                                 baseTableName="regle_commission"
+                                 constraintName="fk_regle_commission_type_service_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="type_service"/>
+
+        <addForeignKeyConstraint baseColumnNames="teneur_src_id"
+                                 baseTableName="regle_commission"
+                                 constraintName="fk_regle_commission_teneur_src_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="unite_organisation"/>
+
+        <addForeignKeyConstraint baseColumnNames="teneur_dest_id"
+                                 baseTableName="regle_commission"
+                                 constraintName="fk_regle_commission_teneur_dest_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="unite_organisation"/>
+
+    </changeSet>
+</databaseChangeLog>

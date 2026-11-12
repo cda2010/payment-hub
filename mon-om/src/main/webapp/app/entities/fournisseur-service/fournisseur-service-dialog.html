@@ -1,0 +1,144 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation class="form-horizontal">
+
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title text-white" id="myFournisseurServiceLabel" ng-show="vm.fournisseurService.id">
+            <i class="fa fa-edit"></i> Editer un fournisseur de service
+        </h4>
+        <h4 class="modal-title text-white" id="myFournisseurServiceLabel" ng-show="vm.fournisseurService.id == undefined && !vm.isDuplicating">
+            <i class="fa fa-plus-circle"></i> Ajouter un fournisseur de service
+        </h4>
+        <h4 class="modal-title text-white" id="myFournisseurServiceLabel" ng-show="vm.fournisseurService.id == undefined && vm.isDuplicating">
+            <i class="fa fa-copy"></i> Dupliquer un fournisseur de service
+        </h4>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group row" ng-show="vm.fournisseurService.id">
+            <label class="col-sm-3 col-form-label" for="id">ID</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.fournisseurService.id" readonly />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_codeFse">Code FSE</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="codeFse" id="field_codeFse"
+                    ng-model="vm.fournisseurService.codeFse"
+                    placeholder="Entrez le code FSE" required/>
+                <div ng-show="editForm.codeFse.$invalid">
+                    <p class="help-block text-danger"
+                        ng-show="editForm.codeFse.$error.required">
+                        Ce champ est obligatoire
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_codeExterne">Code Externe</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="codeExterne" id="field_codeExterne"
+                    ng-model="vm.fournisseurService.codeExterne"
+                    placeholder="Entrez le code externe" required/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_nom">Nom</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="nom" id="field_nom"
+                    ng-model="vm.fournisseurService.nom"
+                    placeholder="Entrez le nom" required/>
+                <div ng-show="editForm.nom.$invalid">
+                    <p class="help-block text-danger"
+                        ng-show="editForm.nom.$error.required">
+                        Ce champ est obligatoire
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_statut">Statut</label>
+            <div class="col-sm-9">
+                <select class="form-control" name="statut" ng-model="vm.fournisseurService.statut" id="field_statut">
+                    <option value="">Sélectionnez un statut</option>
+                    <option value="BANQUE">BANQUE</option>
+                    <option value="NONBANQUE">NON BANQUE</option>
+                    <option value="AUTRE">AUTRE</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_pays">Pays</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="field_pays" name="fournisseurPays" 
+                    ng-model="vm.fournisseurService.pays" 
+                    ng-options="pays as pays.nomPays for pays in vm.payss track by pays.id">
+                    <option value="">Sélectionnez un pays</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_groupe">Groupe</label>
+            <div class="col-sm-9">
+                <select class="form-control" name="groupe" ng-model="vm.fournisseurService.groupe" id="field_groupe">
+                    <option value="">Sélectionnez un groupe</option>
+                    <option value="ETA">ETA</option>
+                    <option value="ETC">ETC</option>
+                    <option value="ENF">ENF</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row" ng-show="vm.fournisseurService.groupe=='ETC'">
+            <label class="col-sm-3 col-form-label" for="field_typeETC">Type ETC</label>
+            <div class="col-sm-9">
+                <select class="form-control" name="typeETC" ng-model="vm.fournisseurService.typeETC" id="field_typeETC">
+                    <option value="">Sélectionnez un type</option>
+                    <option value="FIL">FILIALE</option>
+                    <option value="TEL">TELECOM</option>
+                    <option value="SFD">SFD</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_fseCompense">FSE de compensation</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="field_fseCompense" name="fseCompense" 
+                    ng-model="vm.fournisseurService.fseCompense" 
+                    ng-options="fournisseurservice as fournisseurservice.nom for fournisseurservice in vm.fournisseurServices track by fournisseurservice.id">
+                    <option value="">Sélectionnez un FSE</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_codeAgenceSiege">Agence Siège</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="codeAgenceSiege" id="field_codeAgenceSiege"
+                    ng-model="vm.fournisseurService.codeAgenceSiege"
+                    placeholder="Entrez le code agence siège"/>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal" ng-click="vm.clear()">
+            <i class="fa fa-times"></i>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <i class="fa fa-save"></i>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+
+</form>

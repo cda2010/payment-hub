@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-view name="transfer-fee-policy-all" title="Politiques de frais"
+             model="com.gateway.payment.transfer.domain.TransferFeePolicy" icon="pi pi-sliders-h">
+  <view type="grid" name="transfer-fee-policy-grid"/>
+  <view type="form" name="transfer-fee-policy-form"/>
+</action-view>

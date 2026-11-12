@@ -1,0 +1,66 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "hidden",
+        "key": "providerCode",
+        "defaultValue": "RIA",
+        "input": true
+      },
+      {
+        "type": "select",
+        "key": "destinationCountry",
+        "label": "Pays de destination (RIA)",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "Sénégal", "value": "SN" },
+            { "label": "Côte d'Ivoire", "value": "CI" },
+            { "label": "Mali", "value": "ML" },
+            { "label": "Burkina Faso", "value": "BF" },
+            { "label": "Guinée", "value": "GN" },
+            { "label": "France", "value": "FR" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "select",
+        "key": "receiveCurrency",
+        "label": "Devise de réception",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "XOF", "value": "XOF" },
+            { "label": "EUR", "value": "EUR" },
+            { "label": "USD", "value": "USD" }
+          ]
+        },
+        "defaultValue": "XOF",
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Pays de destination (RIA)": "Pays de destination (RIA)",
+      "Devise de réception": "Devise de réception"
+    },
+    "en": {
+      "Pays de destination (RIA)": "Destination country (RIA)",
+      "Devise de réception": "Receive currency"
+    }
+  }
+}

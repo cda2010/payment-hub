@@ -1,0 +1,30 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "checkbox",
+        "key": "confirmPay",
+        "label": "Je confirme le montant et le paiement de cette facture",
+        "input": true,
+        "defaultValue": false,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Continuer vers le paiement",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Je confirme le montant et le paiement de cette facture": "Je confirme le montant et le paiement de cette facture"
+    },
+    "en": {
+      "Je confirme le montant et le paiement de cette facture": "I confirm the amount and payment of this bill"
+    }
+  }
+}

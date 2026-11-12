@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             targetNamespace="http://payment-gateway/checkout"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+
+  <!--
+    Hôte catalogue CHECKOUT :
+      1) Choix moyen de paiement (wallet / carte)
+      2) callActivity checkout provider (OTP ou redirect)
+  -->
+  <process id="merchantCheckout" name="Merchant Checkout" isExecutable="true">
+    <documentation>
+      Produit CHECKOUT : selectPayProvider → walletCheckout (clé BPMN du rail PAYEMENT).
+    </documentation>
+
+    <startEvent id="start" name="Start"/>
+    <sequenceFlow id="flow_start" sourceRef="start" targetRef="selectPayProvider"/>
+
+    <userTask id="selectPayProvider" name="Moyen de paiement"
+              flowable:formKey="provider-bill-select-pay"
+              flowable:skipExpression="${payProviderCode != null &amp;&amp; payProviderCode != ''}"/>
+    <sequenceFlow id="flow_select_pay" sourceRef="selectPayProvider" targetRef="walletCheckout"/>
+
+    <callActivity id="walletCheckout" name="Paiement wallet"
+                  calledElement="${walletCheckoutProcessKey}"
+                  flowable:businessKey="${paymentId}">
+      <extensionElements>
+        <flowable:in source="paymentId" target="paymentId"/>
+        <flowable:in source="amount" target="amount"/>
+        <flowable:in source="currency" target="currency"/>
+        <flowable:in source="phoneNumber" target="phoneNumber"/>
+        <flowable:in source="phone" target="phone"/>
+        <flowable:in source="payProviderCode" target="providerCode"/>
+        <flowable:in source="payProviderCode" target="payProviderCode"/>
+        <flowable:in sourceExpression="${true}" target="terminalOnConfirm"/>
+        <flowable:out source="phoneNumber" target="phoneNumber"/>
+        <flowable:out source="otp" target="otp"/>
+        <flowable:out source="providerSuccess" target="otpSuccess"/>
+        <flowable:out source="redirectUrl" target="redirectUrl"/>
+      </extensionElements>
+    </callActivity>
+    <sequenceFlow id="flow_end" sourceRef="walletCheckout" targetRef="end"/>
+
+    <endEvent id="end" name="End"/>
+  </process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_merchantCheckout">
+    <bpmndi:BPMNPlane id="BPMNPlane_merchantCheckout" bpmnElement="merchantCheckout">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <omgdc:Bounds x="100" y="162" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="selectPayProvider_di" bpmnElement="selectPayProvider">
+        <omgdc:Bounds x="200" y="140" width="140" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="walletCheckout_di" bpmnElement="walletCheckout">
+        <omgdc:Bounds x="400" y="140" width="140" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="end_di" bpmnElement="end">
+        <omgdc:Bounds x="600" y="162" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="flow_start_di" bpmnElement="flow_start">
+        <omgdi:waypoint x="136" y="180"/><omgdi:waypoint x="200" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_select_pay_di" bpmnElement="flow_select_pay">
+        <omgdi:waypoint x="340" y="180"/><omgdi:waypoint x="400" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_end_di" bpmnElement="flow_end">
+        <omgdi:waypoint x="540" y="180"/><omgdi:waypoint x="600" y="180"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

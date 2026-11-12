@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "uoDevise" : {
+            "home": {
+                "title": "UoDevises",
+                "createLabel": "Créer un nouveau Uo Devise",
+                "createOrEditLabel": "Créer ou éditer un Uo Devise"
+            },
+            "created": "Un nouveau Uo Devise a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Uo Devise avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Uo Devise avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Uo Devise {{ id }} ?"
+            },
+            "detail": {
+                "title": "Uo Devise"
+            },
+            "defaultDevise": "Default Devise",
+            "devise": "Devise",
+            "uniteOrganisation": "Unite Organisation"
+        }
+    }
+}

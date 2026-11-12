@@ -1,0 +1,23 @@
+
+{
+    "ptiApp": {
+        "brancheActivite" : {
+            "home": {
+                "title": "BrancheActivites",
+                "createLabel": "Créer un nouveau Branche Activite",
+                "createOrEditLabel": "Créer ou éditer une Branche Activite"
+            },
+            "created": "Un nouveau Branche Activite a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Branche Activite avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Branche Activite avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Branche Activite {{ id }} ?"
+            },
+            "detail": {
+                "title": "Branche Activite"
+            },
+            "libelle": "Libelle",
+            "code": "Code"
+        }
+    }
+}

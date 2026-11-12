@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application name="payment-gateway"
+             title="Payment Gateway"
+             version="0.1.0"
+             description="Payment Gateway — administration RapidFrame (hors runtime paiement)"
+             default-module="payment-admin-module">
+    <module name="payment-admin-module"/>
+</application>

@@ -1,0 +1,28 @@
+{
+  "partnerApp": {
+    "bwCustomer": {
+      "home": {
+        "title": "BwCustomers",
+        "createLabel": "Créer un nouveau Bw Customer",
+        "createOrEditLabel": "Créer ou éditer un Bw Customer",
+        "notFound": "Aucun Bw Customer trouvé"
+      },
+      "created": "Un nouveau Bw Customer a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Bw Customer avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Bw Customer avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Bw Customer {{ id }} ?"
+      },
+      "detail": {
+        "title": "Bw Customer"
+      },
+      "nomCustomer": "Nom Customer",
+      "prenomCustomer": "Prenom Customer",
+      "typePiece": "Type Piece",
+      "numeroPiece": "Numero Piece",
+      "codePays": "Code Pays",
+      "msisdn": "Msisdn",
+      "test": "Test"
+    }
+  }
+}

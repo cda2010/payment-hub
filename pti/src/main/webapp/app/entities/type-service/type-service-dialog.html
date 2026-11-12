@@ -1,0 +1,84 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation class="form-horizontal ">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myTypeServiceLabel" data-translate="ptiApp.typeService.home.createOrEditLabel">Create or edit a Type Service</h4>
+    </div>
+    <div class="modal-body mt5">
+        <div class="form-group ">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.typeService.libelle" for="field_libelle">Libelle</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"type="text" class="form-control" name="libelle" id="field_libelle" ng-model="vm.typeService.libelle" required/>
+            </div>
+        </div>
+
+        <div class="form-group ">
+            <label mf-required class="control-label col-sm-4" for="field_code">Code</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"type="text" class="form-control" name="code" id="field_code" ng-model="vm.typeService.code" required/>
+            </div>
+        </div>
+ <div class="form-group ">
+            <label mf-required class="control-label col-sm-4" for="field_code">Description</label>
+            <div class="col-sm-6">
+                <input autocomplete="off" type="text" class="form-control" name="description" id="field_description" ng-model="vm.typeService.description" required/>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="control-label col-sm-4" for="field_code">Source Frais</label>
+            <div class="col-sm-6">
+            <select name="etiquetteCompteCode" id="field_etiquetteCompteCode" ng-model="vm.typeService.etiquetteCompteCode"  class="form-control"
+                    ng-options="code.code as code.code for code in vm.etiquetteCode"
+            >
+                <option></option>
+            </select>
+            </div>
+        </div>
+        
+        
+        <div class="form-group">
+            <div class="checkbox col-sm-6 col-sm-offset-4">
+                <label>
+                    <input autocomplete="off" class="colored-success" type="checkbox" name="cmpteClientSournce" id="field_cmpteClientSournce" ng-model="vm.typeService.cmpteClientSournce" />
+                    <b class="text">Compte client source?</b>
+                </label>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="checkbox col-sm-6 col-sm-offset-4">
+                <label>
+                <input autocomplete="off"type="checkbox"  class="colored-success" name="cmpteClientDest" id="field_cmpteClientDest" ng-model="vm.typeService.cmpteClientDest" />
+                    <b class="text">Compte client destination?</b>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="checkbox col-sm-6 col-sm-offset-4">
+                <label>
+                    <input autocomplete="off"type="checkbox" class="colored-success" name="operationClient" id="field_operationClient" ng-model="vm.typeService.operationClient" />
+                    <b class="text">Operation client ?</b>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="checkbox col-sm-6 col-sm-offset-4">
+                <label>
+                    <input autocomplete="off"type="checkbox"class="colored-success"  name="fraisApplicable" id="field_fraisApplicable" ng-model="vm.typeService.fraisApplicable" />
+                    <b class="text">Frais applicable ?</b>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+    </form>

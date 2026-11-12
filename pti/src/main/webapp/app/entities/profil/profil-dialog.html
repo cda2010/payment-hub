@@ -1,0 +1,62 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation class="form-horizontal">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myProfilLabel" data-translate="ptiApp.profil.home.createOrEditLabel">Create or edit a Profil</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="control-label col-sm-4" mf-required for="field_typeUO">Type UO</label>
+            <div class="col-sm-6">
+                <select class="form-control input-xs" ng-disabled="vm.isViewing" id="field_typeUO" name="typeUO" ng-model="vm.profil.typeUOId"
+                        ng-options="typeUniteOrganisation.id as typeUniteOrganisation.libelleTypeUO for typeUniteOrganisation in vm.typeuniteorganisations" required>
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.profil.nom" for="field_nom">Nom</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"type="text" class="form-control" name="nom" id="field_nom"
+                       ng-model="vm.profil.nom"
+                       required/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.profil.description" for="field_description">Description</label>
+            <div class="col-sm-6">
+            <textarea required type="text" class="form-control" name="description" id="field_description"
+                      ng-model="vm.profil.description"
+                      ng-maxlength="1000"/>
+            </div>
+        </div>
+        <div class="form-group" >
+            <label mf-required class="control-label col-sm-4"  for="field_role">Role</label>
+           <div class="col-sm-6">
+                <select disabled required class="form-control" multiple name="authority" ng-model="vm.profil.authorities"
+                ng-options="authority for authority in vm.authorities">
+            </select>
+           </div>
+           <i  title="Sélectionnez les roles" class="btn btn-primary btn-xs"
+               j-select2-dialog
+               j-multiple="true"
+               j-model="vm.authIds"
+               j-list="vm.auth"
+               j-columns='vm.colums'
+               j-event-name="onLoadRoles"
+        >Choisir...</i>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

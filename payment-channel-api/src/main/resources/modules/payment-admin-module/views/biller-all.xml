@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-view name="biller-all" title="Facturiers"
+             model="com.gateway.payment.billing.domain.Biller" icon="pi pi-wallet">
+  <view type="grid" name="biller-grid"/>
+  <view type="form" name="biller-form"/>
+</action-view>

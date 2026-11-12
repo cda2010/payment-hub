@@ -1,0 +1,270 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="well with-header" style="margin-top:10px; width: 100%;height: 100%">
+                <div class="header text-align-center"
+                     style="background-color: #1758a3 !important; color: white !important;">
+                    <B class="">SOURCE</B>
+                </div>
+                <p style="color: #1758a3 !important; text-align: center;"
+                   ng-if="vm.modal.cptS!=null">Compte source selectionné: <span>{{vm.cptSId[0]}} de {{vm.nomS}} {{vm.prenomS}} {{vm.raisonSocialeS}} {{vm.nomAS}} {{vm.pereS}}</span></p>
+                <form>
+                    <br>
+                    <select ng-change="vm.getOperationS(vm.item.typeOp)" required class="form-control" name="" id="op"
+                            ng-model="vm.item.typeOp"
+                            ng-options="op.id as op.libelle for op in vm.operations1"><option value="">Choisir </option>
+                    </select>
+                    <br>
+                    <br>
+                    <div ng-if="vm.idOp=='Client'  " class="row">
+                        <div class="col-sm-4">
+                            <label class="control-label" for="field_nomC">Nom</label>
+                            <input type="text"  class="form-control" name="nom" id="field_nomC"
+                                   ng-model="vm.item.nom">
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="control-label" for="field_telephoneC">Téléphone</label>
+                            <input type="text"  class="form-control" name="telephone" id="field_telephoneC"
+                                   ng-model="vm.item.telephone">
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="control-label" for="field_numeroCptC">Numero de compte</label>
+                            <input type="text"  class="form-control" name="numeroCpt" id="field_numeroCptC"
+                                   ng-model="vm.item.numeroCpt">
+                        </div>
+                    </div>
+                    <div ng-if="vm.idOp=='agent' " class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="field_pereUOIdC">FSE propriétaire</label>
+                                <select name="type" id="field_pereUOIdC"  class="form-control"
+                                        ng-model="vm.itemSearch.pereUoId"
+                                        ng-options="FSE.id as FSE.libelleUniteOrganisation for FSE in vm.FSEs"
+                                >
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="field_typeUoC">TypeUo</label>
+                                <select name="type" id="field_typeUoC"  class="form-control"
+                                        ng-model="vm.itemSearch.typeUO"
+                                        ng-options="typeUniteOrganisation.libelleTypeUO as typeUniteOrganisation.libelleTypeUO for typeUniteOrganisation in vm.typeuniteorganisations"
+                                >
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="field_codeUOC">CodeUo</label>
+                                <input type="text"  class="form-control" name="codeUO" id="field_codeUOC"
+                                       ng-model="vm.itemSearch.codeUO">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="field_libelleUniteOrganisationC">Nom</label>
+                                <input type="text"  class="form-control" name="libelleUniteOrganisation" id="field_libelleUniteOrganisationC"
+                                       ng-model="vm.itemSearch.libelleUniteOrganisation">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <button class="btn btn-danger mt5" ng-click="vm.annulerOp()">
+                                <span class="" > Annuler</span></button>
+                        </div>
+                        <div class="col-sm-2">
+                            <button ng-disabled="vm.idOp!=='Client'  &&  vm.itemSearch.pereUoId==null   " class="btn btn-primary mt5" ng-click="vm.filtrerRechS()">
+                                <span class="glyphicon glyphicon-search" > Filtrer</span></button>
+                        </div>
+                    </div>
+                    <div ng-if="vm.idOp==='Client' && vm.tabS " class="table-responsive scrollbar" style="height: 500px" >
+                        <table class="jh-table table table-striped">
+                            <thead>
+                            <tr>
+                                <th><span>Nom</span></th>
+                                <th ng-if="vm.item.typeC==='particulier' "><span >Prénom(s)</span></th>
+                                <th><span>Téléphone</span></th>
+                                <th><span>Adresse</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="op in vm.listOp">
+                                <td ng-if="op.personnePhysiqueDTO != null">{{ op.personnePhysiqueDTO.nomClient }}</td>
+                                <td ng-if="op.personnePhysiqueDTO != null">{{ op.personnePhysiqueDTO.prenomClient }}</td>
+                                <td ng-if="op.personneMoraleDTO != null">{{op.personneMoraleDTO.raisonSociale}}</td>
+                                <td>{{op.personneDTO.telephone}}</td>
+                                <td>{{op.personneDTO.adresse}}</td>
+                                <td><button ng-click="vm.actionOpS(op.compteDTOS,op.personnePhysiqueDTO.nomClient,op.personnePhysiqueDTO.prenomClient,op.personneMoraleDTO.raisonSociale)">voir compte(s)</button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div ng-if="vm.idOp==='agent' && vm.tabS" class="table-responsive scrollbar" style="height: 500px" >
+                        <table class="jh-table table table-striped">
+                            <thead>
+                            <tr>
+                                <th><span>Nom</span></th>
+                                <th><span >CodeUO</span></th>
+                                <th><span >TypeUO</span></th>
+                                <th><span>Père UO</span></th>
+                                <th><span>Numero de compte</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="uo in vm.listUO">
+                                <td>{{ uo.libelleUniteOrganisation }}</td>
+                                <td>{{ uo.codeUO }}</td>
+                                <td>{{uo.typeUOLibelleTypeUO}}</td>
+                                <td>{{uo.pereUOLibelleUniteOrganisation}}</td>
+                                <td>
+                                    <button ng-click="vm.listCptS(uo.id,uo.libelleUniteOrganisation,uo.pereUOLibelleUniteOrganisation)">voir comptes(s)</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="well with-header" style="margin-top:10px; width: 100%;height: 100%" >
+                <div class="header text-align-center" style="background-color: #1758a3 !important; color: white !important;" >
+                    <B class="">DESTINATION</B>
+                </div>
+                <p style="color: #1758a3 !important; text-align: center;"
+                   ng-if="vm.modal.cptD!=null">Compte destination : <span>{{vm.cptDId[0]}} de {{vm.nomD}} {{vm.prenomD}} {{vm.raisonSocialeD}} {{vm.nomAD}} {{vm.pereD}}</span></p>
+                <form>
+                    <br>
+                    <select ng-change="vm.getOperationD(vm.item1.typeOp)" required class="form-control" name="" id="ope"
+                            ng-model="vm.item1.typeOp"
+                            ng-options="op.id as op.libelle for op in vm.operations2"><option value="">Choisir </option>
+                    </select>
+                    <br>
+                    <br>
+                    <div ng-if="vm.idOp1=='Client' " class="row">
+                        <div class="col-sm-4">
+                            <label class="control-label" for="field_nomA">Nom</label>
+                            <input type="text"  class="form-control" name="nom" id="field_nomA"
+                                   ng-model="vm.item1.nom">
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="control-label" for="field_telephoneA">Téléphone</label>
+                            <input type="text"  class="form-control" name="telephone" id="field_telephoneA"
+                                   ng-model="vm.item1.telephone">
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="control-label" for="field_numeroCptA">Numero de compte</label>
+                            <input type="text"  class="form-control" name="numeroCpt" id="field_numeroCptA"
+                                   ng-model="vm.item1.numeroCpt">
+                        </div>
+                    </div>
+                    <div ng-if="vm.idOp1=='agent' " class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="field_pereUOIdA">FSE propriétaire</label>
+                                <select name="type" id="field_pereUOIdA"  class="form-control"
+                                        ng-model="vm.itemSearch1.pereUoId"
+                                        ng-options="FSE.id as FSE.libelleUniteOrganisation for FSE in vm.FSEs"
+                                >
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="field_typeUoA">TypeUo</label>
+                                <select name="type" id="field_typeUoA"  class="form-control"
+                                        ng-model="vm.itemSearch1.typeUO"
+                                        ng-options="typeUniteOrganisation.libelleTypeUO as typeUniteOrganisation.libelleTypeUO for typeUniteOrganisation in vm.typeuniteorganisations"
+                                >
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="field_codeUOA">CodeUo</label>
+                                <input type="text"  class="form-control" name="codeUO" id="field_codeUOA"
+                                       ng-model="vm.itemSearch1.codeUO">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="field_libelleUniteOrganisationA">Nom</label>
+                                <input type="text"  class="form-control" name="libelleUniteOrganisation" id="field_libelleUniteOrganisationA"
+                                       ng-model="vm.itemSearch1.libelleUniteOrganisation">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <button class="btn btn-danger mt5" ng-click="vm.annulerOp()">
+                                <span class="" > Annuler</span></button>
+                        </div>
+                        <div class="col-sm-2">
+                            <button ng-disabled="vm.idOp1!=='Client'  &&  vm.itemSearch1.pereUoId==null  " class="btn btn-primary mt5" ng-click="vm.filtrerRechD()">
+                                <span class="glyphicon glyphicon-search" > Filtrer</span></button>
+                        </div>
+                    </div>
+                    <div ng-if="vm.idOp1==='Client' && vm.tabD" class="table-responsive scrollbar" style="height: 500px" >
+                        <table class="jh-table table table-striped">
+                            <thead>
+                            <tr>
+                                <th><span>Nom</span></th>
+                                <th ng-if="vm.item1.typeC==='particulier' "><span >Prénom(s)</span></th>
+                                <th><span>Téléphone</span></th>
+                                <th ><span>Adresse</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="op in vm.listOp1">
+                                <td ng-if="op.personnePhysiqueDTO != null">{{ op.personnePhysiqueDTO.nomClient }}</td>
+                                <td ng-if="op.personnePhysiqueDTO != null">{{ op.personnePhysiqueDTO.prenomClient }}</td>
+                                <td ng-if="op.personneMoraleDTO != null">{{op.personneMoraleDTO.raisonSociale}}</td>
+                                <td>{{op.personneDTO.telephone}}</td>
+                                <td>{{op.personneDTO.adresse}}</td>
+                                <td><button  ng-click="vm.actionOpD(op.compteDTOS,op.personnePhysiqueDTO.nomClient,op.personnePhysiqueDTO.prenomClient,op.personneMoraleDTO.raisonSociale)">voir comptes(s)</button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div ng-if="vm.idOp1==='agent' && vm.tabD" class="table-responsive scrollbar" style="height: 500px" >
+                        <table class="jh-table table table-striped">
+                            <thead>
+                            <tr>
+                                <th><span>Nom</span></th>
+                                <th><span >CodeUO</span></th>
+                                <th><span >TypeUO</span></th>
+                                <th><span>Père UO</span></th>
+                                <th><span>Numero de compte</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="uo in vm.listUO1">
+                                <td>{{ uo.libelleUniteOrganisation }}</td>
+                                <td>{{ uo.codeUO }}</td>
+                                <td>{{uo.typeUOLibelleTypeUO}}</td>
+                                <td>{{uo.pereUOLibelleUniteOrganisation}}</td>
+                                <td>
+                                    <button ng-click="vm.listCptD(uo.id,uo.libelleUniteOrganisation,uo.pereUOLibelleUniteOrganisation)">voir comptes(s)</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <button ng-if="vm.modal.cptD!=null && vm.modal.cptS!=null" class="col-sm-offset-6 btn-primary" ng-click="vm.finishOp()">Opération</button>
+    </div>
+</div>

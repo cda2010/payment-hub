@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: payment-alias
+  profiles:
+    default: prod
+  datasource:
+    url: ${ALIAS_DB_URL:jdbc:postgresql://localhost:5439/payment_alias}
+    username: ${ALIAS_DB_USER:alias}
+    password: ${ALIAS_DB_PASSWORD:alias}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+
+server:
+  port: ${SERVER_PORT:8097}
+  error:
+    include-message: never
+    include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+alias:
+  security:
+    keycloak:
+      enabled: ${KEYCLOAK_ENABLED:true}
+      issuer-uri: ${KEYCLOAK_ISSUER:http://localhost:8180/realms/payment}
+      jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:}
+      audience: ${KEYCLOAK_AUDIENCE:payment-api}
+    jwt:
+      secret: ${JWT_SECRET:change-me-to-a-very-long-secret-key-at-least-256-bits}
+      issuer: ${JWT_ISSUER:payment-gateway}
+    cors:
+      allowed-origins: ${CORS_ORIGINS:http://localhost:4200,http://127.0.0.1:4200,http://localhost:4205,http://127.0.0.1:4205,http://localhost:4210,http://127.0.0.1:4210,http://localhost:8100,http://127.0.0.1:8100}
+
+logging:
+  level:
+    root: INFO
+    com.gateway.payment.alias: INFO

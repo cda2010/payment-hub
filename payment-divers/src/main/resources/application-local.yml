@@ -1,0 +1,22 @@
+# Profil local : base dédiée du docker-compose (divers-postgres, port 5445).
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5445/payment_divers
+    username: divers
+    password: divers
+
+inbox:
+  kafka:
+    enabled: true
+    bootstrap-servers: localhost:9092
+    topic: party.actions
+
+spend:
+  kafka:
+    consumer-enabled: true
+    bootstrap-servers: localhost:9092
+    topic: payment.spend
+
+logging:
+  level:
+    com.gateway.payment.divers: DEBUG

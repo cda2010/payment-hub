@@ -1,0 +1,146 @@
+<div class="well with-header" style="margin-top:10px ">
+<!--    <h2 data-translate="ptiApp.blackList.home.title">Black Lists</h2>-->
+<!--    <jhi-alert></jhi-alert>-->
+    <div class="header bg-blue ">
+        <div class="col-xs-8">
+            Blacks Lists
+        </div>
+            <div class="col-xs-2 no-padding-left">
+                <button class="btn btn-primary" ui-sref="black-list.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="ptiApp.blackList.home.createLabel">
+                        Create new Black List
+                    </span>
+                </button>
+            </div>
+    </div>
+<!--  filtre  -->
+    <button ng-if="!vm.afficheFiltreB" class="btn btn-primary mt5" ng-click="vm.afficherFiltreB()">
+        <span class="glyphicon glyphicon-search" > Filtrer</span>
+    </button>
+    <div ng-if="vm.afficheFiltreB" class="row mt5">
+        <div class="row">
+        <div class="col-sm-4">
+        <div class="form-group">
+            <label class="control-label" for="code">ETAT</label>
+            <select name="type" id="code"  class="form-control"
+                    ng-model="vm.itemSearch.actionBlackList">
+                <option value=""></option>
+                <option value="FOLLOW">FOLLOW</option>
+                <option value="BANISHED">BANISHED</option>
+            </select>
+        </div>
+        </div>
+        <div class="col-sm-4">
+        <div class="form-group">
+            <label class="control-label" for="code">Nom</label>
+            <input type="text"  class="form-control" name="nom" id="field_nom"
+                   ng-model="vm.itemSearch.nomClient">
+        </div>
+        </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="control-label" for="code">Prenom</label>
+                    <input type="text"  class="form-control" name="prenom" id="field_prenom"
+                           ng-model="vm.itemSearch.prenomClient">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-4">
+        <div class="form-group">
+            <label class="control-label" for="code">Nom de la mère</label>
+            <input type="text"  class="form-control" name="nomMere" id="field_nom_mere"
+                   ng-model="vm.itemSearch.nomMereClient">
+            </select>
+        </div>
+        </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="control-label" for="code">Telephone</label>
+                    <input type="text"  class="form-control" name="telephone" id="field_telephone"
+                           ng-model="vm.itemSearch.telephone">
+                    </select>
+                </div>
+            </div>
+        <div class="col-sm-4" >
+            <button ng-if="vm.afficheFiltreB" class="btn btn-danger mt5" ng-click="vm.afficherFiltreB()">
+                <span class="glyphicon glyphicon-remove"> Annuler</span>
+            </button>
+            <button class="btn btn-primary mt5" ng-click="vm.chercherB()">
+                <span class="glyphicon glyphicon-search" > Chercher</span>
+            </button>
+        </div>
+        </div>
+    </div>
+<!--  fin filtre  -->
+        <table class="jh-table table table-hover">
+            <thead>
+                <tr class="mf-table-header" jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+<!--                    <th jh-sort-by="clientId"><span data-translate="ptiApp.blackList.client">Client Id</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <th jh-sort-by="clientId"><span >Nom Client</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="clientId"><span >Prenom Client</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="clientId"><span >Telephone</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="clientId"><span >Type personne</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="clientId"><span >Nom de la mère</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="clientId"><span >Etat</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th class="text-right"><span>Action</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="blackList in vm.datas track by blackList.id">
+<!--                    <td><a ui-sref="black-list-detail({id:blackList.id})">{{blackList.id}}</a></td>-->
+                    <td>{{blackList.id}}</td>
+<!--                    <td>-->
+<!--                        {{blackList.clientId}}-->
+<!--                    </td>-->
+                    <td>
+                        {{blackList.nomClient}}
+                    </td>
+                    <td>
+                       {{blackList.prenomClient}}
+                    </td>
+                    <td>
+                        {{blackList.telephone}}
+                    </td>
+                    <td>
+                       {{blackList.typePersonne}}
+                    </td>
+                    <td>
+                        {{blackList.nomMereClient}}
+                    </td>
+                    <td>
+                        {{blackList.actionBlackList}}
+                    </td>
+
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+
+                            <button type="submit" ng-click="vm.detailsOperation(blackList)"
+                                    class="btn btn-info btn-xs btn-round">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+<!--                            <button type="submit"-->
+<!--                                    ui-sref="black-list.edit({id:blackList.id})"-->
+<!--                                    class="btn btn-primary btn-sm">-->
+<!--                                <span class="glyphicon glyphicon-pencil"></span>-->
+<!--                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>-->
+<!--                            </button>-->
+                            <button type="submit"
+                                    ui-sref="black-list.delete({id:blackList.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    <div class="center-block text-center" ng-show="vm.canShowPagination()">
+        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+        </uib-pagination>
+    </div>
+</div>

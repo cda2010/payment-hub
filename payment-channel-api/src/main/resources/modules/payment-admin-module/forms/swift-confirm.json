@@ -1,0 +1,30 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "checkbox",
+        "key": "confirmTransfer",
+        "label": "Je confirme le transfert SWIFT (BIC, IBAN, montant, devise, frais)",
+        "input": true,
+        "defaultValue": false,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Je confirme le transfert SWIFT (BIC, IBAN, montant, devise, frais)": "Je confirme le transfert SWIFT (BIC, IBAN, montant, devise, frais)"
+    },
+    "en": {
+      "Je confirme le transfert SWIFT (BIC, IBAN, montant, devise, frais)": "I confirm the SWIFT transfer (BIC, IBAN, amount, currency, charges)"
+    }
+  }
+}

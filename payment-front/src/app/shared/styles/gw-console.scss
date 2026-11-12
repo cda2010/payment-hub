@@ -1,0 +1,146 @@
+/* Shared admin console styles (RapidFrame / PrimeNG) */
+
+.gw-console-page {
+  padding: 0.25rem 0.25rem 1.5rem;
+  max-width: 1280px;
+}
+
+.gw-console-page h1 {
+  margin: 0 0 0.35rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text-color, #1e293b);
+}
+
+.gw-console-page .subtitle {
+  margin: 0;
+  color: var(--text-color-secondary, #64748b);
+  font-size: 0.9rem;
+}
+
+.gw-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.gw-page-header .header-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.gw-panel {
+  background: var(--surface-card, #fff);
+  border: 1px solid var(--surface-border, #e2e8f0);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.gw-panel h2,
+.gw-panel h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.gw-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 1rem;
+  align-items: end;
+}
+
+.gw-form-grid .full {
+  grid-column: 1 / -1;
+}
+
+.gw-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.gw-field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-color-secondary, #64748b);
+}
+
+.gw-field input,
+.gw-field textarea,
+.gw-field select {
+  width: 100%;
+}
+
+.gw-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.gw-row-actions {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.gw-msg {
+  margin-top: 0.75rem;
+  color: #0369a1;
+  font-size: 0.9rem;
+}
+
+.gw-msg.error {
+  color: #b91c1c;
+}
+
+.gw-loading {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.gw-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem;
+}
+
+.gw-stat {
+  background: var(--surface-card, #fff);
+  border: 1px solid var(--surface-border, #e2e8f0);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.gw-stat .value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color, #2563eb);
+}
+
+.gw-stat .label {
+  font-size: 0.8rem;
+  color: var(--text-color-secondary, #64748b);
+  margin-top: 0.25rem;
+}
+
+.gw-tabs-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .gw-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

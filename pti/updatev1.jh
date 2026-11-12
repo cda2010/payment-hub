@@ -1,0 +1,9 @@
+enum TypeParametre{
+    STRING,BOOLEAN,AUTRE
+}
+
+entity ParametreApp{
+    nom String,
+    valeur String,
+    type TypeParametre
+}

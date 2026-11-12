@@ -1,0 +1,86 @@
+<div id="bodyc">
+    <div class="row">
+        <div class="col-md-9 col-md-offset-1 well mt10">
+            <fieldset class=" mf-fieldset mb10">
+            <legend><h1 data-translate="reset.finish.title" class="text-center">Reset password</h1></legend>
+
+            <div class="alert alert-danger" data-translate="reset.finish.messages.keymissing" ng-show="vm.keyMissing">
+                <strong>The password reset key is missing.</strong>
+            </div>
+
+            <div class="container" ng-hide="vm.success || vm.keyMissing">
+                <br/>
+                <div class="alert alert-dismissable alert-info" >
+                    <button type="button" class="close"  class="btn btn-danger" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <marquee scrollamount="2" direction="up" height="100" class="text-center"><span>Votre mot de passe doit être d'une longueur de 8 à 50 caractères et contenir:</span><br>
+                        <span class="text-center">- au moins une lettre minuscule</span><br>
+                        <span class="text-center">- au moins une lettre majuscule</span><br>
+                        <span class="text-center">- au moins un chiffre</span><br>
+                        <span class="text-center">- au moins un de ces caractères spéciaux: $ @ % * + - _ !</span><br>
+                        <span class="text-center">- aucun autre caractère possible: pas de & ni de { par exemple)</span>
+                    </marquee>
+                    <p><button id="myButton" type="button" class="btn btn-primary">Fermer</button></p>
+                </div> <!-- Fin du bandeau d'alerte -->
+
+                <script>
+                    $('#myButton').click(function(){ /* Après le clic sur l'élément dont l'id est "myButton" (le bouton dans notre cas) "*/
+                        $('.alert').alert('close'); /* Faire disparaitre le bandeau d'alerte*/
+                    });
+                </script>
+            </div>
+
+                <div class="container">
+                    <br/>
+                    <div class="alert alert-dismissable alert-success" ng-if="vm.success" >
+                        <marquee scrollamount="5" class="text-center">
+                            Votre mot de passe a été réinitialisé.Veuillez cliquer sur le bouton "connecter" pour vous authentifier.
+                        </marquee>
+                        <p class="text-center"><button type="button" ng-click="vm.login()" class="btn btn-success">Connecter</button></p>
+                    </div> <!-- Fin du bandeau d'alerte -->
+                </div>
+
+            <div class="alert alert-danger text-center" ng-show="vm.doNotMatch" data-translate="global.messages.error.dontmatch">
+                The password and its confirmation do not match!
+            </div>
+
+            <div ng-hide="vm.keyMissing">
+                <form ng-show="!vm.success" name="form" role="form" novalidate ng-submit="vm.finishReset()" show-validation class="form-horizontal container-fluid">
+                    <div class="container">
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" mf-required for="password" data-translate="global.form.newpassword">New password</label>
+                        <div class="col-sm-8">
+                        <input type="password" class="form-control pwd" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,50})$"
+                               id="password" name="password" placeholder="Mot de passe"
+                               ng-model="vm.resetAccount.password"
+                               title="Votre mots de passe doit être d'une longueur 8 à 50 caractères et contenir:
+                                - au moins une lettre minuscule
+                                - au moins une lettre majuscule
+                                - au moins un chiffre
+                                - au moins un de ces caractères spéciaux: $ @ % * + - _ !
+                                - aucun autre caractère possible: pas de & ni de { par exemple)"
+                               required>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-danger" id="password-progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0">
+                                <span class="sr-only">0% Complete (danger)</span>
+                                <span id="progress-bar-text" style="color:#000;"></span>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" mf-required for="confirmPassword" data-translate="global.form.confirmpassword">New password confirmation</label>
+                        <div class="col-sm-8">
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="{{'global.form.confirmpassword.placeholder' | translate}}"
+                               ng-model="vm.confirmPassword" required>
+                        </div>
+                    </div>
+                    <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary pull-right" data-translate="reset.finish.form.button">Reset Password</button>
+                </form>
+            </div>
+                <div class="mb10"></div>
+            </fieldset>
+        </div>
+    </div>
+</div>

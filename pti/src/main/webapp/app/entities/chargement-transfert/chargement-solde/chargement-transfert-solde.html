@@ -1,0 +1,17 @@
+<div  >
+    <div class="modal-header">
+        <h4 style="background-color: #1758a3 !important; color: white !important;text-align: center;">Solde du compte</h4>
+    </div>
+    <div class="modal-body">
+        <h3 ng-if="vm.compte.compteAutre.solde !=null"  style="color: #1758a3 !important;">Solde: {{vm.compte.compteAutre.solde | currency:""}} Solde de debut:  {{ vm.soldeAvant | currency:""}} </h3>
+        <h3 ng-if="vm.compte.id!=null && vm.compte.compteAutre.solde ==null" style="color: #1758a3 !important;">Solde: {{0 | currency:""}}</h3>
+        <h3 ng-if="vm.compte.id ==null" style="color: #ff0021 !important;">Compte introuvable</h3>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-default"  ng-click="fermerM()">
+                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Fermer</span>
+            </button>
+        </div>
+    </div>
+</div>

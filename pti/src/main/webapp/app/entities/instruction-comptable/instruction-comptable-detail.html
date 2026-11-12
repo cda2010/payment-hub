@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span data-translate="ptiApp.instructionComptable.detail.title">Instruction Comptable</span> {{vm.instructionComptable.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.instructionComptable.numeroOrdre">Numero Ordre</span></dt>
+        <dd>
+            <span>{{vm.instructionComptable.numeroOrdre}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.instructionComptable.instruction">Instruction</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.InstructionEcriture.' + vm.instructionComptable.instruction}}">{{vm.instructionComptable.instruction}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.instructionComptable.etiquetteComptable">Etiquette Comptable</span></dt>
+        <dd>
+            <span>{{vm.instructionComptable.etiquetteComptable}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.instructionComptable.montant">Montant</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.MontantsAComptabiliser.' + vm.instructionComptable.montant}}">{{vm.instructionComptable.montant}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.instructionComptable.typeService">Type Service</span></dt>
+        <dd>
+            <a ui-sref="type-service-detail({id:vm.instructionComptable.typeServiceId})">{{vm.instructionComptable.typeServiceLibelle}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="instruction-comptable-detail.edit({id:vm.instructionComptable.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

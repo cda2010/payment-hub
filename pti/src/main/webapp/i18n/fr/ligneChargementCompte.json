@@ -1,0 +1,31 @@
+{
+    "ptiApp": {
+        "ligneChargementCompte" : {
+            "home": {
+                "title": "LigneChargementComptes",
+                "createLabel": "Créer un nouveau Ligne Chargement Compte",
+                "createOrEditLabel": "Créer ou éditer un Ligne Chargement Compte"
+            },
+            "created": "Un nouveau Ligne Chargement Compte a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Ligne Chargement Compte avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Ligne Chargement Compte avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Ligne Chargement Compte {{ id }} ?"
+            },
+            "detail": {
+                "title": "Ligne Chargement Compte"
+            },
+            "nom": "Nom",
+            "prenom": "Prenom",
+            "telephone": "Telephone",
+            "dateNaissance": "Date Naissance",
+            "lieuNaissance": "Lieu Naissance",
+            "nomMere": "Nom Mere",
+            "personnePrevenir": "Personne Prevenir",
+            "email": "Email",
+            "adresse": "Adresse",
+            "typePersonne": "Type Personne",
+            "chargementCompte": "Chargement Compte"
+        }
+    }
+}

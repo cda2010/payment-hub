@@ -1,0 +1,73 @@
+
+<form class="form-horizontal" name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myEvenementOperationLabel" data-translate="ptiApp.operation.createOrEditEvenementOp">Create or edit a Evenement Operation</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" mf-required data-translate="ptiApp.operation.montant" for="field_montant">Montant</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"type="text" class="form-control" name="montant" id="field_montant"
+                ng-model="vm.evenementOperation.montant" required ng-disabled="vm.isViewing"
+                />
+            </div>
+        </div>
+  
+        
+        <div class="form-group">
+            <label class="control-label col-sm-4" mf-required data-translate="ptiApp.operation.operation" for="field_operation">Opération</label>
+            <div class="col-sm-6">
+                <select class="form-control" class="form-control" name="operation" id="field_operation" ng-options="operation.id as operation.commentaire for operation in vm.operations"
+                    ng-model="vm.evenementOperation.operation.id" required ng-disabled="vm.isViewing">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        
+       
+        <div class="form-group">
+            <label class="control-label col-sm-4" mf-required data-translate="ptiApp.operation.compte" for="field_compte">Compte</label>
+            <div class="col-sm-6">
+                <select class="form-control" class="form-control" name="compte" id="field_compte" ng-options="compte.id as compte.etiquette for compte in vm.comptes"
+                    ng-model="vm.evenementOperation.compte.id" required ng-disabled="vm.isViewing">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <!-- <div class="form-group">
+            <div class="checkbox col-sm-6 col-sm-offset-4">
+                <label>
+                    <input autocomplete="off" class="colored-success" type="checkbox" name="estLevee" id="field_estLevee" ng-model="vm.evenementOperation.estLevee" />
+                    <b class="text" data-translate="ptiApp.operation.estLevee">Est levé ?</b>
+                </label>
+            </div>
+        </div> -->
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" mf-required data-translate="ptiApp.operation.estLevee" for="field_estLevee">Est levé ?</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"type="text" class="form-control" name="estLevee" id="field_estLevee"
+                ng-model="vm.evenementOperation.estLevee" required ng-disabled="vm.isViewing"
+                />
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" ng-if="!vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-if="!vm.isViewing" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+        <button type="button" ng-if="vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+            <span data-translate="ptiApp.compte.fermer">Fermer</span>
+        </button>
+    </div>
+</form>

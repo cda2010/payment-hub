@@ -1,0 +1,24 @@
+{
+    "ptiApp": {
+        "localite" : {
+            "home": {
+                "title": "Localites",
+                "createLabel": "Créer un nouveau Localite",
+                "createOrEditLabel": "Créer ou éditer un Localite"
+            },
+            "created": "Un nouveau Localite a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Localite avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Localite avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Localite {{ id }} ?"
+            },
+            "detail": {
+                "title": "Localite"
+            },
+            "nomRegion": "Nom Region",
+            "nomProvince": "Nom Province",
+            "nomCommune": "Nom Commune",
+            "nomVille": "Nom Ville"
+        }
+    }
+}

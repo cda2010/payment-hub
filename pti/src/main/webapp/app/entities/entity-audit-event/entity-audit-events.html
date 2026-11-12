@@ -1,0 +1,143 @@
+
+<!--    <h2 data-translate="ptiApp.entityAuditEvent.home.title">Entity Audit Events</h2>-->
+<!--    <jhi-alert></jhi-alert>-->
+<!--    <div class="container-fluid">-->
+<!--        <div class="row">-->
+<!--            <div class="col-xs-4 no-padding-left">-->
+<!--                <button class="btn btn-primary" ui-sref="entity-audit-event.new" >-->
+<!--                    <span class="glyphicon glyphicon-plus"></span>-->
+<!--                    <span  data-translate="ptiApp.entityAuditEvent.home.createLabel">-->
+<!--                        Create new Entity Audit Event-->
+<!--                    </span>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="well with-header" style="margin-top:10px ">
+            <div class="header bg-blue ">
+                <div class="col-xs-8">
+                <span >Liste des audits</span>
+                 </div>
+              <div class="no-padding-left col-xs-4">
+                <div class="btn-group mr15" uib-dropdown>
+                    <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                            aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                        éléments par page <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                        <li>
+                            <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+<!--        filtre-->
+            <div class="row mt5">
+                <div class="row mt5">
+                    <div class="form-group col-sm-3"  ng-if="vm.filtrer">
+                        <label for="field_addresse">Action</label>
+                       <select class="form-control" id="action" ng-model="vm.itemSearch.action">
+                           <option value="">Choisir action</option>
+                        <option value="CREATE">CREATE</option>
+                           <option value="UPDATE">UPDATE</option>
+                           <option value="DELETE">DELETE</option>
+                           <option value="AUTHORIZATION_FAILURE">AUTHORIZATION_FAILURE</option>
+                           <option value="AUTHORIZATION_SUCCESS">AUTHORIZATION_SUCCESS</option>
+                       </select>
+                    </div>
+                    <div class="form-group col-sm-3"  ng-if="vm.filtrer">
+                        <label for="field_modifier">Modifier par</label>
+                        <input autocomplete="off" title="ModifierPar"
+                               type="text" class="form-control" name="Adresse" id="field_modifier"
+                               ng-model="vm.itemSearch.modifiedBy" />
+                    </div>
+                    <div class="form-group col-sm-3"  ng-if="vm.filtrer">
+                        <label for="field_addresse">Adresse</label>
+                        <input autocomplete="off" title="Adresse"
+                               type="text" class="form-control" name="Adresse" id="field_addresse"
+                               ng-model="vm.itemSearch.adresse" />
+                    </div>
+                </div>
+                <div class="row mt5" ng-if="vm.filtrer">
+                    <div class="form-group col-sm-6 col-sm-offset-6">
+                        <div class="col-sm-8 col-sm-offset-4">
+                            <button class="btn btn-info btn-md " ng-click="vm.filtre()">
+                                <span class="glyphicon glyphicon-search">Chercher</span>
+                            </button>
+                            <button class="btn btn-danger btn-md " ng-click="vm.annulerFiltre()">
+                                <span class="glyphicon glyphicon-remove">Annuler</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--            filtre-->
+            <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead class="bordered-blue">
+                <tr>
+                    <th ><span data-translate="ptiApp.entityAuditEvent.action">Action</span> </th>
+                    <th ><span data-translate="ptiApp.entityAuditEvent.commitVersion">Commit Version</span> </th>
+                    <th ><span data-translate="ptiApp.entityAuditEvent.entityId">Entity Id</span></th>
+                    <th ><span data-translate="ptiApp.entityAuditEvent.entityType">Entity Type</span> </th>
+                    <th ><span data-translate="ptiApp.entityAuditEvent.entityValue">Entity Value</span></th>
+                    <th ><span data-translate="ptiApp.entityAuditEvent.adresse">Adresse</span> </th>
+                    <th>Modifier par</th>
+                    <th>Date de modification</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="entityAuditEvent in vm.datas">
+                    <td>{{entityAuditEvent.action}}</td>
+                    <td><span>{{entityAuditEvent.commitVersion}}</span></td>
+                    <td>{{entityAuditEvent.entityId}}</td>
+                    <td>{{entityAuditEvent.entityType}}</td>
+                    <td>{{entityAuditEvent.entityValue}}</td>
+                    <td>{{entityAuditEvent.adresse}}</td>
+                    <td>{{entityAuditEvent.modifiedBy}}</td>
+                    <td>{{entityAuditEvent.modifiedDate | date:'medium'}}</td>
+<!--                    <td class="text-right">-->
+<!--                        <div class="btn-group flex-btn-group-container">-->
+<!--                            <button type="submit"-->
+<!--                                    ui-sref="entity-audit-event-detail({id:entityAuditEvent.id})"-->
+<!--                                    class="btn btn-info btn-sm">-->
+<!--                                <span class="glyphicon glyphicon-eye-open"></span>-->
+<!--                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>-->
+<!--                            </button>-->
+<!--                            <button type="submit"-->
+<!--                                    ui-sref="entity-audit-event.edit({id:entityAuditEvent.id})"-->
+<!--                                    class="btn btn-primary btn-sm">-->
+<!--                                <span class="glyphicon glyphicon-pencil"></span>-->
+<!--                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>-->
+<!--                            </button>-->
+<!--                            <button type="submit"-->
+<!--                                    ui-sref="entity-audit-event.delete({id:entityAuditEvent.id})"-->
+<!--                                    class="btn btn-danger btn-sm">-->
+<!--                                <span class="glyphicon glyphicon-remove-circle"></span>-->
+<!--                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </td>-->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        </div>
+    <div class="text-center" ng-show="vm.canShowResultCount">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ></uib-pagination>
+    </div>
+    </div>
+</div>

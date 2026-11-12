@@ -1,0 +1,29 @@
+{
+    "ptiApp": {
+        "regleCommission" : {
+            "home": {
+                "title": "RegleCommissions",
+                "createLabel": "Créer un nouveau Regle Commission",
+                "createOrEditLabel": "Créer ou éditer un Regle Commission"
+            },
+            "created": "Un nouveau Regle Commission a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Regle Commission avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Regle Commission avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Regle Commission {{ id }} ?"
+            },
+            "detail": {
+                "title": "Regle Commission"
+            },
+            "client": "Client",
+            "etiquette": "Etiquette",
+            "typeOperateur": "Type Operateur",
+            "dateDebut": "Date Debut",
+            "dateFin": "Date Fin",
+            "prisEnCharge": "Pris En Charge",
+            "typeService": "Type Service",
+            "teneurSrc": "Teneur Src",
+            "teneurDest": "Teneur Dest"
+        }
+    }
+}

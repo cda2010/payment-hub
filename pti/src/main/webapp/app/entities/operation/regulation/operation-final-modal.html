@@ -1,0 +1,52 @@
+<form class="form-horizontal" name="editForm" role="form" novalidate>
+    <div >
+        <div class="modal-header">
+            <h4 style="background-color: #1758a3 !important; color: white !important;text-align: center;">Type d'opération et montant</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-4">
+                    <p style="color: #1758a3 !important; text-align: center;">Compte Source : {{vm.final.cptsource}}</p>
+                </div>
+                <div class="col-4">
+                    <p style="color: #1758a3 !important; text-align: center;">Compte Destination : {{vm.final.cptdestination}}</p>
+                </div>
+            </div>
+            <div class="form-group bordered-5">
+                <label class="control-label" for="solder" >Opération</label>
+                <select  class="form-control input-xs" id="solder" name="statut" ng-model="vm.modal.typeSolder" required >
+                    <option value=""></option>
+                    <option value="Solder">Solder</option>
+                    <option value="Transfert">Transfert</option>
+                </select>
+            </div>
+            <div class="form-group bordered-5 ">
+                <div ng-if="vm.modal.typeSolder==='Transfert' ">
+                    <label class="control-label" for="mtn_solder" >Montant</label>
+                    <input type="text" id="mtn_solder" class="form-control" ng-model="vm.modal.mntSolder" required>
+                </div>
+                    <label class="control-label" for="field_description">Commentaire</label>
+                    <textarea  ng-model="vm.modal.commentaire"
+                               rows="4"
+                               ng-maxlength="1000" class="form-control" name="commentaire" id="field_description">
+            </textarea>
+                    <label mf-required class="control-label" for="field_description">Motif</label>
+                    <textarea required ng-model="vm.modal.motif"
+                              rows="1"
+                              ng-maxlength="1000" class="form-control" name="motif" id="field_motif">
+            </textarea>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="col-sm-12">
+                <button type="button" class="btn btn-default"  ng-click="fermerM()">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Fermer</span>
+                </button>
+                <button type="button" class="btn btn-primary" ng-disabled="editForm.$invalid" ng-click="validerOp()">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;<span>valider</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

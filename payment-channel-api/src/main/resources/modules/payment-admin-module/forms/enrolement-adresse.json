@@ -1,0 +1,26 @@
+{
+  "formio": {
+    "title": "Adresse",
+    "display": "form",
+    "components": [
+      { "type": "textfield", "key": "countryCode", "label": "Pays", "input": true, "validate": { "required": true } },
+      { "type": "textfield", "key": "regionCode", "label": "Région", "input": true, "validate": { "required": true } },
+      { "type": "textfield", "key": "provinceCode", "label": "Province", "input": true, "validate": { "required": true } },
+      { "type": "textfield", "key": "communeCode", "label": "Commune", "input": true, "validate": { "required": true } },
+      { "type": "textfield", "key": "city", "label": "Ville / localité", "input": true, "validate": { "required": true } },
+      { "type": "textfield", "key": "arrondissement", "label": "Arrondissement", "input": true, "validate": { "required": true } },
+      { "type": "textfield", "key": "sector", "label": "Secteur", "input": true, "validate": { "required": true } },
+      { "type": "textfield", "key": "district", "label": "Quartier", "input": true, "validate": { "required": true } },
+      { "type": "textfield", "key": "street", "label": "Rue", "input": true, "validate": { "required": true } },
+      { "type": "textfield", "key": "buildingNumber", "label": "Numéro de porte / parcelle", "input": true, "validate": { "required": false } },
+      { "type": "textfield", "key": "building", "label": "Bâtiment / immeuble", "input": true, "validate": { "required": false } },
+      { "type": "textfield", "key": "floor", "label": "Étage", "input": true, "validate": { "required": false } },
+      { "type": "textfield", "key": "unit", "label": "Appartement / bureau", "input": true, "validate": { "required": false } },
+      { "type": "textfield", "key": "postalCode", "label": "Code postal", "input": true, "validate": { "required": false } },
+      { "type": "textfield", "key": "landmark", "label": "Point de repère", "input": true, "validate": { "required": false } },
+      { "type": "textfield", "key": "additionalInfo", "label": "Complément d'adresse", "input": true, "validate": { "required": false } },
+      { "type": "textfield", "key": "latitude", "label": "Latitude", "input": true, "validate": { "required": false } },
+      { "type": "textfield", "key": "longitude", "label": "Longitude", "input": true, "validate": { "required": false } }
+    ]
+  }
+}

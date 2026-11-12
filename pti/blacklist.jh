@@ -1,0 +1,12 @@
+entity BlackList{
+}
+
+relationship ManyToOne {
+	BlackList to Client{client}
+}
+
+paginate all with pagination
+
+dto * with mapstruct
+
+service all with serviceClass

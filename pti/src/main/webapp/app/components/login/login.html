@@ -1,0 +1,36 @@
+<div class="login-body"><!--id="bodyc"-->
+    
+    <div class="content-wrapper">
+        <div class="sub">
+            <div class="corismoney-wrapper">
+                <img class="cm-logo" src="../../../content/img/logo-cm.png" alt="introuvalble"/>
+            </div>
+            <form name="editForm" role="form" novalidate ng-submit="vm.login($event)">
+                <div class=""><!--login-container animated fadeInDown-->
+                    <div class="loginbox bg-white">
+                        <!-- <div class="loginbox-title databox-shadowed  ">
+                        <span>
+                            <img style="max-height: 50px" src="../../../content/img/logo.png" alt="introuvalble"/>
+                        </span>
+                        </div> -->
+                    <div class="login-textfield" >
+                        <input placeholder="Login"  type="text" class="form-control input-lg " id="username" placeholder="{{'global.form.username.placeholder' | translate}}" ng-model="vm.username">                
+                        </div>
+                        <div class="login-textfield ">
+                                <input autocomplete="off" placeholder="Password" type="password" class="form-control input-lg" id="password" placeholder="{{'login.form.password.placeholder' | translate}}"
+                                ng-model="vm.password">
+                        </div>
+                        
+                        <div class="alert alert-danger" ng-show="vm.authenticationError">
+                            Identifiant ou mot de passe incorrect.
+                        </div>
+                        <div class="login-submit"><!--btn-block-->
+                            <input  type="submit" class="btn btn-primary" value="Connexion">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

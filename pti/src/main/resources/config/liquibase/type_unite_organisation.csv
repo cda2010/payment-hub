@@ -1,0 +1,7 @@
+id;code_type_uo;libelle_type_uo;niveau
+1;uo1;FSE;1
+2;uo2;AGENCE;2
+3;uo3;MASTER;3
+4;uo4;SOUS_DISTRIBUTEUR;4
+5;uo5;UNITE_REGROUPEMENT;-1
+6;uo6;PAYS;-1

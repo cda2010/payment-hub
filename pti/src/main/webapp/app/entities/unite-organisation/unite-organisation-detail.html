@@ -1,0 +1,850 @@
+<div>
+    <div class="widget">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.close()">&times;
+            </button>
+            <span class="widget-caption"><h4 class="modal-title text-center" id="myOperationLabel">Enregistrer des informations complementaires dans l'UO <strong>{{vm.uniteOrganisation.libelleUniteOrganisation}}</strong></h4></span>
+        </div>
+
+        <div class="widget-body">
+
+            <div class="widget-main ">
+
+                <div class="tabbable">
+
+                    <ul class="nav nav-tabs nav-justified" id="myTab9">
+
+                        <li class="tab-blue">
+                            <a aria-expanded="true" onclick="return false;" data-toggle="tab" href="#pointVente"
+                               ng-click="vm.createPointVente(null,null)">
+                                <h4>Point(s) de vente</h4>
+                            </a>
+                        </li>
+
+                        <li class="tab-red">
+                            <a data-toggle="tab" onclick="return false;" href="#compteUO"
+                               ng-click="vm.createCompte(null,null)">
+                                <h4>Compte(s)</h4>
+                            </a>
+                        </li>
+
+                        <li class="tab-green">
+                            <a data-toggle="tab" onclick="return false;" href="#autorisationUO"
+                               ng-click="vm.initAutorisation()">
+                                <h4>Autorisation(s)</h4>
+                            </a>
+                        </li>
+                        <li class="tab-green">
+                            <a data-toggle="tab" onclick="return false;" href="#UoUsers" ng-click="vm.initUsers()">
+                                <h4>Utilisateur(s)</h4>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="pointVente" class="tab-pane">
+                            <form class="form-horizontal container-fluid" name="editForm">
+                                <fieldset class="mf-fieldset p10">
+                                    <legend class="text-center">Creation d'un point de vente</legend>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-4"
+                                               data-translate="ptiApp.pointVente.codePointVente"
+                                               for="field_codePointVente">Code Point Vente</label>
+                                        <div class="col-sm-6">
+                                            <input autocomplete="off" ng-disabled="true" type="text"
+                                                   class="form-control input-xs" name="codePointVente"
+                                                   id="field_codePointVente" ng-model="vm.pointVente.codePointVente"
+                                                   required/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label mf-required class="control-label col-sm-4"
+                                               data-translate="ptiApp.pointVente.libellePointVente"
+                                               for="field_libellePointVente">Libelle Point Vente</label>
+                                        <div class="col-sm-6">
+                                            <input autocomplete="off" type="text" class="form-control input-xs"
+                                                   name="libellePointVente" id="field_libellePointVente"
+                                                   ng-model="vm.pointVente.libellePointVente" required/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label mf-required class="control-label col-sm-4" for="field_latitude">
+                                            Latitude</label>
+                                        <div class="col-sm-6">
+                                            <input autocomplete="off" type="text" class="form-control input-xs"
+                                                   name="latitude" id="field_latitude" ng-model="vm.pointVente.latitude"
+                                                   required/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label mf-required class="control-label col-sm-4" for="field_longitude">Longitude</label>
+                                        <div class="col-sm-6">
+                                            <input autocomplete="off" type="text" class="form-control input-xs"
+                                                   name="longitude" id="field_longitude"
+                                                   ng-model="vm.pointVente.longitude" required/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox col-sm-offset-4">
+                                            <label>
+                                                <input autocomplete="off" type="checkbox"
+                                                       class="checkbox-slider colored-blue checkbox-lg"
+                                                       ng-disabled="vm.isViewing" ng-model="vm.pointVente.estActif"/>
+                                                <span class="text">Est Actif</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox col-sm-offset-4">
+                                            <label>
+                                                <input autocomplete="off" type="checkbox"
+                                                       class="checkbox-slider colored-blue checkbox-lg"
+                                                       ng-disabled="vm.isViewing" ng-model="vm.pointVente.estSurCard"/>
+                                                <span class="text">Sur la carte</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-offset-8">
+                                        <button type="button" ng-click="vm.initPV()" ng-hide="vm.pointVente.id==null"
+                                                class="btn btn-sm">
+                                            <span>&times;</span>&nbsp;<span>Annuler</span>
+                                        </button>
+                                        <button type="button" ng-click="vm.savePV()"
+                                                ng-disabled="editForm.$invalid || vm.isSaving"
+                                                class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span
+                                                data-translate="entity.action.save">Save</span>
+                                        </button>
+                                    </div>
+                                    <div class="mb30"></div>
+
+
+                                    <div ng-if="vm.datas.length>0" class="col-sm-11 col-sm-offset-1">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading text-center">
+                                                        <h4>
+                                                            Liste des points de vente
+                                                        </h4>
+                                                    </div>
+                                                    <table class="table table-fixed">
+                                                        <caption>
+                                                            <input autocomplete="off" type="text"
+                                                                   placeholder="Rechercher..."
+                                                                   class="form-control form-control-static"
+                                                                   name="filter_field" ng-model="vm.query"/>
+                                                        </caption>
+                                                        <thead>
+                                                        <tr class="mf-table-header">
+                                                            <th class="col-xs-2" ng-click="vm.sortBy('codePointVente')">
+                                                                <span>Code</span>
+                                                                <span ng-if="vm.isCurrentColumn('codePointVente')"
+                                                                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                            </th>
+
+                                                            <th class="col-xs-4"
+                                                                ng-click="vm.sortBy('libellePointVente')">
+                                                                <span>Libelle</span>
+                                                                <span ng-if="vm.isCurrentColumn('libellePointVente')"
+                                                                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                            </th>
+
+                                                            <th class="col-xs-1" ng-click="vm.sortBy('latitude')">
+                                                                <span>Latitude</span>
+                                                                <span ng-if="vm.isCurrentColumn('latitude')"
+                                                                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                            </th>
+
+                                                            <th class="col-xs-1" ng-click="vm.sortBy('longitude')">
+                                                                <span>Longitude</span>
+                                                                <span ng-if="vm.isCurrentColumn('longitude')"
+                                                                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                            </th>
+                                                            <th class="col-xs-1" ng-click="vm.sortBy('estActif')">
+                                                                <span>Est actif ?</span>
+                                                                <span ng-if="vm.isCurrentColumn('estActif')"
+                                                                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                            </th>
+
+                                                            <th class="text-right col-xs-2"><span>Actions</span></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr class="mf-table-body"
+                                                            ng-repeat="pointVente in vm.datas|filter:vm.query track by pointVente.id">
+
+                                                            <td class="col-xs-2" title="{{pointVente.codePointVente}}">
+                                                                {{pointVente.codePointVente|characters:10}}
+                                                            </td>
+
+                                                            <td class="col-xs-4"
+                                                                title="{{pointVente.libellePointVente}}">
+                                                                {{pointVente.libellePointVente|characters:40}}
+                                                            </td>
+
+                                                            <td class="col-xs-1">{{pointVente.latitude}}</td>
+
+                                                            <td class="col-xs-1">{{pointVente.longitude}}</td>
+
+                                                            <td>
+                                                        <span ng-class="{'bg-danger white':!pointVente.estActif,'bg-success white':pointVente.estActif}">
+                                                            <span ng-if="pointVente.estActif">&nbsp; Oui &nbsp;</span>
+                                                            <span ng-if="!pointVente.estActif">&nbsp; Non &nbsp;</span>
+                                                        </span>
+                                                            </td>
+
+
+                                                            <td class="text-right col-xs-2">
+                                                                <div class="btn-group flex-btn-group-container">
+                                                                    <button type="button"
+                                                                            ng-click="vm.createPointVente($event,pointVente)"
+                                                                            class="btn btn-success shiny btn-xs btn-circle">
+                                                                        <span class="glyphicon glyphicon-pencil"></span>
+                                                                    </button>
+                                                                    <button type="button" data-toggle="tooltip"
+                                                                            data-original-title="Supprimer"
+                                                                            ng-click="vm.deleteItem($event, pointVente)"
+                                                                            class="btn btn-danger shiny btn-xs btn-circle ">
+                                                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                                                    </button>
+                                                                    <button type="button" data-toggle="tooltip"
+                                                                            title="imprimer code QR"
+                                                                            class="btn btn-info shiny btn-xs btn-circle"
+                                                                            ng-click="vm.codeQr(pointVente.id)">
+                                                                        <span class="glyphicon glyphicon-save"></span>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </form>
+                        </div>
+
+                        <div id="compteUO" class="tab-pane">
+                            <form class="form-horizontal container-fluid" name="myForm">
+                                <fieldset class="mf-fieldset p10">
+                                    <legend class="text-center">Creation de Compte</legend>
+
+                                    <div>
+                                        <div class="checkbox text-center" ng-if="!vm.compte.selectCompte">
+                                            <label>
+                                                <input autocomplete="off" type="checkbox"
+                                                       ng-disabled="vm.compte.id!=null"
+                                                       class="checkbox-slider colored-blue checkbox-lg"
+                                                       ng-disabled="vm.isViewing || vm.isEdit"
+                                                       ng-model="vm.compte.creerCompte"/>
+                                                <strong class="text">Voulez-vous creer un nouveau compte?</strong>
+                                            </label>
+                                        </div>
+                                        <div class="checkbox text-center"
+                                             ng-if="!vm.compte.selectCompte && !vm.compte.creerCompte">
+                                            <span class="text">OU</span>
+                                        </div>
+
+                                        <div class="checkbox text-center" ng-if="!vm.compte.creerCompte">
+                                            <label>
+                                                <input autocomplete="off" type="checkbox"
+                                                       ng-disabled="vm.compte.id!=null"
+                                                       class="checkbox-slider colored-blue checkbox-lg"
+                                                       ng-disabled="vm.isViewing || vm.isEdit"
+                                                       ng-model="vm.compte.selectCompte"/>
+                                                <strong class="text">Voulez-vous selectionner un compte qui existe
+                                                    déja?</strong>
+                                            </label>
+                                        </div>
+                                        <div ng-if="vm.datas.length===0 && vm.tail===0" ><button class="btn btn-blue" ng-click="vm.ajouterCompteAgent(vm.uniteOrganisation)" ><span>Ajouter les comptes</span></button></div>
+                                    </div>
+                                    <div ng-if="vm.compte.selectCompte">
+                                        <div class="mb10"></div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" mf-required for="field_etiquett">Etiquette</label>
+                                            <div class="col-sm-6">
+                                                <select class="form-control" id="field_etiquett" name="etiquette"
+                                                        ng-model="vm.compte.etiquette"
+                                                        ng-options="etiquette.code as etiquette.code for etiquette in vm.etiquetteComptes"
+                                                        required>
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" mf-required for="field_compte">Compte
+                                                Principal</label>
+                                            <div class="col-sm-6">
+                                                <select disabled class="form-control" id="field_compte" name="compte"
+                                                        ng-model="vm.compte.comptePincipaleId"
+                                                        ng-options="compte.id as compte.etiquette for compte in vm.comptes"
+                                                        required>
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="vm.compte.etiquette!=null">
+                                                <i ng-if="!vm.isViewing" title="Sélectionnez le compte principal"
+                                                   class="btn btn-primary btn-xs" j-select-dialog j-multiple="false"
+                                                   j-model="vm.compte.comptePincipaleId" j-list="vm.comptes"
+                                                   j-columns='vm.compteColums'
+                                                   j-event-name="onLoadCompte">Choisir...</i>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-offset-8">
+                                            <button type="button" ng-click="vm.initCompte()"
+                                                    ng-hide="vm.compte.id==null" class="btn btn-sm">
+                                                <span>&times;</span>&nbsp;<span>Annuler</span>
+                                            </button>
+                                            <button type="button" ng-click="vm.saveCompte()"
+                                                    ng-disabled="myForm.$invalid || vm.isSaving"
+                                                    class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-save"></span>&nbsp;<span
+                                                    data-translate="entity.action.save">Save</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="vm.compte.creerCompte">
+                                        <div class="mb10"></div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" mf-required
+                                                   for="field_categorieCompte"> Compte</label>
+                                            <div class="col-sm-6">
+                                                <select class="form-control" name="categorieCompte"
+                                                        ng-change=" vm.categorieCompteChange()"
+                                                        ng-model="vm.compte.firstCategorieCompte"
+                                                        id="field_categorieCompte" ng-disabled="vm.compte.creerCompte&&vm.isCompteActor ? true : false">
+                                                    <option value="COMPTE_INTERNE">COMPTE_INTERNE</option>
+                                                    <option value="COMPTE_EXTERNE">COMPTE_EXTERNE</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" mf-required for="field_typeCompte">Type
+                                                Compte</label>
+                                            <div class="col-sm-6">
+                                                <select class="form-control" id="field_typeCompte" name="typeCompte"
+                                                        ng-model="vm.compte.typeCompteId"
+                                                        ng-options="typeCompte.id as typeCompte.libelleTypeCompte for typeCompte in vm.typecomptes"
+                                                        ng-disabled="vm.compte.creerCompte&&vm.isCompteActor ? true : false"
+                                                        required>
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4" mf-required for="field_etiquette">Etiquette</label>
+                                            <div class="col-sm-6">
+                                                <select class="form-control" id="field_etiquette" name="etiquette"
+                                                        ng-model="vm.compte.etiquette"
+                                                        ng-options="etiquette.code as etiquette.code for etiquette in vm.etiquetteComptes"
+                                                        ng-disabled="vm.compte.creerCompte&&vm.isCompteActor ? true : false"
+                                                        required>
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group"
+                                             ng-if="vm.compte.firstCategorieCompte=='COMPTE_EXTERNE'">
+                                            <label class="control-label col-sm-4" for="field_valeurCompte">Valeur
+                                                Compte</label>
+                                            <div class="col-sm-6">
+                                                <input autocomplete="off" type="text" class="form-control"
+                                                       name="valeurCompte" id="field_valeurCompte"
+                                                       ng-model="vm.compte.valeurCompte"/>
+                                            </div>
+                                        </div>
+                                        <div ng-if="vm.compte.firstCategorieCompte=='COMPTE_INTERNE'">
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4" for="field_valeurCompte1">Valeur
+                                                    Compte</label>
+                                                <div class="col-sm-6">
+                                                    <input autocomplete="off" type="text" class="form-control"
+                                                           ng-disabled="true" name="valeurCompte"
+                                                           id="field_valeurCompte1" ng-model="vm.compte.valeurCompte"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="checkbox col-lg-offset-6"
+                                             ng-if="vm.compte.firstCategorieCompte=='COMPTE_EXTERNE'">
+                                            <label>
+                                                <input autocomplete="off" type="checkbox"
+                                                       class="checkbox-slider colored-blue checkbox-lg"
+                                                       ng-disabled="vm.isViewing || vm.isEdit || vm.compte.creerCompte&&vm.isCompteActor ? true : false"
+                                                       ng-model="vm.compte.estCompteBanque"/>
+                                                <span class="text">Compte Banque</span>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label" mf-required for="field_fournisseur">Fournisseur</label>
+                                                <div class="col-sm-6">
+                                                    <select class="form-control input-xs" ng-disabled="vm.isViewing"
+                                                            id="field_fournisseur" name="fournisseur"
+                                                            ng-model="vm.compteBanque.codeFse"
+                                                            ng-options="fournisseurService.codeFse as fournisseurService.libelleFse for fournisseurService in vm.fournisseurservices">
+                                                        <option value=""></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4" mf-required
+                                                       for="field_codeAgence">Code Agence</label>
+                                                <div class="col-sm-6">
+                                                    <input autocomplete="off" type="text" class="form-control"
+                                                           name="codeAgence" id="field_codeAgence"
+                                                           ng-model="vm.compteBanque.codeAgence" required/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4" mf-required
+                                                       for="field_codeBanque">Code Banque</label>
+                                                <div class="col-sm-6">
+                                                    <input autocomplete="off" type="text" class="form-control"
+                                                           name="codeBanque" id="field_codeBanque"
+                                                           ng-model="vm.compteBanque.codeBanque" required/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" >
+                                                <label  mf-required class="control-label col-sm-4"
+                                                        for="field_rib">Rib</label>
+                                                <div class="col-sm-6">
+                                                    <input autocomplete="off" required type="text" class="form-control" name="rib"
+                                                           id="field_rib" ng-model="vm.compteBanqueB.rib" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4" mf-required for="field_devise">Devise</label>
+                                                <div class="col-sm-6">
+                                                    <select class="form-control" id="field_devise" name="devise"
+                                                            ng-model="vm.compteBanque.deviseId"
+                                                            ng-options="devise.id as devise.libelle for devise in vm.devises"
+                                                            required>
+                                                        <option value=""></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-offset-8">
+                                            <button type="button" ng-click="vm.initCompte()"
+                                                    ng-hide="vm.compte.id==null" class="btn btn-sm">
+                                                <span>&times;</span>&nbsp;<span>Annuler</span>
+                                            </button>
+                                            <button type="button" ng-click="vm.saveCompte()"
+                                                    ng-disabled="myForm.$invalid || vm.isSaving"
+                                                    class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-save"></span>&nbsp;<span
+                                                    data-translate="entity.action.save">Save</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="mb30"></div>
+
+                                    <div ng-if="vm.datas.length>0" class="col-sm-12">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading text-center">
+<!--                                                        <h4>
+                                                            Liste des comptes
+                                                        </h4>-->
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <h4>
+                                                                    Liste des comptes
+                                                                </h4>
+                                                            </div>
+                                                            <div class="col-sm-6" >
+                                                                <button ng-click="vm.toggle()" >
+                                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                                    <span>Ajouter compte operation</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <table class="table-responsive table table-hover">
+                                                        <caption>
+                                                            <input autocomplete="off" type="text"
+                                                                   placeholder="Rechercher..."
+                                                                   class="form-control form-control-static"
+                                                                   name="filter_field" ng-model="vm.query"/>
+                                                        </caption>
+                                                        <thead>
+                                                        <tr class="mf-table-header">
+                                                            <th class="col-xs-3" ng-click="vm.sortBy('etiquette') ">
+                                                                <span>Etiquette</span>
+                                                                <span ng-if="vm.isCurrentColumn('etiquette')"
+                                                                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                            </th>
+                                                            <th class="col-xs-2" ng-click="vm.sortBy('libelleEtiquette') ">
+                                                                <span>Libelle compte</span>
+                                                            </th>
+                                                            <th class="col-xs-2" ng-click="vm.sortBy('valeurCompte') ">
+                                                                <span>Valeur Compte</span>
+                                                                <span ng-if="vm.isCurrentColumn('valeurCompte')"
+                                                                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                            </th>
+                                                            <th class="col-xs-2"
+                                                                ng-click="vm.sortBy('categorieCompte') ">
+                                                                <span>Catégorie Compte</span>
+                                                                <span ng-if="vm.isCurrentColumn('categorieCompte')"
+                                                                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                            </th>
+
+                                                            <th class="col-xs-2">
+                                                                <span>Solde</span>
+                                                            </th>
+                                                            <th class="col-xs-2">
+                                                                <span>Statut</span>
+                                                            </th>
+                                                            <th class="text-right col-xs-5">Actions</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr ng-repeat="compte in vm.datas|filter:vm.query:strict track by compte.id">
+                                                            <td class="col-xs-3">{{compte.etiquette}}</td>
+                                                            <td class="col-xs-3">{{compte.libelleEtiquette}}</td>
+                                                            <td class="col-xs-2">{{compte.valeurCompte}}</td>
+                                                            <td class="col-xs-2">{{compte.categorieCompte}}</td>
+
+                                                            <td class="col-xs-1">
+                                                                <span ng-if="compte.categorieCompte=='AUTRE'">
+                                                                    {{compte.soldeCompte}}
+                                                                </span>
+                                                            </td>
+                                                            <td class="col-xs-2">
+                                                                <button ng-if="compte.categorieCompte==='BANQUE' && (compte.statutCompte==='DESACTIVE' || compte.statutCompte===null)" class="btn btn-danger btn-xs" ng-click="vm.setActiveCompteBanque(compte)"
+
+                                                                >Desactiver
+                                                                </button>
+                                                                <button ng-if="compte.categorieCompte==='BANQUE' && compte.statutCompte==='ACTIVE'" class="btn btn-success btn-xs" ng-click="vm.setActiveCompteBanque(compte)"
+
+                                                                >Activer
+                                                                </button>
+                                                            </td>
+
+                                                            <td class="text-right col-xs-4">
+                                                                <div class="row btn-group flex-btn-group-container">
+                                                                    <button type="submit"
+                                                                            ng-click="vm.findTransaction(compte)"
+                                                                            class="btn btn-primary shiny btn-xs btn-circle">
+                                                                        <span class="glyphicon glyphicon-sort"></span>
+                                                                    </button>
+                                                                    <button type="submit"
+                                                                            ng-click="vm.createCompte($event,compte)"
+                                                                            class="btn btn-success shiny btn-xs btn-circle">
+                                                                        <span class="glyphicon glyphicon-pencil"></span>
+                                                                    </button>
+                                                                    <button type="button" data-toggle="tooltip"
+                                                                            data-original-title="Supprimer"
+                                                                            ng-click="vm.deleteItem($event, compte)"
+                                                                            class="btn btn-danger shiny btn-xs btn-circle ">
+                                                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+
+                        <div id="autorisationUO" class="tab-pane">
+                            <form class="form-horizontal container-fluid" name="hisForm">
+                                <fieldset class="mf-fieldset p10">
+                                    <legend class="text-center">Creation d'une autorisation</legend>
+
+                                    <div class="col-sm-11 col-sm-offset-1">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading text-center">
+                                                        <h4>
+                                                            Liste des autorisations
+                                                        </h4>
+                                                    </div>
+                                                    <div style="overflow: scroll; max-height:400px">
+                                                        <table class="table table-fixed">
+                                                            <caption>
+                                                                <input autocomplete="off" type="text"
+                                                                       placeholder="Rechercher..."
+                                                                       class="form-control form-control-static"
+                                                                       name="filter_field" ng-model="vm.query"/>
+                                                            </caption>
+                                                            <thead>
+                                                            <tr class="mf-table-header">
+                                                                <th ng-click="vm.sortBy('libelle')"
+                                                                    class="col-xs-10 text-center">
+                                                                    <span>Type Service</span>
+                                                                    <span ng-if="vm.isCurrentColumn('libelle')"
+                                                                          ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                                </th>
+                                                                <th class="col-xs-2"><span>Actions</span></th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr ng-repeat="typeService in vm.typeservices|filter:vm.query track by typeService.id">
+                                                                <td class="col-xs-10 text-center"
+                                                                    title="{{typeService.libelle}}">
+                                                                    {{typeService.libelle| characters:55}}
+                                                                </td>
+                                                                <td class="col-xs-2">
+                                                                    <div class="btn-group flex-btn-group-container">
+                                                                        <label class="switch switch-sm">
+                                                                            <input autocomplete="off" type="checkbox"
+                                                                                   ng-model="typeService.isSave"
+                                                                                   ng-change="vm.createAutorisation($event,typeService)"
+                                                                            />
+                                                                            <span>
+                                                                <i class="handle"></i>
+                                                                </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+
+                        <div id="UoUsers" class="tab-pane">
+                            <form class="form-horizontal container-fluid" name="hisForm">
+                                <fieldset class="mf-fieldset p10">
+                                    <legend class="text-center">Creation des utilisateurs</legend>
+                                    <div class="container-fluid">
+                                        <div class="row mb5 mt5" has-any-authority="ROLE_ADMIN">
+                                            <div class="row" ng-if="vm.filtrer">
+                                                <div class="form-group col-sm-4">
+                                                    <div class="input-group">
+                                                        <input ng-model="vm.organisation.libelleUniteOrganisation"
+                                                               class="form-control input-xs" type="text"
+                                                               placeholder="Organisation" disabled/>
+                                                        <div class="input-group-btn">
+                                                            <button class="btn btn-xs btn-primary"
+                                                                    ng-click="vm.choisirUo()">
+                                                                <span class="glyphicon glyphicon-pencil"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <select class="form-control input-xs" id="field_profil"
+                                                            name="profil" ng-model="vm.itemSearch.profilId"
+                                                            ng-options="profil.id as profil.nom for profil in vm.profils">
+                                                        <option value="">Choisir profil</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" ng-if="vm.filtrer">
+                                                <div class="form-group col-sm-4">
+                                                    <div class="col-sm-4">
+                                                        <button class="btn btn-warnig btn-md"
+                                                                ng-click="vm.initFiltre()">
+                                                            <span class="glyphicon glyphicon-search">Annuler</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <button class="btn btn-info btn-md " ng-click="vm.filtre()">
+                                                            <span class="glyphicon glyphicon-search">Filtrer</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group " ng-if="!vm.filtrer">
+                                                <div class="col-sm-3">
+                                                    <button class="btn btn-info btn-md" ng-click="vm.filtrer=true">
+                                                        <span class="glyphicon glyphicon-search">Filtrer</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="well with-header">
+                                            <div class="header bg-blue row">
+                                                <div class="col-xs-8">
+                                                    <h4>Liste des utilisateurs</h4>
+                                                </div>
+                                                <div class="no-padding-left col-xs-4">
+                                                    <button ng-if="vm.actions.add || vm.actions.add==null"
+                                                            class="btn btn-default  btn-circle btn-xs "
+                                                            ng-click="vm.addItem()">
+                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                    </button>
+                                                    <div class="btn-group mr15" uib-dropdown>
+                                                        <button type="button"
+                                                                class="btn btn-default dropdown-toggle btn-xs"
+                                                                data-toggle="dropdown"
+                                                                aria-expanded="false" uib-dropdown-toggle>
+                                                            {{vm.itemsPerPage}} éléments par page
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                                            <li>
+                                                                <a href="javascript:;"
+                                                                   ng-click="vm.setItemsPerPage(15)">15 éléments par
+                                                                    page</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:;"
+                                                                   ng-click="vm.setItemsPerPage(20)">20 éléments par
+                                                                    page</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:;"
+                                                                   ng-click="vm.setItemsPerPage(30)">30 éléments par
+                                                                    page</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:;"
+                                                                   ng-click="vm.setItemsPerPage(40)">40 éléments par
+                                                                    page</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <table class="table-responsive table table-hover">
+                                                <thead>
+                                                <tr class="">
+                                                    <th ng-click="vm.sortBy('login') ">
+                                                        <span>Login</span>
+                                                        <span ng-if="vm.isCurrentColumn('login')"
+                                                              ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                    </th>
+                                                    <th ng-click="vm.sortBy('telephone') ">
+                                                        <span>Telephone</span>
+                                                        <span ng-if="vm.isCurrentColumn('telephone')"
+                                                              ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                    </th>
+                                                    <th ng-click="vm.sortBy('email') ">
+                                                        <span>Email</span>
+                                                        <span ng-if="vm.isCurrentColumn('email')"
+                                                              ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                    </th>
+                                                    <th ng-click="vm.sortBy('activated') ">
+                                                        <span>Statut</span>
+                                                        <span ng-if="vm.isCurrentColumn('activated')"
+                                                              ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                    </th>
+                                                    <!-- <th ng-click="vm.sortBy('authorities') ">
+                                                         <span>Droit</span>
+                                                         <span ng-if="vm.isCurrentColumn('authoroties')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                     </th>-->
+                                                    <th ng-click="vm.sortBy('createdDate') ">
+                                                        <span>Créé le</span>
+                                                        <span ng-if="vm.isCurrentColumn('createdDate')"
+                                                              ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                    </th>
+                                                    <th ng-click="vm.sortBy('lastModifiedBy') ">
+                                                        <span>Modifié par</span>
+                                                        <span ng-if="vm.isCurrentColumn('lastModifiedBy')"
+                                                              ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                    </th>
+                                                    <th ng-click="vm.sortBy('lastModifiedDate') ">
+                                                        <span>Modifié le</span>
+                                                        <span ng-if="vm.isCurrentColumn('lastModifiedDate')"
+                                                              ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                    </th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="user in vm.datas track by user.id">
+                                                    <td>{{user.login}}</td>
+                                                    <td>{{user.phoneNumber}}</td>
+                                                    <td title="{{user.email}}">{{user.email | characters:30}}</td>
+                                                    <td>
+                                                        <button class="btn btn-danger btn-xs"
+                                                                ng-click="vm.setActive(user, true)"
+                                                                ng-show="!user.activated"
+                                                        >Deactivated
+                                                        </button>
+                                                        <button class="btn btn-success btn-xs"
+                                                                ng-click="vm.setActive(user, false)"
+                                                                ng-show="user.activated"
+                                                                ng-disabled="vm.currentAccount.login === user.login"
+                                                        >Activated
+                                                        </button>
+                                                    </td>
+                                                    <!-- <td>
+                                                         <div ng-repeat="authority in user.authorities">
+                                                             <span title="{{authority}}" class="label label-info">{{ authority }}</span>
+                                                         </div>
+                                                     </td>-->
+                                                    <td>{{user.createdDate | date:'dd/MM/yy HH:mm'}}</td>
+                                                    <td>{{user.lastModifiedBy}}</td>
+                                                    <td>{{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</td>
+                                                    <td class="text-right">
+                                                        <div class="btn-group flex-btn-group-container">
+                                                            <button title="Consulter" type="submit"
+                                                                    ng-click="vm.detailItem($event,user)"
+                                                                    class="btn btn-info btn-xs btn-round">
+                                                                <span class="glyphicon glyphicon-eye-open"></span>
+                                                            </button>
+                                                            <button title="Modifier" type="submit"
+                                                                    ng-click="vm.editItem($event,user)"
+                                                                    class="btn btn-warning btn-xs btn-round">
+                                                                <span class="glyphicon glyphicon-pencil"></span>
+                                                            </button>
+                                                            <button title="Reinitialiser le mot de passe" type="submit"
+                                                                    ng-click="vm.resetPassword(user)"
+                                                                    class="btn btn-danger btn-xs btn-round">
+                                                                <span class="glyphicon glyphicon-check"></span>
+                                                            </button>
+                                                            <!--<button type="submit" ng-disabled="vm.currentAccount.login === user.login" ng-click="vm.deleteItem($event,user)" class="btn btn-danger btn-xs btn-round">-->
+                                                            <!--<span class="glyphicon glyphicon-remove-circle"></span>-->
+                                                            <!--</button>-->
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="center-block text-center" ng-show="vm.canShowPagination()">
+                                            <uib-pagination total-items="vm.totalItems" ng-model="vm.page"
+                                                            items-per-page="vm.itemsPerPage">
+                                            </uib-pagination>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer actions actions-footer" id="simplewizard-actions">
+    <div class="btn-group">
+        <button ng-click="vm.close()" type="button" class="btn btn-default btn-sm"> Fermer</button>
+    </div>
+</div>

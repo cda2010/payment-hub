@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             targetNamespace="http://payment-gateway/provider"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+
+  <process id="providerBalanceInquiry" name="Provider Balance Inquiry" isExecutable="true">
+    <documentation>Consultation de solde — formKey provider-balance-inquiry.</documentation>
+    <startEvent id="start" name="Start"/>
+    <sequenceFlow id="flow_start" sourceRef="start" targetRef="collectAccount"/>
+    <userTask id="collectAccount" name="Identifiant compte / MSISDN"
+              flowable:formKey="provider-balance-inquiry"/>
+    <sequenceFlow id="flow_collect" sourceRef="collectAccount" targetRef="getBalance"/>
+    <serviceTask id="getBalance" name="Consulter solde"
+                 flowable:delegateExpression="${gatewayCallFseTaskDelegate}"/>
+    <sequenceFlow id="flow_end" sourceRef="getBalance" targetRef="end"/>
+    <endEvent id="end" name="End"/>
+  </process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_providerBalanceInquiry">
+    <bpmndi:BPMNPlane id="BPMNPlane_providerBalanceInquiry" bpmnElement="providerBalanceInquiry">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <omgdc:Bounds x="100" y="162" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="collectAccount_di" bpmnElement="collectAccount">
+        <omgdc:Bounds x="180" y="140" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="getBalance_di" bpmnElement="getBalance">
+        <omgdc:Bounds x="350" y="140" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="end_di" bpmnElement="end">
+        <omgdc:Bounds x="520" y="162" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="flow_start_di" bpmnElement="flow_start">
+        <omgdi:waypoint x="136" y="180"/><omgdi:waypoint x="180" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_collect_di" bpmnElement="flow_collect">
+        <omgdi:waypoint x="300" y="180"/><omgdi:waypoint x="350" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_end_di" bpmnElement="flow_end">
+        <omgdi:waypoint x="470" y="180"/><omgdi:waypoint x="520" y="180"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

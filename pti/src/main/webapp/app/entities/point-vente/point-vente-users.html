@@ -1,0 +1,47 @@
+<form name="editForm" ng-submit="vm.save()" role="form" novalidate show-validation class="container-fluid form-horizontal">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myPointVenteLabel"> Utilisateurs du  Point Vente</h4>
+    </div>
+
+    <div class="modal-body">
+            <div class="form-group">
+                    <label class="control-label col-sm-4" mf-required data-translate="ptiApp.pointVente.codePointVente" for="field_codePointVente">Code Point Vente</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off"type="text" class="form-control input-xs" ng-disabled="vm.isViewing" name="codePointVente" id="field_codePointVente"
+                               ng-model="vm.pointVente.codePointVente"
+                               required/>
+                    </div>
+                </div>
+            <div class="form-group">
+                    <label mf-required class="control-label col-sm-4" for="field_utilisateur">Utilisateurs</label>
+                    <div class="col-sm-6">
+                        <select disabled required class="form-control" id="field_utilisateur" name="utilisateur" ng-model="vm.userId" ng-options="user.id as user.login for user in vm.users">
+                        <option value=""></option>
+                    </select>
+                    </div>
+                <i title="Sélectionnez les utilisateurs" class="btn btn-primary btn-xs"
+                   j-select-dialog
+                   j-multiple="false"
+                   j-model="vm.userId"
+                   j-list="vm.users"
+                   j-columns='vm.userColumns'
+                   j-event-name="onLoadUsers">Choisir...</i>
+                </div>
+    </div>
+    
+    <div class="modal-footer" ng-if="!vm.isSaveInUO">
+        <button ng-click="vm.clear()" type="button" ng-if="!vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.close()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-if="!vm.isViewing" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+        <button ng-click="vm.clear()" type="button" ng-if="vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.close()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+            <span>Fermer</span>
+        </button>
+    </div>
+</form>

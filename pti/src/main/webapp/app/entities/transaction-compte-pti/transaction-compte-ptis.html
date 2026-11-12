@@ -1,0 +1,74 @@
+<div>
+    <h2 data-translate="ptiApp.transactionComptePti.home.title">Transaction Compte Ptis</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="transaction-compte-pti.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="ptiApp.transactionComptePti.home.createLabel">
+                        Create new Transaction Compte Pti
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="type"><span data-translate="ptiApp.transactionComptePti.type">Type</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="etat"><span data-translate="ptiApp.transactionComptePti.etat">Etat</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="date"><span data-translate="ptiApp.transactionComptePti.date">Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="montant"><span data-translate="ptiApp.transactionComptePti.montant">Montant</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="soldeCourant"><span data-translate="ptiApp.transactionComptePti.soldeCourant">Solde Courant</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="soldeApres"><span data-translate="ptiApp.transactionComptePti.soldeApres">Solde Apres</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="operationId"><span data-translate="ptiApp.transactionComptePti.operation">Operation</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="transactionComptePti in vm.transactionComptePtis track by transactionComptePti.id">
+                    <td><a ui-sref="transaction-compte-pti-detail({id:transactionComptePti.id})">{{transactionComptePti.id}}</a></td>
+                    <td data-translate="{{'ptiApp.TypeTransactionCompte.' + transactionComptePti.type}}">{{transactionComptePti.type}}</td>
+                    <td data-translate="{{'ptiApp.EtatValidite.' + transactionComptePti.etat}}">{{transactionComptePti.etat}}</td>
+                    <td>{{transactionComptePti.date | date:'medium'}}</td>
+                    <td>{{transactionComptePti.montant}}</td>
+                    <td>{{transactionComptePti.soldeCourant}}</td>
+                    <td>{{transactionComptePti.soldeApres}}</td>
+                    <td>
+                        <a ui-sref="operation-detail({id:transactionComptePti.operationId})">{{transactionComptePti.operationId}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="transaction-compte-pti-detail({id:transactionComptePti.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="transaction-compte-pti.edit({id:transactionComptePti.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="transaction-compte-pti.delete({id:transactionComptePti.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

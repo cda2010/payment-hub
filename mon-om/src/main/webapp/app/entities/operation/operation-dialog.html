@@ -1,0 +1,65 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+
+        <h4 class="modal-title" id="myOperationLabel">Create or edit a Operation</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.operation.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.operation.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_dateOperation">Date Operation</label>
+                <div class="input-group">
+                    <input id="field_dateOperation" type="text" class="form-control" name="dateOperation" datetime-picker="{{dateformat}}" ng-model="vm.operation.dateOperation" is-open="vm.datePickerOpenStatus.dateOperation"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateOperation')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_fseCodeSource">Fse Code Source</label>
+            <input type="text" class="form-control" name="fseCodeSource" id="field_fseCodeSource"
+                    ng-model="vm.operation.fseCodeSource"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_fseCodeDest">Fse Code Dest</label>
+            <input type="text" class="form-control" name="fseCodeDest" id="field_fseCodeDest"
+                    ng-model="vm.operation.fseCodeDest"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="exempleApp.operation.user_id" for="field_user_id">User Id</label>
+            <input type="number" class="form-control" name="user_id" id="field_user_id"
+                    ng-model="vm.operation.user_id"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_typeService">Type Service</label>
+            <input type="number" class="form-control" name="typeService" id="field_typeService"
+                    ng-model="vm.operation.typeService"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_terminal">Terminal</label>
+            <input type="text" class="form-control" name="terminal" id="field_terminal"
+                    ng-model="vm.operation.terminal"
+                    />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+</form>

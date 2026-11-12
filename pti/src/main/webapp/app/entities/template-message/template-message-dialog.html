@@ -1,0 +1,103 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myTemplateMessageLabel" data-translate="ptiApp.templateMessage.home.createOrEditLabel">Create or edit a Template Message</h4>
+    </div>
+    <div class="modal-body">
+        <fieldset  class="p10 mf-fieldset col-sm-6" >
+            <div class="form-group" ng-show="vm.templateMessage.id">
+                <label for="id" data-translate="global.field.id">ID</label>
+                <input type="text" class="form-control" id="id" name="id"
+                       ng-model="vm.templateMessage.id" readonly />
+            </div>
+            <div class="form-group">
+                <label class="control-label" data-translate="ptiApp.templateMessage.langue" for="field_langue">Langue</label>
+                <select class="form-control" name="langue" ng-model="vm.templateMessage.langue" id="field_langue" required>
+                    <option value="FRANCAIS" data-translate="ptiApp.Langues.FRANCAIS">FRANCAIS</option>
+                    <option value="ANGLAIS" data-translate="ptiApp.Langues.ENGLAIS">ENGLAIS</option>
+                    <option value="ALLEMAND" data-translate="ptiApp.Langues.ALLEMAND">ALLEMAND</option>
+                    <option value="ESPAGNOLE" data-translate="ptiApp.Langues.ESPAGNOLE">ESPAGNOLE</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label"  for="field_destination">Destination</label>
+                <select class="form-control" name="langue" ng-model="vm.templateMessage.destination" id="field_destination">
+                    <option value="EMETTEUR">EMETTEUR</option>
+                    <option value="BENEFICIAIRE">BENEFICIAIRE</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" data-translate="ptiApp.templateMessage.etiquette" for="field_etiquette">Etiquette</label>
+                <input type="text" class="form-control" name="etiquette" id="field_etiquette"
+                       ng-model="vm.templateMessage.etiquette"
+                       />
+            </div>
+            <div  class="form-group">
+                <label class="control-label" for="field_type_service">Type Service</label>
+
+                <select class="form-control" id="field_type_service" name="fse" ng-model="vm.templateMessage.typeServiceLibelle"
+                        ng-options="typeService.libelle as typeService.libelle for typeService in vm.typeServices" >
+                            
+                    
+                    <option value="">Choisir un type de service</option>
+                </select>
+            </div>
+            <div  class="form-group">
+                <label class="control-label" for="field_fse">FSE</label>
+
+                <select class="form-control" id="field_fse" name="fse" ng-model="vm.templateMessage.fseId"
+                        ng-options="uo.id as uo.libelleUniteOrganisation for uo in vm.FSEs">
+                </select>
+            </div>
+        </fieldset>
+        <fieldset  class="p10 mf-fieldset col-sm-6">
+            <div class="form-group">
+                <label class="control-label" data-translate="ptiApp.templateMessage.contenu" for="field_contenu">Contenu</label>
+                <textarea class="form-control" name="model" id="field_contenu"
+                          ng-model="vm.templateMessage.contenu" required
+                          rows="5"
+                          placeholder="Ex : Depot ESPECES #agence de #montant  au debit sur votre cpte #compte à la date du #date à #heure. Solde #solde."
+                          ng-maxlength="255">
+                </textarea>
+            </div>
+            <div class="form-group">
+                <label></label>
+                <div>
+                    <ul class="list-style-none">
+                        <li> <span class="label label-success">${SOLDE}</span> solde </li>
+                        <li> <span class="label label-success">${TRANSID}</span>  la référence de la transaction</li>
+                        <li> <span class="label label-success">${DATEOPERATION}</span> la date de l'opération</li>  
+                        <li> <span class="label label-success">${HEUREOPERATION}</span> l'heure de l'opération</li>
+                        <li> <span class="label label-success">${MONTANT}</span>  le montant hors taxe</li>
+                        <li> <span class="label label-success">${NBREJRS}</span> le nombre de jour de validité du code de retrait</li>
+                        <li> <span class="label label-success">${CODERETRAIT}</span> le code de retrait</li>
+                        <li> <span class="label label-success">${FRAIS}</span> les frais de l'opération</li>
+                        <li> <span class="label label-success">${TOTAL}</span> le montant total de l'opération y compris les frais</li>
+                        <li> <span class="label label-success">${EMETTEUR}</span> l'émetteur de </li>
+                        <li> <span class="label label-success">${UOEMETTEUR}</span> L'agent emetteur</li>
+                        <li> <span class="label label-success">${UOACQUEREUR}</span> L'agent acquereur </li>
+                        <li> <span class="label label-success">${BENEFICIAIRE}</span> Le bénéficiaire de l'opération</li>
+                        <li> <span class="label label-success">${TELEPHONEEME}</span> Le téléphone de l'émeteur</li>
+                        <li> <span class="label label-success">${TELEPHONEACQ}</span> Le téléphone du bénéficiaire</li>
+                        <li> <span class="label label-success">${NARRATION}</span> Narration pour les envois en masse </li>
+                        <li> <span class="label label-success">${PASSWORD}</span> Mot de passe </li>
+                        <li> <span class="label label-success">${USERLOGIN}</span> login de l'utilisateur  </li>
+                        <li> <span class="label label-success">${DONNEURORDRE}</span> Donneur d'ordre  </li>
+                    </ul>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

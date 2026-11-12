@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity ProfilActeur.
+    -->
+    <changeSet id="20190527145228-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="profil_acteurs_id"
+                                 baseTableName="profil_acteur_horaire_authentification"
+                                 constraintName="fk_profil_acteur_horaire_authentification_profil_acteurs_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profil_acteur"/>
+        <addForeignKeyConstraint baseColumnNames="horaire_authentifications_id"
+                                 baseTableName="profil_acteur_horaire_authentification"
+                                 constraintName="profil_acteur_horaire_authentif_horaire_authentifications_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="horaire_authentification"/>
+        
+        <addForeignKeyConstraint baseColumnNames="profil_acteurs_id"
+                                 baseTableName="profil_acteur_tableau_frais"
+                                 constraintName="fk_profil_acteur_tableau_frais_profil_acteurs_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profil_acteur"/>
+        <addForeignKeyConstraint baseColumnNames="tableau_frais_id"
+                                 baseTableName="profil_acteur_tableau_frais"
+                                 constraintName="fk_profil_acteur_tableau_frais_tableau_frais_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tableau_frais"/>
+        
+        <addForeignKeyConstraint baseColumnNames="profil_acteurs_id"
+                                 baseTableName="profil_acteur_tableau_cumul"
+                                 constraintName="fk_profil_acteur_tableau_cumul_profil_acteurs_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profil_acteur"/>
+        <addForeignKeyConstraint baseColumnNames="tableau_cumuls_id"
+                                 baseTableName="profil_acteur_tableau_cumul"
+                                 constraintName="fk_profil_acteur_tableau_cumul_tableau_cumuls_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tableau_cumul"/>
+        
+        <addForeignKeyConstraint baseColumnNames="profil_acteurs_id"
+                                 baseTableName="profil_acteur_tableau_repartition_commission"
+                                 constraintName="profil_acteur_tableau_repartiti_profil_acteurs_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profil_acteur"/>
+        <addForeignKeyConstraint baseColumnNames="tableau_repartition_commissions_id"
+                                 baseTableName="profil_acteur_tableau_repartition_commission"
+                                 constraintName="profil_acteur_tableau_repartiti_tableau_repartition_commission_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tableau_repartition_commission"/>
+        
+    </changeSet>
+</databaseChangeLog>

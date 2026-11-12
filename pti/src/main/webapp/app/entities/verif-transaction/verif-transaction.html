@@ -1,0 +1,95 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="well with-header" style="margin-top:10px ">
+            <div class="header bg-blue ">
+                <div class="col-xs-8">
+                    <span>Verification des transactions</span>
+                </div>
+            </div>
+            <!--filtre-->
+            <div class="contaner-fluid mt5">
+                <div class="col-sm-4" ng-if="vm.filtrer">
+                    <div class="form-group">
+                        <label for="field_code">Facturier</label>
+                        <select class="form-control" id="field_facturier" name="facturier"
+                                ng-model="vm.itemSearch.facturier"
+                                ng-change="vm.changeFacturier()"
+                                ng-options="facturiers.id as facturiers.nomFacturier for facturiers in vm.facturiers">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4" ng-if="vm.filtrer">
+                    <div class="form-group">
+                        <label for="field_code">Produit</label>
+                        <select class="form-control" id="field_code" name="nationalite"
+                                ng-model="vm.itemSearch.produit"
+                                ng-options="produits.id as produits.nomProduit for produits in vm.produits">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4" ng-if="vm.filtrer">
+                    <div class="form-group">
+                        <label for="field_code">Code Opération</label>
+                        <input ng-keypress="$event.keyCode == 13 && vm.filtre()"
+                            autocomplete="off" title="code"
+                            type="text" class="form-control" name="code" id="field_code"
+                            ng-model="vm.itemSearch.code"/>
+                    </div>
+                </div>
+            </div>
+                <div class="row mt5" ng-if="vm.filtrer">
+                    <div class="form-group col-sm-12 ">
+                        <div class="col-sm-3 ">
+                            <button class="btn btn-info btn-md " ng-click="vm.filtre()" ng-disabled="!vm.itemSearch.facturier || !vm.itemSearch.produit || !vm.itemSearch.code">
+                                <span class="glyphicon glyphicon-ok">Valider</span>
+                            </button>
+                        </div>
+                        <div class="col-sm-3">
+                            <button ng-if="vm.afficheFiltre" class="btn btn-danger mt5" ng-click="vm.afficherFiltre()">
+                                <span class="glyphicon glyphicon-remove"> Annuler</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div ng-if="vm.afficheFiltre && vm.data.length > 0" class="container-fluid mt5">
+                        <table class="table table-hover" style="border-collapse: collapse;">
+                            <thead class="bordered-blue">
+                                <tr>
+                                    <th ><span class="badge badge-primary">Code Paramètre</span></th>
+                                    <th ><span class="badge badge-primary">Valeur Paramètre</span></th>
+                                </tr>
+                            </thead> 
+                            <tbody>
+                             <tr ng-repeat="parametre in vm.data">
+                                    <td style="border: none;"><span class="badge badge-info">{{ parametre.codeParametre }}</span></td>
+                                    <td style="border: none;"><span class="badge badge-warning">{{ parametre.valeur }}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- <div class="col-sm-6">
+                            <div class="form-group">
+                                <ul style="list-style-type: none;">
+                                    <li ng-repeat="parametre in vm.data">
+                                        <span  class="badge badge-info">{{  parametre.codeParametre }}</span> 
+                                        <strong>Code Paramètre:</strong> {{ parametre.codeParametre }} ----
+                                        <strong>Valeur:</strong> {{ parametre.valeur }} <br>
+                                 </li>
+                                    <li ng-if="vm.data.length === 0">Aucun résultat trouvé.</li>
+                                </ul>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div ng-if="vm.afficheFiltre && vm.data.length === 0" class="container-fluid mt5">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <span class="badge badge-danger" style="text-align: center; font-size: xx-large;">Aucun résultat trouvé.</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+      
+</div>
+</div>

@@ -1,0 +1,46 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "intro",
+        "tag": "p",
+        "content": "Saisissez le code agence et le numéro de compte. Nous rechercherons le titulaire auprès de la banque."
+      },
+      {
+        "type": "textfield",
+        "key": "agence",
+        "label": "Code agence",
+        "input": true,
+        "placeholder": "ex. 01001",
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "numeroCompte",
+        "label": "Numéro de compte",
+        "input": true,
+        "placeholder": "N° de compte",
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Rechercher",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Code agence": "Code agence",
+      "Numéro de compte": "Numéro de compte"
+    },
+    "en": {
+      "Code agence": "Branch code",
+      "Numéro de compte": "Account number"
+    }
+  }
+}

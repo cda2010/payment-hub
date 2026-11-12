@@ -1,0 +1,51 @@
+
+<div>
+    <h2><span data-translate="ptiApp.regleCommission.detail.title">Regle Commission</span> {{vm.regleCommission.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.regleCommission.client">Client</span></dt>
+        <dd>
+            <span>{{vm.regleCommission.client}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.regleCommission.etiquette">Etiquette</span></dt>
+        <dd>
+            <span>{{vm.regleCommission.etiquette}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.regleCommission.typeOperateur">Type Operateur</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.TypeOperateur.' + vm.regleCommission.typeOperateur}}">{{vm.regleCommission.typeOperateur}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.regleCommission.dateDebut">Date Debut</span></dt>
+        <dd>
+            <span>{{vm.regleCommission.dateDebut | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.regleCommission.dateFin">Date Fin</span></dt>
+        <dd>
+            <span>{{vm.regleCommission.dateFin | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.regleCommission.typeService">Type Service</span></dt>
+        <dd>
+            <a ui-sref="type-service-detail({id:vm.regleCommission.typeServiceId})">{{vm.regleCommission.typeServiceId}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.regleCommission.teneurSrc">Teneur Src</span></dt>
+        <dd>
+            <a ui-sref="unite-organisation-detail({id:vm.regleCommission.teneurSrcId})">{{vm.regleCommission.teneurSrcId}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.regleCommission.teneurDest">Teneur Dest</span></dt>
+        <dd>
+            <a ui-sref="unite-organisation-detail({id:vm.regleCommission.teneurDestId})">{{vm.regleCommission.teneurDestId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="regle-commission-detail.edit({id:vm.regleCommission.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,194 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="well with-header" style="margin-top:10px ">
+            <div class="header bg-blue ">
+                <div class="col-xs-8">
+                    <span ng-if="vm.typeP=='PHYSIQUE'">Liste des clients</span>
+                    <span ng-if="vm.typeP=='MORALE'">Liste des entreprises</span>
+                </div>
+                <div class="no-padding-left col-xs-4">
+                    <div class="btn-group mr15" uib-dropdown>
+                        <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                                aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                            éléments par page <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--                filtre-->
+            <div class="row mt5">
+                <div class="row mt5">
+                    <div ng-class="{'col-sm-2':vm.typeP=='PHYSIQUE','col-md-2':vm.typeP=='MORALE'}" class="form-group"
+                         ng-if="vm.filtrer">
+                        <label for="field_code">Pays</label>
+                        <select class="form-control" id="field_code" name="nationalite"
+                                ng-model="vm.itemSearch.code"
+                                ng-options="nationalite.code as nationalite.libelle for nationalite in vm.nationalites">
+                        </select>
+                    </div>
+                    <div class="form-group" ng-class="{'col-sm-2':vm.typeP=='PHYSIQUE','col-md-2':vm.typeP=='MORALE'}"
+                         ng-if="vm.filtrer">
+                        <label for="field_telephoneE">Téléphone</label>
+                        <input ng-keypress="$event.keyCode == 13 && vm.filtre()"
+                               autocomplete="off" title="Telephone"
+                               type="number" class="form-control" name="telephone" id="field_telephoneE"
+                               ng-model="vm.itemSearch.telephone"/>
+                    </div>
+                    <div class="form-group" ng-class="{'col-sm-2':vm.typeP=='PHYSIQUE','col-md-2':vm.typeP=='MORALE'}"
+                         ng-if="vm.filtrer">
+                        <label for="field_addresse">Adresse</label>
+                        <input ng-keypress="$event.keyCode == 13 && vm.filtre()"
+                               autocomplete="off" title="Adresse"
+                               type="text" class="form-control" name="Adresse" id="field_addresse"
+                               ng-model="vm.itemSearch.adresse"/>
+                    </div>
+                    <div class="form-group" ng-class="{'col-sm-2':vm.typeP=='PHYSIQUE','col-md-2':vm.typeP=='MORALE'}"
+                         ng-if="vm.filtrer">
+                        <label for="field_addresse">Numéro Pièce</label>
+                        <input ng-keypress="$event.keyCode == 13 && vm.filtre()"
+                               autocomplete="off" title="Numéro Pièce"
+                               type="text" class="form-control" name="Piece" id="field_piece"
+                               ng-model="vm.itemSearch.numeroPiece"/>
+                    </div>
+                    <div ng-if="vm.typeP=='PHYSIQUE'">
+                        <div class=" form-group col-sm-2" ng-if="vm.filtrer">
+                            <label for="field_nom">Nom</label>
+                            <input ng-keypress="$event.keyCode == 13 && vm.filtre()"
+                                   autocomplete="off" title="Nom"
+                                   type="text" class="form-control" name="nom" id="field_nom"
+                                   ng-model="vm.itemSearch.nom"/>
+                        </div>
+                        <div class="form-group col-sm-2" ng-if="vm.filtrer">
+                            <label for="field_prenom">Prénom</label>
+                            <input ng-keypress="$event.keyCode == 13 && vm.filtre()"
+                                   autocomplete="off" title="Prenom"
+                                   type="text" class="form-control" name="prenom" id="field_prenom"
+                                   ng-model="vm.itemSearch.prenom"/>
+                        </div>
+
+                    </div>
+                    <div ng-if="vm.typeP=='MORALE'">
+
+                        <div class="form-group col-sm-2" ng-if="vm.filtrer">
+                            <label for="field_raison_sociale">Raison sociale</label>
+                            <input ng-keypress="$event.keyCode == 13 && vm.filtre()"
+                                   autocomplete="off" title="Raison sociale"
+                                   type="text" class="form-control" name="raison_sociale" id="field_raison_sociale"
+                                   ng-model="vm.itemSearch.raisonSociale"/>
+                        </div>
+
+                    </div>
+                    <div class="row mt5" ng-if="vm.filtrer">
+                        <div class="form-group col-sm-12 ">
+                            <!--                            <div class="col-sm-4">-->
+                            <!--                                <button class="btn btn-warnig btn-md" ng-click="vm.initFiltre()">-->
+                            <!--                                    <span class="glyphicon glyphicon-search">Annuler</span>-->
+                            <!--                                </button>-->
+                            <!--                            </div>-->
+                            <div class="col-sm-3" ng-if="vm.filtreCtrl">
+                                <select class=" col-sm-5" id="filed_format" name="format" ng-model="vm.format" >
+                                    <option value="">Format</option>
+                                    <option value="PDF">PDF</option>
+                                    <option value="XLSX">XLSX</option>
+                                    <option value="CSV">CSV</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3" ng-if="vm.filtreCtrl">
+                                <button class="btn btn-primary btn-md " ng-click="vm.generateAll()">
+                                    <span class="glyphicon glyphicon-save">Exporter</span>
+                                </button>
+                            </div>
+                            <div class="col-sm-3 ">
+                                <button class="btn btn-info btn-md " ng-click="vm.filtre()">
+                                    <span class="glyphicon glyphicon-search">Chercher</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--            <div class="form-group " ng-if="!vm.filtrer">-->
+                <!--                <div class="col-sm-3">-->
+                <!--                    <button class="btn btn-info btn-md" ng-click="vm.filtrer=true">-->
+                <!--                        <span class="glyphicon glyphicon-search">Filtrer</span>-->
+                <!--                    </button>-->
+                <!--                </div>-->
+                <!--            </div>-->
+            </div>
+            <!--                /filtre-->
+            <div class="row primary" ng-if="vm.canShowResultCount">
+                <i ng-if="vm.totalItems>1">{{vm.totalItems}} éléments trouvés</i>
+                <i ng-if="vm.totalItems==1">{{vm.totalItems}} élément trouvé</i>
+                <i ng-if="vm.totalItems<1">Aucun résultat</i>
+            </div>
+            <table class="table table-hover">
+                <thead class="bordered-blue">
+                <tr>
+                    <th>Nom</th>
+                    <th>Telephone</th>
+                    <th>Adresse</th>
+                    <th>Groupe</th>
+                    <th>Est identifié</th>
+                    <th>Est Actif</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="client in vm.datas">
+                    <td>{{client.nomClient}}  {{client.prenomClient}}</td>
+                    <td>{{client.telephone}}</td>
+                    <td>{{client.adresse}}</td>
+                    <td>{{client.groupeProfilActeurNom}}</td>
+                    <td><span ng-class="{'bg-danger white':!client.clientIdentifie,
+                                          'bg-success white':client.clientIdentifie}">
+                                <span ng-if="client.clientIdentifie">&nbsp; Oui &nbsp;</span>
+                                <span ng-if="!client.clientIdentifie">&nbsp; Non &nbsp;</span>
+                            </span>
+                    </td>
+                    <td><span ng-class="{'bg-danger white':!client.clientValide,
+                                          'bg-success white':client.clientValide}">
+                                <span ng-if="client.clientValide">&nbsp; Oui &nbsp;</span>
+                                <span ng-if="!client.clientValide">&nbsp; Non &nbsp;</span>
+                            </span>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit" ng-click="vm.detailsPersonne(client)"
+                                    class="btn btn-info btn-xs btn-round">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+                            <button title="Mise à jour" type="submit" ng-click="vm.details($event,client,false)"
+                                    class="btn btn-warning btn-xs btn-round">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button title="Supprimer" type="submit" ng-click="vm.deleteClient(client.clientDTO)"
+                                    class="btn btn-danger btn-xs btn-round">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="center-block text-center" ng-show="vm.canShowPagination()">
+            <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+            </uib-pagination>
+        </div>
+    </div>
+</div>

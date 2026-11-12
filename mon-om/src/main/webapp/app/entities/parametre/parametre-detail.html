@@ -1,0 +1,46 @@
+
+<div class="container-fluid">
+    <div class="panel" style="border: 2px solid #7485e6; border-radius: 5px;">
+        <div class="panel-body">
+            <h2 class="text-center m-b-xs">
+                <i class="fa fa-cogs text-warning m-r-xs"></i>
+                <span class="text-primary">Parametre</span>
+                <span class="badge badge-info">{{vm.parametre.id}}</span>
+            </h2>
+            <hr style="border-top: 2px solid #7485e6;"/>
+            
+            <jhi-alert-error></jhi-alert-error>
+            
+            <div class="row" style="background-color: #f8f9fa; padding: 20px; border-radius: 5px;">
+                <dl class="dl-horizontal jh-entity-details">
+                    <dt class="text-primary" style="font-size: 16px;"><span>Nom Parametre</span></dt>
+                    <dd style="background-color: white; padding: 10px; border: 1px solid #7485e6; border-radius: 4px;">
+                        <span>{{vm.parametre.nomParametre}}</span>
+                    </dd>
+                    
+                    <dt class="text-primary" style="font-size: 16px; margin-top: 15px;"><span>Type Parametre</span></dt>
+                    <dd style="background-color: white; padding: 10px; border: 1px solid #7485e6; border-radius: 4px;">
+                        <span>{{vm.parametre.typeParametre}}</span>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="text-center m-t-md">
+                <button type="submit"
+                        ui-sref="{{ vm.previousState }}"
+                        class="btn btn-default"
+                        style="background-color: white; border: 1px solid #7485e6; color: #7485e6;">
+                    <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>Retour</span>
+                </button>
+
+                <button type="button"
+                        ui-sref="parametre-detail.edit({id:vm.parametre.id})"
+                        class="btn btn-primary"
+                        style="margin-left: 10px;">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span class="hidden-sm-down">Modifier</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

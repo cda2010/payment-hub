@@ -1,0 +1,9 @@
+{
+    "ptiApp": {
+        "Etape" : {
+            "null": "",
+            "INIT": "INIT",
+            "PROCEED": "PROCEED"
+        }
+    }
+}

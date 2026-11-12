@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "serviceProfil" : {
+            "home": {
+                "title": "ServiceProfils",
+                "createLabel": "Créer un nouveau Service Profil",
+                "createOrEditLabel": "Créer ou éditer un Service Profil"
+            },
+            "created": "Un nouveau Service Profil a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Service Profil avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Service Profil avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Service Profil {{ id }} ?"
+            },
+            "detail": {
+                "title": "Service Profil"
+            },
+            "nom": "Nom",
+            "description": "Description",
+            "typeService": "Type Service"
+        }
+    }
+}

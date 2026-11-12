@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_8.0.xsd">
+
+  <grid name="transfer-fee-policy-grid" title="Politiques de frais"
+        model="com.gateway.payment.transfer.domain.TransferFeePolicy"
+        edit-form="transfer-fee-policy-form" new-action-view="transfer-fee-policy-new"
+        rest-resource="/api/v1/admin/transfers/fee-policies"
+        canDelete="false">
+    <field name="code"/>
+    <field name="name"/>
+    <field name="policyType"/>
+    <field name="emitterCode"/>
+    <field name="beneficiaryCode"/>
+    <field name="railCode"/>
+    <field name="actif"/>
+  </grid>
+
+  <form name="transfer-fee-policy-form" title="Politique de frais"
+        model="com.gateway.payment.transfer.domain.TransferFeePolicy"
+        rest-resource="/api/v1/admin/transfers/fee-policies">
+    <panel name="main" title="Politique">
+      <field name="code" required="true" colSpan="4"/>
+      <field name="name" required="true" colSpan="8"/>
+      <field name="policyType" required="true" colSpan="4"/>
+      <field name="countryCode" required="true" colSpan="2"/>
+      <field name="currency" required="true" colSpan="2"/>
+      <field name="actif" colSpan="2"/>
+      <field name="ordre" colSpan="2"/>
+      <field name="emitterCode" colSpan="4"/>
+      <field name="beneficiaryCode" colSpan="4"/>
+      <field name="railCode" colSpan="4"/>
+      <field name="feeRule" required="true" colSpan="12"/>
+    </panel>
+  </form>
+
+</object-views>

@@ -1,0 +1,56 @@
+[
+  {
+    "context": ["/api/v1/grilles", "/api/v1/formules", "/api/v1/frais", "/api/v1/pricing"],
+    "target": "http://localhost:8095",
+    "secure": false,
+    "changeOrigin": true
+  },
+  {
+    "context": ["/api/v1/network"],
+    "target": "http://localhost:8096",
+    "secure": false,
+    "changeOrigin": true
+  },
+  {
+    "context": ["/api/v1/identity"],
+    "target": "http://localhost:8094",
+    "secure": false,
+    "changeOrigin": true
+  },
+  {
+    "context": ["/api/v1/aliases"],
+    "target": "http://localhost:8097",
+    "secure": false,
+    "changeOrigin": true
+  },
+  {
+    "context": ["/api/v1/commission"],
+    "target": "http://localhost:8100",
+    "secure": false,
+    "changeOrigin": true
+  },
+  {
+    "context": ["/api/v1/content", "/api/v1/admin/content", "/api/v1/admin/cms"],
+    "target": "http://localhost:8098",
+    "secure": false,
+    "changeOrigin": true
+  },
+  {
+    "context": ["/api/v1/documents"],
+    "target": "http://localhost:8101",
+    "secure": false,
+    "changeOrigin": true
+  },
+  {
+    "context": ["/api/v1/rules", "/api/v1/rule-groups", "/api/v1/limits"],
+    "target": "http://localhost:8099",
+    "secure": false,
+    "changeOrigin": true
+  },
+  {
+    "context": ["/api"],
+    "target": "http://localhost:8080",
+    "secure": false,
+    "changeOrigin": true
+  }
+]

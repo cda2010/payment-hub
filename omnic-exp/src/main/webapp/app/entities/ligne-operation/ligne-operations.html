@@ -1,0 +1,64 @@
+<div>
+    <h2>Ligne Operations</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="ligne-operation.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Ligne Operation
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Text Ligne Transaction</span></th>
+                    <th><span>Reponse</span></th>
+                    <th><span>Codereponse</span></th>
+                    <th><span>Operation</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="ligneOperation in vm.ligneOperations track by ligneOperation.id">
+                    <td><a ui-sref="ligne-operation-detail({id:ligneOperation.id})">{{ligneOperation.id}}</a></td>
+                    <td>{{ligneOperation.textLigneTransaction}}</td>
+                    <td>{{ligneOperation.reponse}}</td>
+                    <td>{{ligneOperation.codereponse}}</td>
+                    <td>
+                        <a ui-sref="operation-detail({id:ligneOperation.operation.id})">{{ligneOperation.operation.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="ligne-operation-detail({id:ligneOperation.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="ligne-operation.edit({id:ligneOperation.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="ligne-operation.delete({id:ligneOperation.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

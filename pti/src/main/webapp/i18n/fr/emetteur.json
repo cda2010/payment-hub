@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "emetteur" : {
+            "home": {
+                "title": "Emetteurs",
+                "createLabel": "Créer un nouveau Emetteur",
+                "createOrEditLabel": "Créer ou éditer un Emetteur"
+            },
+            "created": "Un nouveau Emetteur a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Emetteur avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Emetteur avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Emetteur {{ id }} ?"
+            },
+            "detail": {
+                "title": "Emetteur"
+            },
+            "code": "Code",
+            "personne": "Personne",
+            "operation": "Operation"
+        }
+    }
+}

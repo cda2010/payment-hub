@@ -1,0 +1,30 @@
+{
+  "gateway": { "nextAction": "FORM" },
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "textfield",
+        "key": "accountId",
+        "label": "Identifiant compte / MSISDN",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Identifiant compte / MSISDN": "Identifiant compte / MSISDN"
+    },
+    "en": {
+      "Identifiant compte / MSISDN": "Account ID / MSISDN"
+    }
+  }
+}

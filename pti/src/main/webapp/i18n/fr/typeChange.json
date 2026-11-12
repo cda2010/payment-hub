@@ -1,0 +1,9 @@
+{
+    "ptiApp": {
+        "TypeChange" : {
+            "null": "",
+            "ACHAT": "ACHAT",
+            "VENTE": "VENTE"
+        }
+    }
+}

@@ -1,0 +1,118 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myRepartitionFraisLabel" >Configuration de la repartition des frais</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4"  data-translate="ptiApp.repartitionFrais.typeService" for="field_typeService">Type Service</label>
+            <div class="col-sm-6">
+                <select required class="form-control" id="field_typeService" name="typeService" ng-model="vm.repartitionFrais.typeServiceId" ng-options="typeService.id as typeService.libelle for typeService in vm.typeservices">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="control-label col-sm-4" for="field_relation">Relation</label>
+            <div class="col-sm-6">
+                <select ng-model="vm.relation"  class="form-control" id="field_relation" name="relation" ng-model="vm.repartitionFrais.relationId" ng-options="relation as relation.libelle for relation in vm.relations" ng-change="vm.relationChange()">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.repartitionFrais.acteur" for="field_acteur">Acteur</label>
+            <div class="col-sm-6">
+                <select required class="form-control" name="acteur" ng-model="vm.repartitionFrais.acteur" id="field_acteur">
+                    <option value="COMP" data-translate="ptiApp.Acteur.COMP">COMP</option>
+                    <option value="ACQ" data-translate="ptiApp.Acteur.ACQ">ACQ</option>
+                    <option value="EM" data-translate="ptiApp.Acteur.EM">EM</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.repartitionFrais.min" for="field_min">Min</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"required  type="text" class="form-control" name="min" id="field_min"
+                ng-model="vm.repartitionFrais.min" numeric
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.repartitionFrais.max" for="field_max">Max</label>
+            <div class="col-sm-6">
+                <input autocomplete="off" required type="text" class="form-control" name="max" id="field_max"
+                ng-model="vm.repartitionFrais.max" numeric
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.repartitionFrais.typeTarif" for="field_typeTarif">Type Tarif</label>
+            <div class="col-sm-6">
+                <select required class="form-control" name="typeTarif" ng-model="vm.repartitionFrais.typeTarif" id="field_typeTarif">
+                    <option value="FIXE" data-translate="ptiApp.TypeTarif.FIXE">FIXE</option>
+                    <option value="POURCENTAGE" data-translate="ptiApp.TypeTarif.POURCENTAGE">POURCENTAGE</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.repartitionFrais.valeur" for="field_valeur">Valeur</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"required class="form-control" name="valeur" id="field_valeur"
+                ng-model="vm.repartitionFrais.valeur"
+                />
+            </div>
+        </div>
+
+        <!-- <div class="form-group">
+            <label mf-required class="control-label col-sm-4"  for="field_dateDebut">Date Debut</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"required uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" ng-focus="vm.openCalendar('dateDebut')" id="field_dateDebut" type="text" class="form-control" name="dateDebut" uib-datepicker-popup="{{dateformat}}" ng-model="vm.repartitionFrais.dateDebut"
+                       is-open="vm.datePickerOpenStatus.dateDebut" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4"  for="field_dateFin">Date Fin</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"required uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" ng-focus="vm.openCalendar('dateFin')" id="field_dateFin" type="text" class="form-control" name="dateFin" uib-datepicker-popup="{{dateformat}}" ng-model="vm.repartitionFrais.dateFin"
+                       is-open="vm.datePickerOpenStatus.dateFin" />
+            </div>
+        </div> -->
+
+        <div class="form-group">
+            <div class="checkbox col-sm-6 col-sm-offset-4">
+                <label>
+                    <input autocomplete="off"class="colored-success" type="checkbox" name="obligatoire" id="field_obligatoire"
+                        ng-model="vm.repartitionFrais.activated" />
+                    <b class="text">Active ?</b>
+                </label>
+            </div>
+        </div>
+ <div class="form-group">
+            <div class="checkbox col-sm-6 col-sm-offset-4">
+                <label>
+                    <input autocomplete="off"class="colored-success" type="checkbox" name="obligatoire" id="field_obligatoire"
+                        ng-model="vm.repartitionFrais.surFrais" />
+                    <b class="text">Sur montant des frais ?</b>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

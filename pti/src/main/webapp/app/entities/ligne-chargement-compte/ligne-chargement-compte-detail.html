@@ -1,0 +1,59 @@
+
+<div>
+    <h2><span data-translate="ptiApp.ligneChargementCompte.detail.title">Ligne Chargement Compte</span> {{vm.ligneChargementCompte.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.ligneChargementCompte.nom">Nom</span></dt>
+        <dd>
+            <span>{{vm.ligneChargementCompte.nom}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneChargementCompte.prenom">Prenom</span></dt>
+        <dd>
+            <span>{{vm.ligneChargementCompte.prenom}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneChargementCompte.telephone">Telephone</span></dt>
+        <dd>
+            <span>{{vm.ligneChargementCompte.telephone}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneChargementCompte.dateNaissance">Date Naissance</span></dt>
+        <dd>
+            <span>{{vm.ligneChargementCompte.dateNaissance}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneChargementCompte.lieuNaissance">Lieu Naissance</span></dt>
+        <dd>
+            <span>{{vm.ligneChargementCompte.lieuNaissance}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneChargementCompte.nomMere">Nom Mere</span></dt>
+        <dd>
+            <span>{{vm.ligneChargementCompte.nomMere}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneChargementCompte.personnePrevenir">Personne Prevenir</span></dt>
+        <dd>
+            <span>{{vm.ligneChargementCompte.personnePrevenir}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneChargementCompte.email">Email</span></dt>
+        <dd>
+            <span>{{vm.ligneChargementCompte.email}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneChargementCompte.adresse">Adresse</span></dt>
+        <dd>
+            <span>{{vm.ligneChargementCompte.adresse}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneChargementCompte.typePersonne">Type Personne</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.TypeLignePersonne.' + vm.ligneChargementCompte.typePersonne}}">{{vm.ligneChargementCompte.typePersonne}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="ligne-chargement-compte-detail.edit({id:vm.ligneChargementCompte.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

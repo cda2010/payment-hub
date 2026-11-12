@@ -1,0 +1,222 @@
+<div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="well with-header" style="margin-top:10px" >
+                <div class="header  " >
+                    <div class="form-group">
+                        <label class="control-label" for="field_typeUO" >Choisir type</label>
+                        <select ng-change="vm.getOrganisationByType(vm.typeUO)" required  class="form-control"
+                                 name="typeUO"
+                                 ng-model="vm.typeUO" id="field_typeUO">
+                            <option value="MARCHAND" >
+                                MARCHAND
+                            </option>
+                            <option value="SOUS-DISTRIBUTEUR">SOUS-DISTRIBUTEUR
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="organisationId" >Choisir Organisation</label>
+                        <select ng-change="vm.getOrganisation(vm.organisationId)" required  class="form-control" name="organisationId" id="organisationId"
+                                 ng-model="vm.organisationId"
+                                 ng-options="organisation.id as organisation.libelleUniteOrganisation for organisation in vm.organisations">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="serviceId">Service Profil </label>
+                        <select class="form-control" name="serviceId" required id="serviceId"
+                                ng-model="vm.serviceId"
+                                ng-options="seviceProfile.id as seviceProfile.nom for seviceProfile in vm.seviceProfiles"  >
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="profilId">Goupe Profil Acteur</label>
+                        <select class="form-control" name="profilId" required id="profilId"
+                                ng-model="vm.profilId"
+                                ng-options="group.id as group.nom for group in vm.groupeProfils"  >
+                        </select>
+                    </div>
+                    <br>
+                    <div  ng-show="vm.afficheFichier === false">
+                        <div class="form-group ">
+                            <form name="myForm">
+                                <label class="btn btn-primary btn-file">
+                                    Charger le fichier ici <input type="file" ngf-select=""  ng-model="picFile" name="file"
+                                                                  ngf-max-size="2MB" required accept=".txt,.csv"
+                                                                  ngf-model-invalid="errorFile"  ng-change="vm.progressingBarAzero(picFile)"style="display: none;">
+                                </label>
+                                <button ng-click="vm.lireFichier(picFile)" class="btn btn-primary waves-effect" ng-disabled="vm.ctrlbtnsave">Enregistrer</button>
+                                <button ng-click="vm.clear(picFile)" class="btn btn-primary waves-effect">Annuler</button>
+                                {{vm.fileName}}
+                                <br>
+                                <br>
+                                <div class="progress progress-striped active"  >
+                                    <div class="progress-bar progress-bar-warning ng-binding" role="progressbar" aria-valuenow="{{vm.progressionBar}}"  aria-valuemin="0" aria-valuemax="100" style="width:{{vm.progressionBar}}%">
+                                        <span class="sr-only">
+                                            20% Complete (success)
+                                        </span>
+                                    </div>
+                                </div>
+                                <br>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <button ng-click="vm.supprimerFichier()" class="btn btn-primary"  ng-disabled="!vm.defchargement.id || vm.click || vm.defchargement.statut ==='V'">Supprimer</button>
+                <br>
+                <br>
+                <br>
+                <div class="container-fluid">
+                    <div class="panel-default">
+                        <div ng-if="vm.chargementTransfert.length == 0"><p>Aucun chargement enregistré</p></div>
+                        <div ng-if="vm.chargementTransferts.length != 0"  class="well with-header" style="margin-top:10px ">
+                            <div class="row primary" ng-if="vm.canShowResultCount2">
+                                <i ng-if="vm.totalItems2 > 1">{{vm.totalItems2}} éléments trouvés</i>
+                                <i ng-if="vm.totalItems2 == 1" >{{vm.totalItems2}} élément trouvé</i>
+
+                            </div>
+
+                            <table ng-if="vm.ctrlTabC" class="table table-hover ">
+                                <thead>
+                                <tr>
+                                    <th><span>Reference</span></th>
+                                    <th><span >Nom Fichier</span></th>
+                                    <th><span >Date Chargement</span></th>
+                                    <th><span >Nombre Ligne</span></th>
+                                    <th><span >Nombre Ligne Charge</span></th>
+                                    <th><span >Nombre Ligne Erreur</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="chargementTransfert in vm.chargementFichiers track by chargementTransfert.id" ng-click="vm.getChargement(chargementTransfert, $index)" ng-class="{'selected':$index == vm.selectedRow}">
+                                    <td>{{chargementTransfert.reference}}</td>
+                                    <td>{{chargementTransfert.nomFichier}}</td>
+                                    <td >{{chargementTransfert.dateFichier==null ? chargementTransfert.dateChargement : chargementTransfert.dateFichier}}</td>
+
+
+
+                                    <td>{{chargementTransfert.nombreLigne}}</td>
+                                    <td>{{chargementTransfert.nombreLigneCharge}}</td>
+                                    <td>{{chargementTransfert.nombreLigneErreur}}</td>
+                                    <td>
+                                        <div class="task-state">
+                                                <span class="label label-yellow" ng-if="chargementTransfert.statut !== null && chargementTransfert.statut == 'I'">
+                                                    En cours
+                                                </span>
+                                            <span class="label label label-palegreen" ng-if="chargementTransfert.statut !== null && chargementTransfert.statut === 'V'">
+                                                    Terminé
+                                                </span>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="center-block text-center" ng-show="vm.totalItems2 > vm.queryCount2">
+                        <uib-pagination total-items="vm.totalItems2" ng-model="vm.page2" items-per-page="vm.itemsPerPage">
+                        </uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 " >
+            <div class="well with-header" style="margin-top:10px" >
+                <div class="header  " >
+                    <h4>Détail des chargements {{vm.defchargement.reference}}</h4>
+                    <p> Nombre: {{vm.defchargement.nombreLigne}}</p>
+                </div>
+                <br>
+                <br>
+                <br>
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <select class="form-control input-xs ng-pristine ng-untouched ng-valid ng-empty"  ng-model="vm.filterStatut" id="field_sattutChargement" name="statutChargement"  aria-invalid="false" ng-change="vm.filtrerParStatut(vm.defchargement.id)">
+                            <option value="">Statut</option>
+                            <option value="RJCT">Rejeté</option>
+                            <option value="ACCT">Accepté</option>
+                        </select>
+                        <br>
+                        <button class="btn btn-primary"  ng-click="vm.validerChrgmt(vm.defchargement)" ng-disabled="!vm.defchargement.id || vm.click || vm.defchargement.statut === 'V' || vm.defchargement.statut === 'I'" ng-show="vm.afficheFichier" >
+                            <span class="fa fa-check"></span>
+                            <span >Valider</span>
+                        </button>
+                        <select  id="filed_format" name="format" ng-model="vm.format" >
+                            <option value="">Format</option>
+                            <option value="PDF">PDF</option>
+                            <option value="XLSX">XLSX</option>
+                            <option value="CSV">CSV</option>
+                        </select>
+                        <button type="button" class="btn btn-raised btn-info"  ng-click="vm.imprimerSelonStatut(vm.defchargement.id)" ng-disabled="!vm.filterStatut || !vm.ligneChargements.length != 0"><span class="glyphicon glyphicon-print"></span><span>Imprimer</span></button>
+
+                    </div>
+                </div>
+
+
+                <br/>
+                <div  class="panel-default" >
+                    <div class="container-fluid">
+                        <div class="well with-header" style="margin-top:10px ">
+                            <div class="row primary" ng-if="vm.canShowResultCount">
+                                <i ng-if="vm.totalItems > 1">{{vm.totalItems}} éléments trouvés</i>
+                                <i ng-if="vm.totalItems == 1" >{{vm.totalItems}} élément trouvé</i>
+                                <i ng-if="vm.totalItems < 1">Aucun résultat</i>
+                            </div>
+                            <span class="label label label-blueberry">
+                                NC: Non chargé, IC:instance de chargement, OC: Chargé
+                            </span>
+                            <br/>
+                            <table class="table table-hover">
+
+                                <thead>
+                                <tr>
+                                    <th><span >Nom</span></th>
+                                    <th><span>Statut Ligne</span></th>
+                                    <th><span>Erreur</span></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="ligneChargement in vm.ligneChargements track by ligneChargement.id" >
+                                    <td>{{ligneChargement.nom}}</td>
+                                    <td>{{ligneChargement.statutLigne}}</td>
+                                    <td>{{ligneChargement.error}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="center-block text-center" ng-show="vm.totalItems > vm.queryCount">
+                        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+                        </uib-pagination>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

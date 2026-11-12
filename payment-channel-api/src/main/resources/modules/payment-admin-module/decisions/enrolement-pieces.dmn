@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             id="definitions_enrolement_pieces"
+             name="enrolement-pieces"
+             namespace="https://payment-gateway/dmn/enrolement-pieces"
+             exporter="payment-gateway"
+             exporterVersion="1.0">
+
+  <description>
+    Pays + type de document → pièces à photographier pendant l'enrôlement.
+    Le profil est choisi en premier. Les pièces de ce profil sont collectées ensuite.
+    Ajouter une ligne ici change le parcours, sans modifier le mobile.
+  </description>
+
+  <inputData id="input_pays" name="pays">
+    <variable name="pays" typeRef="string"/>
+  </inputData>
+  <inputData id="input_typeDocument" name="typeDocument">
+    <variable name="typeDocument" typeRef="string"/>
+  </inputData>
+
+  <decision id="decision_EnrolementProfil" name="EnrolementProfil">
+    <variable name="profil" typeRef="string"/>
+    <informationRequirement>
+      <requiredInput href="#input_pays"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_typeDocument"/>
+    </informationRequirement>
+    <decisionTable id="dt_EnrolementProfil" hitPolicy="FIRST">
+      <input id="in_pays" label="pays">
+        <inputExpression typeRef="string"><text>pays</text></inputExpression>
+      </input>
+      <input id="in_type" label="typeDocument">
+        <inputExpression typeRef="string"><text>typeDocument</text></inputExpression>
+      </input>
+      <output id="out_profil" label="profil" name="profil" typeRef="string"/>
+
+      <rule id="r_passeport">
+        <inputEntry><text>-</text></inputEntry>
+        <inputEntry><text>"PASSPORT"</text></inputEntry>
+        <outputEntry><text>"PASSEPORT"</text></outputEntry>
+      </rule>
+      <rule id="r_guinee">
+        <inputEntry><text>"GN"</text></inputEntry>
+        <inputEntry><text>-</text></inputEntry>
+        <outputEntry><text>"GUINEE"</text></outputEntry>
+      </rule>
+      <rule id="r_standard">
+        <inputEntry><text>-</text></inputEntry>
+        <inputEntry><text>-</text></inputEntry>
+        <outputEntry><text>"STANDARD"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <decision id="decision_EnrolementPieces" name="EnrolementPieces">
+    <variable name="piece" typeRef="string"/>
+    <informationRequirement>
+      <requiredDecision href="#decision_EnrolementProfil"/>
+    </informationRequirement>
+    <decisionTable id="dt_EnrolementPieces" hitPolicy="COLLECT">
+      <input id="in_profil" label="profil">
+        <inputExpression typeRef="string"><text>profil</text></inputExpression>
+      </input>
+      <output id="out_face" label="face" name="face" typeRef="string"/>
+      <output id="out_libelle" label="libelle" name="libelle" typeRef="string"/>
+      <output id="out_requis" label="requis" name="requis" typeRef="boolean"/>
+
+      <rule id="p_recto">
+        <inputEntry><text>"PASSEPORT"</text></inputEntry>
+        <outputEntry><text>"RECTO"</text></outputEntry>
+        <outputEntry><text>"Page du passeport"</text></outputEntry>
+        <outputEntry><text>true</text></outputEntry>
+      </rule>
+      <rule id="p_selfie">
+        <inputEntry><text>"PASSEPORT"</text></inputEntry>
+        <outputEntry><text>"SELFIE"</text></outputEntry>
+        <outputEntry><text>"Selfie"</text></outputEntry>
+        <outputEntry><text>true</text></outputEntry>
+      </rule>
+
+      <rule id="g_recto">
+        <inputEntry><text>"GUINEE"</text></inputEntry>
+        <outputEntry><text>"RECTO"</text></outputEntry>
+        <outputEntry><text>"Carte d'identité"</text></outputEntry>
+        <outputEntry><text>true</text></outputEntry>
+      </rule>
+      <rule id="g_selfie">
+        <inputEntry><text>"GUINEE"</text></inputEntry>
+        <outputEntry><text>"SELFIE"</text></outputEntry>
+        <outputEntry><text>"Selfie"</text></outputEntry>
+        <outputEntry><text>true</text></outputEntry>
+      </rule>
+
+      <rule id="s_recto">
+        <inputEntry><text>"STANDARD"</text></inputEntry>
+        <outputEntry><text>"RECTO"</text></outputEntry>
+        <outputEntry><text>"Recto"</text></outputEntry>
+        <outputEntry><text>true</text></outputEntry>
+      </rule>
+      <rule id="s_verso">
+        <inputEntry><text>"STANDARD"</text></inputEntry>
+        <outputEntry><text>"VERSO"</text></outputEntry>
+        <outputEntry><text>"Verso"</text></outputEntry>
+        <outputEntry><text>true</text></outputEntry>
+      </rule>
+      <rule id="s_selfie">
+        <inputEntry><text>"STANDARD"</text></inputEntry>
+        <outputEntry><text>"SELFIE"</text></outputEntry>
+        <outputEntry><text>"Selfie"</text></outputEntry>
+        <outputEntry><text>true</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

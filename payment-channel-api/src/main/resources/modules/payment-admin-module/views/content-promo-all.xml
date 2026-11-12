@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Stub méta : UI réelle = ContentPromosAdminComponent (RF_CUSTOM_ACTION_VIEWS). -->
+<action-view name="content-promo-all" title="Publicité home"
+             model="com.gateway.payment.payment.domain.PaymentTransaction" icon="pi pi-images">
+  <view type="grid" name="transaction-grid"/>
+</action-view>

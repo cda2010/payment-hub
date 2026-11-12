@@ -1,0 +1,47 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "select",
+        "key": "payProvider",
+        "label": "Moyen de paiement",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "Orange Money", "value": "ORANGE_MONEY" },
+            { "label": "Wave", "value": "WAVE" },
+            { "label": "Coris Money", "value": "CORIS_MONEY" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "phoneNumber",
+        "label": "Téléphone (wallet)",
+        "input": true,
+        "validate": { "required": false }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Payer",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Moyen de paiement": "Moyen de paiement",
+      "Téléphone (wallet)": "Téléphone (wallet)"
+    },
+    "en": {
+      "Moyen de paiement": "Payment method",
+      "Téléphone (wallet)": "Wallet phone"
+    }
+  }
+}

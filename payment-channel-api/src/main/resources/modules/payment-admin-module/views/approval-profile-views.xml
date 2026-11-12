@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_8.0.xsd">
+
+  <grid name="approval-profile-grid" title="Profils d'approbation"
+        model="com.gateway.payment.approval.domain.ApprovalProfileEntity"
+        edit-form="approval-profile-form" new-action-view="approval-profile-new"
+        rest-resource="/api/v1/admin/approvals/profiles"
+        canDelete="false">
+    <field name="code"/>
+    <field name="name"/>
+    <field name="actif"/>
+  </grid>
+
+  <form name="approval-profile-form" title="Profil d'approbation"
+        model="com.gateway.payment.approval.domain.ApprovalProfileEntity"
+        rest-resource="/api/v1/admin/approvals/profiles">
+    <panel name="main" title="Profil">
+      <field name="code" required="true" colSpan="4"/>
+      <field name="name" required="true" colSpan="6"/>
+      <field name="actif" colSpan="2"/>
+      <field name="description" colSpan="12" widget="Text"/>
+      <field name="definitionJson" title="Définition JSON (levels)" required="true"
+               colSpan="12" widget="CodeEditor"/>
+    </panel>
+  </form>
+
+</object-views>

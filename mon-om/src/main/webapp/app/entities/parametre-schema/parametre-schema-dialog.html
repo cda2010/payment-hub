@@ -1,0 +1,76 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+
+        <h4 class="modal-title" id="myParametreSchemaLabel">Create or edit a Parametre Schema</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.parametreSchema.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.parametreSchema.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_nomParametreUtil">Nom Parametre </label>
+            <input type="text" class="form-control" name="nomParametreUtil" id="field_nomParametreUtil"
+                    ng-model="vm.parametreSchema.nomParametre"
+                    />
+        </div>
+         <div class="form-group">
+            <label class="control-label" for="field_nomParametreUtil">Code</label>
+
+               <select class="form-control" id="code_parametre"  name="code_parametre" ng-model="vm.parametreSchema.codeParametre" ng-options="etiquette.codeEtiquette as etiquette.codeEtiquette for etiquette in vm.etiquettes">
+                <option value=""></option>
+            </select>
+        </div>
+         <div class="form-group">
+            <label class="control-label" for="field_nomParametreUtil">Paramètre Méthode</label>
+            <input type="text" class="form-control" name="code_parametre_methode" id="code_parametre_methode"
+                    ng-model="vm.parametreSchema.codeParametreMethode"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_valeur">CategorieParam</label>
+             <select class="form-control" id="field_categorieParam" name="categorieParam" ng-model="vm.parametreSchema.categorieParam">
+                <option value="USER">USER</option>
+                <option value="SYSTEM">SYSTEM</option>
+
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="field_valeur">Type</label>
+             <select class="form-control" id="typeParametre" name="typeParametre" ng-model="vm.parametreSchema.typeParametre">
+                <option value="STRING">STRING</option>
+                <option value="DOUBLE">DOUBLE</option>
+                <option value="INTEGER">INTEGER</option>
+                <option value="FLOAT">FLOAT</option>
+                <option value="LONG">LONG</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="field_valeur">Valeur</label>
+            <input type="text" class="form-control" name="valeur" id="field_valeur"
+                    ng-model="vm.parametreSchema.valeur"
+                    />
+        </div>
+
+        <div class="form-group">
+            <label for="field_methode">Ligne</label>
+            <select class="form-control" id="field_methode" name="methode" ng-model="vm.parametreSchema.ligneSchemaEcriture" ng-options="ligne as ligne.id for ligne in vm.lignes track by ligne.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+</form>

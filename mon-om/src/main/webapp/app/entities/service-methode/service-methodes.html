@@ -1,0 +1,65 @@
+<div>
+
+    <h2>Service Methodes</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+             <div class="col-xs-1 no-padding-left">
+                <button class="btn btn-primary" ui-sref="service-traitement" >
+                    <span class="glyphicon glyphicon-backward"></span>
+                    <span >
+                      Retour
+                    </span>
+                </button>
+            </div>
+            <div class="col-xs-1 no-padding-left">
+                <button class="btn btn-primary" ui-sref="service-methode.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Nouveau
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                     <th><span>Methode ou fonction</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="serviceMethode in vm.serviceMethodes track by serviceMethode.id">
+                    <td><a ui-sref="service-methode-detail({id:serviceMethode.id})">{{serviceMethode.id}}</a></td>
+                     <td><a ui-sref="service-methode-detail({id:serviceMethode.id})">{{serviceMethode.methode.nomMethode}}</a></td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="service-methode-detail({id:serviceMethode.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="service-methode.edit({id:serviceMethode.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="service-methode.delete({id:serviceMethode.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

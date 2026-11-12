@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0016",
+  "providerCodeHint": "FSE_0016",
+  "providerLibelle": "Yolce",
+  "participantKindHint": "WALLET",
+  "fseStatut": "NONBANQUE",
+  "groupCode": "ENF",
+  "codeExterne": "00",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "Api YOLCE",
+    "codeApi": "0013",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "OAUTH2_CLIENT_CREDENTIALS",
+    "clientId": "apiPartenersapp",
+    "clientSecret": "my-secret-token-to-change-in-production",
+    "tokenUrl": "http://172.27.4.186:7930/yolce/oauth/token",
+    "grantType": "client_credentials",
+    "username": "admin",
+    "password": "Admin@++19"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "GETMONTANT",
+      "codeMethode": "001301",
+      "operationCode": "GETMONTANT",
+      "nom": "/api/services/apiYolse/getmontant",
+      "httpMethod": "POST",
+      "path": "api/services/apiYolse/getmontant",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"nombre\": \"${nombre}\", \"montant\": \"${montant}\"}",
+      "parameters": [
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "GETINFOS",
+      "codeMethode": "001302",
+      "operationCode": "GETINFOS",
+      "nom": "/api/services/apiYolse/verification",
+      "httpMethod": "GET",
+      "path": "api/services/apiYolse/verification",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"identifiant\": \"${identifiant}\"}",
+      "parameters": [
+        {
+          "code": "identifiant",
+          "nomExterne": "identifiant",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

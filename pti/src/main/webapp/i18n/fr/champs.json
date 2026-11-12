@@ -1,0 +1,29 @@
+{
+    "ptiApp": {
+        "champs" : {
+            "home": {
+                "title": "Champs",
+                "createLabel": "Créer un nouveau Champs",
+                "createOrEditLabel": "Créer ou éditer un Champs"
+            },
+            "created": "Un nouveau Champs a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Champs avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Champs avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Champs {{ id }} ?"
+            },
+            "detail": {
+                "title": "Champs"
+            },
+            "aSaisir": "A Saisir",
+            "min": "Min",
+            "max": "Max",
+            "minLength": "Min Length",
+            "maxLength": "Max Length",
+            "isVisible": "Is Visible",
+            "pattern": "Pattern",
+            "ecranId": "Ecran Id",
+            "composant": "Composant"
+        }
+    }
+}

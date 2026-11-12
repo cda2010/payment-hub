@@ -1,0 +1,30 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "checkbox",
+        "key": "confirmTransfer",
+        "label": "Je confirme le transfert (montant, destination, frais)",
+        "input": true,
+        "defaultValue": false,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Je confirme le transfert (montant, destination, frais)": "Je confirme le transfert (montant, destination, frais)"
+    },
+    "en": {
+      "Je confirme le transfert (montant, destination, frais)": "I confirm the transfer (amount, destination, fees)"
+    }
+  }
+}

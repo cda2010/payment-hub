@@ -1,0 +1,21 @@
+{
+    "ptiApp": {
+        "categorieClient" : {
+            "home": {
+                "title": "CategorieClients",
+                "createLabel": "Créer un nouveau Categorie Client",
+                "createOrEditLabel": "Créer ou éditer un Categorie Client"
+            },
+            "created": "Un nouveau Categorie Client a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Categorie Client avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Categorie Client avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Categorie Client {{ id }} ?"
+            },
+            "detail": {
+                "title": "Categorie Client"
+            },
+            "libelleCategorie": "Libelle Categorie"
+        }
+    }
+}

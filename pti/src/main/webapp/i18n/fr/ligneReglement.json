@@ -1,0 +1,24 @@
+{
+    "ptiApp": {
+        "ligneReglement" : {
+            "home": {
+                "title": "LigneReglements",
+                "createLabel": "Créer un nouveau Ligne Reglement",
+                "createOrEditLabel": "Créer ou éditer un Ligne Reglement"
+            },
+            "created": "Un nouveau Ligne Reglement a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Ligne Reglement avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Ligne Reglement avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Ligne Reglement {{ id }} ?"
+            },
+            "detail": {
+                "title": "Ligne Reglement"
+            },
+            "montantCommission": "Montant Commission",
+            "soldeCompteOp": "Solde Compte Op",
+            "reglement": "Reglement",
+            "organisation": "Organisation"
+        }
+    }
+}

@@ -1,0 +1,326 @@
+<div class="container-fluid">
+    <div class="row mt5">
+        <div class="row" ng-if="vm.filtrer">
+            <div class="form-group col-sm-4" ng-if="!vm.validation">
+                <select class="form-control input-xs" id="field_statut" name="statut"
+                    ng-model="vm.itemSearch.statutOperation" ng-options="statut for statut in vm.statuts">
+                    <option value="">Choisir statut</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-4" ng-if="!vm.validation">
+                <select class="form-control input-xs" id="field_typeService" name="typeService"
+                    ng-model="vm.itemSearch.typeServiceId"
+                    ng-options="typeService.id as typeService.libelle for typeService in vm.typeServices">
+                    <option value="">Choisir typeService</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" ng-if="vm.filtrer">
+            <div class="form-group col-sm-4">
+                <input autocomplete="off" class="form-control" name="f_montantOp" ng-model="vm.itemSearch.montantOp"
+                    placeholder="Montant op" type="text" />
+            </div>
+            <div class="form-group col-sm-4">
+                <select class="form-control input-xs" id="field_pays" name="pays" ng-model="vm.itemSearch.uoAcquereurId"
+                    ng-options="pays.id as pays.libelleUniteOrganisation for pays in vm.pays">
+                    <option value="">Choisir pays destination</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row" ng-if="vm.filtrer">
+            <div class="form-group col-sm-4">
+                <div class="input-group">
+                    <input autocomplete="off" class="form-control" id="dateOperation" is-open="vm.datePickerOpenStatus.dateOperation"
+                        name="dateOperation" ng-model="vm.itemSearch.dateOperation"
+                        placeholder=" Date debut" show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-xs" ng-click="vm.openCalendar('dateOperation')"
+                            type="button"><i
+                                class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+
+            </div>
+            <div class="form-group col-sm-4">
+                <div class="input-group">
+                    <input autocomplete="off" class="form-control" id="dateFin" is-open="vm.datePickerOpenStatus.dateFin"
+                        name="dateFin" ng-model="vm.itemSearch.dateFin" placeholder=" Date fin"
+                        show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-xs" ng-click="vm.openCalendar('dateFin')" type="button"><i
+                                class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <input autocomplete="off" class="form-control" name="f_description" ng-model="vm.itemSearch.description"
+                       placeholder="Description" type="text" />
+            </div>
+        </div>
+
+        <div class="row" ng-if="vm.filtrer">
+            <div class="form-group col-sm-4" has-any-authority="ROLE_ADMIN">
+                <div class="input-group">
+                    <input autocomplete="off" class="form-control input-xs"
+                        disabled ng-model="vm.organisation.libelleUniteOrganisation" placeholder="Organisation" type="text" />
+                    <div class="input-group-btn">
+                        <button class="btn btn-xs btn-primary" ng-click="vm.choisirUo()">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <input autocomplete="off" class="form-control" name="f_montantOp" ng-model="vm.itemSearch.codeOperation"
+                    placeholder="Code operation" type="text" />
+            </div>
+            <div class="form-group col-sm-4" ng-if="!vm.validation">
+                <select class="form-control input-xs" id="field_canal" name="canal"
+                        ng-model="vm.itemSearch.canalId"
+                        ng-options="canal.id as canal.libelleCanal for canal in vm.canals">
+                    <option value="">Choisir Canal</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" ng-if="vm.filtrer">
+
+            <div class="form-group col-sm-12">
+                <div class="col-sm-3">
+                    <button class="btn btn-warnig btn-md" ng-click="vm.initFiltre()">
+                        <span class="glyphicon glyphicon-search">Annuler</span>
+                    </button>
+                </div>
+                <div class=" col-sm-3">
+                    <button class="btn btn-primary btn-md " ng-click="vm.filtre()">
+                        <span class="glyphicon glyphicon-search">Filtrer</span>
+                    </button>
+                </div>
+                <div class=" col-sm-3">
+                    <select  id="filed_format" name="format" ng-model="vm.format" >
+                        <option value="">Format</option>
+                        <option value="PDF">PDF</option>
+                        <option value="XLSX">XLSX</option>
+                        <option value="CSV">CSV</option>
+                    </select>
+                </div>
+
+                <div class=" col-sm-3">
+                    <button class="btn btn-primary btn-md " ng-click="vm.exportAll()">
+                        <span class="glyphicon glyphicon-save">Export</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row col-sm-3 ">
+            <button class="btn btn-info btn-md">
+                <span>Total : {{vm.totalItems}}</span>
+            </button>
+        </div>
+
+
+        <div class="form-group " ng-if="!vm.filtrer">
+            <div class="col-sm-3">
+                <button class="btn btn-info btn-md" ng-click="vm.filtrer=true">
+                    <span class="glyphicon glyphicon-search">Filtrer</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="well with-header" style="margin-top:10px ">
+            <div class="header bg-blue ">
+                <div class="col-xs-10">
+                    <h4 ng-if="vm.personneId==null">Liste des opérations</h4>
+                    <h4 ng-if="vm.personneId!=null"> Historique des opérations du client</h4>
+                </div>
+                <div class="no-padding-left col-xs-2">
+
+                    <div class="btn-group mr15" uib-dropdown>
+                        <button aria-expanded="false" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                            type="button" uib-dropdown-toggle>{{vm.itemsPerPage}} éléments par page
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover">
+                <thead class="bordered-blue">
+                    <tr>
+                        <th ng-click="vm.sortBy('dateOperation') ">
+                            <span>Date</span>
+                            <span ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"
+                                ng-if="vm.isCurrentColumn('dateOperation')"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('codeOperation') ">
+                            <span>Code opération</span>
+                            <span ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"
+                                ng-if="vm.isCurrentColumn('codeOperation')"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('typeServiceLibelle') ">
+                            <span>Type de service</span>
+                            <span ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"
+                                ng-if="vm.isCurrentColumn('typeServiceLibelle')"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('statut') ">
+                            <span>Statut</span>
+                            <span ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"
+                                ng-if="vm.isCurrentColumn('statut')"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('montantOp') ">
+                            <span>Montant</span>
+                            <span ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"
+                                ng-if="vm.isCurrentColumn('montantOp')"></span>
+                        </th>
+
+                        <th ng-click="vm.sortBy('montantFrais') ">
+                            <span>Montant commission</span>
+                            <span ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"
+                                ng-if="vm.isCurrentColumn('montantFrais')"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('montantFrais') ">
+                            <span>Montant taxe</span>
+                            <span ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"
+                                ng-if="vm.isCurrentColumn('montantFrais')"></span>
+                        </th>
+                        <th>
+                            <span>Description</span>
+                        </th>
+                        <th>
+                            <span>Initié par</span>
+                        </th>
+                        <th>
+                            <span>Valider par</span>
+                        </th>
+                        <th>
+                            <span>Date de validation</span>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="operation in vm.datas ">
+                        <td>{{operation.dateOperation | date:'medium'}}</td>
+                        <td>{{operation.codeOperation}}</td>
+                        <td>{{operation.code}}</td>
+                        <td>{{operation.statut}}</td>
+                        <td>{{operation.montantOp | currency:"" }}</td>
+                        <td ng-if="operation.montantFrais!=null">{{operation.montantFrais | currency :"" }}</td>
+                        <td ng-if="operation.montantFrais==null">{{0 | currency :"" }}</td>
+                        <td ng-if="operation.montantTaxe==null">{{0 | currency :"" }}</td>
+                        <td ng-if="operation.montantTaxe!=null">{{operation.montantTaxe | currency :"" }}</td>
+                          <td>{{operation.description}}</td>
+                        <td>{{operation.createdBy}}</td>
+                        <td>{{operation.lastModifiedBy}}</td>
+                        <td>{{operation.lastModifiedDate | date:'medium'}}</td>
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+
+                                <button class="btn btn-success btn-xs btn-round"
+                                    has-any-authority="ROLE_ENVOI_CODE_RETRAIT"
+                                    ng-click="vm.sendCodeRetrait(operation)" ng-if="(operation.code=='ENVOI_CASH' || operation.code=='ACCOUNT_CASH') && ( operation.statut=='ENATTENTE')"
+                                    type="submit">
+                                    <span class="glyphicon glyphicon-send"></span>
+                                </button>
+
+                                <button class="btn btn-primary btn-xs btn-round"
+                                    ng-click="vm.detailsOperations($event,operation)" ng-if="operation.statut!=='ENATTENTE_ANNULATION' && (operation.code=='ACCOUNT_ACCOUNT' || operation.code=='CASH_BACK' || operation.code=='ACCOUNT_CASH')"
+                                    type="submit">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+
+                                <button class="btn btn-primary btn-xs btn-round"
+                                        ng-click="vm.detailsOperationsPaiements($event,operation)" ng-if="operation.code=='PAIEMENT_BIEN' || operation.code=='PAIEMENT_FACTURE' || operation.code=='PAIEMENT_AIRTIME' || operation.code=='PAIEMENT_INTERNET' || operation.code=='RETRAIT_COMPTE' || operation.code=='PAIEMENT_FACTURE_DEPUIS_CASH' "
+                                        type="submit">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+                                <button class="btn btn-primary btn-xs btn-round"
+                                        ng-click="vm.detailsOperationsWTB($event,operation)" ng-if="operation.code=='BANK_TO_WALLET' || operation.code=='WALLET_TO_BANK'"
+                                        type="submit">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+
+                                <button class="btn btn-primary btn-xs btn-round" ng-click="vm.detailsOperationsCashAccount($event,operation)"
+                                    ng-if="operation.statut!=='ENATTENTE_ANNULATION' && (operation.code=='CASH_ACCOUNT')"
+                                    type="submit">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+
+                                <button class="btn btn primary btn-xs btn-round" ng-click="vm.detailItem($event,operation)"
+                                    ng-if="operation.statut!=='ENATTENTE_ANNULATION' && operation.code=='ENVOI_CASH'" type="submit">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+
+                                <button class="btn btn-primary btn-xs btn-round" ng-click="vm.detailsOperationsRetrait($event,operation)"
+                                    ng-if="operation.statut!=='ENATTENTE_ANNULATION' && operation.code=='RETRAIT'"
+                                    type="submit">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+
+                                <button
+                                    class="btn btn-primary btn-xs btn-round"
+                                    ng-click="vm.detailsOperationsApprovisionnement($event,operation)" ng-if="operation.statut!=='ENATTENTE_ANNULATION' && operation.code=='APPROVISIONNEMENT' ||operation.code=='APPROVISIONNEMENT_INTERNE'"
+                                    type="submit">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+                            <button
+                                    class="btn btn-primary btn-xs btn-round"
+                                    ng-click="vm.detailsCreationMonnaie($event,operation)" ng-if="operation.statut!=='ENATTENTE_ANNULATION' && operation.code=='CREATION_MONNAIE' ||operation.code=='DESTRUCTION_MONNAIE'"
+                                    type="submit">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+                                
+                                  <button
+                                    class="btn btn-primary btn-xs btn-round"
+                                    ng-click="vm.detailsRegualtion($event,operation)" ng-if="operation.statut!=='ENATTENTE_ANNULATION' && operation.code=='REGULATION'"
+                                    type="submit">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+                                <button
+                                        class="btn btn-primary btn-xs btn-round"
+                                        ng-click="vm.detailsOperationDiverse($event,operation)" ng-if="operation.statut=='ENATTENTE_ANNULATION'"
+                                        type="submit">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+
+
+                                  <button  class="btn btn-success btn-xs btn-round" has-any-authority="ROLE_ENVOI_CODE_RETRAIT"
+                                    ng-click="vm.print(operation.id)" title="Imprimer le reçu"
+                                    type="submit">
+                                    <span class="glyphicon glyphicon-print"></span>
+                                </button>
+
+                                <button class="btn btn-success btn-xs btn-round" ng-click="vm.detailsTransaction(operation.id)" title="Voir transaction"
+                                        type="submit">
+                                    <span class="glyphicon  glyphicon-transfer"></span>
+                                </button>
+                                <button class="btn btn-secondary btn-xs btn-round" ng-click="vm.detailsCommission(operation.id)" title="Voir commission"
+                                        type="submit">
+                                    <span class="glyphicon  glyphicon-transfer"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="center-block text-center" ng-show="vm.canShowPagination()">
+            <uib-pagination items-per-page="vm.itemsPerPage" ng-model="vm.page" total-items="vm.totalItems">
+            </uib-pagination>
+        </div>
+    </div>
+</div>

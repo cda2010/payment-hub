@@ -1,0 +1,88 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="well with-header" style="margin-top:10px ">
+            <div class="header bg-blue ">
+                <div class="col-xs-8">
+                    <span>Liste des étapes services</span>
+                </div>
+                <div class="row">
+                <div class="no-padding-left col-xs-4">
+                    <button  class="btn btn-default  btn-circle btn-xs
+                                            " ng-click="vm.addItem()">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                    <div class="btn-group mr15" uib-dropdown>
+                        <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                                    aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                                éléments par page <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row primary" ng-if="vm.canShowResultCount">
+            <i ng-if="vm.totalItems>1">{{vm.totalItems}} éléments trouvés</i>
+            <i ng-if="vm.totalItems==1">{{vm.totalItems}} élément trouvé</i>
+            <i ng-if="vm.totalItems<1">Aucun résultat</i>
+        </div>
+        <table class="table table-hover">
+            <thead class="bordered-blue">
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="typeService"><span>Service</span></th>
+                    <th ><span>Action</span></th>
+                    <th></th>
+                </tr>
+            </thead> 
+            <tbody>
+             <tr ng-repeat="etapeService in vm.datas ">
+                    <td>{{ etapeService.typeService.code }}</td>
+                    <td>
+                        <!-- <span ng-repeat="action in etapeService.typeService.action" class="badge badge-{{vm.getRandomColor()}}">{{ action }}</span> -->
+                        <span ng-repeat="action in etapeService.typeService.action track by $index" class="badge badge-info">{{ action }}</span>
+                    </td>
+                    <!-- <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="etape-service-detail({id: etapeService.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                             <button type="submit"
+                                    ui-sref="etape-service.edit({id: etapeService.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="etape-service.delete({id: etapeService.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td> -->
+                </tr>
+            </tbody>
+        </table>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

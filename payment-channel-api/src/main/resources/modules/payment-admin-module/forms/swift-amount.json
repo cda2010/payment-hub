@@ -1,0 +1,77 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "number",
+        "key": "amount",
+        "label": "Montant",
+        "input": true,
+        "validate": { "required": true, "min": 1 }
+      },
+      {
+        "type": "select",
+        "key": "currency",
+        "label": "Devise",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "EUR", "value": "EUR" },
+            { "label": "USD", "value": "USD" },
+            { "label": "XOF", "value": "XOF" },
+            { "label": "GBP", "value": "GBP" }
+          ]
+        },
+        "widget": "choicesjs",
+        "defaultValue": "EUR",
+        "validate": { "required": true }
+      },
+      {
+        "type": "select",
+        "key": "chargeBearer",
+        "label": "Frais à la charge de",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "OUR (émetteur)", "value": "OUR" },
+            { "label": "SHA (partagés)", "value": "SHA" },
+            { "label": "BEN (bénéficiaire)", "value": "BEN" }
+          ]
+        },
+        "widget": "choicesjs",
+        "defaultValue": "SHA",
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "purpose",
+        "label": "Motif / remittance info",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Montant": "Montant",
+      "Devise": "Devise",
+      "Frais à la charge de": "Frais à la charge de",
+      "Motif / remittance info": "Motif / remittance info"
+    },
+    "en": {
+      "Montant": "Amount",
+      "Devise": "Currency",
+      "Frais à la charge de": "Charge bearer",
+      "Motif / remittance info": "Purpose / remittance info"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-view name="user-all" title="Utilisateurs"
+             model="com.gateway.payment.security.domain.GatewayUser" icon="pi pi-users">
+  <view type="grid" name="user-grid"/>
+  <view type="form" name="user-form"/>
+</action-view>

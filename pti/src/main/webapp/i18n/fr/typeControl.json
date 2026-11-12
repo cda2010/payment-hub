@@ -1,0 +1,9 @@
+{
+    "ptiApp": {
+        "TypeControl" : {
+            "null": "",
+            "DESABLE": "DESABLE",
+            "RESET_PASSWORD": "RESET_PASSWORD"
+        }
+    }
+}

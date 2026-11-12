@@ -1,0 +1,27 @@
+
+<div>
+    <h2><span>Webservice</span> {{vm.webservice.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>End Point</span></dt>
+        <dd>
+            <span>{{vm.webservice.endPoint}}</span>
+        </dd>
+        <dt><span>Use Ssl</span></dt>
+        <dd>
+            <span>{{vm.webservice.useSsl}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="webservice-detail.edit({id:vm.webservice.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

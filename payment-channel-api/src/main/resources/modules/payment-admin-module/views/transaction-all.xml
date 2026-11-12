@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-view name="transaction-all" title="Transactions"
+             model="com.gateway.payment.payment.domain.PaymentTransaction" icon="pi pi-list">
+  <view type="grid" name="transaction-grid"/>
+  <view type="form" name="transaction-form"/>
+</action-view>

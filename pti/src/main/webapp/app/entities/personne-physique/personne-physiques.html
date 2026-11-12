@@ -1,0 +1,74 @@
+<div>
+    <h2 data-translate="ptiApp.personnePhysique.home.title">Personne Physiques</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="personne-physique.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="ptiApp.personnePhysique.home.createLabel">
+                        Create new Personne Physique
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="nomClient"><span data-translate="ptiApp.personnePhysique.nomClient">Nom Client</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="prenomClient"><span data-translate="ptiApp.personnePhysique.prenomClient">Prenom Client</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="dateNaissance"><span data-translate="ptiApp.personnePhysique.dateNaissance">Date Naissance</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="personnePrevenir"><span data-translate="ptiApp.personnePhysique.personnePrevenir">Personne Prevenir</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="lieuNaissance"><span data-translate="ptiApp.personnePhysique.lieuNaissance">Lieu Naissance</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="sexe"><span data-translate="ptiApp.personnePhysique.sexe">Sexe</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="nationaliteLibelle"><span data-translate="ptiApp.personnePhysique.nationalite">Nationalite</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="personnePhysique in vm.personnePhysiques track by personnePhysique.id">
+                    <td><a ui-sref="personne-physique-detail({id:personnePhysique.id})">{{personnePhysique.id}}</a></td>
+                    <td>{{personnePhysique.nomClient}}</td>
+                    <td>{{personnePhysique.prenomClient}}</td>
+                        <td>{{personnePhysique.dateNaissance | date:'mediumDate'}}</td>
+                    <td>{{personnePhysique.personnePrevenir}}</td>
+                    <td>{{personnePhysique.lieuNaissance}}</td>
+                    <td data-translate="{{'ptiApp.Sexe.' + personnePhysique.sexe}}">{{personnePhysique.sexe}}</td>
+                    <td>
+                        <a ui-sref="nationalite-detail({id:personnePhysique.nationaliteId})">{{personnePhysique.nationaliteLibelle}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="personne-physique-detail({id:personnePhysique.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="personne-physique.edit({id:personnePhysique.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="personne-physique.delete({id:personnePhysique.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+# Profil local : base dédiée du docker-compose (service pricing-postgres, port 5437).
+# Démarrer l'infra : docker compose up -d pricing-postgres
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5437/payment_pricing
+    username: pricing
+    password: pricing
+
+logging:
+  level:
+    com.gateway.payment.pricing: DEBUG

@@ -1,0 +1,123 @@
+<div class="container-fluid">
+    <div class="row mt5">
+        <div class="form-group col-sm-4" ng-if="vm.filtrer">
+            <label for="field_statutOperation">Statut précédent</label>
+            <select  title="Statut Précédent"
+                     class="form-control"
+                     name="statutOperation"
+                     id="field_statutOperation"
+                     ng-model="vm.itemSearch.statutOperation"
+                     ng-options="statut.nom as statut.nom for statut in vm.statuts"
+            >
+            </select>
+        </div>
+        <div class="form-group col-sm-4" ng-if="vm.filtrer">
+            <label for="field_statutOperation">Statut Après</label>
+            <select  title="Statut Après"
+                     class="form-control"
+                     name="statutOperation"
+                     id="field_statutApres"
+                     ng-model="vm.itemSearch.statutApres"
+                     ng-options="statut.nom as statut.nom for statut in vm.statuts"
+            >s
+            </select>
+        </div>
+    </div>
+    <div class="row" ng-if="vm.filtrer">
+
+        <div class="form-group col-sm-4">
+            <div class="col-sm-4">
+                <button class="btn btn-warnig btn-md" ng-click="vm.initFiltre()">
+                    <span class="glyphicon glyphicon-search">Annuler</span>
+                </button>
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-info btn-md " ng-click="vm.filtre()">
+                    <span class="glyphicon glyphicon-search">Filtrer</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group " ng-if="!vm.filtrer">
+        <div class="col-sm-3">
+            <button class="btn btn-info btn-md" ng-click="vm.filtrer=true">
+                <span class="glyphicon glyphicon-search">Filtrer</span>
+            </button>
+        </div>
+    </div>
+</div>
+    <div class="row">
+        <div>
+            <div class="well with-header" style="margin-top:10px ">
+                <div class="header bg-blue " >
+                    <div class="col-xs-9">
+                        <h4>Suivi du statut des operations</h4>
+                    </div>
+                    <div class="no-padding-left col-xs-3" >
+                        <div class="btn-group mr15" uib-dropdown>
+                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                                éléments par page <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th ng-click="vm.sortBy('id')">
+                        <span data-translate="global.field.id">ID</span>
+                        <span ng-if="vm.isCurrentColumn('id')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                    <th ng-click="vm.sortBy('date')">
+                        <span data-translate="ptiApp.operationAudit.date">Date</span>
+                        <span ng-if="vm.isCurrentColumn('date')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                    <th ng-click="vm.sortBy('statutPrecedent')">
+                        <span data-translate="ptiApp.operationAudit.statutPrecedent">Statut Precedent</span>
+                        <span ng-if="vm.isCurrentColumn('statutPrecedent')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                    <th ng-click="vm.sortBy('statutApres')">
+                        <span data-translate="ptiApp.operationAudit.statutApres">Statut Apres</span>
+                        <span ng-if="vm.isCurrentColumn('statutApres')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                    <th ng-click="vm.sortBy('operation')">
+                        <span data-translate="ptiApp.operationAudit.operation">Operation</span>
+                        <span ng-if="vm.isCurrentColumn('operationCodeOperation')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="operationAudit in vm.datas track by operationAudit.id">
+                    <td>{{operationAudit.id}}</td>
+                    <td>{{operationAudit.date | date:'medium'}}</td>
+                    <td>{{operationAudit.statutPrecedent}}</td>
+                    <td>{{operationAudit.statutApres}}</td>
+                    <td>
+                       {{operationAudit.operationCodeOperation}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+            <div class="center-block text-center" ng-show="vm.canShowPagination()">
+                <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage" >
+                </uib-pagination>
+            </div>
+</div>
+    </div>
+</div>

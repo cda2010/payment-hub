@@ -1,0 +1,46 @@
+<div>
+    <jhi-alert></jhi-alert>
+    <div class="well with-header" style="margin-top:10px ">
+        <div class="header bg-blue ">
+            <div class="col-xs-11">
+                <h4 >Liste des commerciaux</h4>
+            </div>
+            <div class="no-padding-left col-xs-1">
+                <button class="btn btn-default  btn-circle btn-xs" ui-sref="commerciale.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+        <table class="jh-table table table-hover">
+            <thead>
+                <tr>
+                    
+                    <th><span >Nom</span></th>
+                    <th><span>Prénom</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="commerciale in vm.commerciales track by commerciale.id">
+                  
+                    <td>{{commerciale.nom}}</td>
+                    <td>{{commerciale.prenom}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="commerciale.edit({id:commerciale.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="commerciale.delete({id:commerciale.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

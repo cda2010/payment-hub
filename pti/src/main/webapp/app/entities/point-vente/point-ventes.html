@@ -1,0 +1,75 @@
+<div class="container-fluid">
+    <div class="row">
+                <div class="col-sm-offset-1 col-sm-10 well with-header" style="margin-top:10px ">
+                        <div class="header bg-blue" >
+                            <div class="col-xs-9">
+                               <h4>Liste des points de vente</h4>
+                            </div>
+                            <div class="no-padding-left col-xs-3" >
+                                  
+                                    <div class="btn-group mr15" uib-dropdown>
+                                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                                                éléments par page  <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                                                </li>
+                                            </ul>
+                                    </div>
+                            </div>
+                        </div>
+            <table class="table table-hover">
+                <thead>
+                <tr class="">
+                    <th ng-click="vm.sortBy('codePointVente')">
+                        <span >Code</span>
+                        <span ng-if="vm.isCurrentColumn('codePointVente')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                    <th ng-click="vm.sortBy('libellePointVente')" >
+                        <span>Libelle</span>
+                        <span ng-if="vm.isCurrentColumn('libellePointVente')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                    <th ng-click="vm.sortBy('uniteOrganisationLibelleUniteOrganisation')">
+                        <span>Organisation</span>
+                        <span ng-if="vm.isCurrentColumn('uniteOrganisationLibelleUniteOrganisation')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                    <th class="text-right"><span>Actions</span> </th>
+                </tr>
+                </thead>
+                <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                <tr ng-repeat="pointVente in vm.datas track by pointVente.id">
+
+                    <td>{{pointVente.codePointVente}}</td>
+                    <td>{{pointVente.libellePointVente}} </td>
+                    <td >{{pointVente.uniteOrganisationLibelleUniteOrganisation}} </td>
+
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    data-toggle="tooltip" data-original-title="Modifier"
+                                    ng-click="vm.addUsers(pointVente)"
+                                    class="btn btn-warning btn-xs btn-round">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+</div>
+    <div class="center-block text-center" ng-show="vm.canShowPagination()">
+        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage" >
+        </uib-pagination>
+    </div>
+</div>

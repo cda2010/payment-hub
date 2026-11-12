@@ -1,0 +1,47 @@
+
+<div>
+    <h2><span data-translate="ptiApp.transactionComptePti.detail.title">Transaction Compte Pti</span> {{vm.transactionComptePti.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.transactionComptePti.type">Type</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.TypeTransactionCompte.' + vm.transactionComptePti.type}}">{{vm.transactionComptePti.type}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.transactionComptePti.etat">Etat</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.EtatValidite.' + vm.transactionComptePti.etat}}">{{vm.transactionComptePti.etat}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.transactionComptePti.date">Date</span></dt>
+        <dd>
+            <span>{{vm.transactionComptePti.date | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.transactionComptePti.montant">Montant</span></dt>
+        <dd>
+            <span>{{vm.transactionComptePti.montant}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.transactionComptePti.soldeCourant">Solde Courant</span></dt>
+        <dd>
+            <span>{{vm.transactionComptePti.soldeCourant}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.transactionComptePti.soldeApres">Solde Apres</span></dt>
+        <dd>
+            <span>{{vm.transactionComptePti.soldeApres}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.transactionComptePti.operation">Operation</span></dt>
+        <dd>
+            <a ui-sref="operation-detail({id:vm.transactionComptePti.operationId})">{{vm.transactionComptePti.operationId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="transaction-compte-pti-detail.edit({id:vm.transactionComptePti.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

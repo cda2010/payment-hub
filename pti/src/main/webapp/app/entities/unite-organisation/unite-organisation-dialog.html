@@ -1,0 +1,314 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation
+      class="form-horizontal container-fluid ">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;
+        </button>
+        <h4 class="modal-title" id="myUniteOrganisationLabel"
+            data-translate="ptiApp.uniteOrganisation.home.createOrEditLabel">Create or edit a Unite Organisation</h4>
+    </div>
+    <div class="modal-body">
+        <fieldset class="p10 mf-fieldset col-sm-7">
+            <legend>Creation de l'Unite Organisation</legend>
+            <!--            pere uo-->
+
+            <fieldset class="mf-fieldset p10 ">
+                <legend>Père UO</legend>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" mf-required data-translate="ptiApp.uniteOrganisation.typeUO"
+                           for="field_typeUO">Type</label>
+                    <div class="col-sm-6">
+                        <select class="form-control input-xs" ng-disabled="vm.isViewing" id="field_pere_typeUO" name="typeUO"
+                                ng-change="vm.pereTypeUOChange()" ng-model="vm.pereTypeUO"
+                                ng-options="typeUniteOrganisation.codeTypeUO as typeUniteOrganisation.libelleTypeUO for typeUniteOrganisation in vm.typeuniteorganisations"
+                                required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="vm.pereTypeUO">
+                    <label class="control-label col-sm-4" data-translate="ptiApp.uniteOrganisation.pereUO"
+                           for="field_pereUO">UO</label>
+                    <div class="col-sm-6">
+                        <select class="form-control input-xs" ng-disabled="vm.isViewing" id="field_pereUO" name="pereUO"
+                                ng-model="vm.uniteOrganisation.pereUOId"
+                                ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.uniteorganisations">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+            <!--            /pere uo-->
+
+            <div class="form-group">
+                <label mf-required class="control-label col-sm-4" for="field_libelleUniteOrganisation">Nom</label>
+                <div class="col-sm-6">
+                    <input required autocomplete="off" type="text" class="input-xs form-control" ng-disabled="vm.isViewing"
+                           name="libelleUniteOrganisation" id="field_libelleUniteOrganisation"
+                           ng-model="vm.uniteOrganisation.libelleUniteOrganisation"/>
+                </div>
+            </div>
+
+
+            <div class="form-group" ng-if="vm.isViewing">
+                <label class="control-label col-sm-4" data-translate="ptiApp.uniteOrganisation.numeroOrdre"
+                       for="field_numeroOrdre">Numero Ordre</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" type="number" class="input-xs form-control" ng-disabled="vm.isViewing"
+                           name="numeroOrdre" id="field_numeroOrdre" ng-model="vm.uniteOrganisation.numeroOrdre"/>
+                </div>
+            </div>
+            <div class="form-group" ng-if="vm.isEdit || vm.isViewing">
+                <div ng-if="vm.uniteOrganisation.agentId!==null && (vm.uniteOrganisation.typeUOId==5||vm.uniteOrganisation.typeUOId==6)">
+                    <label class="control-label col-sm-4"
+                           for="field_numeroOrdre">Référence AgentId</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off" type="number" class="input-xs form-control" ng-disabled="vm.isViewing"
+                               name="agentId" id="field_agentId" ng-model="vm.uniteOrganisation.agentId"/>
+                    </div>
+                </div>
+                <div ng-if="vm.uniteOrganisation.marchandId!==null && vm.uniteOrganisation.typeUOId==8">
+                    <label class="control-label col-sm-4"
+                           for="field_marchandId">Référence MerId</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off" type="number" class="input-xs form-control" ng-disabled="vm.isViewing"
+                               name="marchandId" id="field_marchandId" ng-model="vm.uniteOrganisation.marchandId"/>
+                    </div>
+                </div>
+                <div ng-if="vm.uniteOrganisation.tagIdentityRef!==null">
+                    <label class="control-label col-sm-4"
+                           for="field_tagIdentityRef">Référence IdentityId</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off" type="number" class="input-xs form-control" ng-disabled="vm.isViewing"
+                               name="tagIdentityRef" id="field_tagIdentityRef" ng-model="vm.uniteOrganisation.tagIdentityRef"/>
+                    </div>
+                </div>
+                <div ng-if="vm.uniteOrganisation.cosId!==null">
+                    <label class="control-label col-sm-4"
+                           for="field_cosId">Référence CostId</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off" type="number" class="input-xs form-control" ng-disabled="vm.isViewing"
+                               name="cosId" id="field_cosId" ng-model="vm.uniteOrganisation.cosId"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-if="vm.isViewing">
+                <div class="checkbox col-sm-offset-6">
+                    <label>
+                        <input autocomplete="off" type="checkbox" class="inverted" ng-disabled="vm.isViewing"
+                               ng-model="vm.uniteOrganisation.feuille"/>
+                        <span class="text"> Feuille</span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" mf-required data-translate="ptiApp.uniteOrganisation.typeUO"
+                       for="field_typeUO">Type UO</label>
+                <div class="col-sm-6">
+                    <select class="form-control input-xs" ng-disabled="vm.isViewing" id="field_typeUO" name="typeUO"
+                            ng-change="vm.typeUOChange()" ng-model="vm.uniteOrganisation.typeUOId"
+                            ng-options="typeUniteOrganisation.id as typeUniteOrganisation.libelleTypeUO for typeUniteOrganisation in vm.typeuniteorganisationsNew"
+                            required>
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <div ng-if="vm.uniteOrganisation.typeUOId==5||vm.uniteOrganisation.typeUOId==6||vm.uniteOrganisation.typeUOId==8"
+                 class="form-group">
+                <label class="col-sm-4 control-label" for="field_commerciale">Commerciale</label>
+                <div class="col-sm-6">
+                    <select class="form-control input-xs" ng-disabled="vm.isViewing" id="field_commerciale" name="ville"
+                            ng-model="vm.uniteOrganisation.commercialeId"
+                            ng-options="commerciale.id as commerciale.nom+' '+commerciale.prenom for commerciale in vm.commerciaux">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="vm.niveau<1">
+                <label mf-required class="control-label col-sm-4" for="field_code">Indicatif</label>
+                <div class="col-sm-6">
+                    <input required type="text" ng-disabled="vm.isViewing" class="form-control input-xs" name="code"
+                           id="field_code" ng-model="vm.uniteOrganisation.codePays"/>
+                </div>
+            </div>
+
+            <div class="form-group" >
+                <label mf-required class="control-label col-sm-4" data-translate="ptiApp.uniteOrganisation.telephone"
+                       for="telephone">Telephone</label>
+                <div class="col-sm-2">
+                    <select ng-disabled="vm.isViewing" required class="form-control input-xs"
+                            id="field_nationalite" name="nationalite"
+                            ng-model="vm.uniteOrganisation.codePaysTelephone"
+                            ng-options="nationalite.code as nationalite.libelle for nationalite in vm.nationalites">
+                        <option value="">Code</option>
+                    </select>
+                </div>
+                <div class="col-sm-4" ng-class="{'has-error': editForm.telephone.$invalid}">
+                    <span class="input-icon icon-right">
+                        <input required autocomplete="off" type="text" class="form-control "  name="telephone"
+                               id="telephone" ng-pattern="/^[0-9]*$/" ng-model="vm.uniteOrganisation.telephone" />
+                        <!-- <span class="fa fa-eye validity"></span> -->
+                    </span>
+                </div>
+            </div>
+
+            <div class=" form-group">
+                <label class="col-sm-4 control-label" for="field_ville">Ville</label>
+                <div class="col-sm-6">
+                    <select class="form-control input-xs" ng-disabled="vm.isViewing" id="field_ville" name="ville"
+                            ng-model="vm.uniteOrganisation.villeId"
+                            ng-options="ville.id as ville.nom for ville in vm.villes">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group" ng-if="vm.niveau>1">
+                <label class=" col-sm-4 control-label" for="field_dateCreation">Date creation</label>
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <input autocomplete="off" show-button-bar="false" popup-placement="top" id="field_dateCreation"
+                               show-button-bar="false" type="text" class="form-control input-xs" name="dateCreation"
+                               uib-datepicker-popup="dd/MM/yyyy" ng-model="vm.uniteOrganisation.dateCreation"
+                               is-open="vm.datePickerOpenStatus.dateCreation" uib-datepicker-popup="dd/MM/yyyy"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default btn-xs"
+                                    ng-click="vm.openCalendar('dateCreation')"><i
+                                    class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class=" form-group" ng-if="vm.isViewing">
+                <label mf-required class="col-sm-4 control-label" for="field_profil">Profil</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control input-xs" ng-disabled="vm.isViewing" id="field_profil"
+                           name="profil" ng-model="vm.uniteOrganisation.profilActeurNom">
+                </div>
+            </div>
+
+            <div class=" form-group" ng-if="vm.niveau>1">
+                <label mf-required class="col-sm-4 control-label" for="field_groupe_profil">Groupe</label>
+                <div class="col-sm-6">
+                    <select required class="form-control input-xs" ng-disabled="vm.isViewing" id="field_groupe_profil"
+                            name="profil" ng-model="vm.uniteOrganisation.groupeProfilActeurId"
+                            ng-options="groupe.id as groupe.nom for groupe in vm.groupeProfils">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="field_adresse">Adresse</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" type="text" ng-disabled="vm.isViewing" class="form-control input-xs"
+                           name="adresse" id="field_adresse" ng-model="vm.uniteOrganisation.adresse"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" data-translate="ptiApp.uniteOrganisation.email"
+                       for="field_email">Mail</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" type="email" ng-disabled="vm.isViewing" class="form-control input-xs"
+                           name="email" id="field_email" ng-model="vm.uniteOrganisation.email"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label mf-required class="control-label col-sm-4"
+                       for="field_serviceProfile">Profil Service</label>
+                <div class="col-sm-6">
+                    <select class="form-control input-xs" ng-disabled="vm.isViewing" id="field_serviceProfile"
+                            name="seviceProfile"
+                            ng-model="vm.uniteOrganisation.serviceProfilId"
+                            ng-options="seviceProfile.id as seviceProfile.nom for seviceProfile in vm.seviceProfiles"
+                            required>
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="checkbox col-sm-offset-5">
+                    <label>
+                        <input autocomplete="off" type="checkbox" class="checkbox-slider colored-blue checkbox-lg"
+                               ng-disabled="vm.isViewing" ng-model="vm.uniteOrganisation.estActif"/>
+                        <span class="text">Est Actif</span>
+                    </label>
+                </div>
+            </div>
+            <div ng-if="vm.niveau!=-1">
+                <div class="control-label form-group" ng-if="vm.niveau==1">
+                    <label class="col-sm-4" data-translate="ptiApp.uniteOrganisation.fournisseur"
+                           for="field_fournisseur">Fournisseur</label>
+                    <div class="col-sm-6">
+                        <select class="form-control input-xs" ng-disabled="vm.isViewing" id="field_fournisseur"
+                                name="fournisseur" ng-model="vm.uniteOrganisation.codeFse"
+                                ng-options="fournisseurService.codeFse as fournisseurService.libelleFse for fournisseurService in vm.fournisseurservices">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" ng-if="vm.niveau==2">
+                    <div class="checkbox col-sm-offset-6">
+                        <label>
+                            <input autocomplete="off" type="checkbox" class="inverted" ng-disabled="vm.isViewing"
+                                   ng-model="vm.uniteOrganisation.estSiege"/>
+                            <b class="text"> Est siège</b>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row" ng-if="vm.niveau==1">
+                    <div class="checkbox col-sm-offset-6">
+                        <label>
+                            <input autocomplete="off" type="checkbox" class="inverted" ng-disabled="vm.isViewing"
+                                   ng-model="vm.uniteOrganisation.estFiliale"/>
+                            <b class="text"> Est filiale</b>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row" ng-if="vm.isAgent">
+                    <div class="checkbox col-sm-offset-5">
+                        <label>
+                            <input autocomplete="off" type="checkbox" class="checkbox-slider colored-blue checkbox-lg"
+                                   ng-disabled="vm.isViewing" ng-model="vm.uniteOrganisation.rep"/>
+                            <span class="text">Representant</span>
+                        </label>
+                    </div>
+                </div>
+                <!--<div ng-include="'app/entities/unite-organisation/representant-unite-organisation.html'"></div>-->
+            </div>
+        </fieldset>
+
+        <fieldset class="p10 mf-fieldset col-sm-5">
+            <div ng-if="vm.niveau!=-1">
+                <div ng-include="'app/entities/unite-organisation/representant-unite-organisation.html'"></div>
+            </div>
+
+        </fieldset>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" ng-if="!vm.isViewing" class="btn btn-default .shiny" data-dismiss="modal"
+                ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-if="!vm.isViewing" ng-disabled="editForm.$invalid || vm.isSaving"
+                class="btn btn-primary .shiny">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+        <button type="button" ng-if="vm.isViewing" class="btn btn-default .shiny" data-dismiss="modal"
+                ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+            <span>Fermer</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity RepartitionFrais.
+    -->
+    <changeSet id="20190326153111-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="type_service_id"
+                                 baseTableName="repartition_frais"
+                                 constraintName="fk_repartition_frais_type_service_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="type_service"/>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-view name="pays-all" title="Pays"
+             model="com.gateway.payment.configuration.domain.Pays" icon="pi pi-globe">
+  <view type="grid" name="pays-grid"/>
+  <view type="form" name="pays-form"/>
+</action-view>

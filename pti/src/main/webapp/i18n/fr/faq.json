@@ -1,0 +1,22 @@
+{
+    "ptiApp": {
+        "faq" : {
+            "home": {
+                "title": "Faqs",
+                "createLabel": "Créer un nouveau Faq",
+                "createOrEditLabel": "Créer ou éditer un Faq"
+            },
+            "created": "Un nouveau Faq a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Faq avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Faq avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Faq {{ id }} ?"
+            },
+            "detail": {
+                "title": "Faq"
+            },
+            "question": "Question",
+            "reponse": "Reponse"
+        }
+    }
+}

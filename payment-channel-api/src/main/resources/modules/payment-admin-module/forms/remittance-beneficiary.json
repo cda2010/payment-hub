@@ -1,0 +1,44 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "textfield",
+        "key": "beneficiaryName",
+        "label": "Nom du bénéficiaire",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "phoneNumber",
+        "key": "beneficiaryPhone",
+        "label": "Téléphone bénéficiaire",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryCity",
+        "label": "Ville (optionnel)",
+        "input": true
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Nom du bénéficiaire": "Nom du bénéficiaire",
+      "Téléphone bénéficiaire": "Téléphone bénéficiaire"
+    },
+    "en": {
+      "Nom du bénéficiaire": "Beneficiary name",
+      "Téléphone bénéficiaire": "Beneficiary phone"
+    }
+  }
+}

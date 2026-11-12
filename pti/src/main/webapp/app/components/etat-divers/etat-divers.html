@@ -1,0 +1,56 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="col-sm-6 col-sm-offset-2">
+    <div class="header bg-blue text-center"><B style="color: white">Liste des états divers</B></div>
+    <div class="modal-body ">
+        <form name="editForm" role="form" novalidate>
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="filed_etat_format">Etat</label>
+                <div class="col-sm-7">
+                    <select ng-change="vm.getEtatChoisi()" required class="form-control" name="etat" id="filed_etat_format"
+                            ng-model="vm.etatChoisi"
+                            ng-options="data.id as data.libelle for data in vm.etats">
+                    </select>
+                   <!-- <select class="form-control" id="filed_etat_format" ng-change="" name="reportFormat">
+                        <option value="">Liste des états divers disponibles</option>
+                        <option selected value="COMPTE EN INSTANCE">Comptes en instance</option>
+                        <option selected value="COMPTE BLOQUE OU CLOTURE">Comptes bloqués ou clôturés</option>
+                        <option selected value="BENEFICIAIRE">Bénéficiaires d'un client</option>
+                        <option selected value="COMPTE INACTIF">Comptes inactifs depuis 6 mois</option>
+                        <option selected value="TRANSACTION PENDING">Transactions en instance</option>
+                        <option selected value="COMPTE USER">Comptes de connexion des utilisateur</option>
+                        <option selected value="CONNEXION DENIED">Connexions echouées</option>
+                        <option selected value="PROFIL USER">Profils utilisateurs</option>
+                        <option selected value="RAPPORT USER ACTIVITY">Rapport d'activité des utilisateurs</option>
+                        <option selected value="CONNEXION DENIED">Modifications sur les profils utilisateurs</option>
+                    </select>-->
+                    <br>
+                </div>
+               <!-- <div class="form-group" >
+                    <label class="control-label col-sm-4" for="filed_format">Format</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="filed_format" name="reportFormat" ng-model="vm.item.reportFormat" >
+                            <option selected value="PDF">PDF</option>
+                            <option value="XLSX">XLSX</option>
+                        </select>
+                        <br>
+                    </div>
+                </div>-->
+
+<!--                <div class="padding-bottom-20" ng- style="float: right">
+                    <button class="btn-primary btn-sm" type="button" ng-disabled="editForm.$invalid || vm.isSaving" ng-click="vm.save()" >
+                        <span class="glyphicon glyphicon-save"></span> <span>Génerer Rapport</span></button>
+                    <button type="button" class=" btn-default btn-sm" data-dismiss="modal" ng-click="vm.clear()">
+                        <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Annuler</span>
+                    </button>
+                </div>-->
+            </div>
+        </form>
+    </div>
+</div>
+

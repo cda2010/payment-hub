@@ -1,0 +1,74 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "select",
+        "key": "sourceRail",
+        "label": "Compte source",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "WAVE", "value": "WAVE" },
+            { "label": "CORIS_MONEY", "value": "CORIS_MONEY" },
+            { "label": "BANK_TRANSFER", "value": "BANK_TRANSFER" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "select",
+        "key": "destRail",
+        "label": "Compte destination",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "CORIS_MONEY", "value": "CORIS_MONEY" },
+            { "label": "WAVE", "value": "WAVE" },
+            { "label": "BANK_TRANSFER", "value": "BANK_TRANSFER" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "phoneNumber",
+        "key": "destPhone",
+        "label": "Téléphone / compte destinataire",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "number",
+        "key": "amount",
+        "label": "Montant",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Compte source": "Compte source",
+      "Compte destination": "Compte destination",
+      "Téléphone / compte destinataire": "Téléphone / compte destinataire",
+      "Montant": "Montant"
+    },
+    "en": {
+      "Compte source": "Source account",
+      "Compte destination": "Destination account",
+      "Téléphone / compte destinataire": "Recipient phone / account",
+      "Montant": "Amount"
+    }
+  }
+}

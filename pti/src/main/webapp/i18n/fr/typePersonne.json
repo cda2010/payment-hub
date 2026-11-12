@@ -1,0 +1,9 @@
+{
+    "ptiApp": {
+        "TypePersonne" : {
+            "null": "",
+            "PHYSIQUE": "PHYSIQUE",
+            "MORALE": "MORALE"
+        }
+    }
+}

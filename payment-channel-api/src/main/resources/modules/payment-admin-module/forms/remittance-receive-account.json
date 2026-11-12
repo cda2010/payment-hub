@@ -1,0 +1,45 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "intro",
+        "tag": "p",
+        "content": "Confirmez le compte / wallet de crédit (mode bank ou wallet)."
+      },
+      {
+        "type": "textfield",
+        "key": "payoutAccount",
+        "label": "Compte / IBAN / MSISDN",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "checkbox",
+        "key": "confirmAccount",
+        "label": "Je confirme que le compte appartient au bénéficiaire",
+        "input": true,
+        "defaultValue": false,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Compte / IBAN / MSISDN": "Compte / IBAN / MSISDN",
+      "Je confirme que le compte appartient au bénéficiaire": "Je confirme que le compte appartient au bénéficiaire"
+    },
+    "en": {
+      "Compte / IBAN / MSISDN": "Account / IBAN / MSISDN",
+      "Je confirme que le compte appartient au bénéficiaire": "I confirm the account belongs to the beneficiary"
+    }
+  }
+}

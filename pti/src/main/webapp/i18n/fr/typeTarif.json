@@ -1,0 +1,9 @@
+{
+    "ptiApp": {
+        "TypeTarif" : {
+            "null": "",
+            "FIXE": "FIXE",
+            "POURCENTAGE": "POURCENTAGE"
+        }
+    }
+}

@@ -1,0 +1,24 @@
+
+{
+    "ptiApp": {
+        "verifOtp" : {
+            "home": {
+                "title": "VerifOtps",
+                "createLabel": "Créer un nouveau Verif Otp",
+                "createOrEditLabel": "Créer ou éditer un Verif Otp"
+            },
+            "created": "Un nouveau Verif Otp a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Verif Otp avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Verif Otp avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Verif Otp {{ id }} ?"
+            },
+            "detail": {
+                "title": "Verif Otp"
+            },
+            "otp": "Otp",
+            "login": "Login",
+            "hostId": "Host Id"
+        }
+    }
+}

@@ -1,0 +1,61 @@
+# Profil local : PostgreSQL + Redis (docker-compose ou instances locales)
+# Démarrer l'infra : docker compose up -d postgres redis
+#
+# Modules RapidFrame (admin UI) — chemins relatifs à la racine payment-2
+# (java -jar depuis payment-2). Si cwd = payment-channel-api : RF_MODULES_PATH=src/main/resources/modules
+rapidframe:
+  modules-path: ${RF_MODULES_PATH:payment-channel-api/src/main/resources/modules}
+  modules:
+    directory: ${RF_MODULES_PATH:payment-channel-api/src/main/resources/modules}
+  domains-path: ${RF_DOMAINS_PATH:payment-channel-api/src/main/resources/domains}
+  views-path: ${RF_VIEWS_PATH:payment-channel-api/src/main/resources/views}
+
+gateway:
+  security:
+    jwt:
+      # Le profil local ne reprend pas JWT_SECRET : NetBeans en injecte parfois un trop court.
+      secret: change-me-to-a-very-long-secret-key-at-least-256-bits
+  bootstrap:
+    providers: true
+  events:
+    # configs webhook NONE historiques en local
+    inbound-require-auth: false
+    kafka-enabled: false
+  performance:
+    redis-enabled: true
+    parallel-legs: true
+    async-audit: true
+    virtual-threads: true
+flowable:
+  async-executor-activate: false
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment_gateway?autoReconnect=true 
+    username: gateway
+    password: gateway
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 800ms
+
+inbox:
+  kafka:
+    enabled: true
+    bootstrap-servers: localhost:9092
+    topic: party.actions
+
+spend:
+  kafka:
+    enabled: true
+    bootstrap-servers: localhost:9092
+    topic: payment.spend
+
+logging:
+  level:
+    com.gateway.payment: DEBUG

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_8.0.xsd">
+<grid name="transfer-rail-grid" title="Rails de transfert"
+        model="com.gateway.payment.transfer.domain.TransferRail"
+        edit-form="transfer-rail-form" new-action-view="transfer-rail-new"
+        rest-resource="/api/v1/admin/transfers/rails">
+    <field name="code"/>
+    <field name="name"/>
+    <field name="railScope"/>
+    <field name="currency"/>
+    <field name="actif"/>
+    <field name="ordre"/>
+  </grid>
+
+  <form name="transfer-rail-form" title="Rail de transfert"
+        model="com.gateway.payment.transfer.domain.TransferRail">
+    <panel name="main" title="Rail">
+      <field name="code" required="true" colSpan="4"/>
+      <field name="name" required="true" colSpan="8"/>
+      <field name="description" colSpan="12" widget="Text"/>
+      <field name="railScope" required="true" colSpan="4"/>
+      <field name="currency" required="true" colSpan="2"/>
+      <field name="actif" colSpan="2"/>
+      <field name="ordre" colSpan="2"/>
+      <field name="minAmount" colSpan="3"/>
+      <field name="maxAmount" colSpan="3"/>
+      <field name="requiresBank" colSpan="3"/>
+      <field name="sameCountryOnly" colSpan="3"/>
+      <field name="sameGroupOnly" colSpan="3"/>
+      <field name="crossBorderOnly" colSpan="3"/>
+      <field name="extraFieldsJson" colSpan="12" widget="Text"/>
+    </panel>
+  </form>
+
+</object-views>

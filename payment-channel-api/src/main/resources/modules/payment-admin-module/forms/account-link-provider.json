@@ -1,0 +1,44 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "intro",
+        "tag": "p",
+        "content": "Choisissez le wallet / opérateur à rattacher à votre profil."
+      },
+      {
+        "type": "select",
+        "key": "providerRail",
+        "label": "Wallet à lier",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "WAVE", "value": "WAVE" },
+            { "label": "ORANGE_MONEY", "value": "ORANGE_MONEY" },
+            { "label": "CORIS_MONEY", "value": "CORIS_MONEY" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Wallet à lier": "Wallet à lier"
+    },
+    "en": {
+      "Wallet à lier": "Wallet to link"
+    }
+  }
+}

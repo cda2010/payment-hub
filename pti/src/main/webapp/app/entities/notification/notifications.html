@@ -1,0 +1,149 @@
+<div class="container-fluid">
+    <div class="row">
+            <div class="well with-header" style="margin-top:10px ">
+                <div class="header bg-blue ">
+                    <div class="col-xs-8">
+                        <h4>Liste des notifications</h4>
+                    </div>
+                    <div class="no-padding-left col-xs-4">
+                        <button  class="btn btn-default  btn-circle btn-xs"
+                                 ng-click="vm.addItem()">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <div class="btn-group mr15" uib-dropdown>
+                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                                    aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                                éléments par page <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--filtes -->
+                <button ng-if="! vm.afficheFiltre" class="btn btn-primary mt5" ng-click="vm.afficherFiltre()">
+                    <span class="glyphicon glyphicon-search" > Filtrer</span>
+                </button>
+
+                <div ng-if="vm.afficheFiltre" class="contaner-fluid mt5">
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="type">Type</label>
+                            <select name="type" id="type" class="form-control"
+                                    ng-model="vm.itemSearch.typeNotification"
+                                    ng-options="type for type in vm.typeNotifications"
+                            >
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="field_destination">Destination</label>
+                            <input type="text"  class="form-control" name="destination" id="field_destination"
+                                   ng-model="vm.itemSearch.destination">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="dateEnvoi">Date envoi</label>
+                            <input type="date"  class="form-control" name="dateEnvoi" id="dateEnvoi"
+                                   ng-model="vm.itemSearch.dateEnvoi">
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-8 col-sm-4" >
+                        <button ng-if="vm.afficheFiltre" class="btn btn-danger mt5" ng-click="vm.afficherFiltre()">
+                            <span class="glyphicon glyphicon-remove"> Annuler</span>
+                        </button>
+                        <button class="btn btn-primary mt5" ng-click="vm.chercherNot()">
+                            <span class="glyphicon glyphicon-search" > Chercher</span>
+                        </button>
+                    </div>
+                </div>
+                <!--/filtes -->
+                <table class="table table-hover">
+                    <thead>
+                        <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                            <th ng-click="vm.sortBy('dateHeureEnvoie')">
+                                <span>Date Heure Envoie</span>
+                                <span ng-if="vm.isCurrentColumn('dateHeureEnvoie')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                            </th>
+                            <th ng-click="vm.sortBy('contenu')">
+                                <span>Contenu</span>
+                                <span ng-if="vm.isCurrentColumn('contenu')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                            </th>
+                            <th>
+                                <span>Code indicatif</span>
+                            </th>
+                            <th ng-click="vm.sortBy('destinataire')">
+                                <span>Destinataire</span>
+                                <span ng-if="vm.isCurrentColumn('destinataire')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                            </th>
+                            <th ng-click="vm.sortBy('isDelivred')">
+                                <span>Est délivrée ?</span>
+                                <span ng-if="vm.isCurrentColumn('isDelivred')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                            </th>
+                            <th ng-click="vm.sortBy('typeNotification')">
+                                <span>Type Notification</span>
+                                <span ng-if="vm.isCurrentColumn('typeNotification')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+            <tbody>
+                <tr ng-repeat="notification in vm.datas track by notification.id">
+                    <td>{{notification.dateHeureEnvoie | date:'medium'}}</td>
+                    <td>{{notification.contenu}}</td>
+                    <td>{{notification.codeIndicatif}}</td>
+                    <td>{{notification.destinataire}}</td>
+                    <td>
+                        <span class="bg-success white" ng-if="notification.isDelivred">&nbsp;Oui &nbsp;</span>
+                        <span class="bg-danger white" ng-if="!notification.isDelivred">&nbsp;Non &nbsp;</span>
+                    </td>
+                    <td>{{notification.typeNotification}}</td>
+                    <td class="text-right">
+<!--                        <div class="btn-group flex-btn-group-container">-->
+<!--                            <button type="submit"-->
+<!--                                    ui-sref="notification-detail({id:notification.id})"-->
+<!--                                    class="btn btn-info btn-sm">-->
+<!--                                <span class="glyphicon glyphicon-eye-open"></span>-->
+<!--&lt;!&ndash;                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>&ndash;&gt;-->
+<!--                            </button>-->
+                        <button  type="submit" class="btn btn-success" ng-click="vm.ResendSmS(notification)" >
+                            <span class="glyphicon glyphicon-send" title="Réenvoyer"></span>
+                        </button>
+                         <!--   <button type="submit"
+                                    ng-click="vm.editItem($event, notification)"
+                                    class="btn btn-warning btn-xs">
+                                <span class="glyphicon glyphicon-pencil"></span>
+&lt;!&ndash;                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>&ndash;&gt;
+                            </button>
+                            <button type="submit"
+                                    ng-click="vm.deleteItem($event, notification)"
+                                    class="btn btn-danger btn-xs">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+&lt;!&ndash;                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>&ndash;&gt;
+                            </button>-->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        <div class="center-block text-center" ng-show="vm.canShowPagination()">
+            <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage" >
+            </uib-pagination>
+        </div>
+    </div>
+</div>

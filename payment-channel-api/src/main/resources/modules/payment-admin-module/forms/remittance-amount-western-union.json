@@ -1,0 +1,70 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "hidden",
+        "key": "providerCode",
+        "defaultValue": "WESTERN_UNION",
+        "input": true
+      },
+      {
+        "type": "number",
+        "key": "amount",
+        "label": "Montant à envoyer (Western Union)",
+        "input": true,
+        "validate": { "required": true, "min": 1000 }
+      },
+      {
+        "type": "textfield",
+        "key": "currency",
+        "label": "Devise d'envoi",
+        "input": true,
+        "defaultValue": "XOF"
+      },
+      {
+        "type": "textfield",
+        "key": "purpose",
+        "label": "Motif du transfert",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "select",
+        "key": "wuDeliveryOption",
+        "label": "Option de livraison WU",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "Standard", "value": "STANDARD" },
+            { "label": "Express", "value": "EXPRESS" }
+          ]
+        },
+        "defaultValue": "STANDARD",
+        "widget": "choicesjs"
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Montant à envoyer (Western Union)": "Montant à envoyer (Western Union)",
+      "Devise d'envoi": "Devise d'envoi",
+      "Motif du transfert": "Motif du transfert",
+      "Option de livraison WU": "Option de livraison WU"
+    },
+    "en": {
+      "Montant à envoyer (Western Union)": "Send amount (Western Union)",
+      "Devise d'envoi": "Send currency",
+      "Motif du transfert": "Transfer purpose",
+      "Option de livraison WU": "WU delivery option"
+    }
+  }
+}

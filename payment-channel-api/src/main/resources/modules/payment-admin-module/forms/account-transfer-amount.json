@@ -1,0 +1,41 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "currency",
+        "key": "amount",
+        "label": "Montant",
+        "input": true,
+        "validate": { "required": true },
+        "properties": {
+          "amountChips": [1000, 2000, 5000, 10000, 25000, 50000]
+        }
+      },
+      {
+        "type": "textfield",
+        "key": "currency",
+        "label": "Devise",
+        "input": true,
+        "defaultValue": "XOF"
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Montant": "Montant",
+      "Devise": "Devise"
+    },
+    "en": {
+      "Montant": "Amount",
+      "Devise": "Currency"
+    }
+  }
+}

@@ -1,0 +1,62 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myCompteLabel">Create or edit a Compte</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.compte.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.compte.id" readonly />
+        </div>
+         <div class="form-group">
+            <label class="control-label" for="field_codeAgence">Code Banque</label>
+            <input type="text" class="form-control" name="codeAgence" id="field_codeAgence"
+                    ng-model="vm.compte.codeBanque"
+                    />
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label" for="field_codeAgence">Code Agence</label>
+            <input type="text" class="form-control" name="codeAgence" id="field_codeAgence"
+                    ng-model="vm.compte.codeAgence"
+                    />
+        </div>
+          <div class="form-group">
+            <label class="control-label" for="field_codeAgence">Numero de Compte</label>
+            <input type="text" class="form-control" name="codeAgence" id="field_codeAgence"
+                    ng-model="vm.compte.numeroCompte"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_codeAgence">clé</label>
+            <input type="text" class="form-control" name="codeAgence" id="field_codeAgence"
+                    ng-model="vm.compte.cle"
+                    />
+        </div>
+        <div class="form-group" >
+            <label for="field_fournisseurService">Type de Compte</label>
+            <select class="form-control" id="field_relation" name="relation" ng-model="vm.compte.typeCompte" ng-options="typecompte as typecompte.nomTypeCompte for typecompte in vm.typecomptes track by typecompte.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group" ng-show="false">
+            <label for="field_fournisseurService">relation</label>
+            <select class="form-control" id="field_relation" name="relation" ng-model="vm.compte.relation" ng-options="relation as relation.id for relation in vm.relations track by relation.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,46 @@
+entity MotifOperation{
+    libelle String required
+}
+
+entity BrancheActivite{
+    libelle String required,
+    code String
+}
+
+enum TypeTarif {
+  FIXE,POURCENTAGE
+}
+
+enum MontantsAComptabilise{
+    MONTANT,FRAIS,FRAISEMT,FRAISACQ
+}
+
+entity Taxe{
+    modeCalcul TypeTarif,
+    appliqueSur MontantsAComptabilise,
+    valeur BigDecimal
+}
+
+entity TypeService{
+}
+
+entity Operation{
+}
+
+
+relationship ManyToMany {
+  Taxe{typeService} to TypeService{taxe},
+  Taxe{operation} to Operation{taxe}
+}
+
+entity UniteOrganisation{
+}
+
+relationship OneToMany{
+ UniteOrganisation{uniteOrganisation} to Taxe{taxe}
+}
+
+
+    dto * with mapstruct
+	paginate * with pagination
+	service * with serviceClass

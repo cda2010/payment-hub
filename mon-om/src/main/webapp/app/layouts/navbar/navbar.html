@@ -1,0 +1,275 @@
+<div class="topbar" style="background: linear-gradient(135deg, #7485e6, #4a90e2);">
+    <!-- LOGO -->
+    <div class="topbar-left">
+        <a href="index.html" class="logo" style="color: #fff;"><i class="zmdi zmdi-layers"></i></a>
+    </div>
+  
+    <!-- Button mobile view to collapse sidebar menu -->
+    <div class="navbar navbar-default" role="navigation" style="background: transparent; border: none;">
+        <div class="container">
+
+            <!-- Page title -->
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="button-menu-mobile open-left" style="color: #fff;">
+                        <i class="zmdi zmdi-menu"></i>
+                    </button>
+                </li>
+                <li>
+                    <h4 class="page-title" style="color: #fff;">{{vm.$state.current.name}}</h4>
+                </li>
+            </ul>
+
+            <!-- Right(Notification and Searchbox -->
+
+        </div><!-- end container -->
+    </div><!-- end navbar -->
+</div>
+
+<!-- DEBUT NOUVEAU=================================== -->
+<div class="left side-menu" role="navigation" style="background: #f8f9fa; border-right: 2px solid #ecedf2;">
+    <div class="sidebar-inner slimscrollleft">
+        <!-- User -->
+        <div class="user-box" style="background: #fff; padding: 20px; border-radius: 0; margin: 15px;">
+            <div class="user-img">
+                <img src="assets/images/users/avatar1.png" alt="user-img" title="utilisateur connecté" class="img-circle img-thumbnail img-responsive" style="border: 3px solid #7485e6;">
+                <div class="user-status offline"><i class="zmdi zmdi-dot-circle"></i></div>
+            </div>
+            <h5><a href="#" style="color: #7485e6;">{{vm.account.lastName}}</a></h5>
+            <ul class="list-inline">
+                <li>
+                    <a href="#" class="text-custom" ng-click="vm.logout()" style="color: #7485e6;">
+                        <i class="zmdi zmdi-power"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- End User -->
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu" ng-switch="vm.isAuthenticated()" style="margin-top: 20px;">
+            <ul style="padding: 0;">
+                <li ui-sref-active="active" ng-if="!vm.account || !vm.account.authorities || vm.account.authorities.length > 1" style="margin: 5px 0;">
+                    <a class="waves-effect" ui-sref="home" ng-click="vm.collapseNavbar()" style="color: #7485e6; padding: 12px 20px; border-radius: 0; transition: all 0.3s;">
+                        <i class="fa fa-home mr-2"></i>
+                        <span class="hidden-sm" data-translate="global.menu.home">Home</span>
+                    </a>
+                </li>
+                <li ng-class="{active: vm.$state.includes('entity')}" class="has_sub" has-any-authority="ROLE_ADMIN" style="margin: 5px 0;">
+                    <a ng-click="vm.collapseNavbar()" href="" id="account-menu" uib-dropdown-toggle class="waves-effect" style="color: #7485e6; padding: 12px 20px; border-radius: 0;">
+                        <i class="fa fa-cogs mr-2"></i>
+                        <span data-translate="global.menu.entities.parametre">Paramètres</span>
+                        <span class="menu-arrow"><i class="fa fa-chevron-down"></i></span>
+                    </a>
+                    <ul class="list-unstyled" uib-dropdown-menu style="background: #fff; border-radius: 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                        <li ui-sref-active="active">
+                            <a ui-sref="interface-utilisateur" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-desktop mr-2"></i>
+                                <span>Interface</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="pays" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-globe mr-2"></i>
+                                <span>Pays</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="fournisseur-service" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-truck mr-2"></i>
+                                <span>Fournisseur Service</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="autre-parametre" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-sliders-h mr-2"></i>
+                                <span>Autres Paramètres</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="service-traitement" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-cog mr-2"></i>
+                                <span>Service</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="api" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-plug mr-2"></i>
+                                <span>Api</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="schema-ecriture" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-sitemap mr-2"></i>
+                                <span>Schema</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="type-compte" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-users mr-2"></i>
+                                <span>Type compte</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="type-service" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-list mr-2"></i>
+                                <span>Type service</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="relation" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-link mr-2"></i>
+                                <span>Relation entre FSE</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="compte" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-user-circle mr-2"></i>
+                                <span>Comptes</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="unite-organisation" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-building mr-2"></i>
+                                <span>Unite Organisation</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" ng-show="true">
+                            <a ui-sref="etiquette" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-tags mr-2"></i>
+                                <span>Etiquette des comptes</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="etiquette-methode" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-tag mr-2"></i>
+                                <span>Liste des étiquettes méthodes</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li ui-sref-active="active" class="has_sub" has-any-authority="ROLE_ADMIN" style="margin: 5px 0;">
+                    <a class="waves-effect" uib-dropdown-toggle href="" ng-click="vm.collapseNavbar()" style="color: #7485e6; padding: 12px 20px; border-radius: 0;">
+                        <i class="fa fa-chart-line mr-2"></i>
+                        <span data-translate="global.menu.entities.arret">Monitoring</span>
+                        <span class="menu-arrow"><i class="fa fa-chevron-down"></i></span>
+                    </a>
+                    <ul class="list-unstyled" uib-dropdown-menu style="background: #fff; border-radius: 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                        <li ui-sref-active="active">
+                            <a ui-sref="operation" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-eye mr-2"></i>
+                                <span>Visualisation Opération</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li ng-class="{active: vm.$state.includes('admin')}" has-any-authority="ROLE_ADMIN" class="has_sub" style="margin: 5px 0;">
+                    <a href="" ng-click="vm.collapseNavbar()" uib-dropdown-toggle id="admin-menu-online" class="waves-effect" style="color: #7485e6; padding: 12px 20px; border-radius: 0;">
+                        <i class="fa fa-user-circle mr-2"></i>
+                        <span>Account</span>
+                        <span class="menu-arrow"><i class="fa fa-chevron-down"></i></span>
+                    </a>
+                    <ul class="list-unstyled" uib-dropdown-menu style="background: #fff; border-radius: 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                        <li ui-sref-active="active" ng-switch-when="true">
+                            <a ui-sref="settings" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-cog mr-2"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" ng-switch-when="true">
+                            <a ui-sref="password" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-key mr-2"></i>
+                                <span>Password</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" ng-switch-when="true">
+                            <a href="" ng-click="vm.logout()" id="logout" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-sign-out-alt mr-2"></i>
+                                <span>Sign out</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" ng-switch-when="false">
+                            <a ui-sref="connexion" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-sign-in-alt mr-2"></i>
+                                <span>Sign in</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" ng-switch-when="true">
+                            <a ui-sref="register" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-user-plus mr-2"></i>
+                                <span>Register</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li ng-class="{active: vm.$state.includes('admin')}" has-any-authority="ROLE_ADMIN" class="has_sub" style="margin: 5px 0;">
+                    <a href="" ng-click="vm.collapseNavbar()" uib-dropdown-toggle id="admin-menu-online" class="waves-effect" style="color: #7485e6; padding: 12px 20px; border-radius: 0;">
+                        <i class="fa fa-shield-alt mr-2"></i>
+                        <span>Administration</span>
+                        <span class="menu-arrow"><i class="fa fa-chevron-down"></i></span>
+                    </a>
+                    <ul class="list-unstyled" uib-dropdown-menu style="background: #fff; border-radius: 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                        <li ui-sref-active="active">
+                            <a ui-sref="user-management" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-users mr-2"></i>
+                                <span>User management</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="jhi-metrics" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-tachometer-alt mr-2"></i>
+                                <span>Metrics</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="jhi-health" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-heartbeat mr-2"></i>
+                                <span>Health</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="jhi-configuration" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-wrench mr-2"></i>
+                                <span>Configuration</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="audits" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-bell mr-2"></i>
+                                <span>Audits</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="logs" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-list-alt mr-2"></i>
+                                <span>Logs</span>
+                            </a>
+                        </li>
+                        <li ng-show="vm.swaggerEnabled" ui-sref-active="active">
+                            <a ui-sref="docs" ng-click="vm.collapseNavbar()" style="padding: 10px 20px; color: #666;">
+                                <i class="fa fa-book mr-2"></i>
+                                <span>API</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Ajout du menu Dashboard pour le rôle CONSULT_TDB -->
+                <li ui-sref-active="active" has-any-authority="ROLE_CONSULT_TDB">
+                    <a class="waves-effect" ui-sref="dashboard" ng-click="vm.collapseNavbar()" style="color: #7485e6; padding: 12px 20px; border-radius: 0; transition: all 0.3s;">
+                        <i class="fa fa-tachometer-alt mr-2"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <!-- Sidebar -->
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<script type="text/javascript-lazy" src="../assets/js/jquery.app.js"></script>
+<!-- FIN  ====== -->

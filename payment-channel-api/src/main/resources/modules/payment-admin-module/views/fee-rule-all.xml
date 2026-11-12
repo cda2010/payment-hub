@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-view name="fee-rule-all" title="Règles de frais"
+             model="com.gateway.payment.transfer.domain.FeeRule" icon="pi pi-percentage">
+  <view type="grid" name="fee-rule-grid"/>
+  <view type="form" name="fee-rule-form"/>
+</action-view>

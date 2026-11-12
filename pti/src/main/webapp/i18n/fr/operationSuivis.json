@@ -1,0 +1,22 @@
+{
+    "ptiApp": {
+        "operationSuivis" : {
+            "home": {
+                "title": "OperationSuivis",
+                "createLabel": "Créer un nouveau Operation Suivis",
+                "createOrEditLabel": "Créer ou éditer un Operation Suivis"
+            },
+            "created": "Un nouveau Operation Suivis a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Operation Suivis avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Operation Suivis avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Operation Suivis {{ id }} ?"
+            },
+            "detail": {
+                "title": "Operation Suivis"
+            },
+            "client": "Client",
+            "operation": "Operation"
+        }
+    }
+}

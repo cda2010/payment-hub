@@ -1,0 +1,6 @@
+unite de regroupement a adjouté.
+mobile a ajouté coté contact et ajouté les expressions reguliere;
+modifier le titre.information complementaire
+le nom de l'organisation puis 
+dupliquer un profil puis changer l'organisation et les autres informations;
+

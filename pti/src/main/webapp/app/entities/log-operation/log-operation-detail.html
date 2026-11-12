@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span data-translate="ptiApp.logOperation.detail.title">Log Operation</span> {{vm.logOperation.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.logOperation.dateOperation">Date Operation</span></dt>
+        <dd>
+            <span>{{vm.logOperation.dateOperation | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.logOperation.description">Description</span></dt>
+        <dd>
+            <span>{{vm.logOperation.description}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.logOperation.login">Login</span></dt>
+        <dd>
+            <span>{{vm.logOperation.login}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.logOperation.result">Result</span></dt>
+        <dd>
+            <span>{{vm.logOperation.result}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.logOperation.codeOperation">Code Operation</span></dt>
+        <dd>
+            <span>{{vm.logOperation.codeOperation}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="log-operation-detail.edit({id:vm.logOperation.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

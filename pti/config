@@ -1,0 +1,13 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = http://10.214.0.75/smp/pti.git
+	fetch = +refs/heads/pti_refresh:refs/remotes/origin/pti_refresh
+[branch "pti_refresh"]
+	remote = origin
+	merge = refs/heads/pti_refresh

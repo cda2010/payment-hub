@@ -1,0 +1,24 @@
+<div >
+    <div class="modal-header">
+        <h4 style="background-color: #1758a3 !important; color: white !important;text-align: center;">Liste des comptes</h4>
+    </div>
+    <div class="modal-body" >
+        <div ng-repeat="c in data track by $index">
+        <div class="radio mt5">
+            <label >
+                <input autocomplete="off" ng-model="vm.modal.cptS" value={{c.valeurCompte+','+c.id}} name="form-field-radio"
+                       type="radio" class="colored-blue" id="id_bouton_radio" ng-click="voirSolde()" >
+                <span   class="text">{{c.valeurCompte}} {{listeAll[$index].libelle}}</span><span ng-if="ctrlSolde " class="margin-10">  Solde = {{c.soldeCompte | currency:""}} FCFA</span>
+            </label>
+        </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-default"  ng-click="fermerM()">
+                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Fermer</span>
+            </button>
+        </div>
+    </div>
+</div>
+

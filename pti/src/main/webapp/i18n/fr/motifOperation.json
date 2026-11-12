@@ -1,0 +1,22 @@
+
+{
+    "ptiApp": {
+        "motifOperation" : {
+            "home": {
+                "title": "MotifOperations",
+                "createLabel": "Créer un nouveau Motif Operation",
+                "createOrEditLabel": "Créer ou éditer un Motif Operation"
+            },
+            "created": "Un nouveau Motif Operation a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Motif Operation avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Motif Operation avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Motif Operation {{ id }} ?"
+            },
+            "detail": {
+                "title": "Motif Operation"
+            },
+            "libelle": "Libelle"
+        }
+    }
+}

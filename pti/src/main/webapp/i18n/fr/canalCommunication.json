@@ -1,0 +1,24 @@
+
+{
+    "ptiApp": {
+        "canalCommunication" : {
+            "home": {
+                "title": "CanalCommunications",
+                "createLabel": "Créer un nouveau Canal Communication",
+                "createOrEditLabel": "Créer ou éditer un Canal Communication"
+            },
+            "created": "Un nouveau Canal Communication a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Canal Communication avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Canal Communication avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Canal Communication {{ id }} ?"
+            },
+            "detail": {
+                "title": "Canal Communication"
+            },
+            "facturier": "Facturier",
+            "ftp": "Ftp",
+            "recepteurEmail": "Recepteur Email"
+        }
+    }
+}

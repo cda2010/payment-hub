@@ -1,0 +1,37 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation class="form-horizontal">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myEtapeServiceLabel" data-translate="ptiApp.canalApplication.home.createOrEditLabel">
+            Create or edit a Service Step</h4>
+    </div> 
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="col-sm-4 control-label" mf-required class="control-label"
+                   for="field_nom">Libelle Canal</label>
+            <div class="col-sm-6">
+                <input autocomplete="off" required type="text" class="form-control" name="field_libelleCanal" id="field_application" ng-model="vm.canalApplication.libelleCanal"/>
+            </div>
+        </div> 
+        <div class="form-group"> 
+            <label class="control-label col-sm-4"
+                for="field_typeCanal">Type Canal</label> 
+            <div class="col-sm-6"> 
+                <select class="form-control" name="field_typeCanal" id="field_typeCanal" ng-model="vm.canalApplication.typeCanal">
+                    <option value="CANAL">Canal</option>
+                    <option value="SOUSCANAL">Sous Canal</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

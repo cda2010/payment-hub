@@ -1,0 +1,25 @@
+{
+    "ptiApp": {
+        "logOperation" : {
+            "home": {
+                "title": "LogOperations",
+                "createLabel": "Créer un nouveau Log Operation",
+                "createOrEditLabel": "Créer ou éditer un Log Operation"
+            },
+            "created": "Un nouveau Log Operation a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Log Operation avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Log Operation avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Log Operation {{ id }} ?"
+            },
+            "detail": {
+                "title": "Log Operation"
+            },
+            "dateOperation": "Date Operation",
+            "description": "Description",
+            "login": "Login",
+            "result": "Result",
+            "codeOperation": "Code Operation"
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "recepteurAlarme" : {
+            "home": {
+                "title": "RecepteurAlarmes",
+                "createLabel": "Créer un nouveau Recepteur Alarme",
+                "createOrEditLabel": "Créer ou éditer un Recepteur Alarme"
+            },
+            "created": "Un nouveau Recepteur Alarme a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Recepteur Alarme avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Recepteur Alarme avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Recepteur Alarme {{ id }} ?"
+            },
+            "detail": {
+                "title": "Recepteur Alarme"
+            },
+            "etiquette": "Etiquette",
+            "emails": "Emails",
+            "sms": "Sms"
+        }
+    }
+}

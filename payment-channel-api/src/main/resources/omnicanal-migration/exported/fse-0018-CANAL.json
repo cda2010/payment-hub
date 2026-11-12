@@ -1,0 +1,230 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0018",
+  "providerCodeHint": "FSE_0018",
+  "providerLibelle": "CANAL +",
+  "participantKindHint": "FACTURIER",
+  "fseStatut": "AUTRE",
+  "groupCode": "ENF",
+  "codeExterne": "0",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "CANAL +",
+    "codeApi": "0016",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "OAUTH2_CLIENT_CREDENTIALS",
+    "clientId": "apiPartenersapp",
+    "clientSecret": "my-secret-token-to-change-in-production",
+    "tokenUrl": "http://172.27.4.29:7930/yolce/oauth/token",
+    "grantType": "client_credentials",
+    "username": "admin",
+    "password": "Admin@++19"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "GETINFOS",
+      "codeMethode": "001601",
+      "operationCode": "GETINFOS",
+      "nom": "/api/services/canalplus/getInfos",
+      "httpMethod": "POST",
+      "path": "api/services/canalplus/getInfos",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"numeroCarte\": \"${numeroCarte}\", \"currency\": \"${currency}\", \"operatorName\": \"${operatorName}\", \"country\": \"${country}\", \"typeOperation\": \"${typeOperation}\", \"options\": \"${options}\", \"choixoffre\": \"${choixoffre}\", \"duree\": \"${duree}\"}",
+      "parameters": [
+        {
+          "code": "numeroCarte",
+          "nomExterne": "numeroCarte",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "currency",
+          "nomExterne": "currency",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "operatorName",
+          "nomExterne": "operatorName",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "country",
+          "nomExterne": "country",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "typeOperation",
+          "nomExterne": "typeOperation",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "options",
+          "nomExterne": "options",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "choixoffre",
+          "nomExterne": "choixoffre",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "duree",
+          "nomExterne": "duree",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "GETMONTANT",
+      "codeMethode": "001602",
+      "operationCode": "GETMONTANT",
+      "nom": "/api/services/canalplus/getmontant",
+      "httpMethod": "POST",
+      "path": "api/services/canalplus/getmontant",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"nombre\": \"${nombre}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "SETTLEMENT",
+      "codeMethode": "001603",
+      "operationCode": "SETTLEMENT",
+      "nom": "/api/services/canalplus/settlement",
+      "httpMethod": "POST",
+      "path": "api/services/canalplus/settlement",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"numeroCarte\": \"${numeroCarte}\", \"currency\": \"${currency}\", \"operatorName\": \"${operatorName}\", \"idBase\": \"${idBase}\", \"montant\": \"${montant}\", \"tokenId\": \"${tokenId}\", \"numSubscriber\": \"${numSubscriber}\", \"accountRef\": \"${accountRef}\", \"numContract\": \"${numContract}\", \"mainOffer\": \"${mainOffer}\", \"duree\": \"${duree}\", \"options\": \"${options}\", \"country\": \"${country}\", \"typeOperation\": \"${typeOperation}\", \"externalReference\": \"${externalReference}\", \"telephone\": \"${telephone}\", \"operation\": \"${operation}\"}",
+      "parameters": [
+        {
+          "code": "numeroCarte",
+          "nomExterne": "numeroCarte",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "currency",
+          "nomExterne": "currency",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "operatorName",
+          "nomExterne": "operatorName",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "idBase",
+          "nomExterne": "idBase",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "tokenId",
+          "nomExterne": "tokenId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "numSubscriber",
+          "nomExterne": "numSubscriber",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "accountRef",
+          "nomExterne": "accountRef",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "numContract",
+          "nomExterne": "numContract",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "mainOffer",
+          "nomExterne": "mainOffer",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "duree",
+          "nomExterne": "duree",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "options",
+          "nomExterne": "options",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "country",
+          "nomExterne": "country",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "typeOperation",
+          "nomExterne": "typeOperation",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "externalReference",
+          "nomExterne": "externalReference",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "telephone",
+          "nomExterne": "telephone",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "operation",
+          "nomExterne": "operation",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

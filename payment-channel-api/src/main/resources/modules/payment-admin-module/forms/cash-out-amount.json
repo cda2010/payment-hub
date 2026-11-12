@@ -1,0 +1,41 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "currency",
+        "key": "amount",
+        "label": "Montant à retirer (cash)",
+        "input": true,
+        "validate": { "required": true, "min": 500 },
+        "properties": {
+          "amountChips": [1000, 2000, 5000, 10000, 25000, 50000]
+        }
+      },
+      {
+        "type": "textfield",
+        "key": "currency",
+        "label": "Devise",
+        "input": true,
+        "defaultValue": "XOF"
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Montant à retirer (cash)": "Montant à retirer (cash)",
+      "Devise": "Devise"
+    },
+    "en": {
+      "Montant à retirer (cash)": "Cash amount to withdraw",
+      "Devise": "Currency"
+    }
+  }
+}

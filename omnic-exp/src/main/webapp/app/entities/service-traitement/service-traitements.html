@@ -1,0 +1,68 @@
+<div>
+    <h2>Service Traitements</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="service-traitement.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Service Traitement
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Code Service</span></th>
+                    <th><span>Nom Service</span></th>
+                    <th><span>Fournisseur Service</span></th>
+                    
+                    <th><span>Type Service</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="serviceTraitement in vm.serviceTraitements track by serviceTraitement.id">
+                    <td><a ui-sref="service-traitement-detail({id:serviceTraitement.id})">{{serviceTraitement.id}}</a></td>
+                    <td>{{serviceTraitement.codeService}}</td>
+                    <td>{{serviceTraitement.nomService}}</td>
+                    <td>
+                       {{serviceTraitement.fournisseurService.nom}}
+                    </td>
+                   
+                    <td>
+                        {{serviceTraitement.typeService}}
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="service-traitement-detail({id:serviceTraitement.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="service-traitement.edit({id:serviceTraitement.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="service-traitement.delete({id:serviceTraitement.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

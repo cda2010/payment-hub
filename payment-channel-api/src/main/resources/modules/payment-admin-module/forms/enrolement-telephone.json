@@ -1,0 +1,17 @@
+{
+  "formio": {
+    "display": "form",
+    "title": "Téléphone",
+    "components": [
+      {
+        "type": "phoneNumber",
+        "key": "telephone",
+        "label": "Numéro de téléphone",
+        "input": true,
+        "validate": {
+          "required": true
+        }
+      }
+    ]
+  }
+}

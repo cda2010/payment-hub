@@ -1,0 +1,11 @@
+# Profil local : base dédiée docker-compose (rules-postgres, port 5441).
+# Démarrer l'infra : docker compose up -d rules-postgres
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5441/payment_rules
+    username: rules
+    password: rules
+
+logging:
+  level:
+    com.gateway.payment.rules: DEBUG

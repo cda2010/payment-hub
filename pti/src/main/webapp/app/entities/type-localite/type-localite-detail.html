@@ -1,0 +1,31 @@
+
+<div>
+    <h2><span data-translate="ptiApp.typeLocalite.detail.title">Type Localite</span> {{vm.typeLocalite.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.typeLocalite.libelle">Libelle</span></dt>
+        <dd>
+            <span>{{vm.typeLocalite.libelle}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.typeLocalite.niveau">Niveau</span></dt>
+        <dd>
+            <span>{{vm.typeLocalite.niveau}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.typeLocalite.pays">Pays</span></dt>
+        <dd>
+            <a ui-sref="unite-organisation-detail({id:vm.typeLocalite.paysId})">{{vm.typeLocalite.paysId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="type-localite-detail.edit({id:vm.typeLocalite.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

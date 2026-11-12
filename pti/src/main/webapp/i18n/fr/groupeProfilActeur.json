@@ -1,0 +1,26 @@
+{
+    "ptiApp": {
+        "groupeProfilActeur" : {
+            "home": {
+                "title": "GroupeProfilActeurs",
+                "createLabel": "Créer un nouveau Groupe Profil Acteur",
+                "createOrEditLabel": "Créer ou éditer un Groupe Profil Acteur"
+            },
+            "created": "Un nouveau Groupe Profil Acteur a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Groupe Profil Acteur avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Groupe Profil Acteur avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Groupe Profil Acteur {{ id }} ?"
+            },
+            "detail": {
+                "title": "Groupe Profil Acteur"
+            },
+            "nom": "Nom",
+            "description": "Description",
+            "type": "Type",
+            "destineA": "Destine A",
+            "codeFSE": "Code FSE",
+            "active": "Active"
+        }
+    }
+}

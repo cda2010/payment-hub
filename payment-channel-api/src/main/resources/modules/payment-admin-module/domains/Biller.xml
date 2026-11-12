@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://rapidframe.com/schema/domain"
+               name="Biller"
+               class="com.gateway.payment.billing.domain.Biller"
+               table="biller"
+               repository="none">
+
+  <string name="code" title="Code" required="true" unique="true"/>
+  <string name="name" title="Nom" required="true" namecolumn="true"/>
+  <string name="description" title="Description" large="true"/>
+  <string name="logoUrl" title="Logo URL"/>
+  <boolean name="actif" title="Actif" default="true"/>
+  <string name="defaultCurrency" title="Devise" required="true" default="XOF"/>
+  <integer name="ordreAffichage" title="Ordre d'affichage"/>
+  <many-to-one name="provider" ref="com.gateway.payment.configuration.domain.PaymentProvider"
+               title="Fournisseur FACTURIER" required="true"/>
+  <one-to-many name="products" ref="com.gateway.payment.billing.domain.BillerProduct" mappedBy="biller" orphanRemoval="true"/>
+  <datetime name="createdAt" title="Créé le" readonly="true"/>
+  <datetime name="updatedAt" title="Modifié le" readonly="true"/>
+
+  <finder name="findByCode" using="code"/>
+  <finder name="findActive" using="actif" all="true" orderBy="ordreAffichage ASC"/>
+
+</domain-models>

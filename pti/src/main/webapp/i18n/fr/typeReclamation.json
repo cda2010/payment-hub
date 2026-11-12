@@ -1,0 +1,23 @@
+{
+  "ptiApp": {
+    "typeReclamation": {
+      "home": {
+        "title": "TypeReclamations",
+        "createLabel": "Créer un nouveau Type Reclamation",
+        "createOrEditLabel": "Créer ou éditer un Type Reclamation",
+        "notFound": "Aucun Type Reclamation trouvé"
+      },
+      "created": "Un nouveau Type Reclamation a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Type Reclamation avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Type Reclamation avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Type Reclamation {{ id }} ?"
+      },
+      "detail": {
+        "title": "Type Reclamation"
+      },
+      "libelleTypeReclamation": "Libelle Type Reclamation",
+      "reclamation": "Reclamation"
+    }
+  }
+}

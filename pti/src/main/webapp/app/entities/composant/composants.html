@@ -1,0 +1,68 @@
+<div class="container-fluid">
+<div class="row">
+    <div class="well with-header" style="margin-top:10px ">
+        <div class="header bg-blue ">
+            <div class="col-xs-11">
+                <h4 >Liste des composants</h4>
+            </div>
+            <div class="no-padding-left col-xs-1">
+                <button class="btn btn-default  btn-circle btn-xs" ui-sref="composant.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+        <table class="jh-table table table-hover">
+            <thead>
+                <tr>
+<!--                    <th><span>ID</span></th>-->
+                    <th><span>Type</span></th>
+                    <th><span>Label</span></th>
+                    <th><span>Code</span></th>
+                    <th><span>Valeur par défaut</span></th>
+                    <th><span>Attribut</span></th>
+                    <th><span>Type Composant</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="composant in vm.datas track by composant.id">
+<!--                    <td><a ui-sref="composant-detail({id:composant.id})">{{composant.id}}</a></td>-->
+                    <td>{{composant.type}}</td>
+                    <td>{{composant.label}}</td>
+                    <td>{{composant.code}}</td>
+                    <td>{{composant.defaultValue}}</td>
+                    <td>{{composant.attribut}}</td>
+                    <td>{{composant.typeComposant}}</td>
+
+                     <td class="text-right">
+                         <div class="btn-group flex-btn-group-container">
+                             <button type="submit"
+                                     ui-sref="composant-detail({id:composant.id})"
+                                     class="btn btn-info btn-sm">
+                                 <span class="glyphicon glyphicon-eye-open"></span>
+                                 <!--<span class="hidden-sm-down" data-translate="entity.action.view"></span>-->
+                             </button>
+                             <button type="submit"
+                                     ui-sref="composant.edit({id:composant.id})"
+                                     class="btn btn-primary btn-sm">
+                                 <span class="glyphicon glyphicon-pencil"></span>
+                                 <!--<span class="hidden-sm-down" data-translate="entity.action.edit"></span>-->
+                             </button>
+                             <button type="submit"
+                                     ui-sref="composant.delete({id:composant.id})"
+                                     class="btn btn-danger btn-sm">
+                                 <span class="glyphicon glyphicon-remove-circle"></span>
+                                 <!--<span class="hidden-sm-down" data-translate="entity.action.delete"></span>-->
+                             </button>
+                         </div>
+                     </td>
+                 </tr>
+             </tbody>
+         </table>
+     </div>
+    <div class="center-block text-center" ng-show="vm.canShowPagination()">
+        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+        </uib-pagination>
+    </div>
+ </div>
+</div>

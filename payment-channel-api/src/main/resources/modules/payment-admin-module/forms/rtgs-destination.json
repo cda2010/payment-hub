@@ -1,0 +1,62 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "select",
+        "key": "destRail",
+        "label": "Banque destinataire",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "CORIS_BANK", "value": "CORIS_BANK" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "destAccount",
+        "label": "N° de compte bénéficiaire",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryName",
+        "label": "Nom du bénéficiaire",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "bankCode",
+        "label": "Code banque / BIC (optionnel)",
+        "input": true
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Banque destinataire": "Banque destinataire",
+      "N° de compte bénéficiaire": "N° de compte bénéficiaire",
+      "Nom du bénéficiaire": "Nom du bénéficiaire",
+      "Code banque / BIC (optionnel)": "Code banque / BIC (optionnel)"
+    },
+    "en": {
+      "Banque destinataire": "Receiving bank",
+      "N° de compte bénéficiaire": "Beneficiary account number",
+      "Nom du bénéficiaire": "Beneficiary name",
+      "Code banque / BIC (optionnel)": "Bank code / BIC (optional)"
+    }
+  }
+}

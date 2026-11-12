@@ -1,0 +1,48 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "returnInfo",
+        "tag": "p",
+        "content": "L'approbation a été refusée. Corrigez si besoin les données du transfert, puis reconfirmez pour relancer le circuit d'approbation."
+      },
+      {
+        "type": "textarea",
+        "key": "initiatorCorrectionNote",
+        "label": "Note de correction (optionnel)",
+        "input": true,
+        "rows": 3
+      },
+      {
+        "type": "checkbox",
+        "key": "readyToResubmit",
+        "label": "Je souhaite reconfirmer le transfert",
+        "input": true,
+        "defaultValue": false,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "gateway": {
+    "nextAction": "FORM"
+  },
+  "i18n": {
+    "fr": {
+      "Note de correction (optionnel)": "Note de correction (optionnel)",
+      "Je souhaite reconfirmer le transfert": "Je souhaite reconfirmer le transfert"
+    },
+    "en": {
+      "Note de correction (optionnel)": "Correction note (optional)",
+      "Je souhaite reconfirmer le transfert": "I want to reconfirm the transfer"
+    }
+  }
+}

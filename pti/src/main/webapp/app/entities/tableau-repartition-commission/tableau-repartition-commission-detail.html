@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span data-translate="ptiApp.tableauRepartitionCommission.detail.title">Tableau Repartition Commission</span> {{vm.tableauRepartitionCommission.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.tableauRepartitionCommission.niveaoOperation">Niveao Operation</span></dt>
+        <dd>
+            <span>{{vm.tableauRepartitionCommission.niveaoOperation}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauRepartitionCommission.dateDebut">Date Debut</span></dt>
+        <dd>
+            <span>{{vm.tableauRepartitionCommission.dateDebut | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauRepartitionCommission.dateFin">Date Fin</span></dt>
+        <dd>
+            <span>{{vm.tableauRepartitionCommission.dateFin | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauRepartitionCommission.typeService">Type Service</span></dt>
+        <dd>
+            <a ui-sref="type-service-detail({id:vm.tableauRepartitionCommission.typeServiceId})">{{vm.tableauRepartitionCommission.typeServiceLibelle}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="tableau-repartition-commission-detail.edit({id:vm.tableauRepartitionCommission.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

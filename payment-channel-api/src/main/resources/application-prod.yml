@@ -1,0 +1,63 @@
+# Profil prod : PostgreSQL + Redis (docker-compose ou infra dédiée)
+gateway:
+  bootstrap:
+    providers: false
+  performance:
+    cache-ttl-seconds: 900
+    cache-max-size: 5000
+    async-audit: true
+    redis-enabled: true
+    redis-lock-ttl-seconds: 120
+    parallel-legs: true
+    leg-executor-threads: 128
+    virtual-threads: true
+    http:
+      connect-timeout-ms: 2000
+      read-timeout-ms: 25000
+      executor-threads: 300
+      max-connections-per-route: 80
+  provider-resilience:
+    enabled: true
+    failure-threshold: 15
+    failure-rate-threshold: 40
+    open-duration-ms: 8000
+    half-open-permitted-calls: 2
+  security:
+    jwt:
+      secret: ${JWT_SECRET}
+    cors:
+      allowed-origins: ${CORS_ORIGINS}
+  encryption:
+    secret-key: ${ENCRYPTION_SECRET}
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment_gateway?autoReconnect=true 
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 80
+      minimum-idle: 20
+      connection-timeout: 2000
+      max-lifetime: 1800000
+      pool-name: payment-gateway-pool
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 800ms
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+management:
+  tracing:
+    sampling:
+      probability: 0.1
+
+logging:
+  level:
+    root: WARN
+    com.gateway.payment: INFO
+    org.springframework.security: WARN

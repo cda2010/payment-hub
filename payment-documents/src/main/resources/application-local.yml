@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5442/payment_documents
+    username: documents
+    password: documents
+
+inbox:
+  kafka:
+    enabled: true
+    bootstrap-servers: localhost:9092
+    topic: party.actions
+
+logging:
+  level:
+    com.gateway.payment.documents: DEBUG

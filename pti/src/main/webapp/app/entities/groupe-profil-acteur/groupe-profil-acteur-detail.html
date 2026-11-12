@@ -1,0 +1,43 @@
+
+<div>
+    <h2><span data-translate="ptiApp.groupeProfilActeur.detail.title">Groupe Profil Acteur</span> {{vm.groupeProfilActeur.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.groupeProfilActeur.nom">Nom</span></dt>
+        <dd>
+            <span>{{vm.groupeProfilActeur.nom}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.groupeProfilActeur.description">Description</span></dt>
+        <dd>
+            <span>{{vm.groupeProfilActeur.description}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.groupeProfilActeur.type">Type</span></dt>
+        <dd>
+            <span>{{vm.groupeProfilActeur.type}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.groupeProfilActeur.destineA">Destine A</span></dt>
+        <dd>
+            <span>{{vm.groupeProfilActeur.destineA}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.groupeProfilActeur.codeFSE">Code FSE</span></dt>
+        <dd>
+            <span>{{vm.groupeProfilActeur.codeFSE}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.groupeProfilActeur.active">Active</span></dt>
+        <dd>
+            <span>{{vm.groupeProfilActeur.active}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="groupe-profil-acteur-detail.edit({id:vm.groupeProfilActeur.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

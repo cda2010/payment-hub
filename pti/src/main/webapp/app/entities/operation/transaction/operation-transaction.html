@@ -1,0 +1,54 @@
+<div >
+    <div class="modal-header">
+        <h4 style="background-color: #1758a3 !important; color: white !important;text-align: center;">Liste des transactions</h4>
+    </div>
+    <div class="modal-body">
+    <div class="table-responsive">
+    <table class="jh-table table table-striped">
+        <thead>
+        <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+            <th >Type</th>
+            <th >Valeur du compte</th>
+            <th >Organisation</th>
+            <th>Etiquette</th>
+            <th>Libelle</th>
+            <th>Etat</th>
+            <th >Date</th>
+            <th >Montant</th>
+            <th >Solde Courant</th>
+            <th >Solde Apres</th>
+            <th >Créer par</th>
+            <th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="transactionComptePti in vm.transaction ">
+            <td>{{transactionComptePti.type}}</td>
+            <td>{{transactionComptePti.valeurCompte}}</td>
+            <td>{{transactionComptePti.organisationLibelle}}</td>
+            <td>{{transactionComptePti.etiquette}}</td>
+            <td>{{transactionComptePti.libelleCompte}}</td>
+            <td >{{transactionComptePti.etat}}</td>
+            <td>{{transactionComptePti.date | date:'medium'}}</td>
+            <td>{{transactionComptePti.montant | currency:""}}</td>
+            <td>{{transactionComptePti.soldeCourant | currency:""}}</td>
+            <td>{{transactionComptePti.soldeApres | currency:""}}</td>
+            <td>{{transactionComptePti.createdBy}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+        <div  class="center-block text-center" ng-show="vm.canShowResultCount">
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+            <uib-pagination total-items="vm.queryCount" ng-model="vm.page" items-per-page="vm.itemsPerPage" ng-change="vm.transition()" >
+            </uib-pagination>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-default"  ng-click="fermerM()">
+                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Fermer</span>
+            </button>
+        </div>
+    </div>
+</div>

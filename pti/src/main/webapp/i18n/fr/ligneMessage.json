@@ -1,0 +1,26 @@
+{
+    "ptiApp": {
+        "ligneMessage" : {
+            "home": {
+                "title": "LigneMessages",
+                "createLabel": "Créer un nouveau Ligne Message",
+                "createOrEditLabel": "Créer ou éditer un Ligne Message"
+            },
+            "created": "Un nouveau Ligne Message a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Ligne Message avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Ligne Message avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Ligne Message {{ id }} ?"
+            },
+            "detail": {
+                "title": "Ligne Message"
+            },
+            "codeIndicatif": "Code Indicatif",
+            "numeroTelephone": "Numero Telephone",
+            "email": "Email",
+            "message": "Message",
+            "error": "Error",
+            "chargementMessage": "Chargement Message"
+        }
+    }
+}

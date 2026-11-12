@@ -1,0 +1,77 @@
+<div>
+    <h2 data-translate="ptiApp.commission.home.title">Commissions</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="commission.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="ptiApp.commission.home.createLabel">
+                        Create new Commission
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="montant"><span data-translate="ptiApp.commission.montant">Montant</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th><span>Montant de l'operation</span></th>
+                    <th><span>Type de service</span></th>
+                    <th jh-sort-by="estPaye"><span data-translate="ptiApp.commission.estPaye">Est Paye</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="datePaiement"><span data-translate="ptiApp.commission.datePaiement">Date Paiement</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="operationCodeOperation"><span data-translate="ptiApp.commission.operation">Operation</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="organisationLibelleUniteOrganisation"><span data-translate="ptiApp.commission.organisation">Organisation</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="commission in vm.commissions track by commission.id">
+                    <td ><a ui-sref="commission-detail({id:commission.id})">{{commission.id}}</a></td>
+                    <td>{{commission.montant}}</td>
+                    <td>{{commission.montantOp}}</td>
+                    <td>{{commission.typeService}}</td>
+                    <td>{{commission.estPaye}}</td>
+                    <td>{{commission.datePaiement | date:'medium'}}</td>
+                    <td>
+                        <a ui-sref="operation-detail({id:commission.operationId})">{{commission.operationCodeOperation}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="unite-organisation-detail({id:commission.organisationId})">{{commission.organisationLibelleUniteOrganisation}}</a>
+                    </td>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="commission-detail({id:commission.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="commission.edit({id:commission.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="commission.delete({id:commission.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

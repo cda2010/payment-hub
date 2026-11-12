@@ -1,0 +1,267 @@
+spring:
+  application:
+    name: payment-gateway
+  profiles:
+    default: local
+  main:
+    allow-bean-definition-overriding: true
+  # Redis : activé via gateway.performance.redis-enabled (GatewayRedisConfig)
+  # Ne pas exclure RedisAutoConfiguration si redis-enabled=true en prod
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: never
+    include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+  tracing:
+    sampling:
+      probability: 1.0
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+# RapidFrame — admin meta/designer + BPM (Flowable) pour conception
+# Le checkout runtime reste PaymentEngine (gateway.orchestration.mode=engine)
+rapidframe:
+  application:
+    name: payment-gateway
+    title: Payment Gateway
+    version: 0.1.0
+    description: Payment Gateway — administration RapidFrame
+  database:
+    enabled: false
+  cache:
+    type: caffeine
+    enabled: true
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=10m
+  meta:
+    database-enabled: true
+    auto-load: true
+    import-mode: upsert
+  domains:
+    verify-on-startup: false
+  # Chemins FS (RapidFrame indexe le disque, pas le classpath du jar).
+  # Défaut = lancement depuis payment-channel-api (mvnw -pl … / IDE module).
+  # Depuis la racine payment-2 : RF_MODULES_PATH=payment-channel-api/src/main/resources/modules
+  domains-path: ${RF_DOMAINS_PATH:src/main/resources/domains}
+  views-path: ${RF_VIEWS_PATH:src/main/resources/views}
+  modules-path: ${RF_MODULES_PATH:src/main/resources/modules}
+  modules:
+    directory: ${RF_MODULES_PATH:src/main/resources/modules}
+    layout: legacy
+  bpm:
+    enabled: true
+    deploy-module-processes: true
+    dmn-enabled: true
+    deploy-module-decisions: true
+    classpath-deploy-locations:
+      - classpath*:/modules/*/processes/
+
+flowable:
+  database-schema-update: true
+  # true = jobs async / WAIT durables (prod). false = sync HTTP (local / debug).
+  async-executor-activate: ${FLOWABLE_ASYNC_EXECUTOR:${GATEWAY_FLOWABLE_ASYNC:false}}
+  check-process-definitions: false
+  dmn:
+    enabled: true
+
+gateway:
+  bootstrap:
+    providers: false
+  # Outbox domaine + webhooks sortants / durcissement inbound
+  events:
+    outbox-enabled: ${GATEWAY_OUTBOX_ENABLED:true}
+    poll-delay-ms: ${GATEWAY_OUTBOX_POLL_MS:5000}
+    batch-size: 50
+    max-attempts: 8
+    outbound-webhooks-enabled: ${GATEWAY_OUTBOUND_WEBHOOKS:true}
+    # Prod : true. Local : false pour configs webhook NONE historiques.
+    inbound-require-auth: ${GATEWAY_WEBHOOK_REQUIRE_AUTH:true}
+    kafka-enabled: ${GATEWAY_OUTBOX_KAFKA:false}
+    kafka-topic: ${GATEWAY_OUTBOX_KAFKA_TOPIC:payment.domain-events}
+    kafka-bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+  # Clients BC peers
+  bc:
+    pricing-enabled: ${GATEWAY_PRICING_ENABLED:true}
+    rules-enabled: ${GATEWAY_RULES_ENABLED:true}
+    commission-enabled: ${GATEWAY_COMMISSION_ENABLED:true}
+    network-enabled: ${GATEWAY_NETWORK_ENABLED:true}
+    alias-enabled: ${GATEWAY_ALIAS_ENABLED:true}
+    documents-enabled: ${GATEWAY_DOCUMENTS_ENABLED:true}
+    identity-enabled: ${GATEWAY_IDENTITY_ENABLED:true}
+    pricing:
+      url: ${PRICING_URL:http://localhost:8095}
+      timeout: PT5S
+    rules:
+      url: ${RULES_URL:http://localhost:8099}
+      timeout: PT5S
+    commission:
+      url: ${COMMISSION_URL:http://localhost:8100}
+      timeout: PT5S
+    network:
+      url: ${NETWORK_URL:http://localhost:8096}
+      timeout: PT5S
+    alias:
+      url: ${ALIAS_URL:http://localhost:8097}
+      timeout: PT5S
+    documents:
+      url: ${DOCUMENTS_URL:http://localhost:8101}
+      timeout: PT15S
+    identity:
+      url: ${IDENTITY_URL:http://localhost:8094}
+      timeout: PT5S
+  # Timeout WAIT + recon CHECK_STATUS
+  ops:
+    wait-timeout-enabled: ${GATEWAY_WAIT_TIMEOUT:true}
+    wait-timeout-minutes: ${GATEWAY_WAIT_TIMEOUT_MIN:60}
+    wait-timeout-poll-ms: 60000
+    recon-enabled: ${GATEWAY_RECON_ENABLED:true}
+    recon-after-minutes: ${GATEWAY_RECON_AFTER_MIN:5}
+    recon-poll-ms: 120000
+  canal:
+    enabled: true
+    api-key: ${CANAL_API_KEY:change-me-mobile}
+  # Langues supportées (mappings, formulaires checkout Form.io, messages)
+  i18n:
+    default-language: fr
+    supported-languages:
+      - code: fr
+        label: Français
+      - code: en
+        label: English
+  # engine | flowable — flowable utilise PaymentFlow.bpmProcessKey (sinon fallback engine)
+  orchestration:
+    mode: flowable
+  # INVOKE catalogue → InterfaceUtilisateur REQUEST uniquement (pas de rail direct)
+  catalog:
+    omnicanal:
+      enabled: true
+      # fallback-to-provider ignoré (toujours false) — conservé pour compat YAML legacy
+      fallback-to-provider: false
+  # Omnicanal externe (omnic-exp). Actif : les méthodes et le virement du parcours passent par lui.
+  omnicanal:
+    external:
+      enabled: ${OMNICANAL_EXTERNAL_ENABLED:true}
+      base-url: ${OMNICANAL_URL:http://localhost:5981}
+      login: ${OMNICANAL_LOGIN:admin}
+      password: "${OMNICANAL_PASSWORD:omnic@n@l19}"
+      client-id: ${OMNICANAL_CLIENT_ID:Omnicanalapp}
+      client-secret: ${OMNICANAL_CLIENT_SECRET:}
+      timeout: PT30S
+  # Product Gateways d'apps peers (lecture listes UI) — origin GATEWAY
+  # Exemple :
+  # data-sources:
+  #   apps:
+  #     ESTABLISHMENTS:
+  #       enabled: true
+  #       label: Établissements
+  #       base-url: ${ESTABLISHMENTS_GATEWAY_URL:http://localhost:8101}
+  #       list-path: /api/v1/gateway/establishments
+  #       auth-type: none
+  data-sources:
+    apps: {}
+  transfer:
+    quote-ttl-minutes: 3
+  security:
+    jwt:
+      secret: ${JWT_SECRET:change-me-to-a-very-long-secret-key-at-least-256-bits}
+      issuer: payment-gateway
+      access-token-ttl: 15m
+      refresh-token-ttl: 7d
+    keycloak:
+      enabled: ${KEYCLOAK_ENABLED:true}
+      issuer-uri: ${KEYCLOAK_ISSUER:http://localhost:8180/realms/payment}
+      jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:}
+      audience: ${KEYCLOAK_AUDIENCE:payment-api}
+    cors:
+      allowed-origins: ${CORS_ORIGINS:http://localhost:4200,http://127.0.0.1:4200,http://[::1]:4200,http://localhost:4205,http://127.0.0.1:4205,http://localhost:4210,http://127.0.0.1:4210,http://localhost:8100,http://127.0.0.1:8100}
+  encryption:
+    secret-key: ${ENCRYPTION_SECRET:0123456789abcdef0123456789abcdef}
+  business-metrics:
+    default-category: AUTRE
+    amount-operations: [TRANSFERT, DEBIT, CREDIT, PAYEMENT]
+    balance-operations: [CONSULTATIONSOLDE, CONSULTATION_SOLDE]
+  provider-resilience:
+    enabled: true
+    failure-threshold: 20
+    failure-rate-threshold: 50
+    open-duration-ms: 10000
+    half-open-permitted-calls: 3
+  performance:
+    cache-ttl-seconds: 600
+    cache-max-size: 2000
+    async-audit: true
+    redis-enabled: ${GATEWAY_REDIS_ENABLED:true}
+    redis-lock-ttl-seconds: 120
+    parallel-legs: true
+    leg-executor-threads: 64
+    virtual-threads: true
+    http:
+      connect-timeout-ms: 3000
+      read-timeout-ms: 30000
+      executor-threads: 200
+      max-connections-per-route: 50
+  bill-payment:
+    connector-base-url: ${BILL_CONNECTOR_URL:http://localhost:9182}
+    connector-api-key: ${BILLS_API_KEY:change-me-bills}
+    rewire-mock-env: true
+  approval:
+    identity:
+      role-prefix: ROLE_
+      admin-sees-all: true
+
+inbox:
+  kafka:
+    enabled: ${INBOX_KAFKA_ENABLED:false}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    topic: ${INBOX_KAFKA_TOPIC:party.actions}
+
+spend:
+  kafka:
+    enabled: ${SPEND_KAFKA_ENABLED:false}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    topic: ${SPEND_KAFKA_TOPIC:payment.spend}
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{paymentId:-}]"
+  level:
+    root: INFO
+    com.gateway.payment: INFO
+    API_AUDIT: INFO
+    com.rapidframe: INFO
+    org.flowable: INFO
+    org.springframework.security: INFO

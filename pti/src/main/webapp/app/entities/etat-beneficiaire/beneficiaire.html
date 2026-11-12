@@ -1,0 +1,88 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="col-sm-6 col-sm-offset-2">
+    <div class="header bg-blue text-center"><B style="color: white">Etat des bénéficiaires d'un client</B></div>
+    <div class="modal-body ">
+        <form name="editForm" role="form" novalidate>
+            <div class="form-group">
+                <label class="control-label col-sm-4" mf-required>Numero:</label>
+                <div class=" col-sm-7">
+                    <input class="form-control" type="text" placeholder="Téléphone du client" name="numTel"
+                           ng-model="vm.item.numTel" required ng-keydown="$event.keyCode === 13 && vm.searchCompte()"
+                    />
+                    <br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label  class="control-label col-sm-4" for="compte" mf-required>Numéro compte:</label>
+                <div class=" col-sm-7">
+                    <select class="form-control" required id="compte" name="compte"
+                            ng-model="vm.item.numCompte"
+                            ng-options="compte.valeurCompte as compte.valeurCompte for compte in vm.comptes">
+                        <option value=""></option>
+                    </select>
+                    <br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mf-required="" class="control-label col-sm-4" for="debut">date Debut:</label>
+                <div class=" col-sm-7">
+                    <input required autocomplete="off" id="debut" show-button-bar="false"
+                           placeholder=" Date debut"  popup-placement="top"
+                           is-open="vm.datePickerOpenStatus.debut" uib-datepicker-popup="dd/MM/yyyy"
+                           ng-focus="vm.openCalendar('debut')"  class="form-control"
+                           ng-model="vm.item.debut" name="debut"/>
+                    <br>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="fin" mf-required>date Fin:</label>
+                <div class=" col-sm-7">
+                    <input required autocomplete="off" id="fin" show-button-bar="false"
+                           placeholder=" Date fin" popup-placement="top"
+                           is-open="vm.datePickerOpenStatus.fin" uib-datepicker-popup="dd/MM/yyyy"
+                           ng-focus="vm.openCalendar('fin')"  class="form-control"
+                           ng-model="vm.item.fin" name="fin"/>
+                    <br>
+                </div>
+            </div>
+            <div class="form-group" >
+                <label class="control-label col-sm-4" for="filed_format">Format</label>
+                <div class="col-sm-7">
+                    <select   id="filed_format" name="reportFormat" ng-model="vm.item.reportFormat" >
+                        <option selected value="PDF">PDF</option>
+                        <option value="XLSX">XLSX</option>
+<!--                        <option value="CSV">CSV</option>-->
+                    </select>
+                    <br>
+                </div>
+            </div>
+            <div class="margin-top-40 col-sm-8" ng- style="float: right">
+                <button ng- style="float: left" type="button" class=" btn-default btn-sm" data-dismiss="modal" ng-click="vm.back()">
+                    <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>Retour</span>
+                </button>
+                <button ng- style="float: right" class="btn-primary btn-sm" type="button" ng-disabled="editForm.$invalid || vm.isSaving" ng-click="vm.save()" >
+                    <span class="glyphicon glyphicon-save"></span> <span>Génerer Rapport</span>
+                </button>
+                <button ng- style="float: right" type="button" class=" btn-default btn-sm" data-dismiss="modal" ng-click="vm.clear()">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Annuler</span>
+                </button>
+            </div>
+
+<!--            <div class="padding-bottom-20" ng- style="float: right">-->
+<!--                <button class="btn-primary btn-sm" type="button" ng-disabled="editForm.$invalid || vm.isSaving" ng-click="vm.save()" >-->
+<!--                    <span class="glyphicon glyphicon-save"></span> <span>Génerer Rapport</span></button>-->
+<!--                <button type="button" class=" btn-default btn-sm" data-dismiss="modal" ng-click="vm.clear()">-->
+<!--                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Annuler</span>-->
+<!--                </button>-->
+<!--            </div>-->
+        </form>
+    </div>
+</div>
+

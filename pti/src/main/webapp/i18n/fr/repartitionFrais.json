@@ -1,0 +1,26 @@
+{
+    "ptiApp": {
+        "repartitionFrais" : {
+            "home": {
+                "title": "RepartitionFrais",
+                "createLabel": "Créer un nouveau Repartition Frais",
+                "createOrEditLabel": "Créer ou éditer un Repartition Frais"
+            },
+            "created": "Un nouveau Repartition Frais a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Repartition Frais avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Repartition Frais avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Repartition Frais {{ id }} ?"
+            },
+            "detail": {
+                "title": "Repartition Frais"
+            },
+            "min": "Min",
+            "max": "Max",
+            "typeTarif": "Type Tarif",
+            "acteur": "Acteur",
+            "valeur": "Valeur",
+            "typeService": "Type Service"
+        }
+    }
+}

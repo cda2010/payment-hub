@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "ligneRepartitionCommission" : {
+            "home": {
+                "title": "LigneRepartitionCommissions",
+                "createLabel": "Créer un nouveau Ligne Repartition Commission",
+                "createOrEditLabel": "Créer ou éditer un Ligne Repartition Commission"
+            },
+            "created": "Un nouveau Ligne Repartition Commission a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Ligne Repartition Commission avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Ligne Repartition Commission avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Ligne Repartition Commission {{ id }} ?"
+            },
+            "detail": {
+                "title": "Ligne Repartition Commission"
+            },
+            "niveau": "Niveau",
+            "valeur": "Valeur",
+            "tableauRepartitionCommission": "Tableau Repartition Commission"
+        }
+    }
+}

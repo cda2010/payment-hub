@@ -1,0 +1,211 @@
+<div class="row mb5 mt5" has-any-authority="ROLE_USER">
+    <div class="row" ng-if="vm.filtrer">
+        <div class="form-group col-sm-4">
+            <div class="input-group">
+                <input ng-model="vm.organisation.libelleUniteOrganisation" class="form-control input-xs" type="text" placeholder="Organisation" disabled/>
+                <div class="input-group-btn">
+                    <button class="btn btn-xs btn-primary" ng-click="vm.choisirUo()">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-sm-3">
+            <select class="form-control input-xs" id="field_profil" name="profil" ng-model="vm.itemSearch.profilId"
+                    ng-options="profil.id as profil.nom for profil in vm.profils">
+                <option value="">Choisir profil</option>
+            </select>
+        </div>
+    </div>
+    <div class="row" ng-if="vm.filtrer">
+        <div class="form-group col-sm-3">
+            <label for="field_login">Login</label>
+            <input autocomplete="off" title="login"
+                   type="text" class="form-control" name="login" id="field_login"
+                   ng-model="vm.itemSearch.login" />
+        </div>
+        <div class="form-group col-sm-3">
+            <label for="field_telephoneE">Téléphone</label>
+            <input autocomplete="off" title="Telephone"
+                   type="text" class="form-control" name="telephone" id="field_telephoneE"
+                   ng-model="vm.itemSearch.telephone" />
+        </div>
+    </div>
+
+    <div class="row" ng-if="vm.filtrer">
+        <div class="form-group ">
+            <div class="col-sm-3">
+                <button class="btn btn-warnig btn-md" ng-click="vm.initFiltre()">
+                    <span class="glyphicon glyphicon-search">Annuler</span>
+                </button>
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-info btn-md " ng-click="vm.filtre()">
+                    <span class="glyphicon glyphicon-search">Filtrer</span>
+                </button>
+            </div>
+            <div class="col-sm-3" ng-if="vm.ctrlExport">
+                <select class=" col-sm-5" id="filed_format" name="format" ng-model="vm.format" >
+                    <option value="">Format</option>
+                    <option value="PDF">PDF</option>
+                    <option value="XLSX">XLSX</option>
+                    <option value="CSV">CSV</option>
+                </select>
+            </div>
+            <div class="col-sm-3" ng-if="vm.ctrlExport">
+                <button   ng-click="vm.genererListe()" class="btn btn-primary mt5">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Générer</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group " ng-if="!vm.filtrer">
+        <div class="col-sm-3">
+            <button class="btn btn-info btn-md" ng-click="vm.filtrer=true">
+                <span class="glyphicon glyphicon-search">Filtrer</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="well with-header" >
+    <div class="header bg-blue row">
+        <div class="col-xs-8">
+            <h4>Liste des utilisateurs</h4>
+        </div>
+        <div class="no-padding-left col-xs-4">
+            <button ng-if="vm.actions.add || vm.actions.add==null" class="btn btn-default  btn-circle btn-xs
+                        " ng-click="vm.addItem()">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            <div class="btn-group mr15" uib-dropdown>
+                <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                        aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}} éléments par page
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                    <li>
+                        <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <table class="table-responsive table table-hover">
+        <thead>
+        <tr class="">
+            <th ng-click="vm.sortBy('login') ">
+                <span>Login</span>
+                <span ng-if="vm.isCurrentColumn('login')"
+                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+            </th>
+            <th ng-click="vm.sortBy('profilNom') ">
+                <span>Profil</span>
+                <span ng-if="vm.isCurrentColumn('profilNom')"
+                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+            </th>
+            <th>
+                <span>Code indicatif</span>
+            </th>
+            <th ng-click="vm.sortBy('telephone') ">
+                <span>Telephone</span>
+                <span ng-if="vm.isCurrentColumn('telephone')"
+                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+            </th>
+            <th ng-click="vm.sortBy('email') ">
+                <span>Email</span>
+                <span ng-if="vm.isCurrentColumn('email')"
+                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+            </th>
+            <th ng-click="vm.sortBy('activated') ">
+                <span>Statut</span>
+                <span ng-if="vm.isCurrentColumn('activated')"
+                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+            </th>
+            <!-- <th ng-click="vm.sortBy('authorities') ">
+                 <span>Droit</span>
+                 <span ng-if="vm.isCurrentColumn('authoroties')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+             </th>-->
+            <th ng-click="vm.sortBy('createdDate') ">
+                <span>Créé le</span>
+                <span ng-if="vm.isCurrentColumn('createdDate')"
+                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+            </th>
+            <th ng-click="vm.sortBy('lastModifiedBy') ">
+                <span>Modifié par</span>
+                <span ng-if="vm.isCurrentColumn('lastModifiedBy')"
+                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+            </th>
+            <th ng-click="vm.sortBy('lastModifiedDate') ">
+                <span>Modifié le</span>
+                <span ng-if="vm.isCurrentColumn('lastModifiedDate')"
+                      ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in vm.datas track by user.id">
+            <td>{{user.login}}</td>
+            <td>{{user.profilNom}}</td>
+            <td>{{user.codeIndicatif}}</td>
+            <td>{{user.phoneNumber}}</td>
+            <td title="{{user.email}}">{{user.email | characters:30}}</td>
+            <td>
+                <button class="btn btn-danger btn-xs" ng-click="vm.setActive(user, true)"
+                        ng-show="!user.activated"
+                        data-translate="userManagement.deactivated">Deactivated
+                </button>
+                <button class="btn btn-success btn-xs" ng-click="vm.setActive(user, false)"
+                        ng-show="user.activated"
+                        ng-disabled="vm.currentAccount.login === user.login"
+                        data-translate="userManagement.activated">Activated
+                </button>
+            </td>
+            <!-- <td>
+                 <div ng-repeat="authority in user.authorities">
+                     <span title="{{authority}}" class="label label-info">{{ authority }}</span>
+                 </div>
+             </td>-->
+            <td>{{user.createdDate | date:'dd/MM/yy HH:mm'}}</td>
+            <td>{{user.lastModifiedBy}}</td>
+            <td>{{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</td>
+            <td class="text-right">
+                <div class="btn-group flex-btn-group-container">
+                    <button title="Consulter" type="submit" ng-click="vm.detailItem($event,user)"
+                            class="btn btn-info btn-xs btn-round">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </button>
+                    <button title="Modifier" type="submit" ng-click="vm.editItem($event,user)"
+                            class="btn btn-warning btn-xs btn-round">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button title="Reinitialiser le mot de passe" type="submit"
+                            ui-sref="user-management.edit({login:user.login})"
+                            class="btn btn-danger btn-xs btn-round">
+                        <span class="glyphicon glyphicon-check"></span>
+                    </button>
+                    <!--<button type="submit" ng-disabled="vm.currentAccount.login === user.login" ng-click="vm.deleteItem($event,user)" class="btn btn-danger btn-xs btn-round">-->
+                    <!--<span class="glyphicon glyphicon-remove-circle"></span>-->
+                    <!--</button>-->
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="center-block text-center" ng-show="vm.canShowPagination()">
+    <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+    </uib-pagination>
+</div>

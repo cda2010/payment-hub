@@ -1,0 +1,38 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "serviceApi",
+            "otherEntityName": "serviceApi",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "nomParametre",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "typeParametre",
+            "fieldType": "ParamatreType",
+            "fieldValues": "STRING,DOUBLE,INTEGER,FLOAT,LONG",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "categorieParametre",
+            "fieldType": "CategorieParametre",
+            "fieldValues": "USER,SYSTEM"
+        }
+    ],
+    "changelogDate": "20170404133237",
+    "entityTableName": "parametre",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

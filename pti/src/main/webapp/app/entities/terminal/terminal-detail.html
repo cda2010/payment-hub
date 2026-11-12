@@ -1,0 +1,55 @@
+
+<div>
+    <h2><span data-translate="ptiApp.terminal.detail.title">Terminal</span> {{vm.terminal.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.terminal.codePays">Code Pays</span></dt>
+        <dd>
+            <span>{{vm.terminal.codePays}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.terminal.uuid">Uuid</span></dt>
+        <dd>
+            <span>{{vm.terminal.uuid}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.terminal.plateform">Plateform</span></dt>
+        <dd>
+            <span>{{vm.terminal.plateform}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.terminal.model">Model</span></dt>
+        <dd>
+            <span>{{vm.terminal.model}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.terminal.manufacturer">Manufacturer</span></dt>
+        <dd>
+            <span>{{vm.terminal.manufacturer}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.terminal.codeTerminal">Code Terminal</span></dt>
+        <dd>
+            <span>{{vm.terminal.codeTerminal}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.terminal.codeUo">Code Uo</span></dt>
+        <dd>
+            <span>{{vm.terminal.codeUo}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.terminal.activeTerminal">Active Terminal</span></dt>
+        <dd>
+            <span>{{vm.terminal.activeTerminal}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.terminal.typeTerminal">Type Terminal</span></dt>
+        <dd>
+            <span>{{vm.terminal.typeTerminal}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="terminal-detail.edit({id:vm.terminal.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

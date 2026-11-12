@@ -1,0 +1,83 @@
+
+<div>
+    <h2><span data-translate="ptiApp.tableauCumul.detail.title">Tableau Cumul</span> {{vm.tableauCumul.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.tableauCumul.poidsNum">Poids Num</span></dt>
+        <dd>
+            <span>{{vm.tableauCumul.poidsNum}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauCumul.codeRegle">Code Regle</span></dt>
+        <dd>
+            <span>{{vm.tableauCumul.codeRegle}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauCumul.temps">Temps</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.Temps.' + vm.tableauCumul.temps}}">{{vm.tableauCumul.temps}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauCumul.nombre">Nombre</span></dt>
+        <dd>
+            <span>{{vm.tableauCumul.nombre}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauCumul.montant">Montant</span></dt>
+        <dd>
+            <span>{{vm.tableauCumul.montant}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauCumul.action">Action</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.Action.' + vm.tableauCumul.action}}">{{vm.tableauCumul.action}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauCumul.dateDebut">Date Debut</span></dt>
+        <dd>
+            <span>{{vm.tableauCumul.dateDebut | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauCumul.dateFin">Date Fin</span></dt>
+        <dd>
+            <span>{{vm.tableauCumul.dateFin | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauCumul.typeRegle">Type Regle</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.TypeRegle.' + vm.tableauCumul.typeRegle}}">{{vm.tableauCumul.typeRegle}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauCumul.operateur">Operateur</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.Operateur.' + vm.tableauCumul.operateur}}">{{vm.tableauCumul.operateur}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauCumul.typeService">Type Service</span></dt>
+        <dd>
+            <a ui-sref="type-service-detail({id:vm.tableauCumul.typeServiceId})">{{vm.tableauCumul.typeServiceLibelle}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauCumul.canal">Canal</span></dt>
+        <dd>
+            <a ui-sref="canal-detail({id:vm.tableauCumul.canalId})">{{vm.tableauCumul.canalLibelleCanal}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauCumul.beneficiaire">Beneficiaire</span></dt>
+        <dd>
+            <a ui-sref="client-detail({id:vm.tableauCumul.beneficiaireId})">{{vm.tableauCumul.beneficiaireCodeClient}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauCumul.emetteur">Emetteur</span></dt>
+        <dd>
+            <a ui-sref="client-detail({id:vm.tableauCumul.emetteurId})">{{vm.tableauCumul.emetteurCodeClient}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauCumul.organisationEm">Organisation Em</span></dt>
+        <dd>
+            <a ui-sref="unite-organisation-detail({id:vm.tableauCumul.organisationEmId})">{{vm.tableauCumul.organisationEmLibelleUniteOrganisation}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.tableauCumul.organisationAcq">Organisation Acq</span></dt>
+        <dd>
+            <a ui-sref="unite-organisation-detail({id:vm.tableauCumul.organisationAcqId})">{{vm.tableauCumul.organisationAcqLibelleUniteOrganisation}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="tableau-cumul-detail.edit({id:vm.tableauCumul.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

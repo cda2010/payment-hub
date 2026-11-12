@@ -1,0 +1,39 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "recapPlaceholder",
+        "tag": "p",
+        "content": "Récapitulatif généré dynamiquement (configuration.recap)."
+      },
+      {
+        "type": "checkbox",
+        "key": "confirmRecap",
+        "label": "Je confirme les informations du récapitulatif",
+        "input": true,
+        "defaultValue": false,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "gateway": {
+    "nextAction": "FORM"
+  },
+  "i18n": {
+    "fr": {
+      "Je confirme les informations du récapitulatif": "Je confirme les informations du récapitulatif"
+    },
+    "en": {
+      "Je confirme les informations du récapitulatif": "I confirm the summary details"
+    }
+  }
+}

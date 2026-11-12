@@ -1,0 +1,904 @@
+<div class="topbar">
+    <!-- LOGO -->
+    <div class="topbar-left">
+        <a href="index.html" class="logo"><i class="zmdi zmdi-layers"></i></a>
+    </div>
+
+    <!-- Button mobile view to collapse sidebar menu -->
+    <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+
+            <!-- Page title -->
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <button class="button-menu-mobile open-left">
+                        <i class="zmdi zmdi-menu"></i>
+                    </button>
+                </li>
+                <li>
+                    <h4 class="page-title">  {{vm.$state.current.name}}   </h4>
+                </li>
+            </ul>
+
+            <!-- Right(Notification and Searchbox -->
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <!-- Notification -->
+                    <div class="notification-box">
+                        <ul class="list-inline m-b-0">
+                            <li>
+                                <a href="javascript:void(0);" class="right-bar-toggle">
+                                    <i class="ti-menu"></i>
+                                </a>
+                                <div class="noti-dot">
+                                    <span class="dot"></span>
+                                    <span class="pulse"></span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Notification bar -->
+                </li>
+
+            </ul>
+
+        </div><!-- end container -->
+    </div><!-- end navbar -->
+</div>
+
+
+<div class="left side-menu"  role="navigation">
+    <div class="sidebar-inner slimscrollleft">
+        <!-- User -->
+        <div class="user-box">
+            <div class="user-img">
+                <img src="assets/images/users/avatar1.png" alt="user-img" title="utilisateur connecté" class="img-circle img-thumbnail img-responsive">
+                <div class="user-status offline"><i class="zmdi zmdi-dot-circle"></i></div>
+            </div>
+            <h5><a  href="#">{{vm.account.lastName}}</a> </h5>
+            <ul class="list-inline">
+                <li>
+                    <a   href="#" class="text-custom"  ng-click="vm.logout()" >
+                        <i class="zmdi zmdi-power"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- End User -->
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu" ng-switch="vm.isAuthenticated()">
+            <ul>
+                <li ui-sref-active="active">
+                    <a class="waves-effect" ui-sref="home" ng-click="vm.collapseNavbar()">
+                        <span class="glyphicon glyphicon-home"></span>
+                        <span class="hidden-sm" data-translate="global.menu.home">Home</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: vm.$state.includes('entity')}" class="has_sub"  has-any-authority="ROLE_ADMIN" >
+                    <a ng-click="vm.collapseNavbar()" href="" id="account-menu" uib-dropdown-toggle class="waves-effect"> <span data-translate="global.menu.entities.parametre"></span> <span class="menu-arrow"></span>         
+                    </a>
+
+
+
+                    <ul class="list-unstyled" uib-dropdown-menu>
+                        <li ui-sref-active="active">
+                            <a class="waves-effect" ui-sref="agence" ng-click="vm.collapseNavbar()">          
+                                <span data-translate="global.menu.entities.agence">agence</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a class="waves-effect" ui-sref="filiale" ng-click="vm.collapseNavbar()">          
+                                <span data-translate="global.menu.entities.filiale">Filiale</span>
+                            </a>
+                        </li>
+			<li ui-sref-active="active">
+                            <a class="waves-effect" ui-sref="param-dealer" ng-click="vm.collapseNavbar()">
+                                <span>Param Dealer</span>
+                            </a>
+                        </li>
+                         <li ui-sref-active="active">
+                            <a class="waves-effect" ui-sref="param-agence" ng-click="vm.collapseNavbar()">
+                                <span>Param Agence</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>  
+                <li ui-sref-active="active"  class="has_sub"  has-any-authority="ROLE_ADMIN,ROLE_CAISSE_CAISSIER,ROLE_CAISSE_ADMIN" >
+                    <a class="waves-effect" uib-dropdown-toggle ui-sref="arret" ng-click="vm.collapseNavbar()">
+
+                        <span data-translate="global.menu.entities.arret">Situation des arrêtés de caisse</span> <span class="menu-arrow"></span> 
+                    </a>
+
+                    <ul class="list-unstyled" uib-dropdown-menu>
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CAISSE_CAISSIER,ROLE_CAISSE_ADMIN">
+                            <a ui-sref="situation" ng-click="vm.collapseNavbar()">
+
+                                <span data-translate="global.menu.entities.situation">Situation</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active"  has-any-authority="ROLE_ADMIN,ROLE_CAISSE_ADMIN" >
+                            <a ui-sref="validation" ng-click="vm.collapseNavbar()">
+
+                                <span>Validation</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active"  has-any-authority="ROLE_ADMIN,ROLE_CAISSE_ADMIN" >
+                            <a ui-sref="visualisation" ng-click="vm.collapseNavbar()">
+
+                                <span data-translate="global.menu.entities.visualisation">Visualisation</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CAISSE_CAISSIER,ROLE_CAISSE_ADMIN" >
+                            <a ui-sref="etat" ng-click="vm.collapseNavbar()">
+
+                                <span>Etat</span>
+                            </a>
+                        </li>
+                        <li class="has_sub"   has-any-authority="ROLE_ADMIN,ROLE_CAISSE_ADMIN" >
+                            <a class="waves-effect" ui-sref="arret" ng-click="vm.collapseNavbar()">
+
+                                <span>Paramètres</span> <span class="menu-arrow"></span> 
+                            </a>
+                            <ul class="list-group list-no-border user-list">
+
+
+                                <li ui-sref-active="active"    has-any-authority="ROLE_ADMIN">
+                                    <a ui-sref="type-situation" ng-click="vm.collapseNavbar()">
+
+                                        <span data-translate="global.menu.entities.typeSituation">Type Situation</span>
+                                    </a>
+                                </li>
+
+                                <li ui-sref-active="active"    has-any-authority="ROLE_ADMIN">
+                                    <a ui-sref="rubrique" ng-click="vm.collapseNavbar()">
+
+                                        <span data-translate="global.menu.entities.rubrique">Rubrique</span>
+                                    </a>
+                                </li>
+                                <li ui-sref-active="active"   has-any-authority="ROLE_ADMIN,ROLE_CAISSE_ADMIN">
+                                    <a ui-sref="caisse" ng-click="vm.collapseNavbar()">
+
+                                        <span data-translate="global.menu.entities.caisse">Rubrique</span>
+                                    </a>
+                                </li>
+                                <li ui-sref-active="active"    has-any-authority="ROLE_ADMIN">
+                                    <a ui-sref="type-caisse" ng-click="vm.collapseNavbar()">
+
+                                        <span data-translate="global.menu.entities.typeCaisse">Rubrique</span>
+                                    </a>
+                                </li>
+                                <li ui-sref-active="active"   has-any-authority="ROLE_ADMIN,ROLE_CAISSE_ADMIN">
+                                    <a ui-sref="caissier" ng-click="vm.collapseNavbar()">
+
+                                        <span data-translate="global.menu.entities.caissier">Rubrique</span>
+                                    </a>
+                                </li>
+                                <li ui-sref-active="active"   has-any-authority="ROLE_ADMIN">
+                                    <a ui-sref="type-rubrique" ng-click="vm.collapseNavbar()">
+
+                                        <span data-translate="global.menu.entities.typeRubrique">Type Rubrique</span>
+                                    </a>
+                                </li>
+                                <li ui-sref-active="active"    has-any-authority="ROLE_ADMIN">
+                                    <a ui-sref="groupe" ng-click="vm.collapseNavbar()">
+
+                                        <span data-translate="global.menu.entities.groupe">Groupe</span>
+                                    </a>
+                                </li>
+                                <li ui-sref-active="active"   has-any-authority="ROLE_ADMIN">
+                                    <a ui-sref="formule-calcul" ng-click="vm.collapseNavbar()">
+
+                                        <span data-translate="global.menu.entities.formuleCalcul">Formule Calcul</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </li>
+                    </ul>
+                </li>
+                
+                 <li ng-class="{active: vm.$state.includes('entity')}" class="has_sub"
+                    has-any-authority="ROLE_ADMIN,ROLE_CAISSE_CAISSIER_PRINCIPAL,ROLE_CHEF_AGENCE,ROLE_CHEF_DEPARTEMENT,ROLE_CHARGER_TRANSFERT,ROLE_DO">
+                    <a ng-click="vm.collapseNavbar()" href="" id="account-menu" uib-dropdown-toggle
+                        class="waves-effect">
+                        <span>Demande d'allocation</span> <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled" uib-dropdown-menu>
+                        <!-- <li ui-sref-active="active">
+                            <a class="waves-effect" ui-sref="demande-allocation" ng-click="vm.collapseNavbar()">
+                                <span>Allocation</span>
+                            </a>
+                        </li> -->
+                        <li ui-sref-active="active"
+                            has-any-authority="ROLE_ADMIN,ROLE_CAISSE_CAISSIER_PRINCIPAL,ROLE_CHEF_AGENCE,ROLE_CHEF_DEPARTEMENT,ROLE_CHARGER_TRANSFERT,ROLE_DO">
+                            <a class="waves-effect" ui-sref="demande-allocation-cours-caissier"
+                                ng-click="vm.collapseNavbar()">
+                                <span>En cours</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active"
+                            has-any-authority="ROLE_ADMIN,ROLE_CAISSE_CAISSIER_PRINCIPAL,ROLE_CHEF_AGENCE,ROLE_CHEF_DEPARTEMENT,ROLE_CHARGER_TRANSFERT">
+                            <a class="waves-effect" ui-sref="demande-allocation-non-valide"
+                                ng-click="vm.collapseNavbar()">
+                                <span>Non Valide</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active"
+                            has-any-authority="ROLE_ADMIN,ROLE_CAISSE_CAISSIER_PRINCIPAL,ROLE_CHEF_AGENCE,ROLE_CHEF_DEPARTEMENT,ROLE_CHARGER_TRANSFERT,ROLE_DO">
+                            <a class="waves-effect" ui-sref="demande-allocation-valide" ng-click="vm.collapseNavbar()">
+                                <span>Valide</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li ng-class="{active: vm.$state.includes('entity')}" class="has_sub"
+                    has-any-authority="ROLE_ADMIN,ROLE_CAISSE_CAISSIER_PRINCIPAL,ROLE_CHEF_AGENCE,ROLE_CHEF_DEPARTEMENT,ROLE_CHARGER_TRANSFERT,ROLE_DO">
+                    <a ng-click="vm.collapseNavbar()" href="" id="account-menu" uib-dropdown-toggle
+                        class="waves-effect">
+                        <span>Demande de désallocation</span> <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled" uib-dropdown-menu>
+
+                        <li ui-sref-active="active"
+                            has-any-authority="ROLE_ADMIN,ROLE_CAISSE_CAISSIER_PRINCIPAL,ROLE_CHEF_AGENCE,ROLE_CHEF_DEPARTEMENT,ROLE_CHARGER_TRANSFERT,ROLE_DO">
+                            <a class="waves-effect" ui-sref="demande-desallocation-cours-caissier"
+                                ng-click="vm.collapseNavbar()">
+                                <span>En cours</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active"
+                            has-any-authority="ROLE_ADMIN,ROLE_CAISSE_CAISSIER_PRINCIPAL,ROLE_CHEF_AGENCE,ROLE_CHEF_DEPARTEMENT,ROLE_CHARGER_TRANSFERT">
+                            <a class="waves-effect" ui-sref="demande-desallocation-non-valide"
+                                ng-click="vm.collapseNavbar()">
+                                <span>Non Valide</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active"
+                            has-any-authority="ROLE_ADMIN,ROLE_CAISSE_CAISSIER_PRINCIPAL,ROLE_CHEF_AGENCE,ROLE_CHEF_DEPARTEMENT,ROLE_CHARGER_TRANSFERT,ROLE_DO">
+                            <a class="waves-effect" ui-sref="demande-desallocation-valide"
+                                ng-click="vm.collapseNavbar()">
+                                <span>Valide</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li ng-class="{active: vm.$state.includes('entity')}" class="has_sub"  has-any-authority="ROLE_ADMIN,ROLE_ADMINBF,ROLE_CARTE_MOUVEMENT" >
+                    <a ui-sref="carte-mouvement" id="account-menu"  class="waves-effect"><span>Carte de mouvement </span> 
+                    </a> 
+
+                </li>
+                   <li ng-class="{active: vm.$state.includes('entity')}" class="has_sub"  has-any-authority="ROLE_USER" >
+                    <a ng-click="vm.collapseNavbar()" href="" id="account-menu" uib-dropdown-toggle class="waves-effect"><span>Dem-aut </span> <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled" uib-dropdown-menu>
+                         <li ui-sref-active="active" has-any-authority="ROLE_CAISSE_CAISSIER_SECONDAIRE,ROLE_ADMIN">
+                             <a class="waves-effect" ui-sref="demandes({typeDemande: 'COMMANDE'})" ng-click="vm.collapseNavbar()">
+                                 <span>Commande de fonds</span>
+                             </a>
+                         </li>
+                         <!-- ---------------------------------------------- new --------------------------------------------------------------------- -->
+                         <li ui-sref-active="active" has-any-authority="ROLE_CAISSE_CAISSIER_PRINCIPAL,ROLE_ADMIN">
+                            <a class="waves-effect" ui-sref="demandes({typeDemande: 'COMMANDE'})" ng-click="vm.collapseNavbar()">
+                                <span>Commande vers la caisse centrale</span>
+                            </a>
+                        </li>
+
+                        <li ui-sref-active="active" has-any-authority="ROLE_CAISSE_CAISSIER_PRINCIPAL,ROLE_ADMIN">
+                            <a class="waves-effect" ui-sref="demandes({typeDemande: 'REVERSEMENT'})" ng-click="vm.collapseNavbar()">
+                                <span>Reversement à la caisse centrale</span>
+                            </a>
+                        </li>
+                        <!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+                        <li ui-sref-active="active" has-any-authority="ROLE_CAISSE_CAISSIER_SECONDAIRE,ROLE_ADMIN">
+                            <a class="waves-effect" ui-sref="demandes({typeDemande: 'REVERSEMENT'})" ng-click="vm.collapseNavbar()">
+                                <span>Reversement de fonds</span>
+                            </a>
+                        </li>
+
+                        <li ui-sref-active="active" has-any-authority="ROLE_CAISSE_CAISSIER_PRINCIPAL,ROLE_ADMIN">
+                            <a class="waves-effect" ui-sref="appro({typeDemande: 'COMMANDE'})" ng-click="vm.collapseNavbar()">
+                                <span>Approvisionnement de caisse aux</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" has-any-authority="ROLE_CAISSE_CAISSIER_CENTRAL,ROLE_ADMIN">
+                            <a class="waves-effect" ui-sref="centralappro({typeDemande: 'COMMANDE'})" ng-click="vm.collapseNavbar()">
+                                <span>Approvisionnement</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" has-any-authority="ROLE_CAISSE_CAISSIER_PRINCIPAL,ROLE_ADMIN">
+                            <a class="waves-effect" ui-sref="appro({typeDemande: 'REVERSEMENT'})" ng-click="vm.collapseNavbar()">
+                                <span>Accepter reversement de caisse aux</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" has-any-authority="ROLE_CAISSE_CAISSIER_CENTRAL,ROLE_ADMIN">
+                            <a class="waves-effect" ui-sref="centralappro({typeDemande: 'REVERSEMENT'})" ng-click="vm.collapseNavbar()">
+                                <span>Accepter reversement</span>
+                            </a>
+                        </li>
+<!--                        <li ui-sref-active="active" has-any-authority="ROLE_CAISSE_CAISSIER_PRINCIPAL,ROLE_CAISSE_CAISSIER_SECONDAIRE">-->
+<!--                            <a class="waves-effect" ui-sref="demandes({typeDemande: 'REVERSEMENT'})" ng-click="vm.collapseNavbar()">-->
+<!--                                <span>Reversement</span>-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li ui-sref-active="active" has-any-authority="ROLE_CAISSE_CAISSIER_CENTRAL">-->
+<!--                            <a class="waves-effect" ui-sref="demandes({typeDemande: 'REVERSEMENT'})" ng-click="vm.collapseNavbar()">-->
+<!--                                <span>Reversement</span>-->
+<!--                            </a>-->
+<!--                        </li>-->
+                        <li ui-sref-active="active"  has-any-authority="ROLE_ADMIN">
+                            <a class="waves-effect" ui-sref="billetage" ng-click="vm.collapseNavbar()">
+                                <span>Billetage</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active"  has-any-authority="ROLE_ADMIN">
+                            <a class="waves-effect" ui-sref="detail-billetage" ng-click="vm.collapseNavbar()">
+                                <span>Details-Billetage</span>
+                            </a>
+                        </li>
+                <!-- ---------------------------------------------- etat ------------------------------------------------- -->
+                        <li ui-sref-active="active"  has-any-authority="ROLE_CHEF_AGENCE, ROLE_CAISSE_CAISSIER_CENTRAL,ROLE_CAISSE_CAISSIER_PRINCIPAL ,ROLE_ADMIN">
+                            <a class="waves-effect" ui-sref="etat-demande" ng-click="vm.collapseNavbar()">
+                                <span>Etat demande</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li ng-class="{active: vm.$state.includes('entity')}" class="has_sub"  has-any-authority="ROLE_ADMIN,ROLE_ADMINBF,ROLE_CARDLESS" >
+                    <a ng-click="vm.collapseNavbar()" href="" id="account-menu" uib-dropdown-toggle class="waves-effect"><span>Banque to wallet </span> <span class="menu-arrow"></span>
+                    </a> 
+                    <ul class="list-unstyled" uib-dropdown-menu>
+                        <li ui-sref-active="active">
+                            <a class="waves-effect" ui-sref="bw-customer" ng-click="vm.collapseNavbar()">
+                                <span>Souscription</span>
+                            </a>
+                        </li>
+                         <li ui-sref-active="active">
+                            <a class="waves-effect" ui-sref="comptes" ng-click="vm.collapseNavbar()">
+                                <span>Compte</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a class="waves-effect" ui-sref="fournisseur-service" ng-click="vm.collapseNavbar()">
+                                <span>Fournisseur service</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li ng-class="{active: vm.$state.includes('entity')}" class="has_sub"  has-any-authority="ROLE_ADMIN,ROLE_ADMINBF,ROLE_CARDLESS" >
+                    <a ng-click="vm.collapseNavbar()" href="" id="account-menu" uib-dropdown-toggle class="waves-effect"><span>CardLess </span> <span class="menu-arrow"></span>
+                    </a> 
+                    <ul class="list-unstyled" uib-dropdown-menu>
+                        <li ui-sref-active="active">
+                            <a class="waves-effect" ui-sref="donnee-cardless" ng-click="vm.collapseNavbar()">
+                                <span>Transaction CardLess</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li ng-class="{active: vm.$state.includes('entity')}" class="has_sub"  has-any-authority="ROLE_ADMIN,ROLE_FACTURE" >
+                    <a ng-click="vm.collapseNavbar()" href="" id="account-menu" uib-dropdown-toggle class="waves-effect"><span>Paiement Impôt</span> <span class="menu-arrow"></span>
+                    </a> 
+                    <ul class="list-unstyled" uib-dropdown-menu>
+                        <li ui-sref-active="active">
+                            <a class="waves-effect" ui-sref="impot-payment" ng-click="vm.collapseNavbar()">
+                                <span>Liste des paiements</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li ng-class="{active: vm.$state.includes('entity')}" class="has_sub"  has-any-authority="ROLE_ADMIN,ROLE_FACTURE" >
+
+
+                    <a ng-click="vm.collapseNavbar()" href="" id="account-menu" uib-dropdown-toggle class="waves-effect"><span data-translate="global.menu.entities.paiementfact"></span> <span class="menu-arrow"></span>
+
+
+
+                    </a>
+
+
+
+                    <ul class="list-unstyled" uib-dropdown-menu>
+                        <li ui-sref-active="active">
+                            <a class="waves-effect" ui-sref="sonabel" ng-click="vm.collapseNavbar()">
+
+                                <span data-translate="global.menu.entities.paiementFactureSonabel">Paiement Facture</span>
+                            </a>
+                        </li>
+
+
+
+
+
+                    </ul>
+                </li>
+                <li ng-class="{active: vm.$state.includes('entity')}" class="has_sub"  has-any-authority="ROLE_AJOUT_NUM,ROLE_SUPP_NUM,ROLE_ADMINAUTREFIL,ROLE_MODIF_NUM,ROLE_ADMINCI,ROLE_ADMINBF,ROLE_ADMIN,ROLE_LIVRAISON_PIN,ROLE_SOUSCRIPTION,ROLE_REMISE_CARTE,ROLE_TRIPERSO,ROLE_TRIPERSO_ADMIN,ROLE_CHARGEMENT_CARTE" >
+                    <a ng-click="vm.collapseNavbar()" href="" id="account-menu" uib-dropdown-toggle class="waves-effect"> <span data-translate="global.menu.entities.gestionCard"></span> <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled" uib-dropdown-menu>      
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_SOUSCRIPTION,ROLE_ADMINCI">
+                            <a ui-sref="souscription"  class="waves-effect" ng-click="vm.collapseNavbar()">
+
+                                <span data-translate="global.menu.entities.souscription">Souscription</span>
+                            </a>
+                        </li>
+
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_REMISE_CARTE,ROLE_ADMINCI" >
+                            <a ui-sref="remise-carte"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                <span data-translate="global.menu.entities.remisecarte">Carte</span>
+                            </a>
+                        </li> 
+                        <li ui-sref-active="active"  has-any-authority="ROLE_ADMIN,ROLE_LIVRAISON_PIN,ROLE_ADMINCI">
+                            <a ui-sref="remise-pin"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                <span data-translate="global.menu.entities.remisepin">PIN</span>
+                            </a>
+                        </li>
+
+                        <li ui-sref-active="active" has-any-authority="ROLE_AJOUT_NUM,ROLE_SUPP_NUM,ROLE_MODIF_NUM,ROLE_ADMIN,ROLE_LIVRAISON_PIN,ROLE_REMISE_CARTE,ROLE_ADMINCI,ROLE_ADMINBF,ROLE_ADMINAUTREFIL">
+                            <a ui-sref="livraison-pin"  class="waves-effect" ng-click="vm.collapseNavbar()">
+
+                                <span data-translate="global.menu.entities.enregistrementNumero">Livraison</span>
+                            </a>
+                        </li>
+<!--                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_ADMINCI,ROLE_ADMINBF,ROLE_MODIF_NUM,ROLE_ADMINAUTREFIL">
+                            <a ui-sref="demande-pin"   class="waves-effect" ng-click="vm.collapseNavbar()">
+                                <span data-translate="global.menu.entities.listedemande">Liste</span>
+                            </a>
+                        </li>-->
+
+<!--                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                            <a ui-sref="old-demande-pin"  ng-click="vm.collapseNavbar()">
+
+                                <span data-translate="global.menu.entities.creationdemande">Liste</span>
+                            </a>
+                        </li>-->
+
+
+
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_TRIPERSO,ROLE_TRIPERSO_ADMIN">
+                            <a ui-sref="perso-batch" ng-click="vm.collapseNavbar()">
+                                <span data-translate="global.menu.entities.pointageCarte">Liste</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+                <li ng-class="{active: vm.$state.includes('entity')}" class="has_sub"  has-any-authority="ROLE_ENROLEMENT,ROLE_REMISE_CARTE,ROLE_ADMINBF,ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_CHARGEMENT_CARTE_ADMIN,ROLE_LIVRAISON_PIN,ROLE_DONNEE_CARTE" >
+                    <a ng-click="vm.collapseNavbar()" href="" id="account-menu" uib-dropdown-toggle class="waves-effect"> <span data-translate="global.menu.entities.operationCard"></span> <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled" uib-dropdown-menu>
+
+                        <li class="has_sub"   has-any-authority="ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_ADMINBF,ROLE_CHARGEMENT_CARTE_ADMIN" >
+                            <a class="waves-effect" ui-sref="arret" ng-click="vm.collapseNavbar()">
+
+                                <span>Chargement</span> <span class="menu-arrow"></span> 
+                            </a>
+                            <ul class="list-group list-no-border user-list">
+
+
+                                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_ADMINBF">
+                                    <a ui-sref="chargement-carte"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                        <span >Lot</span>
+                                    </a>
+                                </li>
+                                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_ADMINBF">
+                                    <a ui-sref="chargement-carte-unitaire"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                        <span>Unitaire</span>
+                                    </a>
+                                </li>
+                                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_ADMINBF">
+                                    <a ui-sref="transfert-carte"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                        <span data-translate="global.menu.entities.transfertCarte">Liste</span>
+                                    </a>
+                                </li>
+                                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CHARGEMENT_CARTE_ADMIN,ROLE_ADMINBF">
+                                    <a ui-sref="validate-chargement-carte"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                        <span data-translate="global.menu.entities.validateChargementCarte">Liste</span>
+                                    </a>
+                                </li>
+                                <li ui-sref-active="active"    has-any-authority="ROLE_ADMIN,ROLE_CHARGEMENT_CARTE_ADMIN,ROLE_ADMINBF">
+                                    <a ui-sref="etat-chargement" ng-click="vm.collapseNavbar()">
+                                        <span >Etat de chargement</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="has_sub"   has-any-authority="ROLE_ENROLEMENT,ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_ADMINBF" >
+                            <a class="waves-effect" ui-sref="arret" ng-click="vm.collapseNavbar()">
+
+                                <span>Enrôlement</span> <span class="menu-arrow"></span> 
+                            </a>
+                            <ul class="list-group list-no-border user-list">
+                                <li ui-sref-active="active" has-any-authority="ROLE_ENROLEMENT,ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_ADMINBF">
+                                    <a ui-sref="enrollement-carte"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                        <span data-translate="global.menu.entities.enrollementCarte">Liste</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li class="has_sub"   has-any-authority="ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_ADMINBF" >
+                            <a class="waves-effect" ui-sref="arret" ng-click="vm.collapseNavbar()">
+                                <span>Opération carte</span> <span class="menu-arrow"></span> 
+                            </a>
+                            <ul class="list-group list-no-border user-list">
+
+                                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_ADMINBF">
+                                    <a ui-sref="operation-carte"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                        <span> Lot</span>
+                                    </a>
+                                </li>
+                                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_ADMINBF">
+                                    <a ui-sref="operation-carte-unitaire"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                        <span> Unitaire</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>  
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_ADMINBF,ROLE_LIVRAISON_PIN,ROLE_REMISE_CARTE,ROLE_DONNEE_CARTE">
+                            <a ui-sref="donnee-carte"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                <span>Données Carte</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>    
+                <li ng-class="{active: vm.$state.includes('entity')}" class="has_sub"  has-any-authority="ROLE_ADMINAUTREFIL,ROLE_ADMINBF,ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_CHARGEMENT_CARTE_ADMIN,ROLE_ADMINCI,ROLE_ETAT_DIVERS" >
+                    <a ng-click="vm.collapseNavbar()" href="" id="account-menu" uib-dropdown-toggle class="waves-effect"> <span >Etat divers</span> <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled" uib-dropdown-menu>
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_ADMINBF,ROLE_ADMINCI,ROLE_ADMINAUTREFIL,ROLE_ETAT_DIVERS">
+                            <a ui-sref="etat-divers-stat"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                <span >Statistique Distribution Carte</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>  
+                <li ng-class="{active: vm.$state.includes('entity')}" class="has_sub"  has-any-authority="ROLE_ADMINAUTREFIL,ROLE_COMPENSE,ROLE_ADMINBF,ROLE_ADMIN,ROLE_ADMINCI,ROLE_ADMINML,ROLE_ADMINBJ,ROLE_ADMINSN" >
+                    <a ng-click="vm.collapseNavbar()" href="" id="account-menu" uib-dropdown-toggle class="waves-effect"> <span >Fichier de Compense</span> <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled" uib-dropdown-menu>
+
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                            <a ui-sref="typeCompensation"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                <span >Type compensation</span>
+                            </a>
+                        </li>    
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                            <a ui-sref="fichierCompensation"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                <span >Fichier Compensation</span>
+                            </a>
+                        </li>    
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_ADMINBF,ROLE_ADMINCI,ROLE_COMPENSE, ROLE_ADMINAUTREFIL">
+                            <a ui-sref="gen-compense"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                <span >Génération du fichier</span>
+                            </a>
+                        </li>  
+                    </ul>
+                </li>  
+
+                <li ng-class="{active: vm.$state.includes('entity')}" class="has_sub"  has-any-authority="ROLE_ADMINBF,ROLE_ADMIN,ROLE_ARRET_GAB" >
+                    <a ng-click="vm.collapseNavbar()" href="" id="account-menu" uib-dropdown-toggle class="waves-effect"> <span >Arrêt DAB/GAB</span> <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled" uib-dropdown-menu>
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_ADMINBF,ROLE_ARRET_GAB">
+                            <a ui-sref="gab"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                <span >GAB</span>
+                            </a>
+
+                        </li>  
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CHARGEMENT_CARTE,ROLE_ADMINBF,ROLE_ARRET_GAB">
+                            <a ui-sref="arretGab"  class="waves-effect" ng-click="vm.collapseNavbar()">
+                                <span >Arrêt GAB</span>
+                            </a>
+
+                        </li>  
+                    </ul>
+                </li>  
+                <li ng-class="{active: vm.$state.includes('account')}" class="has_sub" >     
+                    <a ng-click="vm.collapseNavbar()" href="" id="account-menu" uib-dropdown-toggle class="waves-effect"> <span data-translate="global.menu.account.main"> Account</span> <span class="menu-arrow"></span>
+
+                    </a>
+                    <ul class="list-unstyled" uib-dropdown-menu>
+                        <li ui-sref-active="active" ng-switch-when="true">
+                            <a class="waves-effect" ui-sref="settings" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-wrench"></span>&nbsp;
+                                <span data-translate="global.menu.account.settings">Settings</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" ng-switch-when="true">
+                            <a class="waves-effect" ui-sref="password" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-lock"></span>&nbsp;
+                                <span data-translate="global.menu.account.password">Password</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" ng-switch-when="true">
+                            <a class="waves-effect" href="" ng-click="vm.logout()" id="logout">
+                                <span class="glyphicon glyphicon-log-out"></span>&nbsp;
+                                <span data-translate="global.menu.account.logout">Sign out</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" ng-switch-when="false">
+                            <a class="waves-effect" href="" ng-click="vm.login()" id="login">
+                                <span class="glyphicon glyphicon-log-in"></span>&nbsp;
+                                <span data-translate="global.menu.account.login">Sign in</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li ng-class="{active: vm.$state.includes('admin')}"    has-any-authority="ROLE_ADMIN,ROLE_ADMINBF,ROLE_ADMINCI,ROLE_AUDIT_USER,ROLE_ADMINAUTREFIL" class="has_sub">
+
+                    <a href="" ng-click="vm.collapseNavbar()" uib-dropdown-toggle id="admin-menu" class="waves-effect"><span data-translate="global.menu.admin.main"> Administration</span> <span class="menu-arrow"></span>    
+                    </a>
+                    <ul class="list-unstyled" uib-dropdown-menu >
+                        <li ui-sref-active="active">
+                            <a class="waves-effect" ui-sref="user-management" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-user"></span>&nbsp;
+                                <span data-translate="global.menu.admin.userManagement">User management</span>
+                            </a>
+                        </li>
+
+                        <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+                    </ul>
+                </li>
+                <li ng-class="{active: vm.$state.includes('admin')}" has-any-authority="ROLE_ADMIN"
+                    class="has_sub">
+                    <a href="" ng-click="vm.collapseNavbar()" uib-dropdown-toggle id="admin-menu-online" class="waves-effect"><span>Online</span> 
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled" uib-dropdown-menu>
+                        <li ui-sref-active="active">
+                            <a class="waves-effect" ui-sref="serveur-user-management" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-user"></span>&nbsp;
+                                <span>Utilisateurs</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li ui-sref-active="active"   class="has_sub" ng-controller="JhiLanguageController as languageVm">
+
+                    <a class="waves-effect"  ng-click="vm.collapseNavbar()" href="" class="waves-effect"><span data-translate="global.menu.language"> Language</span> <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul class="list-unstyled" uib-dropdown-menu ng-if="languageVm.languages.length > 1">
+                        <li active-menu="{{language}}" ng-repeat="language in languageVm.languages">
+                            <a class="waves-effect" href="" ng-click="languageVm.changeLanguage(language);vm.collapseNavbar();">{{language| findLanguageFromKey}}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <!-- Sidebar -->
+        <div class="clearfix"></div>
+    </div>
+
+</div>
+
+
+
+
+    <aside class="navigation">
+         <nav class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()">
+            <ul class="nav luna-nav">
+                  <li ui-sref-active="active">
+                    <a ui-sref="home" ng-click="vm.collapseNavbar()">
+                        <span class="glyphicon glyphicon-home"></span>
+                        <span class="hidden-sm">Home</span>
+                    </a>
+                </li>
+                <li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
+                    <a href="#parametre" data-toggle="collapse" aria-expanded="false"  uib-dropdown-toggle>
+                        Parametres<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="parametre" class="nav nav-second collapse"   >
+                         <li ui-sref-active="active">
+                                <a ui-sref="interface-utilisateur" ng-click="vm.collapseNavbar()">
+                                    <span >Interface</span>
+                                </a>
+                            </li>
+                        <li ui-sref-active="active">
+                                <a ui-sref="pays" ng-click="vm.collapseNavbar()">
+                                    <span >Pays</span>
+                                </a>
+                            </li>
+                           <li ui-sref-active="active">
+                                <a ui-sref="fournisseur-service" ng-click="vm.collapseNavbar()">
+                                    <span >Fournisseur Service</span>
+                                </a>
+                            </li>
+                               <li ui-sref-active="active">
+                                <a ui-sref="autre-parametre" ng-click="vm.collapseNavbar()">
+
+                                    <span >Autres Paramètres</span>
+                                </a>
+                            </li>
+                             <li ui-sref-active="active">
+                                <a ui-sref="service-traitement" ng-click="vm.collapseNavbar()">
+
+                                    <span >Service</span>
+                                </a>
+                            </li>
+                              <li ui-sref-active="active">
+                                <a ui-sref="api" ng-click="vm.collapseNavbar()">
+
+                                    <span >Api</span>
+                                </a>
+                            </li>
+                              <li ui-sref-active="active">
+                                <a ui-sref="schema-ecriture" ng-click="vm.collapseNavbar()">
+
+                                    <span >Schema</span>
+                                </a>
+                            </li>
+                             <li ui-sref-active="active">
+                                <a ui-sref="type-compte" ng-click="vm.collapseNavbar()">
+
+                                    <span >Type compte</span>
+                                </a>
+                            </li>
+                                <li ui-sref-active="active">
+                                <a ui-sref="type-service" ng-click="vm.collapseNavbar()">
+
+                                    <span >Type service</span>
+                                </a>
+                            </li>
+                             <li ui-sref-active="active">
+                                <a ui-sref="relation" ng-click="vm.collapseNavbar()">
+
+                                    <span >Relation entre FSE</span>
+                                </a>
+                            </li>
+                             <li ui-sref-active="active">
+                                <a ui-sref="compte" ng-click="vm.collapseNavbar()">
+
+                                    <span >Comptes</span>
+                                </a>
+                            </li>
+
+                            <li ui-sref-active="active">
+                                <a ui-sref="unite-organisation" ng-click="vm.collapseNavbar()">
+
+                                    <span >Unite Organisation</span>
+                                </a>
+                            </li>
+                               <li ui-sref-active="active" ng-show="true">
+                                <a ui-sref="etiquette" ng-click="vm.collapseNavbar()">
+
+                                    <span >Etiquette des comptes</span>
+                                </a>
+                            </li>
+                            <li ui-sref-active="active" >
+                                <a ui-sref="etiquette-methode" ng-click="vm.collapseNavbar()">
+                                    <span>Liste des étiquettes méthodes</span>
+                                </a>
+                            </li>
+                    </ul>
+                </li>
+                 <li  ng-class="{active: vm.$state.includes('account')}" uib-dropdown class="dropdown pointer" ng-switch-when="true" has-authority="ROLE_ADMIN">
+                   <a href="#monitor" data-toggle="collapse" aria-expanded="false"  uib-dropdown-toggle>
+                        Monitoring<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="monitor" class="nav nav-second collapse">
+                        <li ui-sref-active="active" >
+                            <a ui-sref="operation" ng-click="vm.collapseNavbar()">
+
+                                <span>Visualisation Opération</span>
+                            </a>
+                        </li>
+
+
+
+
+
+                    </ul>
+                </li>
+               <li  ng-class="{active: vm.$state.includes('account')}" uib-dropdown class="dropdown pointer">
+                    <a href="#account" data-toggle="collapse" aria-expanded="false"  uib-dropdown-toggle>
+                        Account<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="account" class="nav nav-second collapse">
+                        <li ui-sref-active="active" ng-switch-when="true">
+                            <a ui-sref="settings" ng-click="vm.collapseNavbar()">
+
+                                <span>Settings</span>
+                            </a>
+                        </li>
+                       <li ui-sref-active="active" ng-switch-when="true">
+                            <a ui-sref="password" ng-click="vm.collapseNavbar()">
+
+                                <span>Password</span>
+                            </a>
+                        </li>
+                       <li ui-sref-active="active" ng-switch-when="true">
+                            <a href="" ng-click="vm.logout()" id="logout">
+
+                                <span>Sign out</span>
+                            </a>
+                        </li>
+                      <li ui-sref-active="active" ng-switch-when="false">
+                            <a ui-sref="connexion" ng-click="vm.collapseNavbar()">
+
+                                <span>Sign in</span>
+                            </a>
+                        </li>
+                       <li ui-sref-active="active" ng-switch-when="true">
+                            <a ui-sref="register" ng-click="vm.collapseNavbar()">
+
+                                <span>Register</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                   <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
+                    <a href="#admin" data-toggle="collapse" aria-expanded="false"  uib-dropdown-toggle>
+                        Administration<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="admin" class="nav nav-second collapse">
+                        <li ui-sref-active="active">
+                            <a ui-sref="user-management" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-user"></span>&nbsp;
+                                <span>User management</span>
+                            </a>
+                        </li>
+                       <li ui-sref-active="active">
+                            <a ui-sref="jhi-metrics" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-dashboard"></span>&nbsp;
+                                <span>Metrics</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="jhi-health" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-heart"></span>&nbsp;
+                                <span>Health</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="jhi-configuration" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+                                <span>Configuration</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="audits" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-bell"></span>&nbsp;
+                                <span>Audits</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="logs" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-tasks"></span>&nbsp;
+                                <span>Logs</span>
+                            </a>
+                        </li>
+                        <li ng-show="vm.swaggerEnabled" ui-sref-active="active">
+                            <a ui-sref="docs" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-book"></span>&nbsp;
+                                <span>API</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+
+
+
+
+
+            </ul>
+        </nav>
+    </aside>

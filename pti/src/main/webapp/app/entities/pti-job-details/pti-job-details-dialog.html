@@ -1,0 +1,246 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myPtiJobDetailsLabel" data-translate="ptiApp.ptiJobDetails.home.createOrEditLabel">Create or edit a Pti Job Details</h4>
+    </div>
+    <div class="modal-body">
+        <!--        <div class="row">-->
+        <!--            <div class="form-group" ng-show="vm.ptiJobDetails.id">-->
+        <!--                <label class="control-label col-sm-3" for="id">ID</label>-->
+        <!--                <div class="col-sm-8">-->
+        <!--                    <input type="text" class="form-control" id="id" name="id"-->
+        <!--                           ng-model="vm.ptiJobDetails.id" readonly/>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <div class="row">
+            <div class="form-group col-md-6" >
+                <label class="control-label col-sm-3" for="field_jobName">Job Name</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="jobName" id="field_jobName"
+                           ng-model="vm.ptiJobDetails.jobName" ng-disabled="vm.isViewing"/>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+
+                <label class="control-label col-sm-3" for="field_displayName">Display Name</label>
+                <div class="col-sm-8"><input type="text" class="form-control" name="displayName" id="field_displayName" ng-model="vm.ptiJobDetails.displayName" ng-disabled="vm.isViewing"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!--            <div class="form-group col-md-6">-->
+            <!--                <label class="control-label col-sm-3" for="field_schedulerGroupe">Scheduler Groupe</label>-->
+            <!--                <div class="col-sm-8">-->
+            <!--                    <input type="number" min="0" class="form-control" name="schedulerGroupe" id="field_schedulerGroupe"-->
+            <!--                           ng-model="vm.ptiJobDetails.schedulerGroupe" ng-disabled="vm.isViewing"/>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <div class="form-group col-md-6" >
+                <label class="control-label col-sm-3" for="field_fournisseur">Fournisseur Service</label>
+                <div class="col-sm-8">
+                    <select class="form-control" name="fournisseur" id="field_fournisseur"
+                            ng-model="vm.ptiJobDetails.fournisseurServiceId"
+                            ng-options="fournisseur.id as fournisseur.libelleFse for fournisseur in vm.fournisseurServices"
+                            ng-disabled="vm.isViewing">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label col-sm-3" for="field_nomGroupe">Nom Groupe</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="nomGroupe" id="field_nomGroupe"
+                           ng-model="vm.ptiJobDetails.nomGroupe" ng-disabled="vm.isViewing"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="control-label col-sm-3" for="field_priorite">Priorite</label>
+                <div class="col-sm-8">
+                    <input type="number" min="0" class="form-control" name="priorite" id="field_priorite"
+                           ng-model="vm.ptiJobDetails.priorite" ng-disabled="vm.isViewing"/>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label col-sm-3" for="field_jobKey">Job Key</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="jobKey" id="field_jobKey"
+                           ng-model="vm.ptiJobDetails.jobKey" readonly/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-3">
+                <label >
+                    <input autocomplete="off"type="checkbox" class="checkbox-slider colored-blue checkbox-lg"
+                           ng-model="vm.ptiJobDetails.estActif" ng-disabled="vm.isViewing"/>
+                    <span class="text">Est Actif ?</span>
+                </label>
+            </div>
+            <div class="form-group col-sm-3">
+                <label >
+                    <input autocomplete="off"type="checkbox" class="checkbox-slider colored-blue checkbox-lg"
+                           ng-model="vm.ptiJobDetails.cronJob" ng-disabled="vm.isViewing"/>
+                    <span class="text">Est cron Job ?</span>
+                </label>
+            </div>
+            <div class="form-group col-sm-6" ng-if="!vm.ptiJobDetails.cronJob">
+                <label class="control-label col-sm-3" for="field_repeatTime">repeatTime</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="repeatTime" id="field_repeatTime"
+                           ng-model="vm.ptiJobDetails.repeatTime" />
+                </div>
+            </div>
+            <div class="form-group col-sm-6" ng-if="vm.ptiJobDetails.cronJob">
+                <label class="control-label col-sm-3" for="field_expressionCron">Expression Cron</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="expressionCron" id="field_expressionCron"
+                           ng-model="vm.ptiJobDetails.expressionCron" ng-disabled="vm.isViewing"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="control-label col-sm-3" for="field_jobClass">Classe</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="jobClass" id="field_jobClass"
+                           ng-model="vm.ptiJobDetails.jobClass" />
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label col-sm-3" for="field_erreurExecution">Erreur Execution</label>
+                <div class="col-sm-8">
+                    <textarea class="form-control" rows="5" name="erreurExcetion" id="field_erreurExecution"
+                              ng-model="vm.ptiJobDetails.erreurExecution" ng-disabled="vm.isViewing">
+
+                    </textarea>
+                </div>
+            </div>
+        </div>
+        <!--<div class="tab-content">
+            <div id="paramExecution" class="tab-pane active row">
+                <div class="col-sm-12" style="overflow: scroll; max-height: 500px">
+                    <div class="well with-header" style="margin-top:10px">
+                        <div class="header bg-blue ">
+                            <div class="col-xs-11">
+                                <h4 >Liste des paramètres d'exécution</h4>
+                            </div>
+                            <div class="no-padding-left col-xs-1">
+                                <button ng-click="vm.addParametre()" class="btn btn-default  btn-circle btn-xs">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <table class="jh-table table table-striped mt10">
+                            <thead>
+                            <tr>
+                                <th><span >ID</span></th>
+                                <th><span>Clé</span></th>
+                                <th><span>Valeur</span></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="paramExecutionJob in vm.paramExecutionJobs track by paramExecutionJob.id">
+                                <td>{{paramExecutionJob.id}}</td>
+                                <td>{{paramExecutionJob.cle}}</td>
+                                <td>{{paramExecutionJob.valeur}}</td>
+                                <td class="text-right">
+                                    <div class="btn-group flex-btn-group-container">
+                                        <button ng-click="vm.editParametre(paramExecutionJob.id)" class="btn btn-warning btn-xs">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </button>
+                                        <button ng-click="vm.deleteParametre(paramExecutionJob.id)" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clearJob()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button ng-show="!vm.isViewing" type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>
+
+
+<div class="container-fluid">
+    <div class="well with-header" style="margin-top:10px ">
+        <div class="header bg-blue ">
+            <div class="col-xs-10">
+                <h4>Liste des paramètres</h4>
+            </div>
+            <div class="no-padding-left col-xs-1" ng-show="vm.ptiJobDetails.id">
+                <button class="btn btn-default  btn-circle btn-xs" ng-click="vm.addParametre()" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+
+        </div>
+        <div>
+
+
+            <!--/filtes -->
+            <table class="table-responsive table table-hover">
+                <thead>
+                    <tr>
+
+                        <th><span>Cle</span></th>
+                        <th><span >Valeur</span></th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                    <tr ng-repeat="paramExecutionJob in vm.paramExecutionJobs track by paramExecutionJob.id">
+
+                        <td>{{paramExecutionJob.cle}}</td>
+                        <td>{{paramExecutionJob.valeur}}</td>
+                        <td>
+                            <div class="btn-group flex-btn-group-container " style="float:right">
+                                <button type="submit"
+                                        data-toggle="tooltip" data-original-title="Modifier"
+                                        ng-click="vm.detailParametre(paramExecutionJob.id)"
+                                        class="btn btn-primary btn-xs btn-round">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+                                <button ng-click="vm.editParametre(paramExecutionJob.id)" class="btn btn-warning btn-xs">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                                <button ng-click="vm.deleteParametre(paramExecutionJob.id)" class="btn btn-danger btn-xs">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="center-block text-center" ng-show="vm.canShowPagination()">
+        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage" >
+        </uib-pagination>
+    </div>
+</div>
+
+
+
+
+
+

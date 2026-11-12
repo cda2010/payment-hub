@@ -1,0 +1,93 @@
+<div class="container-fluid">
+        <div class="col-sm-10 col-sm-offset-1 mb5">
+            <div class="no-padding-left ">
+                <button class="btn btn-primary btn-outline" ng-click="vm.addItem()">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span class="hidden-xs-down">
+                    Nouveau
+                </span>
+                </button>
+                <div class="btn-group mr15" uib-dropdown >
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}} éléments par page
+                    <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                        <li>
+                            <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="text-center">
+                <span class="h4"><u>Liste des compte-banques</u></span>
+            </div>
+        </div>
+    
+        <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">    
+        <table class="table-responsive table">
+            <thead>
+            <tr class="mf-table-header">
+                <th ng-click="vm.sortBy('codeAgence')">
+                    <span >CodeAgence</span>
+                    <span ng-if="vm.isCurrentColumn('codeAgence')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                </th>
+                <th ng-click="vm.sortBy('codeBanque')">
+                    <span >CodeBanque</span>
+                    <span ng-if="vm.isCurrentColumn('codeBanque')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                </th>
+                <th ng-click="vm.sortBy('deviseCode')" >
+                    <span data-translate="ptiApp.compteBanque.devise">deviseCode</span>
+                    <span ng-if="vm.isCurrentColumn('deviseCode')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                </th>
+                <th class="text-right"><span>Actions</span> </th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+            <tr ng-repeat="compteBanque in vm.datas track by compteBanque.id">
+
+                <td>{{compteBanque.codeAgence}}</td>
+                <td>{{compteBanque.codeBanque}}</td>
+                <td >{{compteBanque.deviseCode}} </td>
+                <td class="">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                data-toggle="tooltip" data-original-title="Modifier"
+                                ng-click="vm.editItem($event, compteBanque)"
+                                class="btn btn-success btn-xs btn-round">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                        <button type="submit"
+                                data-toggle="tooltip" data-original-title="Supprimer"
+                                ng-click="vm.deleteItem($event, compteBanque)"
+                                class="btn btn-danger btn-xs btn-round">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+    <div class="center-block text-center" ng-show="vm.canShowPagination()">
+        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage" >
+        </uib-pagination>
+    </div>
+
+</div>
+
+
+
+

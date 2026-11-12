@@ -1,0 +1,224 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myTableauCumulLabel" data-translate="ptiApp.tableauCumul.home.createOrEditLabel">
+            Create or edit a Tableau Cumul</h4>
+    </div>
+    <div class="modal-body">
+
+
+        <!--  <div class="form-group">
+             <label mf-required class="control-label col-sm-4" data-translate="ptiApp.tableauCumul.codeRegle"
+                 for="field_codeRegle">Code
+                 Regle</label>
+             <div class="col-sm-6">
+                 <input autocomplete="off"required type="text" class="form-control" name="codeRegle" id="field_codeRegle"
+                     ng-model="vm.tableauCumul.codeRegle" />
+             </div>
+         </div> -->
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" 
+                   for="field_typeRegle">Type regle</label>
+            <div class="col-sm-6">
+                <select required class="form-control" name="typeRegle" ng-model="vm.tableauCumul.typeRegle" id="field_typeRegle">
+                    <option value="CLIENT" >CLIENT</option>
+                    <option value="ACTEUR">ACTEUR</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4"
+                   for="field_temps">Critère</label>
+            <div class="col-sm-6">
+                <select required class="form-control" name="temps" ng-model="vm.tableauCumul.temps" id="field_temps">
+                    <option value="JOURNALIER" data-translate="ptiApp.Temps.JOURNALIER">JOURNALIER</option>
+                    <option value="HEBDOMADAIRE" data-translate="ptiApp.Temps.HEBDOMADAIRE">HEBDOMADAIRE</option>
+                    <option value="MENSUEL" data-translate="ptiApp.Temps.MENSUEL">MENSUEL</option>
+                    <option value="MONTANT_OP"> MONTANT_OP</option>
+                    <option value="SOLDE"> SOLDE</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group" ng-if="vm.tableauCumul.temps == 'MONTANT_OP' || vm.tableauCumul.temps === 'SOLDE'">
+            <label class="control-label col-sm-4" 
+                   for="field_operateur">Opérateur</label>
+            <div class="col-sm-6">
+                <select class="form-control" name="operateur" ng-model="vm.tableauCumul.operateur" id="field_operateur">
+                    <option value="EGALE" >EGALE</option>
+                    <option value="INFERIEUR_EGALE" >INFERIEUR_EGALE</option>
+                    <option value="SUPERIEUR_EGALE" >SUPERIEUR_EGALE</option>
+                    <option value="INFERIEUR" >INFERIEUR</option>
+                    <option value="SUPERIEUR" >SUPERIEUR</option>
+
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group" ng-if="vm.tableauCumul.temps != 'MONTANT_OP'">
+            <label class="control-label col-sm-4" data-translate="ptiApp.tableauCumul.nombre"
+                   for="field_nombre">Nombre</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"type="number" class="form-control" name="nombre" id="field_nombre"
+                       ng-model="vm.tableauCumul.nombre" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.tableauCumul.montant"
+                   for="field_montant">Montant</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"required type="number" class="form-control" name="montant" id="field_montant"
+                       ng-model="vm.tableauCumul.montant" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.tableauCumul.action"
+                   for="field_action">Action</label>
+            <div class="col-sm-6">
+                <select required class="form-control" name="action" ng-model="vm.tableauCumul.action" id="field_action">
+                    <option value="BLOQUE" data-translate="ptiApp.Action.BLOQUE">BLOQUE</option>
+                    <option value="NON_BLOQUANT" >EN VALIDATION</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.tableauCumul.typeService"
+                   for="field_typeService">Type Service</label>
+            <div class="col-sm-6">
+                <select  class="form-control" id="field_typeService" name="typeService"
+                         ng-model="vm.tableauCumul.typeServiceId"
+                         ng-options="typeService.id as typeService.libelle for typeService in vm.typeservices">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.tableauCumul.canal"
+                   for="field_canal">Canal</label>
+            <div class="col-sm-6">
+                <select class="form-control" id="field_canal" name="canal" ng-model="vm.tableauCumul.canalId"
+                        ng-options="canal.id as canal.libelleCanal for canal in vm.canals">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <!-- <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.tableauCumul.beneficiaire"
+                for="field_beneficiaire">Beneficiaire</label>
+            <div class="col-sm-6">
+                <select class="form-control" id="field_beneficiaire" name="beneficiaire"
+                    ng-model="vm.tableauCumul.beneficiaire"
+                    ng-options="client as client.codeClient for client in vm.clients">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.tableauCumul.emetteur"
+                for="field_emetteur">Emetteur</label>
+            <div class="col-sm-6">
+                <select class="form-control" id="field_emetteur" name="emetteur" ng-model="vm.tableauCumul.emetteur"
+                    ng-options="client as client.codeClient for client in vm.clients">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div> -->
+        <div class="form-group">
+            <label class="control-label col-sm-4"
+                   for="typeUoEmmetteur">Type Organisation Emettrice</label>
+            <div class="col-sm-6">
+                <select class="form-control" name="operateur" ng-model="vm.typeUoEmmetteur" id="typeUoEmmetteur"
+                        ng-options="type as type for type in vm.type">
+                </select>
+            </div>
+        </div>
+
+        
+        
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.tableauCumul.organisationEm"
+                   for="field_organisationEm">Organisation
+                Em</label>
+            <div class="col-sm-6">
+                <select class="form-control" id="field_organisationEm" name="organisationEm"
+                        ng-model="vm.tableauCumul.organisationEmId"
+                        ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.typeOrganisationEm">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4"
+                   for="typeUoAcq">Type Organisation acquereur</label>
+            <div class="col-sm-6">
+                <select class="form-control" name="operateur" ng-model="vm.typeUoAcq"  id="typeUoAcq"
+                        ng-options="type as type for type in vm.type">
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.tableauCumul.organisationAcq"
+                   for="field_organisationAcq">Organisation
+                Acq</label>
+            <div class="col-sm-6">
+                <select class="form-control" id="field_organisationAcq" name="organisationAcq"
+                        ng-model="vm.tableauCumul.organisationAcqId"
+                        ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.typeOrganisationAcq">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <!-- <div class="form-group">
+            <label mf-required class="control-label col-sm-4" for="field_dateDebut">Date Debut</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"required uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" ng-focus="vm.openCalendar('dateDebut')"
+                    id="field_dateDebut" type="text" class="form-control" name="dateDebut"
+                    uib-datepicker-popup="{{dateformat}}" ng-model="vm.tableauCumul.dateDebut"
+                    is-open="vm.datePickerOpenStatus.dateDebut" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" for="field_dateFin">Date Fin</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"required uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" ng-focus="vm.openCalendar('dateFin')"
+                    id="field_dateFin" type="text" class="form-control" name="dateFin"
+                    uib-datepicker-popup="{{dateformat}}" ng-model="vm.tableauCumul.dateFin"
+                    is-open="vm.datePickerOpenStatus.dateFin" />
+            </div>
+        </div> -->
+
+        <div class="form-group">
+            <div class="checkbox col-sm-6 col-sm-offset-4">
+                <label>
+                    <input autocomplete="off"class="colored-success" type="checkbox" name="obligatoire" id="field_obligatoire"
+                           ng-model="vm.tableauCumul.activated" />
+                    <b class="text">Active ?</b>
+                </label>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

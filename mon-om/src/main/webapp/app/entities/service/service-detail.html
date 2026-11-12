@@ -1,0 +1,45 @@
+
+<div>
+    <h2><span>Service</span> {{vm.service.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Code Service</span></dt>
+        <dd>
+            <span>{{vm.service.codeService}}</span>
+        </dd>
+        <dt><span>Nom Service</span></dt>
+        <dd>
+            <span>{{vm.service.nomService}}</span>
+        </dd>
+        <dt><span>Fournisseur Service</span></dt>
+        <dd>
+            <a ui-sref="fournisseur-service-detail({id:vm.service.fournisseurService.id})">{{vm.service.fournisseurService.id}}</a>
+        </dd>
+        <dt><span>Interface Utilisateur</span></dt>
+        <dd>
+            <a ui-sref="interface-utilisateur-detail({id:vm.service.interfaceUtilisateur.id})">{{vm.service.interfaceUtilisateur.id}}</a>
+        </dd>
+        <dt><span>Utilise</span></dt>
+        <dd>
+            <span ng-repeat="utilise in vm.service.utilises">
+                <a ui-sref="methode-detail({id: utilise.id})">{{utilise.id}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span>Type Service</span></dt>
+        <dd>
+            <a ui-sref="type-service-detail({id:vm.service.typeService.id})">{{vm.service.typeService.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="service-detail.edit({id:vm.service.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

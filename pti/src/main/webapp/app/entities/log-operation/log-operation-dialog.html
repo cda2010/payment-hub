@@ -1,0 +1,60 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myLogOperationLabel" data-translate="ptiApp.logOperation.home.createOrEditLabel">Create or edit a Log Operation</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.logOperation.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.logOperation.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.logOperation.dateOperation" for="field_dateOperation">Date Operation</label>
+                <div class="input-group">
+                    <input id="field_dateOperation" type="text" class="form-control" name="dateOperation" datetime-picker="{{dateformat}}" ng-model="vm.logOperation.dateOperation" is-open="vm.datePickerOpenStatus.dateOperation"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateOperation')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.logOperation.description" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                    ng-model="vm.logOperation.description"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.logOperation.login" for="field_login">Login</label>
+            <input type="text" class="form-control" name="login" id="field_login"
+                    ng-model="vm.logOperation.login"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.logOperation.result" for="field_result">Result</label>
+            <input type="text" class="form-control" name="result" id="field_result"
+                    ng-model="vm.logOperation.result"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.logOperation.codeOperation" for="field_codeOperation">Code Operation</label>
+            <input type="text" class="form-control" name="codeOperation" id="field_codeOperation"
+                    ng-model="vm.logOperation.codeOperation"
+                    />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

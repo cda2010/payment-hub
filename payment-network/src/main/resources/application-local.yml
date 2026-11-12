@@ -1,0 +1,11 @@
+# Profil local : base dédiée du docker-compose (service network-postgres, port 5438).
+# Démarrer l'infra : docker compose up -d network-postgres
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5438/payment_network
+    username: network
+    password: network
+
+logging:
+  level:
+    com.gateway.payment.network: DEBUG

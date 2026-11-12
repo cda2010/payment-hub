@@ -1,0 +1,28 @@
+{
+    "ptiApp": {
+        "composant" : {
+            "home": {
+                "title": "Composants",
+                "createLabel": "Créer un nouveau Composant",
+                "createOrEditLabel": "Créer ou éditer un Composant"
+            },
+            "created": "Un nouveau Composant a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Composant avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Composant avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Composant {{ id }} ?"
+            },
+            "detail": {
+                "title": "Composant"
+            },
+            "type": "Type",
+            "label": "Label",
+            "code": "Code",
+            "typeComposant": "Type Composant",
+            "": "",
+            "": "",
+            "": "",
+            "champs": "Champs"
+        }
+    }
+}

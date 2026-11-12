@@ -1,0 +1,59 @@
+{
+  "formio": {
+    "display": "form",
+    "title": "Pièce d'identité",
+    "components": [
+      {
+        "type": "select",
+        "key": "typeDocument",
+        "label": "Type de document",
+        "input": true,
+        "validate": { "required": true },
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "CNI", "value": "CNI" },
+            { "label": "Passeport", "value": "PASSPORT" },
+            { "label": "Carte consulaire", "value": "CARTE_CONSULAIRE" }
+          ]
+        }
+      },
+      {
+        "type": "file",
+        "key": "recto",
+        "label": "Recto",
+        "input": true,
+        "validate": {
+          "required": true
+        },
+        "storage": "base64",
+        "filePattern": "image/*,application/pdf",
+        "image": true
+      },
+      {
+        "type": "file",
+        "key": "verso",
+        "label": "Verso",
+        "input": true,
+        "validate": {
+          "required": true
+        },
+        "storage": "base64",
+        "filePattern": "image/*,application/pdf",
+        "image": true
+      },
+      {
+        "type": "file",
+        "key": "selfie",
+        "label": "Selfie",
+        "input": true,
+        "validate": {
+          "required": true
+        },
+        "storage": "base64",
+        "filePattern": "image/*",
+        "image": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+    "ptiApp": {
+        "horaireAuthentification" : {
+            "home": {
+                "title": "HoraireAuthentifications",
+                "createLabel": "Créer un nouveau Horaire Authentification",
+                "createOrEditLabel": "Créer ou éditer un Horaire Authentification"
+            },
+            "created": "Un nouveau Horaire Authentification a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Horaire Authentification avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Horaire Authentification avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Horaire Authentification {{ id }} ?"
+            },
+            "detail": {
+                "title": "Horaire Authentification"
+            },
+            "jour": "Jour",
+            "heureDebut": "Heure Debut",
+            "heureFin": "Heure Fin",
+            "dateDebut": "Date Debut",
+            "dateFin": "Date Fin"
+        }
+    }
+}

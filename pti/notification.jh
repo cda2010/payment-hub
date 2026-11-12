@@ -1,0 +1,26 @@
+
+enum TypeNotification{
+SMS , MESSAGEPUSH
+}
+entity Notification{
+dateHeureEnvoie ZonedDateTime,
+contenu String,
+destinataire String,
+isDelivred Boolean,
+typeNotification TypeNotification
+}
+ entity ListeDiffusion{
+ nomListe String,
+ }
+ entity DetailListeDiffusion{
+ numero String
+ }
+relationship OneToMany {
+	ListeDiffusion to DetailListeDiffusion{liste}
+}
+
+paginate all with pagination
+
+dto * with mapstruct
+
+service all with serviceClass

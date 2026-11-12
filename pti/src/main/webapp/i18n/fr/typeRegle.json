@@ -1,0 +1,9 @@
+{
+    "ptiApp": {
+        "TypeRegle" : {
+            "null": "",
+            "CLIENT": "CLIENT",
+            "ACTEUR": "ACTEUR"
+        }
+    }
+}

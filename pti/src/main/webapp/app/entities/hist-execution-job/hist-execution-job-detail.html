@@ -1,0 +1,47 @@
+
+<div>
+    <h2><span data-translate="ptiApp.histExecutionJob.detail.title">Hist Execution Job</span> {{vm.histExecutionJob.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.histExecutionJob.typeTrigger">Type Trigger</span></dt>
+        <dd>
+            <span>{{vm.histExecutionJob.typeTrigger}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.histExecutionJob.debutExecution">Debut Execution</span></dt>
+        <dd>
+            <span>{{vm.histExecutionJob.debutExecution | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.histExecutionJob.finExecution">Fin Execution</span></dt>
+        <dd>
+            <span>{{vm.histExecutionJob.finExecution | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.histExecutionJob.statut">Statut</span></dt>
+        <dd>
+            <span>{{vm.histExecutionJob.statut}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.histExecutionJob.messageErreur">Message Erreur</span></dt>
+        <dd>
+            <span>{{vm.histExecutionJob.messageErreur}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.histExecutionJob.erreurLog">Erreur Log</span></dt>
+        <dd>
+            <span>{{vm.histExecutionJob.erreurLog}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.histExecutionJob.ptiJobDetail">Pti Job Detail</span></dt>
+        <dd>
+            <a ui-sref="pti-job-details-detail({id:vm.histExecutionJob.ptiJobDetailId})">{{vm.histExecutionJob.ptiJobDetailId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="hist-execution-job-detail.edit({id:vm.histExecutionJob.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

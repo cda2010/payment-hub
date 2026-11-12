@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://rapidframe.com/schema/domain"
+               name="FeeRuleLine"
+               class="com.gateway.payment.transfer.domain.FeeRuleLine"
+               table="fee_rule_line"
+               repository="none">
+
+  <many-to-one name="feeRule" ref="com.gateway.payment.transfer.domain.FeeRule" title="Règle" required="true"/>
+  <string name="feeType" title="Type" required="true"/>
+  <decimal name="minAmount" title="Palier min" precision="18" scale="2"/>
+  <decimal name="maxAmount" title="Palier max" precision="18" scale="2"/>
+  <decimal name="value" title="Valeur" precision="18" scale="4" required="true"/>
+  <decimal name="fixedAmount" title="Fixe" precision="18" scale="2"/>
+  <decimal name="percentValue" title="%" precision="18" scale="4"/>
+  <decimal name="minFee" title="Frais min" precision="18" scale="2"/>
+  <decimal name="maxFee" title="Frais max" precision="18" scale="2"/>
+  <integer name="ordre" title="Ordre" required="true"/>
+
+</domain-models>

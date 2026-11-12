@@ -1,0 +1,89 @@
+<div class="container-fluid">
+    <div class="row">
+        <div>
+            <div class="well with-header" style="margin-top:10px ">
+                <div class="header bg-blue " >
+                    <div class="col-xs-9">
+                        <h4>Liste des relevés mensuels de compte</h4>
+                    </div>
+                    <div class="no-padding-left col-xs-3" >
+                        <button  class="btn btn-default  btn-circle btn-xs
+                                        " ng-click="vm.addItem()">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <div class="btn-group mr15" uib-dropdown>
+                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                                éléments par page <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-hover">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="soldeInitial"><span data-translate="ptiApp.releveCompte.soldeInitial">Solde Initial</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="dateDebut"><span data-translate="ptiApp.releveCompte.dateDebut">Date Debut</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="soldeFinal"><span data-translate="ptiApp.releveCompte.soldeFinal">Solde Final</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="dateFin"><span data-translate="ptiApp.releveCompte.dateFin">Date Fin</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="releveCompte in vm.datas track by releveCompte.id">
+                    <td><a ui-sref="releve-compte-detail({id:releveCompte.id})">{{releveCompte.id}}</a></td>
+                    <td>{{releveCompte.soldeInitial}}</td>
+                    <td>{{releveCompte.dateDebut | date:'medium'}}</td>
+                    <td>{{releveCompte.soldeFinal}}</td>
+                    <td>{{releveCompte.dateFin | date:'medium'}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="releve-compte-detail({id:releveCompte.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+<!--                            <button type="submit"-->
+<!--                                    ui-sref="releve-compte.edit({id:releveCompte.id})"-->
+<!--                                    class="btn btn-primary btn-sm">-->
+<!--                                <span class="glyphicon glyphicon-pencil"></span>-->
+<!--                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>-->
+<!--                            </button>-->
+<!--                            <button type="submit"-->
+<!--                                    ui-sref="releve-compte.delete({id:releveCompte.id})"-->
+<!--                                    class="btn btn-danger btn-sm">-->
+<!--                                <span class="glyphicon glyphicon-remove-circle"></span>-->
+<!--                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>-->
+<!--                            </button>-->
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+            <div class="center-block text-center">
+                <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+                <uib-pagination  ng-show="vm.canShowPagination()" total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage" >
+                </uib-pagination>
+            </div>
+<!--    <div class="text-center">-->
+<!--        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>-->
+<!--        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>-->
+<!--    </div>-->
+</div>
+    </div>
+</div>

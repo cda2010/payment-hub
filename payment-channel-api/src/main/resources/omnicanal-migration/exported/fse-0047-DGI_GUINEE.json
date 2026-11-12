@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0047",
+  "providerCodeHint": "FSE_0047",
+  "providerLibelle": "DGI GUINEE",
+  "participantKindHint": "WALLET",
+  "fseStatut": "NONBANQUE",
+  "groupCode": "ENF",
+  "codeExterne": "0",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "Api Impot Guinee",
+    "codeApi": "0043",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "NONE"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "CONSULTATIONFACTURE",
+      "codeMethode": "004301",
+      "operationCode": "CONSULTATIONFACTURE",
+      "nom": "api/gu/etax/getfacture",
+      "httpMethod": "POST",
+      "path": "api/gu/etax/getfacture",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{}",
+      "parameters": []
+    },
+    {
+      "typeMethode": "SETTLEMENT",
+      "codeMethode": "004302",
+      "operationCode": "SETTLEMENT",
+      "nom": "api/gu/etax/settlement",
+      "httpMethod": "POST",
+      "path": "api/gu/etax/settlement",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"reference\": \"${reference}\", \"statut\": \"${statut}\", \"referenceBanque\": \"${referenceBanque}\", \"codeRejet\": \"${codeRejet}\"}",
+      "parameters": [
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "statut",
+          "nomExterne": "statut",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "referenceBanque",
+          "nomExterne": "referenceBanque",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeRejet",
+          "nomExterne": "codeRejet",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

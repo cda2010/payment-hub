@@ -1,0 +1,70 @@
+<div>
+    <h2>Methodes</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="methode.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Methode
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Code Methode</span></th>
+                    <th><span>Api</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="methode in vm.methodes track by methode.id">
+                    <td><a ui-sref="methode-detail({id:methode.id})">{{methode.id}}</a></td>
+                    <td>{{methode.codeMethode}}</td>
+                    <td>
+                        <a ui-sref="api-detail({id:methode.api.id})">{{methode.api.id}}</a>
+                    </td>
+                      <td>{{methode.typeMethode}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="methode-detail({id:methode.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="methode.edit({id:methode.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="methode.delete({id:methode.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            
+                               <button type="submit"
+                                    ui-sref="parametre-methode({idmethode:methode.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-cog"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            
+                            
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+{
+    "ptiApp": {
+        "Operateur" : {
+            "null": "",
+            "EGALE": "EGALE",
+            "INFERIEUR_EGALE": "INFERIEUR_EGALE",
+            "SUPERIEUR_EGALE": "SUPERIEUR_EGALE",
+            "INFERIEUR": "INFERIEUR",
+            "SUPERIEUR": "SUPERIEUR"
+        }
+    }
+}

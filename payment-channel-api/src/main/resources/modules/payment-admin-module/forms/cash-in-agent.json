@@ -1,0 +1,53 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "agentInfo",
+        "tag": "p",
+        "content": "Choisissez le réseau d'agents où vous remettrez le cash (souvent le même que votre wallet)."
+      },
+      {
+        "type": "select",
+        "key": "agentNetwork",
+        "label": "Réseau agent (encaissement cash)",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "WAVE (agents)", "value": "WAVE" },
+            { "label": "ORANGE_MONEY (agents)", "value": "ORANGE_MONEY" },
+            { "label": "CORIS_MONEY (agents)", "value": "CORIS_MONEY" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "agentCode",
+        "label": "Code agent / point (optionnel)",
+        "placeholder": "Ex. AG-OUAGA-12",
+        "input": true
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Réseau agent (encaissement cash)": "Réseau agent (encaissement cash)",
+      "Code agent / point (optionnel)": "Code agent / point (optionnel)"
+    },
+    "en": {
+      "Réseau agent (encaissement cash)": "Agent network (cash deposit)",
+      "Code agent / point (optionnel)": "Agent / outlet code (optional)"
+    }
+  }
+}

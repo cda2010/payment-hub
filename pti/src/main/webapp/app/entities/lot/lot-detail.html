@@ -1,0 +1,129 @@
+<div class="container-fluid">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                    ng-click="vm.clear()">&times;</button>
+            <span class="widget-caption">
+                    <h4 class="modal-title text-center" id="myLotLabel"></strong>
+                        Détails
+                    </h4>
+                </span>
+        </div>
+        <div class="modal-body">
+            <form class="bg-white">
+
+
+                <div class="col-sm-4 form-group">
+                    <label class="control-label" for="field_numero">Numero</label>
+                    <input class="form-control" name="numero" ng-model="vm.lot.numero" id="field_lot_numero" disabled/>
+                </div>
+
+                <div  class="col-sm-4 form-group">
+                    <label class="control-label" for="field_unite_organisation">Unité d'Organisation</label>
+                    <input type="text" class="form-control" name="unite_organisation" id="field_unite_organisation"
+                           ng-model="vm.lot.organisation.libelleUniteOrganisation" disabled
+                    />
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="control-label" for="field_date_ouverture">Date Ouverture</label>
+                    <input type="text" class="form-control" name="dateouverture" id="field_dateouverture"
+                           ng-model="vm.lot.dateOuverture" disabled
+                    />
+                </div>
+                <div class="col-sm-4 form-group" ng-show="vm.lot.dateFermeture">
+                    <label class="control-label" for="field_date_fermeture">Date Fermeture</label>
+                    <input class="form-control" id="field_date_fermeture" name="date_fermeture" ng-model="vm.lot.dateFermeture"
+                           disabled/>
+                </div>
+                <!-- <div class="col-sm-4 form-group">
+                    <label class="control-label" for="field_etat">Etat</label>
+                    <input class="form-control" id="field_etat" name="etat"
+                            ng-model="vm.lot.etat" disabled/>
+
+                </div> -->
+               
+            </form>
+
+    <div class="col-sm-12 row">
+        <div class="widget">
+            <div class="widget-body row">
+
+                <div class="widget-main ">
+
+                    <div class="tabbable">
+
+                            <ul class="nav nav-tabs nav-justified" id="myTab9">
+                                <li class="tab-blue active" >
+                                    <a data-toggle="tab" href="#clients" target="_self" aria-expanded="true">
+                                        <h4>Clients</h4>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        <div class="tab-content">
+                            <div id="clients" class="tab-pane active row">
+                                <div class="col-sm-12" style="overflow: scroll; max-height: 500px">
+                                    <div class="well with-header" style="margin-top:10px">
+                                        <div class="header bg-blue ">
+                                            <div class="row text-align-center">
+                                                <h4 >Liste des clients</h4>
+                                            </div>
+                                            <div class="row mt5 ">
+                                                <div class=" col-sm-2 col-sm-offset-7">
+                                                    <button type="button" class="btn btn-default"  ng-click="vm.exportLotZip()">
+                                                        <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Exporter</span>
+                                                    </button>
+                                                </div>
+                                                <div class=" col-sm-1 col-sm-offset-1">
+                                                    <button ng-click="vm.addDetailsLot()" class="btn btn-default  btn-circle btn-xs" ng-show="vm.lot.etat == true">
+                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <table class="jh-table table table-striped mt10">
+                                            <thead>
+                                            <tr>
+                                                <th><span>Code client</span></th>
+                                                <th><span>Nom</span></th>
+                                                <th><span>Prénom</span></th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="d in vm.detailsLots track by d.id">
+                                                <td>{{d.codeClient}}</td>
+                                                <td>{{d.nomClient}}</td>
+                                                <td>{{d.prenomClient}}</td>
+                                                <td>
+                                               
+                                                <td class="text-right">
+                                                    <div class="btn-group flex-btn-group-container">
+                                                        <button
+                                                            ng-click="vm.deleteDetail(d.id)" class="btn btn-danger btn-xs">
+                                                            <span class="glyphicon glyphicon-trash"></span>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>   
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-default"  ng-click="vm.clear()">
+                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Fermer</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-view name="biller-new" title="Nouveau facturier"
+             model="com.gateway.payment.billing.domain.Biller" icon="pi pi-plus">
+  <view type="form" name="biller-form"/>
+</action-view>

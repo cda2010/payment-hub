@@ -1,0 +1,22 @@
+{
+    "ptiApp": {
+        "utilitaire" : {
+            "home": {
+                "title": "Utilitaires",
+                "createLabel": "Créer un nouveau Utilitaire",
+                "createOrEditLabel": "Créer ou éditer un Utilitaire"
+            },
+            "created": "Un nouveau Utilitaire a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Utilitaire avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Utilitaire avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Utilitaire {{ id }} ?"
+            },
+            "detail": {
+                "title": "Utilitaire"
+            },
+            "nom": "Nom",
+            "description": "Description"
+        }
+    }
+}

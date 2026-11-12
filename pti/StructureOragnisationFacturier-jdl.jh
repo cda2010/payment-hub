@@ -1,0 +1,3 @@
+relationship OneToMany {
+	UniteOrganisation to StructureOrganisationFacturier{uniteOrganisation}
+}

@@ -1,0 +1,26 @@
+{
+    "ptiApp": {
+        "entityAuditEvent" : {
+            "home": {
+                "title": "EntityAuditEvents",
+                "createLabel": "Créer un nouveau Entity Audit Event",
+                "createOrEditLabel": "Créer ou éditer un Entity Audit Event"
+            },
+            "created": "Un nouveau Entity Audit Event a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Entity Audit Event avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Entity Audit Event avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Entity Audit Event {{ id }} ?"
+            },
+            "detail": {
+                "title": "Entity Audit Event"
+            },
+            "action": "Action",
+            "commitVersion": "Commit Version",
+            "entityId": "Entity Id",
+            "entityType": "Entity Type",
+            "entityValue": "Entity Value",
+            "adresse": "Adresse"
+        }
+    }
+}

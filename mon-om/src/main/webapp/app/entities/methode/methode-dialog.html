@@ -1,0 +1,103 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+
+        <h4 class="modal-title" id="myMethodeLabel">Create or edit a Methode</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.methode.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   ng-model="vm.methode.id" readonly />
+        </div>
+        <div class="form-group">
+            <label  for="field_codeMethode">Code Methode</label>
+            <input type="text" class="form-control" name="codeMethode" id="field_codeMethode"
+                   ng-model="vm.methode.codeMethode"
+                   />
+
+        </div>
+
+        <div class="form-group" ng-show="false">
+            <label for="field_api">Api</label>
+            <select class="form-control" id="field_api" name="api" ng-model="vm.methode.api" ng-options="api as api.id for api in vm.apis track by api.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_typeMethode">Type méthode</label>
+            <select class="form-control" name="typeMethode" ng-model="vm.methode.typeMethode" id="field_typeMethode">
+                <option value="TRANSFERT">TRANSFERT</option>
+                <option value="DEBIT">DEBIT</option>
+                <option value="CREDIT">CREDIT</option>
+                <option value="CONSULTATION">CONSULTATION</option>
+                <option value="CONSULTATIONSOLDE">CONSULTATIONSOLDE</option>
+                <option value="ENVOISMS">ENVOISMS</option>
+                <option value="ENVOIMAIL">ENVOIMAIL</option>
+                <option value="CONSULTATIONHIST">CONSULTATIONHIST</option>
+                <option value="LISTEVENEMENT">LISTEVENEMENT</option>
+                <option value="INFOCLIENT">INFOCLIENT</option>
+                <option value="CARTEMOUVEMENT">CARTEMOUVEMENT</option>
+                <option value="GETMONTANT">GETMONTANT</option>
+                <option value="CONSULTATIONFACTURE">CONSULTATIONFACTURE</option>
+                <option value="VERIFREGLEFACTURIER">VERIFREGLEFACTURIER</option>
+                <option value="GETAIRTIME">GETAIRTIME</option>
+                <option value="GETINFOS">GETINFOS</option>
+                <option value="SETTLEMENT">SETTLEMENT</option>
+                <option value="GETDATA">GETDATA</option>
+                <option value="GETCARDLESSTOKEN">CARDLESS TOKEN</option>
+                <option value="TRANSACTIONSTATUS">TRANSACTIONSTATUS</option>
+                <option value="SENDFILEMAIL">SENDFILEMAIL</option>
+                <option value="SENDFILEFTP">SENDFILEFTP</option>
+                <option value="PING">PING SYSTEME</option>
+                <option value="LISTEFACTURIER">LISTEFACTURIER</option>
+                <option value="TRAITEOTP">TRAITEOTP</option>
+                    <option value="STOPPAGE">GET OPPOSITION</option>
+                 <option value="GETDATATRANSACTION">GETDATATRANSACTION</option>
+                
+                <option value="NOP">NOP</option>
+
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_nommethode">Nom d'appel</label>
+            <input type="text" class="form-control" name="nommethode" id="field_nommethode"
+                   ng-model="vm.methode.nomMethode"
+                   />
+        </div>
+        <div class="form-group" >
+            <label class="control-label" for="field_typeAppel">Type Appel</label>
+
+            <select class="form-control" name="type" ng-model="vm.methode.typeAppel" id="field_type">
+                <option value="POST">POST</option>
+                <option value="GET">GET</option>
+                <option value="PUT">PUT</option>
+                <option value="NONE">NONE</option>
+            </select>
+
+
+        </div>
+        <div class="form-group" >
+            <label class="control-label" for="field_typeAppel">Type Reponse</label>
+
+            <select class="form-control" name="type" ng-model="vm.methode.typeReponse" id="field_type">
+                <option value="XML">XML</option>
+                <option value="JSON">JSON</option>
+
+            </select>
+
+
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+</form>

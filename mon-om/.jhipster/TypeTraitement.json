@@ -1,0 +1,26 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "est",
+            "otherEntityName": "traitement",
+            "otherEntityRelationshipName": "typeTraitement"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "codeTypeTraitement",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nomTraitement",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170404133237",
+    "entityTableName": "type_traitement",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

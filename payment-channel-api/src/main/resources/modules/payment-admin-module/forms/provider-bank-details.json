@@ -1,0 +1,38 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "textfield",
+        "key": "accountHolder",
+        "label": "Titulaire du compte",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "iban",
+        "label": "IBAN / N° de compte",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Titulaire du compte": "Titulaire du compte",
+      "IBAN / N° de compte": "IBAN / N° de compte"
+    },
+    "en": {
+      "Titulaire du compte": "Account holder",
+      "IBAN / N° de compte": "IBAN / Account number"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+<div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                    ng-click="vm.clear()">&times;</button>
+            <h4 class="modal-title" id="myCompteLabel">  Liste des taxes</h4>
+</div>
+<div class="container" >
+            <div class="row">
+                <div class="panel panel-default">
+                    <table class="table table-hover table-responsive mt5">
+                        <thead>
+                        <tr >
+                            <th>Nom</th>
+                            <th>Montant</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="mf-table-body" ng-repeat="taxe in vm.taxeOperations track by taxe.id">
+                            <td>{{taxe.taxeNom}}</td>
+                            <td>{{taxe.montant |currency:' ':2}}</td>
+                        </tr>
+                        </tbody>
+                        <tr>
+                                <td></td>
+                                <td class="h3"><span class="label label-info"><b> {{vm.total |currency:' ':2}}</b> </span>
+                                </td>
+                            </tr>
+                    </table>
+                    
+                </div>
+            </div>
+</div>
+<div class="footer actions actions-footer" id="simplewizard-actions">
+        <div class="btn-group">
+            <button ng-click="vm.clear()" type="button" class="btn btn-default btn-sm"> Fermer</button>
+        </div>
+</div>

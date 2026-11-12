@@ -1,0 +1,33 @@
+{
+  "ptiApp": {
+    "reclamation": {
+      "home": {
+        "title": "Reclamations",
+        "createLabel": "Créer un nouveau Reclamation",
+        "createOrEditLabel": "Créer ou éditer un Reclamation",
+        "notFound": "Aucun Reclamation trouvé"
+      },
+      "created": "Un nouveau Reclamation a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Reclamation avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Reclamation avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Reclamation {{ id }} ?"
+      },
+      "detail": {
+        "title": "Reclamation"
+      },
+      "dateHeureCreation": "Date Heure Creation",
+      "contenu": "Contenu",
+      "etat": "Etat",
+      "telephone": "Telephone",
+      "dateModification": "Date Modification",
+      "solution": "Solution",
+      "tache": "Tache",
+      "document": "Document",
+      "codeActeur": "Code Acteur",
+      "attribueA": "Attribue A",
+      "qualiteAuteur": "Qualite Auteur",
+      "typeReclamation": "Type Reclamation"
+    }
+  }
+}

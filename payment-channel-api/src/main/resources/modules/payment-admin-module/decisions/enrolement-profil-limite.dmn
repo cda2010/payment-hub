@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             id="definitions_enrolement_profil_limite"
+             name="enrolement-profil-limite"
+             namespace="https://payment-gateway/dmn/enrolement-profil-limite"
+             exporter="payment-gateway"
+             exporterVersion="1.0">
+
+  <description>
+    Segment + choix d'enrôlement → profil de limite à affecter.
+    REFUS : la personne n'ouvre pas de compte.
+    CREATION : elle ouvre le compte après l'identité, sans pièce.
+    IDENTIFICATION : elle poursuit avec les pièces.
+    Ajouter une ligne change le profil rattaché, sans modifier le mobile.
+  </description>
+
+  <inputData id="input_segment" name="segment">
+    <variable name="segment" typeRef="string"/>
+  </inputData>
+  <inputData id="input_choix" name="choix">
+    <variable name="choix" typeRef="string"/>
+  </inputData>
+
+  <decision id="decision_EnrolementProfilLimite" name="EnrolementProfilLimite">
+    <variable name="profil" typeRef="string"/>
+    <informationRequirement>
+      <requiredInput href="#input_segment"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_choix"/>
+    </informationRequirement>
+    <decisionTable id="dt_EnrolementProfilLimite" hitPolicy="FIRST">
+      <input id="in_segment" label="segment">
+        <inputExpression typeRef="string"><text>segment</text></inputExpression>
+      </input>
+      <input id="in_choix" label="choix">
+        <inputExpression typeRef="string"><text>choix</text></inputExpression>
+      </input>
+      <output id="out_profil" label="profil" name="profil" typeRef="string"/>
+
+      <rule id="r_refus">
+        <inputEntry><text>"RETAIL"</text></inputEntry>
+        <inputEntry><text>"REFUS"</text></inputEntry>
+        <outputEntry><text>"RETAIL-LIMITE"</text></outputEntry>
+      </rule>
+      <rule id="r_creation">
+        <inputEntry><text>"RETAIL"</text></inputEntry>
+        <inputEntry><text>"CREATION"</text></inputEntry>
+        <outputEntry><text>"RETAIL-LIMITE-COMPTE"</text></outputEntry>
+      </rule>
+      <rule id="r_identification">
+        <inputEntry><text>"RETAIL"</text></inputEntry>
+        <inputEntry><text>"IDENTIFICATION"</text></inputEntry>
+        <outputEntry><text>"RETAIL-LIMITE-IDENTIFIE"</text></outputEntry>
+      </rule>
+      <rule id="r_defaut">
+        <inputEntry><text>-</text></inputEntry>
+        <inputEntry><text>-</text></inputEntry>
+        <outputEntry><text>"RETAIL-LIMITE"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

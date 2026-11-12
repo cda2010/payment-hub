@@ -1,0 +1,21 @@
+{
+    "ptiApp": {
+        "etiquetteComptable" : {
+            "home": {
+                "title": "EtiquetteComptables",
+                "createLabel": "Créer un nouveau Etiquette Comptable",
+                "createOrEditLabel": "Créer ou éditer un Etiquette Comptable"
+            },
+            "created": "Un nouveau Etiquette Comptable a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Etiquette Comptable avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Etiquette Comptable avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Etiquette Comptable {{ id }} ?"
+            },
+            "detail": {
+                "title": "Etiquette Comptable"
+            },
+            "code": "Code"
+        }
+    }
+}

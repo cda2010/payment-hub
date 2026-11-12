@@ -1,0 +1,75 @@
+
+<form class="form-horizontal" name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myEtiquetteCompteLabel" data-translate="ptiApp.etiquetteCompte.home.createOrEditLabel">Create or edit a Etiquette Compte</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" mf-required data-translate="ptiApp.etiquetteCompte.code" for="field_code">Code</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"type="text" class="form-control" name="code" id="field_code"
+                ng-model="vm.etiquetteCompte.code" required
+                />
+            </div>
+        </div>
+  
+        
+        <div class="form-group">
+            <label class="control-label col-sm-4" mf-required data-translate="ptiApp.etiquetteCompte.libelle" for="field_code">Libellé</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"type="text" class="form-control" name="libelle" id="field_code"
+                ng-model="vm.etiquetteCompte.libelle" required
+                />
+            </div>
+        </div>
+        
+       
+        <div class="form-group">
+            <div class="checkbox col-sm-6 col-sm-offset-4">
+                <label>
+                    <input autocomplete="off" class="colored-success" type="checkbox" name="obligatoire" id="field_obligatoire" ng-model="vm.etiquetteCompte.obligatoire" />
+                    <b class="text">Obligatoire ?</b>
+                </label>
+            </div>
+        </div>
+  <div class="form-group">
+            <div class="checkbox col-sm-6 col-sm-offset-4">
+                <label>
+                    <input autocomplete="off" class="colored-success" type="checkbox" name="debiteur" id="field_obligatoire" ng-model="vm.etiquetteCompte.estDebiteur" />
+                    <b class="text">Est débiteur ?</b>
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="checkbox col-sm-6 col-sm-offset-4">
+                <label>
+                    <input autocomplete="off" class="colored-success" type="checkbox" name="transversal" id="field_transversal" ng-model="vm.etiquetteCompte.transversal" />
+                    <b class="text">Transversale ?</b>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group" ng-if="vm.etiquetteCompte.transversal">
+            <label class="control-label col-sm-4" mf-required for="field_niveau">A partir du niveau</label>
+            <div class="col-sm-6">
+                <select class="form-control" id="field_niveau" name="niveau" ng-model="vm.etiquetteCompte.niveau" ng-options="typeUo.niveau as typeUo.libelleTypeUO for typeUo in vm.typeUos" required >
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

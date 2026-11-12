@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:pay="http://payment-gateway/schema/bpmn/pay"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             targetNamespace="http://payment-gateway/catalog"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+
+  <!--
+    ADD_BENEFICIARY — ajout carnet avec recherche titulaire FSE.
+    Clé Flowable : addBeneficiary
+    Un écran : réseau (slide) + identifiant → INFOCLIENT → récap → save
+  -->
+  <process id="addBeneficiary" name="Add Beneficiary (Catalog)" isExecutable="true">
+    <documentation>
+      Réseau FSE + identifiant → recherche connecteur → récap → enregistrement carnet.
+    </documentation>
+
+    <startEvent id="start" name="Start"/>
+    <sequenceFlow id="flow_start" sourceRef="start" targetRef="SELECT_PROVIDER"/>
+
+    <userTask id="SELECT_PROVIDER" name="01 Network + identifier"
+              flowable:formKey="add-beneficiary-provider"/>
+    <sequenceFlow id="flow_01" sourceRef="SELECT_PROVIDER" targetRef="INFO_CLIENT"/>
+
+    <serviceTask id="INFO_CLIENT" name="02 Lookup holder via connector"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="INFO_CLIENT"
+                 pay:actorRole="DESTINATION"
+                 pay:operation="INFOCLIENT"/>
+    <sequenceFlow id="flow_02" sourceRef="INFO_CLIENT" targetRef="CONFIRM"/>
+
+    <userTask id="CONFIRM" name="03 Recap confirm"
+              flowable:formKey="product-recap"/>
+    <sequenceFlow id="flow_03" sourceRef="CONFIRM" targetRef="SAVE_TRANSFER_BENEFICIARY"/>
+
+    <serviceTask id="SAVE_TRANSFER_BENEFICIARY" name="04 Save to address book"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="SAVE_TRANSFER_BENEFICIARY"/>
+    <sequenceFlow id="flow_04" sourceRef="SAVE_TRANSFER_BENEFICIARY" targetRef="NOTIFY"/>
+
+    <serviceTask id="NOTIFY" name="05 Notify"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="NOTIFY"/>
+    <sequenceFlow id="flow_05" sourceRef="NOTIFY" targetRef="end"/>
+
+    <endEvent id="end" name="End"/>
+  </process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_addBeneficiary">
+    <bpmndi:BPMNPlane id="BPMNPlane_addBeneficiary" bpmnElement="addBeneficiary">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <omgdc:Bounds x="40" y="102" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SELECT_PROVIDER_di" bpmnElement="SELECT_PROVIDER">
+        <omgdc:Bounds x="110" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="INFO_CLIENT_di" bpmnElement="INFO_CLIENT">
+        <omgdc:Bounds x="280" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CONFIRM_di" bpmnElement="CONFIRM">
+        <omgdc:Bounds x="450" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SAVE_TRANSFER_BENEFICIARY_di" bpmnElement="SAVE_TRANSFER_BENEFICIARY">
+        <omgdc:Bounds x="280" y="220" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="NOTIFY_di" bpmnElement="NOTIFY">
+        <omgdc:Bounds x="450" y="220" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="end_di" bpmnElement="end">
+        <omgdc:Bounds x="620" y="242" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

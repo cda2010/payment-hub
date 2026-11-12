@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             targetNamespace="http://payment-gateway/catalog"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+
+  <!--
+    REMITTANCE_RECEIVE — retrait / crédit après envoi AVAILABLE_FOR_PAYOUT.
+    Clé Flowable : remittanceReceive
+  -->
+  <process id="remittanceReceive" name="Remittance Receive (Catalog)" isExecutable="true">
+    <documentation>
+      Référence → lookup → branche payoutMethod (CASH_PICKUP | BANK/WALLET) →
+      validate → execute payout → complete (clôture parent) → notify.
+    </documentation>
+
+    <startEvent id="start" name="Start"/>
+    <sequenceFlow id="flow_start" sourceRef="start" targetRef="CAPTURE_REFERENCE"/>
+
+    <userTask id="CAPTURE_REFERENCE" name="01 Capture remittance reference"
+              flowable:formKey="remittance-receive-reference"/>
+    <sequenceFlow id="flow_01" sourceRef="CAPTURE_REFERENCE" targetRef="LOOKUP_REMITTANCE"/>
+
+    <serviceTask id="LOOKUP_REMITTANCE" name="02 Lookup send"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_02" sourceRef="LOOKUP_REMITTANCE" targetRef="gw_payoutMethod"/>
+
+    <exclusiveGateway id="gw_payoutMethod" name="Payout method?" default="flow_to_pickup_default"/>
+    <sequenceFlow id="flow_to_pickup" sourceRef="gw_payoutMethod" targetRef="CAPTURE_BENEFICIARY_ID">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${payoutMethod == 'CASH_PICKUP'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_to_account" sourceRef="gw_payoutMethod" targetRef="CAPTURE_ACCOUNT_CONFIRM">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${payoutMethod == 'BANK_DEPOSIT' || payoutMethod == 'WALLET'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_to_pickup_default" sourceRef="gw_payoutMethod" targetRef="CAPTURE_BENEFICIARY_ID"/>
+
+    <!-- ── CASH_PICKUP ───────────────────────────────────────────────────── -->
+    <userTask id="CAPTURE_BENEFICIARY_ID" name="03 Capture beneficiary ID"
+              flowable:formKey="remittance-receive-id"/>
+    <sequenceFlow id="flow_pickup_01" sourceRef="CAPTURE_BENEFICIARY_ID" targetRef="VALIDATE_PAYOUT"/>
+
+    <!-- ── BANK / WALLET ─────────────────────────────────────────────────── -->
+    <userTask id="CAPTURE_ACCOUNT_CONFIRM" name="03 Confirm destination account"
+              flowable:formKey="remittance-receive-account"/>
+    <sequenceFlow id="flow_account_01" sourceRef="CAPTURE_ACCOUNT_CONFIRM" targetRef="VALIDATE_PAYOUT"/>
+
+    <serviceTask id="VALIDATE_PAYOUT" name="04 Validate payout"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_04" sourceRef="VALIDATE_PAYOUT" targetRef="CONFIRM_PAYOUT"/>
+
+    <userTask id="CONFIRM_PAYOUT" name="05 Confirm payout"
+              flowable:formKey="product-recap"/>
+    <sequenceFlow id="flow_05" sourceRef="CONFIRM_PAYOUT" targetRef="EXECUTE_PAYOUT"/>
+
+    <serviceTask id="EXECUTE_PAYOUT" name="06 Execute payout"
+                 flowable:delegateExpression="${gatewayProviderCallDelegate}"/>
+    <sequenceFlow id="flow_06" sourceRef="EXECUTE_PAYOUT" targetRef="COMPLETE_PAYOUT"/>
+
+    <serviceTask id="COMPLETE_PAYOUT" name="07 Complete + close parent send"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_07" sourceRef="COMPLETE_PAYOUT" targetRef="NOTIFY"/>
+
+    <serviceTask id="NOTIFY" name="08 Notify"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_08" sourceRef="NOTIFY" targetRef="end"/>
+
+    <endEvent id="end" name="End"/>
+  </process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_remittanceReceive">
+    <bpmndi:BPMNPlane id="BPMNPlane_remittanceReceive" bpmnElement="remittanceReceive">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <omgdc:Bounds x="40" y="162" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CAPTURE_REFERENCE_di" bpmnElement="CAPTURE_REFERENCE">
+        <omgdc:Bounds x="110" y="140" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="LOOKUP_REMITTANCE_di" bpmnElement="LOOKUP_REMITTANCE">
+        <omgdc:Bounds x="260" y="140" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="gw_payoutMethod_di" bpmnElement="gw_payoutMethod">
+        <omgdc:Bounds x="425" y="165" width="40" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CAPTURE_BENEFICIARY_ID_di" bpmnElement="CAPTURE_BENEFICIARY_ID">
+        <omgdc:Bounds x="510" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CAPTURE_ACCOUNT_CONFIRM_di" bpmnElement="CAPTURE_ACCOUNT_CONFIRM">
+        <omgdc:Bounds x="510" y="200" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="VALIDATE_PAYOUT_di" bpmnElement="VALIDATE_PAYOUT">
+        <omgdc:Bounds x="670" y="140" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CONFIRM_PAYOUT_di" bpmnElement="CONFIRM_PAYOUT">
+        <omgdc:Bounds x="110" y="320" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EXECUTE_PAYOUT_di" bpmnElement="EXECUTE_PAYOUT">
+        <omgdc:Bounds x="260" y="320" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="COMPLETE_PAYOUT_di" bpmnElement="COMPLETE_PAYOUT">
+        <omgdc:Bounds x="410" y="320" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="NOTIFY_di" bpmnElement="NOTIFY">
+        <omgdc:Bounds x="560" y="320" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="end_di" bpmnElement="end">
+        <omgdc:Bounds x="720" y="342" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

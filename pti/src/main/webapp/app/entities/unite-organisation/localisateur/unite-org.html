@@ -1,0 +1,74 @@
+
+                <div class="container-fluid well">
+                        <div class="modal-header">
+                                <h4 class="modal-title" id="appel_fond">Localisateur</h4>
+                            </div>
+                        <div class="row mt5">
+                                <div class="row">
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                            <div class="row" >
+                                                <div class="form-group col-sm-4">
+                                                    <select class="form-control input-xs" id="field_pays" name="pays" ng-model="vm.itemSearch.paysId"
+                                                        ng-options="pays.id as pays.libelleUniteOrganisation for pays in vm.pays">
+                                                        <option value="">Pays</option>
+                                                    </select>
+                                                </div>
+                                
+                                                <div class="form-group col-sm-4">
+                                                    <select class="form-control input-xs" id="field_fse" name="fse"
+                                                        ng-model="vm.itemSearch.fseId"
+                                                        ng-options="fse.id as fse.libelleUniteOrganisation for fse in vm.allFse">
+                                                        <option value="">Reseau</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                
+                                            <div class="row" >
+                                                <div class="form-group col-sm-4">
+                                                    <select class="form-control input-xs" id="field_ville" name="ville" ng-model="vm.itemSearch.villeId"
+                                                        ng-options="ville.id as ville.nom for ville in vm.villes">
+                                                        <option value="">Ville</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                
+                                            <div class="row" >
+                                                <div class="form-group col-sm-4">
+                                                    <div class="col-sm-4">
+                                                        <button class="btn btn-warnig btn-md" ng-click="vm.initFiltre()">
+                                                            <span class="glyphicon glyphicon-search">Annuler</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <button class="btn btn-info btn-md " ng-click="vm.filtre()">
+                                                            <span class="glyphicon glyphicon-search">Filtrer</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="well with-header">
+                                <table class="table table-hover">
+                                        <thead class="bordered-blue">
+                                                <tr class="">
+                                                    <th>Nom</th>
+                                                    <th>Telephone</th>
+                                                    <th>Ville</th>
+                                                    <th>Adresse</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="org in vm.orgs">
+                                                    <td>{{org.libelleUniteOrganisation}}</td>
+                                                    <td>{{org.telephone}} </td>
+                                                    <td>{{org.villeNom}} </td>
+                                                    <td>{{org.adresse}} </td>
+                                                </tr>
+                                            </tbody>
+                                </table>
+                            </div>
+                        </div>
+                       </div>

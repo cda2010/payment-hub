@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             targetNamespace="http://payment-gateway/catalog"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+
+  <!--
+    Produit catalogue RTGS (séparé d'ACCOUNT_TRANSFER).
+    Clé Flowable : rtgsTransfer
+  -->
+  <process id="rtgsTransfer" name="RTGS Transfer (Catalog)" isExecutable="true">
+    <documentation>
+      Parcours RTGS : banques source/dest → montant → validations/limites/cut-off/frais →
+      confirm → approbation DMN → OTP → exécution → wait settlement → notify.
+    </documentation>
+
+    <startEvent id="start" name="Start"/>
+    <sequenceFlow id="flow_start" sourceRef="start" targetRef="SELECT_SOURCE_BANK"/>
+
+    <userTask id="SELECT_SOURCE_BANK" name="01 Select source bank"
+              flowable:formKey="rtgs-source"/>
+    <sequenceFlow id="flow_01" sourceRef="SELECT_SOURCE_BANK" targetRef="CAPTURE_DESTINATION"/>
+
+    <userTask id="CAPTURE_DESTINATION" name="02 Capture destination"
+              flowable:formKey="rtgs-destination"/>
+    <sequenceFlow id="flow_02" sourceRef="CAPTURE_DESTINATION" targetRef="CAPTURE_AMOUNT"/>
+
+    <userTask id="CAPTURE_AMOUNT" name="03 Capture amount"
+              flowable:formKey="rtgs-amount"/>
+    <sequenceFlow id="flow_03" sourceRef="CAPTURE_AMOUNT" targetRef="VALIDATE_ACCOUNT"/>
+
+    <serviceTask id="VALIDATE_ACCOUNT" name="04 Validate account"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_04" sourceRef="VALIDATE_ACCOUNT" targetRef="CHECK_LIMITS"/>
+
+    <serviceTask id="CHECK_LIMITS" name="05 Check limits"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_05" sourceRef="CHECK_LIMITS" targetRef="CHECK_CUTOFF"/>
+
+    <serviceTask id="CHECK_CUTOFF" name="06 Check cutoff"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_06" sourceRef="CHECK_CUTOFF" targetRef="CALCULATE_FEES"/>
+
+    <serviceTask id="CALCULATE_FEES" name="07 Calculate fees"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_07" sourceRef="CALCULATE_FEES" targetRef="CONFIRM"/>
+
+    <userTask id="CONFIRM" name="08 Confirm"
+              flowable:formKey="rtgs-confirm"/>
+    <sequenceFlow id="flow_08" sourceRef="CONFIRM" targetRef="EVALUATE_APPROVAL"/>
+
+    <serviceTask id="EVALUATE_APPROVAL" name="08b Evaluate approval"
+                 flowable:delegateExpression="${gatewayTransferApprovalEvaluateDelegate}"/>
+    <sequenceFlow id="flow_08b" sourceRef="EVALUATE_APPROVAL" targetRef="gw_approvalNeeded"/>
+
+    <exclusiveGateway id="gw_approvalNeeded" name="Approval needed?"/>
+    <sequenceFlow id="flow_skip_approval" sourceRef="gw_approvalNeeded" targetRef="generateOtp">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approvalLevelsRequired == null || approvalLevelsRequired < 1}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_to_l1" sourceRef="gw_approvalNeeded" targetRef="APPROVAL_L1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approvalLevelsRequired >= 1}]]></conditionExpression>
+    </sequenceFlow>
+
+    <userTask id="APPROVAL_L1" name="08c Approval L1"
+              flowable:formKey="account-transfer-approval"
+              flowable:candidateGroups="${approvalCandidateGroupL1}"/>
+    <sequenceFlow id="flow_l1_done" sourceRef="APPROVAL_L1" targetRef="gw_l1_result"/>
+
+    <exclusiveGateway id="gw_l1_result" name="L1 result"/>
+    <sequenceFlow id="flow_l1_reject" sourceRef="gw_l1_result" targetRef="APPROVAL_RETURNED">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == false}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_l1_to_l2" sourceRef="gw_l1_result" targetRef="APPROVAL_L2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == true && approvalLevelsRequired >= 2}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_l1_to_otp" sourceRef="gw_l1_result" targetRef="generateOtp">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == true && approvalLevelsRequired < 2}]]></conditionExpression>
+    </sequenceFlow>
+
+    <userTask id="APPROVAL_L2" name="08d Approval L2"
+              flowable:formKey="account-transfer-approval"
+              flowable:candidateGroups="${approvalCandidateGroupL2}"/>
+    <sequenceFlow id="flow_l2_done" sourceRef="APPROVAL_L2" targetRef="gw_l2_result"/>
+
+    <exclusiveGateway id="gw_l2_result" name="L2 result"/>
+    <sequenceFlow id="flow_l2_reject" sourceRef="gw_l2_result" targetRef="APPROVAL_RETURNED">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == false}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_l2_to_l3" sourceRef="gw_l2_result" targetRef="APPROVAL_L3">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == true && approvalLevelsRequired >= 3}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_l2_to_otp" sourceRef="gw_l2_result" targetRef="generateOtp">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == true && approvalLevelsRequired < 3}]]></conditionExpression>
+    </sequenceFlow>
+
+    <userTask id="APPROVAL_L3" name="08e Approval L3"
+              flowable:formKey="account-transfer-approval"
+              flowable:candidateGroups="${approvalCandidateGroupL3}"/>
+    <sequenceFlow id="flow_l3_done" sourceRef="APPROVAL_L3" targetRef="gw_l3_result"/>
+
+    <exclusiveGateway id="gw_l3_result" name="L3 result"/>
+    <sequenceFlow id="flow_l3_reject" sourceRef="gw_l3_result" targetRef="APPROVAL_RETURNED">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == false}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_l3_to_otp" sourceRef="gw_l3_result" targetRef="generateOtp">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == true}]]></conditionExpression>
+    </sequenceFlow>
+
+    <serviceTask id="APPROVAL_RETURNED" name="Mark returned to initiator"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_returned_to_correct" sourceRef="APPROVAL_RETURNED" targetRef="CORRECT_TRANSFER"/>
+
+    <userTask id="CORRECT_TRANSFER" name="Correct and resubmit"
+              flowable:formKey="account-transfer-return"/>
+    <sequenceFlow id="flow_correct_to_confirm" sourceRef="CORRECT_TRANSFER" targetRef="CONFIRM"/>
+
+    <serviceTask id="generateOtp" name="09 Authenticate — generate OTP"
+                 flowable:delegateExpression="${gatewayProviderCallDelegate}"/>
+    <sequenceFlow id="flow_09a" sourceRef="generateOtp" targetRef="enterOtp"/>
+
+    <userTask id="enterOtp" name="09 Authenticate — enter OTP"
+              flowable:formKey="provider-otp-code"/>
+    <sequenceFlow id="flow_09b" sourceRef="enterOtp" targetRef="EXECUTE_RTGS"/>
+
+    <serviceTask id="EXECUTE_RTGS" name="10 Execute RTGS"
+                 flowable:delegateExpression="${gatewayProviderCallDelegate}"/>
+    <sequenceFlow id="flow_10" sourceRef="EXECUTE_RTGS" targetRef="WAIT_SETTLEMENT"/>
+
+    <serviceTask id="WAIT_SETTLEMENT" name="11 Wait settlement"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_11" sourceRef="WAIT_SETTLEMENT" targetRef="NOTIFY"/>
+
+    <serviceTask id="NOTIFY" name="12 Notify"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_12" sourceRef="NOTIFY" targetRef="end"/>
+
+    <endEvent id="end" name="End"/>
+  </process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_rtgsTransfer">
+    <bpmndi:BPMNPlane id="BPMNPlane_rtgsTransfer" bpmnElement="rtgsTransfer">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <omgdc:Bounds x="40" y="102" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SELECT_SOURCE_BANK_di" bpmnElement="SELECT_SOURCE_BANK">
+        <omgdc:Bounds x="110" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CAPTURE_DESTINATION_di" bpmnElement="CAPTURE_DESTINATION">
+        <omgdc:Bounds x="260" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CAPTURE_AMOUNT_di" bpmnElement="CAPTURE_AMOUNT">
+        <omgdc:Bounds x="410" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="VALIDATE_ACCOUNT_di" bpmnElement="VALIDATE_ACCOUNT">
+        <omgdc:Bounds x="560" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CHECK_LIMITS_di" bpmnElement="CHECK_LIMITS">
+        <omgdc:Bounds x="710" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CHECK_CUTOFF_di" bpmnElement="CHECK_CUTOFF">
+        <omgdc:Bounds x="860" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CALCULATE_FEES_di" bpmnElement="CALCULATE_FEES">
+        <omgdc:Bounds x="1010" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CONFIRM_di" bpmnElement="CONFIRM">
+        <omgdc:Bounds x="110" y="220" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="generateOtp_di" bpmnElement="generateOtp">
+        <omgdc:Bounds x="260" y="220" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="enterOtp_di" bpmnElement="enterOtp">
+        <omgdc:Bounds x="410" y="220" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EXECUTE_RTGS_di" bpmnElement="EXECUTE_RTGS">
+        <omgdc:Bounds x="560" y="220" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WAIT_SETTLEMENT_di" bpmnElement="WAIT_SETTLEMENT">
+        <omgdc:Bounds x="710" y="220" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="NOTIFY_di" bpmnElement="NOTIFY">
+        <omgdc:Bounds x="860" y="220" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="end_di" bpmnElement="end">
+        <omgdc:Bounds x="1020" y="242" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

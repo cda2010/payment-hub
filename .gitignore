@@ -1,0 +1,21 @@
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+.env
+*.log
+**/target/
+payment-front/dist/
+payment-front/.angular/
+payment-front/node_modules/
+# legacy
+backend/
+backend/target/
+frontend/dist/
+frontend/.angular/
+frontend/node_modules/
+backend/.gradle/
+backend/build/
+/pti/src/main/webapp/bower_components/
+base.sql

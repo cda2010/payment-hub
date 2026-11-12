@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" id="definitions_transfer_approval" name="transfer-approval" namespace="https://payment-gateway/dmn/transfer-approval" exporter="payment-gateway" exporterVersion="1.1">
+  <description>
+    ACCOUNT_TRANSFER : contexte → approvalProfileCode (NO_APPROVAL | LEVEL_1 | LEVEL_1_2 | HIGH_VALUE).
+    Les niveaux/rôles sont définis dans approval_profile, pas dans ce DMN.
+  </description>
+  <inputData id="input_amount" name="amount">
+    <variable name="amount" typeRef="number" />
+  </inputData>
+  <inputData id="input_currency" name="currency">
+    <variable name="currency" typeRef="string" />
+  </inputData>
+  <inputData id="input_catalogServiceCode" name="catalogServiceCode">
+    <variable name="catalogServiceCode" typeRef="string" />
+  </inputData>
+  <decision id="decision_TransferApproval" name="TransferApproval">
+    <variable name="TransferApproval" typeRef="string" />
+    <informationRequirement>
+      <requiredInput href="#input_amount" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_currency" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_catalogServiceCode" />
+    </informationRequirement>
+    <decisionTable id="dt_TransferApproval" hitPolicy="FIRST">
+      <input id="in_amount" label="amount">
+        <inputExpression typeRef="number">
+          <text>amount</text>
+        </inputExpression>
+      </input>
+      <input id="in_currency" label="currency">
+        <inputExpression typeRef="string">
+          <text>currency</text>
+        </inputExpression>
+      </input>
+      <input id="in_catalogServiceCode" label="catalogServiceCode">
+        <inputExpression typeRef="string">
+          <text>catalogServiceCode</text>
+        </inputExpression>
+      </input>
+      <output id="out_profile" label="approvalProfileCode" name="approvalProfileCode" typeRef="string" />
+      <rule id="r_no">
+        <inputEntry id="r0_c1">
+          <text>&lt;= 0</text>
+        </inputEntry>
+        <inputEntry id="r0_c2">
+          <text>"XOF"</text>
+        </inputEntry>
+        <inputEntry id="r0_c3">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="r0_o1">
+          <text>"NO_APPROVAL"</text>
+        </outputEntry>
+      </rule>
+      <rule id="r_l1">
+        <inputEntry id="r1_c1">
+          <text>&lt;= 100</text>
+        </inputEntry>
+        <inputEntry id="r1_c2">
+          <text>"XOF"</text>
+        </inputEntry>
+        <inputEntry id="r1_c3">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="r1_o1">
+          <text>"LEVEL_1"</text>
+        </outputEntry>
+      </rule>
+      <rule id="r_l12">
+        <inputEntry id="r2_c1">
+          <text>&lt;= 50000000</text>
+        </inputEntry>
+        <inputEntry id="r2_c2">
+          <text>"XOF"</text>
+        </inputEntry>
+        <inputEntry id="r2_c3">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="r2_o1">
+          <text>"LEVEL_1_2"</text>
+        </outputEntry>
+      </rule>
+      <rule id="r_high">
+        <inputEntry id="r3_c1">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="r3_c2">
+          <text>"XOF"</text>
+        </inputEntry>
+        <inputEntry id="r3_c3">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="r3_o1">
+          <text>"HIGH_VALUE"</text>
+        </outputEntry>
+      </rule>
+      <rule id="r_other">
+        <inputEntry id="r4_c1">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="r4_c2">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="r4_c3">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="r4_o1">
+          <text>"LEVEL_1"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

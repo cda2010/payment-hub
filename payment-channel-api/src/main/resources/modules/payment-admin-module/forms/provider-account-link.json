@@ -1,0 +1,38 @@
+{
+  "gateway": { "nextAction": "FORM" },
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "phoneNumber",
+        "key": "phoneNumber",
+        "label": "Numéro à rattacher",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "accountAlias",
+        "label": "Alias (optionnel)",
+        "input": true
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Numéro à rattacher": "Numéro à rattacher",
+      "Alias (optionnel)": "Alias (optionnel)"
+    },
+    "en": {
+      "Numéro à rattacher": "Number to link",
+      "Alias (optionnel)": "Alias (optional)"
+    }
+  }
+}

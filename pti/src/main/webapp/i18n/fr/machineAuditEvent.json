@@ -1,0 +1,22 @@
+
+{
+    "ptiApp": {
+        "machineAuditEvent" : {
+            "home": {
+                "title": "MachineAuditEvents",
+                "createLabel": "Créer un nouveau Machine Audit Event",
+                "createOrEditLabel": "Créer ou éditer un Machine Audit Event"
+            },
+            "created": "Un nouveau Machine Audit Event a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Machine Audit Event avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Machine Audit Event avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Machine Audit Event {{ id }} ?"
+            },
+            "detail": {
+                "title": "Machine Audit Event"
+            },
+            "statut": "Statut"
+        }
+    }
+}

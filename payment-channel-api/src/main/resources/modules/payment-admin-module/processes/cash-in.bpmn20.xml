@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowable="http://flowable.org/bpmn" xmlns:pay="http://payment-gateway/schema/bpmn/pay" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" targetNamespace="http://payment-gateway/catalog" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <process id="cashIn" name="Cash-in (Catalog)" isExecutable="true">
+    <documentation>
+      Montant → compte destination → réseau agent → frais → rules → récap → OTP →
+      code dépôt → attente encaissement agent → crédit → notify.
+    </documentation>
+    <startEvent id="start" name="Start" />
+    <sequenceFlow id="flow_start" sourceRef="start" targetRef="CAPTURE_AMOUNT" />
+    <userTask id="CAPTURE_AMOUNT" name="01 Capture amount" flowable:formKey="cash-in-amount" />
+    <sequenceFlow id="flow_01" sourceRef="CAPTURE_AMOUNT" targetRef="SELECT_DESTINATION" />
+    <userTask id="SELECT_DESTINATION" name="02 Select destination account" flowable:formKey="cash-in-destination" />
+    <sequenceFlow id="flow_02" sourceRef="SELECT_DESTINATION" targetRef="SELECT_AGENT_CHANNEL" />
+    <userTask id="SELECT_AGENT_CHANNEL" name="03 Select agent network" flowable:formKey="cash-in-agent" />
+    <sequenceFlow id="flow_03" sourceRef="SELECT_AGENT_CHANNEL" targetRef="CALCULATE_FEES" />
+    <serviceTask id="CALCULATE_FEES" name="04 Calculate fees" flowable:delegateExpression="${catalogStepDelegate}" pay:capability="CALCULATE_FEES" />
+    <sequenceFlow id="flow_04" sourceRef="CALCULATE_FEES" targetRef="EVALUATE_RULES" />
+    <serviceTask id="EVALUATE_RULES" name="05 Evaluate rules" flowable:delegateExpression="${catalogStepDelegate}" pay:capability="EVALUATE_RULES" pay:actorRole="DESTINATION" />
+    <sequenceFlow id="flow_05" sourceRef="EVALUATE_RULES" targetRef="CONFIRM" />
+    <userTask id="CONFIRM" name="06 Recap confirm" flowable:formKey="product-recap" />
+    <sequenceFlow id="flow_06" sourceRef="CONFIRM" targetRef="WAIT_AGENT_COLLECT" />
+    <serviceTask id="WAIT_AGENT_COLLECT" name="09 Wait agent collect cash" flowable:delegateExpression="${catalogStepDelegate}" pay:capability="WAIT">
+      <incoming>flow_06</incoming>
+    </serviceTask>
+    <sequenceFlow id="flow_09" sourceRef="WAIT_AGENT_COLLECT" targetRef="EXECUTE_CASHIN" />
+    <serviceTask id="EXECUTE_CASHIN" name="10 Credit destination" flowable:delegateExpression="${catalogStepDelegate}" pay:capability="EXECUTE_CASHIN" pay:actorRole="DESTINATION" pay:operation="TRANSFERT" />
+    <sequenceFlow id="flow_10" sourceRef="EXECUTE_CASHIN" targetRef="NOTIFY" />
+    <serviceTask id="NOTIFY" name="11 Notify" flowable:delegateExpression="${catalogStepDelegate}" pay:capability="NOTIFY" />
+    <sequenceFlow id="flow_11" sourceRef="NOTIFY" targetRef="end" />
+    <endEvent id="end" name="End" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_cashIn">
+    <bpmndi:BPMNPlane id="BPMNPlane_cashIn" bpmnElement="cashIn">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <omgdc:Bounds x="40" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CAPTURE_AMOUNT_di" bpmnElement="CAPTURE_AMOUNT">
+        <omgdc:Bounds x="110" y="80" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SELECT_DESTINATION_di" bpmnElement="SELECT_DESTINATION">
+        <omgdc:Bounds x="170" y="-100" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SELECT_AGENT_CHANNEL_di" bpmnElement="SELECT_AGENT_CHANNEL">
+        <omgdc:Bounds x="330" y="-220" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CALCULATE_FEES_di" bpmnElement="CALCULATE_FEES">
+        <omgdc:Bounds x="470" y="-170" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EVALUATE_RULES_di" bpmnElement="EVALUATE_RULES">
+        <omgdc:Bounds x="690" y="-150" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CONFIRM_di" bpmnElement="CONFIRM">
+        <omgdc:Bounds x="860" y="-150" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WAIT_AGENT_COLLECT_di" bpmnElement="WAIT_AGENT_COLLECT">
+        <omgdc:Bounds x="480" y="340" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EXECUTE_CASHIN_di" bpmnElement="EXECUTE_CASHIN">
+        <omgdc:Bounds x="710" y="380" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="NOTIFY_di" bpmnElement="NOTIFY">
+        <omgdc:Bounds x="860" y="220" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="end_di" bpmnElement="end">
+        <omgdc:Bounds x="1020" y="242" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="flow_start_di" bpmnElement="flow_start">
+        <omgdi:waypoint x="58" y="138" />
+        <omgdi:waypoint x="58" y="109" />
+        <omgdi:waypoint x="170" y="109" />
+        <omgdi:waypoint x="170" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_01_di" bpmnElement="flow_01">
+        <omgdi:waypoint x="170" y="80" />
+        <omgdi:waypoint x="170" y="30" />
+        <omgdi:waypoint x="230" y="30" />
+        <omgdi:waypoint x="230" y="-20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_02_di" bpmnElement="flow_02">
+        <omgdi:waypoint x="290" y="-60" />
+        <omgdi:waypoint x="390" y="-60" />
+        <omgdi:waypoint x="390" y="-140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_03_di" bpmnElement="flow_03">
+        <omgdi:waypoint x="390" y="-140" />
+        <omgdi:waypoint x="390" y="-5" />
+        <omgdi:waypoint x="530" y="-5" />
+        <omgdi:waypoint x="530" y="-90" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_04_di" bpmnElement="flow_04">
+        <omgdi:waypoint x="530" y="-90" />
+        <omgdi:waypoint x="530" y="5" />
+        <omgdi:waypoint x="750" y="5" />
+        <omgdi:waypoint x="750" y="-70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_05_di" bpmnElement="flow_05">
+        <omgdi:waypoint x="810" y="-110" />
+        <omgdi:waypoint x="860" y="-110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_06_di" bpmnElement="flow_06">
+        <omgdi:waypoint x="920" y="-70" />
+        <omgdi:waypoint x="920" y="190" />
+        <omgdi:waypoint x="170" y="190" />
+        <omgdi:waypoint x="170" y="260" />
+        <omgdi:waypoint x="320" y="260" />
+        <omgdi:waypoint x="320" y="380" />
+        <omgdi:waypoint x="480" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_09_di" bpmnElement="flow_09">
+        <omgdi:waypoint x="600" y="380" />
+        <omgdi:waypoint x="655" y="380" />
+        <omgdi:waypoint x="655" y="420" />
+        <omgdi:waypoint x="710" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_10_di" bpmnElement="flow_10">
+        <omgdi:waypoint x="830" y="420" />
+        <omgdi:waypoint x="845" y="420" />
+        <omgdi:waypoint x="845" y="260" />
+        <omgdi:waypoint x="860" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_11_di" bpmnElement="flow_11">
+        <omgdi:waypoint x="920" y="300" />
+        <omgdi:waypoint x="920" y="271" />
+        <omgdi:waypoint x="1038" y="271" />
+        <omgdi:waypoint x="1038" y="242" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

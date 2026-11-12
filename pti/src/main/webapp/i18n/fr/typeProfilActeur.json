@@ -1,0 +1,9 @@
+{
+    "ptiApp": {
+        "TypeProfilActeur" : {
+            "null": "",
+            "CLIENT": "CLIENT",
+            "ORGANISATION": "ORGANISATION"
+        }
+    }
+}

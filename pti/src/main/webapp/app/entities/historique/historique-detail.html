@@ -1,0 +1,31 @@
+
+<div>
+    <h2><span data-translate="ptiApp.historique.detail.title">Historique</span> {{vm.historique.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.historique.fournisseurService">Fournisseur Service</span></dt>
+        <dd>
+            <span>{{vm.historique.fournisseurService}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.historique.dateHistorique">Date Historique</span></dt>
+        <dd>
+            <span>{{vm.historique.dateHistorique | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.historique.etiquette">Etiquette</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.HistoryType.' + vm.historique.etiquette}}">{{vm.historique.etiquette}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="historique-detail.edit({id:vm.historique.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

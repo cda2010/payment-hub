@@ -1,0 +1,25 @@
+
+{
+    "ptiApp": {
+        "ftp" : {
+            "home": {
+                "title": "Ftps",
+                "createLabel": "Créer un nouveau Ftp",
+                "createOrEditLabel": "Créer ou éditer un Ftp"
+            },
+            "created": "Un nouveau Ftp a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Ftp avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Ftp avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Ftp {{ id }} ?"
+            },
+            "detail": {
+                "title": "Ftp"
+            },
+            "url": "Url",
+            "username": "Username",
+            "password": "Password",
+            "repertoire": "Repertoire"
+        }
+    }
+}

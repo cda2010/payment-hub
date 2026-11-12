@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:pay="http://payment-gateway/schema/bpmn/pay"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             targetNamespace="http://payment-gateway/catalog"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+
+  <!--
+    LINK / REGISTER — rattachement compte wallet (ServiceType LINK).
+    Clé Flowable : accountLink
+    Les serviceTasks portent leur capability (pay:*) ; le catalogue ne garde que
+    les bindings UI, les softRules et les paramètres métier.
+  -->
+  <process id="accountLink" name="Account Link (Catalog)" isExecutable="true">
+    <documentation>
+      Provider → compte (MSISDN) → validation → récap → OTP → LINK → notify.
+    </documentation>
+
+    <startEvent id="start" name="Start"/>
+    <sequenceFlow id="flow_start" sourceRef="start" targetRef="SELECT_PROVIDER"/>
+
+    <userTask id="SELECT_PROVIDER" name="01 Select wallet provider"
+              flowable:formKey="account-link-provider"/>
+    <sequenceFlow id="flow_01" sourceRef="SELECT_PROVIDER" targetRef="CAPTURE_ACCOUNT"/>
+
+    <userTask id="CAPTURE_ACCOUNT" name="02 Capture account to link"
+              flowable:formKey="account-link-account"/>
+    <sequenceFlow id="flow_02" sourceRef="CAPTURE_ACCOUNT" targetRef="VALIDATE_ACCOUNT"/>
+
+    <serviceTask id="VALIDATE_ACCOUNT" name="03 Validate account fields"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="VALIDATE_ACCOUNT"/>
+    <sequenceFlow id="flow_03" sourceRef="VALIDATE_ACCOUNT" targetRef="CONFIRM"/>
+
+    <userTask id="CONFIRM" name="04 Recap confirm"
+              flowable:formKey="product-recap"/>
+    <sequenceFlow id="flow_04" sourceRef="CONFIRM" targetRef="generateOtp"/>
+
+    <serviceTask id="generateOtp" name="05 Authenticate — generate OTP"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="GENERATE_OTP"
+                 pay:actorRole="SOURCE"/>
+    <sequenceFlow id="flow_05a" sourceRef="generateOtp" targetRef="enterOtp"/>
+
+    <userTask id="enterOtp" name="05 Authenticate — enter OTP"
+              flowable:formKey="provider-otp-code"/>
+    <sequenceFlow id="flow_05b" sourceRef="enterOtp" targetRef="EXECUTE_LINK"/>
+
+    <serviceTask id="EXECUTE_LINK" name="06 Link account"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="EXECUTE_LINK"
+                 pay:actorRole="SOURCE"
+                 pay:operation="LINK"/>
+    <sequenceFlow id="flow_06" sourceRef="EXECUTE_LINK" targetRef="NOTIFY"/>
+
+    <serviceTask id="NOTIFY" name="07 Notify"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="NOTIFY"/>
+    <sequenceFlow id="flow_07" sourceRef="NOTIFY" targetRef="end"/>
+
+    <endEvent id="end" name="End"/>
+  </process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_accountLink">
+    <bpmndi:BPMNPlane id="BPMNPlane_accountLink" bpmnElement="accountLink">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <omgdc:Bounds x="40" y="102" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SELECT_PROVIDER_di" bpmnElement="SELECT_PROVIDER">
+        <omgdc:Bounds x="110" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CAPTURE_ACCOUNT_di" bpmnElement="CAPTURE_ACCOUNT">
+        <omgdc:Bounds x="260" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="VALIDATE_ACCOUNT_di" bpmnElement="VALIDATE_ACCOUNT">
+        <omgdc:Bounds x="410" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CONFIRM_di" bpmnElement="CONFIRM">
+        <omgdc:Bounds x="560" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="generateOtp_di" bpmnElement="generateOtp">
+        <omgdc:Bounds x="110" y="220" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="enterOtp_di" bpmnElement="enterOtp">
+        <omgdc:Bounds x="260" y="220" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EXECUTE_LINK_di" bpmnElement="EXECUTE_LINK">
+        <omgdc:Bounds x="410" y="220" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="NOTIFY_di" bpmnElement="NOTIFY">
+        <omgdc:Bounds x="560" y="220" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="end_di" bpmnElement="end">
+        <omgdc:Bounds x="720" y="242" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

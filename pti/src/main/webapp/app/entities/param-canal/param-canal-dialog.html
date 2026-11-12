@@ -1,0 +1,87 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation class="form-horizontal">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myEtapeServiceLabel" data-translate="ptiApp.canalApplication.home.createOrEditLabel">
+            Create or edit a Param Canal Step</h4>
+    </div> 
+    <!--  {{vm.canals}} -->
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="col-sm-4 control-label" mf-required class="control-label"
+                   for="field_application">Application</label>
+            <div class="col-sm-6">
+                <select class="form-control" id="field_application" name="application" ng-model="vm.paramCanal.application">
+                    <option value="PTIAPP">PTIAPP</option>
+                    <option value="CORISMONEY">CORISMONEY</option>
+                </select> 
+            </div>  
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4" mf-required 
+                   for="field_canal">Canal</label>
+            <div class="col-sm-6">
+                <input class="form-control" id="field_canal" name="canal" type="text" ng-model="vm.paramCanal.canal" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4"
+                   for="field_canal">Sous Canal</label>
+            <div class="col-sm-6">
+                <input class="form-control" id="field_sousCanal" name="sousCanal" type="text" ng-model="vm.paramCanal.sousCanal"/>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-4"
+               for="field_typeCanal">Type Service</label>
+        <div class="col-sm-6">
+            <select class="form-control" id="field_typeService" name="typeService" 
+                    ng-model="vm.paramCanal.typeService" ng-change="vm.calculPoids()"
+                    ng-options="typeService as typeService.libelle for typeService in vm.typeservices track by typeService.id"></select> 
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-4" data-translate="ptiApp.facturier.typeFacturier" for="field_typeFacturier">Type Unite d'Organisation</label>
+        <div class="col-sm-6">
+            <select class="form-control" name="typeFacturier" ng-model="vm.paramCanal.typeFacturier" id="field_typeFacturier">
+                <option value="FSE" data-translate="ptiApp.TypeFacturier.FSE">FSE</option>
+                <option value="MARCHAND" data-translate="ptiApp.TypeFacturier.MARCHAND">MARCHAND</option>
+            </select>
+        </div>
+    </div>
+    <div ng-if="vm.paramCanal.typeFacturier == 'MARCHAND'" class="form-group">
+        <label class="control-label col-sm-4" for="field_marchand" data-translate="ptiApp.facturier.uniteOrganisation">Unité Organisation</label>
+        <div class="col-sm-6">
+            <select  class="form-control" id="field_marchand" name="marchand" ng-model="vm.paramCanal.uniteOrganisation.id" ng-change="vm.calculPoids()"
+                     ng-options="uo.id as uo.libelleUniteOrganisation for uo in vm.MARCHANDs">
+            </select>
+        </div>
+    </div>
+    <div ng-if="vm.paramCanal.typeFacturier == 'FSE'" class="form-group">
+        <label class="control-label col-sm-4" for="field_uniteOrganisation" data-translate="ptiApp.facturier.uniteOrganisation">Unité Organisation</label>
+        <div class="col-sm-6">
+            <select class="form-control" id="field_uniteOrganisation" name="fse" ng-model="vm.paramCanal.uniteOrganisation.id"  ng-change="vm.calculPoids()"
+                    ng-options="uo.id as uo.libelleUniteOrganisation for uo in vm.FSEs">
+            </select>
+        </div>
+    </div>
+    <div hidden class="form-group">
+        <label  class="col-sm-4 control-label" mf-required class="control-label" for="field_poidsCanal">Poids Canal</label>
+        <div class="col-sm-6">
+            <input class="form-control" id="field_poidsCanal" name="poidsCanal" type="number" ng-model="vm.paramCanal.poids" disabled/>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+        <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+            data-translate="entity.action.cancel">Cancel</span>
+    </button>
+    <!--  <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">-->
+    <button type="submit" class="btn btn-primary" ng-disabled="!vm.paramCanal.canal">
+        <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+    </button>
+</div>
+</form>

@@ -1,0 +1,1319 @@
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myCompteLabel"> Toutes les informations du client</h4>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="col-sm-12 col-lg-12 col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12 mb5" >
+                        <div ng-if="vm.client" class="dropdown container-fluid" style="float: right">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                Action
+                            </button>
+                            <ul class="dropdown-menu list-group">
+                                <li ng-if="!vm.client.clientIdentifie" ng-click="vm.identifierClient()" class="dropdown-item list-group-item">
+                                    <span class="fa fa-user"> Identifier</span>
+                                </li>
+
+                                <!--                                <li class="dropdown-item list-group-item">-->
+                                <!--                                    <span j-select2-dialog ng-click=""-->
+                                <!--                                          j-event-name="onLoadCompteLie"-->
+                                <!--                                          j-multiple="false"-->
+                                <!--                                            j-model="vm.client.profilActeurId"-->
+                                <!--                                            j-list="vm.profilActeurs"-->
+                                <!--                                            j-columns="['nom']"-->
+                                <!--                                            type="button">-->
+                                <!--                                            <span class="fa fa-wrench">-->
+                                <!--                                                Changer profile-->
+                                <!--                                            </span>-->
+
+                                <!--                                    </span>-->
+                                <!--                                </li>-->
+
+                                <li ng-click="vm.confirmReset()" class="dropdown-item list-group-item">
+                                    <span class="fa fa-refresh"> Renitialiser code PIN</span>
+                                </li>
+
+                                <li class="dropdown-item list-group-item" ng-if="!vm.client.clientValide">
+                                        <span ng-click="vm.changeStatutClient()" class="glyphicon glyphicon-ok">
+                                             Activer
+                                        </span>
+                                </li>
+
+                                <li class="dropdown-item list-group-item" ng-if="vm.client.clientValide"
+                                >
+                                    <span ng-click="vm.changeStatutClient()" class="glyphicon glyphicon-remove">
+                                             Désactiver
+                                    </span>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label  class="control-label col-sm-4" data-translate="ptiApp.personne.typePersonne"
+                                for="field_typePersonne">Type Personne</label>
+                        <div class="col-sm-8">
+                            <select disabled ng-disabled="vm.disabled" class="form-control" name="typePersonne"
+                                    ng-model="vm.personneE.typePersonne" id="field_typePersonne">
+                                <option value="PHYSIQUE" data-translate="ptiApp.TypePersonne.PHYSIQUE">PHYSIQUE</option>
+                                <option value="MORALE" data-translate="ptiApp.TypePersonne.MORALE">MORALE</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label  class="control-label col-sm-4" data-translate="ptiApp.personne.telephone"
+                                for="field_telephone">Telephone</label>
+                        <div class="col-sm-3">
+                            <select disabled ng-disabled="vm.disabled" class="form-control input-xs" id="field_nationalite"
+                                    name="nationalite" ng-model="vm.personneE.codePaysTelephone"
+                                    ng-options="nationalite.code as nationalite.code for nationalite in vm.nationalites">
+                                <option value="">Code</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-5">
+                            <span class="input-icon icon-right">
+                                <input autocomplete="off" required ng-disabled="vm.disabled" type="text" class="form-control"
+                                       name="telephone" id="field_telephone" ng-model="vm.personneE.telephone" />
+                                <span class="fa fa-eye validity"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div ng-if="vm.personnePhysiqueE" class="form-group col-sm-6">
+                        <label  class="col-sm-4 control-label" for="field_nomClient">Nom</label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off" ng-disabled="vm.disabled" type="text" class="form-control input-xs"
+                                   name="nomClient" id="field_nomClient" ng-model="vm.personnePhysiqueE.nomClient"
+                                   required />
+                        </div>
+                    </div>
+
+                    <div ng-if="vm.personneMoraleE" class="form-group col-sm-6">
+                        <label  class="col-sm-4 control-label" for="field_raisonSociale">Raison sociale</label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off" ng-disabled="vm.disabled" type="text"
+                                   class="form-control input-xs"
+                                   name="nomClient" id="field_raisonSociale" ng-model="vm.personneMoraleE.raisonSociale"
+                                   required/>
+                        </div>
+                    </div>
+
+                    <div ng-if="vm.personnePhysiqueE" class="form-group col-sm-6">
+                        <label  class="col-sm-4 control-label" for="field_PrenomClient">Prénom</label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off" ng-disabled="vm.disabled" type="text" class="form-control input-xs"
+                                   name="nomClient" id="field_PrenomClient" ng-model="vm.personnePhysiqueE.prenomClient"
+                                   required />
+                        </div>
+                    </div>
+
+                    <div ng-if="vm.personneMoraleE" class="form-group col-sm-6">
+                        <label  class="col-sm-4 control-label" for="field_numero_ifu">Numéro IFU</label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off" ng-disabled="vm.disabled" type="text"
+                                   class="form-control input-xs"
+                                   name="nomClient" id="field_numero_ifu" ng-model="vm.personneMoraleE.numreoIfu"
+                            />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div ng-if="vm.personnePhysiqueE" class="form-group col-sm-6">
+                        <label class=" col-sm-4 control-label" data-translate="ptiApp.personnePhysique.sexe"
+                               for="field_sexe">Sexe</label>
+                        <div class="col-sm-8">
+                            <select disabled ng-disabled="vm.disabled" class="form-control input-xs" name="sexe"
+                                    ng-model="vm.personnePhysiqueE.sexe" id="field_sexe">
+                                <option value="MASCULIN" data-translate="ptiApp.Sexe.MASCULIN">MASCULIN</option>
+                                <option value="FEMININ" data-translate="ptiApp.Sexe.FEMININ">FEMININ</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div ng-if="vm.personnePhysiqueE" class="form-group col-sm-6">
+                        <label class=" col-sm-4 control-label" data-translate="ptiApp.personnePhysique.dateNaissance"
+                               for="field_dateNaissance">Date Naissance</label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off" ng-disabled="vm.disabled" show-button-bar="false" popup-placement="top"
+                                   ng-disabled="true" id="field_dateNaissance" show-button-bar="false" type="text"
+                                   class="form-control input-xs" name="dateNaissance"
+                                   ng-model="vm.personnePhysiqueE.dateNaissance"
+                                   is-open="vm.datePickerOpenStatus.dateNaissance" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div ng-if="vm.personnePhysiqueE" class="form-group col-sm-6">
+                        <label class="col-sm-4 control-label" data-translate="ptiApp.personnePhysique.lieuNaissance"
+                               for="field_lieuNaissance">Lieu Naissance</label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off" ng-disabled="vm.disabled" type="text" class="form-control input-xs"
+                                   name="lieuNaissance" id="field_lieuNaissance"
+                                   ng-model="vm.personnePhysiqueE.lieuNaissance" />
+                        </div>
+                    </div>
+                    <div ng-if="vm.personnePhysiqueE" class="form-group col-sm-6">
+                        <label class="col-sm-4 control-label"
+                               for="field_personnePrevenir">Personne à prévenir</label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off" ng-disabled="vm.disabled" type="text" class="form-control input-xs"
+                                   name="personnePrevenir" id="field_personnePrevenir"
+                                   ng-model="vm.personnePhysiqueE.personnePrevenir" />
+                        </div>
+                    </div>
+
+
+                    <div ng-if="vm.personnePhysiqueE" class="form-group col-sm-6">
+                        <label class=" col-sm-4 control-label" for="field_nationalite">Pays de résidence</label>
+                        <div class="col-sm-8">
+                            <select disabled ng-disabled="vm.disabled" class="form-control input-xs" id="field_nationalite"
+                                    name="nationalite" ng-model="vm.personnePhysiqueE.paysResidenceId"
+                                    ng-options="nationalite.id as nationalite.libelle for nationalite in vm.nationalites">
+                                <option value="">Choisir</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div ng-if="vm.personnePhysiqueE.profession!==null" class="form-group col-sm-6">
+                        <label  class=" col-sm-4 control-label" for="field_profession">Agent Enroleur</label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off" ng-disabled="vm.disabled" type="text"
+                                   class="form-control input-xs"
+                                   name="agentEnr" id="field_agentEnr" ng-model="vm.client.agentEnroleur"
+                            />
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label  class="col-sm-4 control-label" for="field_adresse">Adresse</label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off" required ng-disabled="true" type="text"
+                                   class="form-control input-xs" name="adresse" id="field_adresse"
+                                   ng-model="vm.personneE.adresse" />
+                        </div>
+                    </div>
+
+                    <div ng-if="vm.personneMoraleE" class="form-group col-sm-6">
+                        <label  class="col-sm-4 control-label" for="field_registre_commerce">RCCM</label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off" ng-disabled="vm.disabled" type="text"
+                                   class="form-control input-xs"
+                                   name="nomClient" id="field_registre_commerce" ng-model="vm.personneMoraleE.registreCommerce"
+                            />
+                        </div>
+                    </div>
+
+                    <div ng-if="vm.personnePhysiqueE" class="form-group col-sm-6">
+                        <label  class=" col-sm-4 control-label" for="field_profession">Profession</label>
+                        <div ng-if="vm.personnePhysiqueE.profession===null" class="col-sm-8">
+                            <select disabled ng-model="vm.personneE.brancheActiviteId" required ng-disabled="vm.disabled"
+                                    class="form-control input-xs" id="field_profession" name="profession"
+                                    ng-model="vm.personnePhysiqueE.professionId"
+                                    ng-options="profession.id as profession.libelle for profession in vm.branchesActivites">
+                                <option value="">Choisir</option>
+                            </select>
+                        </div>
+                        <div ng-if="vm.personnePhysiqueE.profession!==null" class="col-sm-8">
+                            <input autocomplete="off" ng-disabled="vm.disabled" type="text"
+                                   class="form-control input-xs"
+                                   name="profession1" id="field_profession1" ng-model="vm.personnePhysiqueE.profession"
+                            />
+
+                        </div>                     
+                    </div>
+                    <div ng-if="vm.personnePhysiqueE" class="form-group col-sm-6">
+                        <label  class=" col-sm-4 control-label" for="field_profession">Nom Jeune Fille</label>
+                        <div ng-if="vm.personnePhysiqueE.profession!==null" class="col-sm-8">
+                            <input autocomplete="off" ng-disabled="vm.disabled" type="text"
+                                   class="form-control input-xs"
+                                   name="nom_jeune" id="field_nom_jeune" ng-model="vm.personnePhysiqueE.nomJeuneFille"
+                            />
+
+                        </div>
+                    </div>
+                    <div ng-if="vm.client" class="form-group col-sm-6">
+                        <label  class=" col-sm-4 control-label" for="field_info">Info</label>
+                        <div ng-if="vm.client.infosuppId!==null" class="col-sm-8">
+                            <input autocomplete="off" ng-disabled="vm.disabled" type="text"
+                                   class="form-control input-xs"
+                                   name="nom_jeune" id="field_nom_jeune" ng-model="vm.client.infosuppId"
+                            />
+
+                        </div>
+                    </div>
+                    <div ng-if="vm.personneE.memo!==null" class="col-sm-8">
+                        <label  class=" col-sm-4 control-label" for="field_memo">Memo</label>
+                        <div ng-if="vm.personneE.memo!==null" class="col-sm-8">
+                            <input autocomplete="off" ng-disabled="vm.disabled" type="text"
+                                   class="form-control input-xs"
+                                   name="memo" id="field_memo" ng-model="vm.personneE.memo"
+                            />
+                        </div>                         
+                    </div>
+                </div>
+                <div class="row">
+                    <div ng-if="vm.personnePhysiqueE" class="form-group col-sm-6">
+                        <label class=" col-sm-4 control-label" for="field_nationalite">Pays de naissance</label>
+                        <div class="col-sm-8">
+                            <select disabled ng-disabled="vm.disabled" class="form-control input-xs"
+                                    id="field_nationalites"
+                                    name="nationalite" ng-model="vm.personnePhysiqueE.nationaliteId"
+                                    ng-options="nationalite.id as nationalite.libelle for nationalite in vm.nationalites">
+                                <option value="">Choisir</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="control-label col-sm-4" for="groupe">Groupe Profil</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="groupe" name="groupe"
+                                   ng-disabled="vm.disabled" ng-model="vm.client.groupeProfilActeurNom">
+                        </div>
+
+                    </div>
+                    <div ng-if="vm.personneMoraleE" class="form-group col-sm-6">
+                        <label  class="col-sm-4 control-label" for="field_dateRCCM">Date Delivrance RCCM</label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off"
+                                   id="field_dateRCCM" type="text" class="form-control"
+                                   name="dateRCCM"
+                                   ng-model="vm.personneMoraleE.dateRCCM"
+                                   disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div ng-if="vm.personnePhysiqueE" class="form-group col-sm-6">
+                        <label class=" col-sm-4 control-label" for="field_nationalite">Catégorie</label>
+                        <div class="col-sm-8">
+                            <select disabled ng-disabled="vm.disabled" class="form-control input-xs" id="field_nationalite"
+                                    name="nationalite" ng-model="vm.personnePhysiqueE.nationaliteId"
+                                    ng-options="nationalite.id as nationalite.libelle for nationalite in vm.nationalites">
+                                <option value="">Choisir</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="control-label col-sm-4" for="profil" >Profil Acteur</label>
+                        <div class="col-sm-4">
+                            <select ng-change="vm.changeProfileCient()" class="form-control" id="profil" name="profil"
+                                    ng-disabled="vm.disabled" ng-model="vm.client.profilActeurId"
+                                    ng-options="profilActeur.id as profilActeur.nom for profilActeur in vm.profilActeurs"
+                                    required>
+                                <option value=""></option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <button ng-if="vm.oldProfileId!=vm.client.profilActeurId"
+                                    class="btn btn-success"
+                                    ng-click="vm.changeProfileCient()"
+                            >
+                                Enregistrer
+                            </button>
+                        </div>
+                    </div>
+                    <div ng-if="vm.personneMoraleE" class="form-group col-sm-6">
+                        <label  class="col-sm-4 control-label" for="field_siege_social">Siège Social</label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off" ng-disabled="vm.disabled" type="text"
+                                   class="form-control input-xs"
+                                   name="nomClient" id="field_siege_social" ng-model="vm.personneMoraleE.siegeSocial"
+                            />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div ng-if="vm.personneMoraleE" class="form-group col-sm-6 col-sm-offset-6">
+                        <label  class="col-sm-4 control-label" for="field_dirigeant">Nom Dirigeant</label>
+                        <div class="col-sm-8">
+                            <input autocomplete="off" ng-disabled="vm.disabled" type="text"
+                                   class="form-control input-xs"
+                                   name="dirigeant" id="field_dirigeant" ng-model="vm.personneMoraleE.dirigeant"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <input autocomplete="off" ng-checked="vm.isChecked(vm.client.clientValide)" class="colored-success"
+                           type="checkbox"/>
+                    <input autocomplete="off" ng-checked="vm.isChecked(vm.client.clientIdentifie)"
+                           class="colored-success"
+                           type="checkbox"/>
+                </div>
+
+                <uib-accordion close-others="oneAtATime" class="panel-group accordion">
+                    <div uib-accordion-group class="panel-group accordion" heading="Documents d'identification"
+                         is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                        <div class="table-responsive">
+
+                            <table class="jh-table table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Type Piece</th>
+                                    <th>Reference Piece</th>
+                                    <th>Lieu Delivrance</th>
+                                    <th>Date Delivrance</th>
+                                    <th>Date Expiration</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="piece in vm.pieces track by piece.id">
+                                    <td>
+                                        {{piece.typePieceLibelleTypePiece}}
+                                    </td>
+                                    <td>{{piece.referencePiece}}</td>
+                                    <td>{{piece.lieuDelivrance}}</td>
+                                    <td>{{piece.dateDelivrance | date:'mediumDate'}}</td>
+                                    <td>{{piece.dateExpiration | date:'mediumDate'}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div uib-accordion-group class="panel-group accordion" heading="Localisation">
+                        <div class="table-responsive">
+                            <table class="jh-table table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Region</th>
+                                    <th>Province</th>
+                                    <th>Ville</th>
+                                    <th>Secteur</th>
+                                    <th>Quartier</th>
+                                </tr>
+                                </thead>
+                                <tbody style="min-height: 100px;">
+                                <tr >
+                                    <td>{{vm.personneE.localiteRegion}}</td>
+                                    <td>{{vm.personneE.localiteProvince}}</td>
+                                    <td>{{vm.personneE.localiteVille}}</td>
+                                    <td>{{vm.personneE.localiteSecteur}}</td>
+                                    <td>{{vm.personneE.localiteQuartier}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div uib-accordion-group class="panel-group accordion" heading="Documents" >
+                        <div class="table-responsive">
+                            <table class=" table ">
+                                <thead>
+                                <tr class="mf-table-header">
+                                    <th class="col-xs-2">
+                                        Type
+                                    </th>
+                                    <th ng-if="!vm.isViewing" class="text-right col-xs-2">Actions
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody style="min-height: 100px;">
+                                <tr ng-repeat="document in vm.documents">
+                                    <td class="col-xs-2">
+                                        {{document.typeDocumentLibelle}}</td>
+                                    <td class="text-right col-xs-2" ng-if="document.imageFolder===null" >
+                                        <span class="btn btn-xs btn-primary"
+                                              ng-click="vm.openFile(document)"
+                                              data-translate="entity.action.open">open</span>
+                                        <span ng-if="document.valeur">{{document.valeurContentType}},
+                                            {{vm.byteSize(document.valeur)}}</span>
+                                    </td>
+                                    <td class="text-right col-xs-2" ng-if="document.imageFolder!==null">
+                                        <span class="btn btn-xs btn-primary"
+                                              ng-click="vm.openFile(document)"
+                                              data-translate="entity.action.open">open</span>
+                                        <!--<span ng-if="document.valeur">{{document.valeurContentType}},
+                                            {{vm.byteSize(document.valeur)}}</span>-->
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div uib-accordion-group class="panel-default" heading="Comptes">
+                        <fieldset class="mf-fieldset row">
+                            <div class="col-xs-11">
+                                <span></span>
+                            </div>
+                            <div class="col-xs-1"> 
+                                <button class="btn btn-primary btn-circle btn-xs float-right" ng-click="vm.createCompteBanque(vm.client)" style="margin-left: auto;"> 
+                                    <span class="glyphicon glyphicon-plus"></span> 
+                                </button> 
+                            </div> 
+                        </fieldset>
+                        <fieldset class="mf-fieldset row">
+                            <div class="row header ">
+                                <div class="col-xs-11 no-padding-left">
+                                    <lengend class="col-xs-3">Comptes Banque</lengend>
+                                </div>
+                                <!--Add Button for Add Compte-->
+
+                                
+                               
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr class="mf-table-header">
+                                        <th class="col-xs-2">
+                                            <span>Etiquette</span>
+                                        </th>
+                                        <th class="col-xs-2">
+                                            <span>Valeur Compte</span>
+                                        </th>
+                                        <th class="col-xs-2">
+                                            <span>Code Agence</span>
+                                        </th>
+                                        <th class="col-xs-2">
+                                            <span>Code Banque</span>
+                                        </th>
+                                        <th class="col-xs-2">
+                                            <span>Rib</span>
+                                        </th>
+                                        <th class="col-xs-2">
+                                            <span>Code FSE</span>
+                                        </th>
+                                        <!-- <th class="col-xs-1" >
+                                             <span>Etat</span>
+                                         </th>-->
+                                        <th class="col-xs-1" >
+                                            <span>Statut</span>
+                                        </th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="cpt in vm.comptesBanques">
+                                        <td class="col-xs-2">{{cpt.etiquette}}</td>
+                                        <td class="col-xs-2">{{cpt.valeurCompte}}</td>
+                                        <td class="col-xs-2">{{cpt.compteBanqueDTO.codeAgence}}</td>
+                                        <td class="col-xs-2">{{cpt.compteBanqueDTO.codeBanque}}</td>
+                                        <td class="col-xs-2">{{cpt.compteBanqueDTO.rib}}</td>
+                                        <td class="col-xs-2">{{cpt.compteBanqueDTO.codeFse}}</td>
+                                        <!--                  <td><span ng-class="{'bg-danger white':cpt.etatCompte=='FERME',
+                                                                                              'bg-success white':cpt.etatCompte=='OUVERT'}">{{cpt.etatCompte}}
+                                                                      </span>
+                                                          </td>-->
+                                        <td><span ng-class="{'bg-danger white':cpt.statutCompte==='DESACTIVE',
+                                                            'bg-success white':cpt.statutCompte==='ACTIVE'}">{{cpt.statutCompte}}
+                            </span>
+                                        </td>
+
+                                        <td class="text-right">
+                                            <div class="btn-group flex-btn-group-container" has-any-authority="ROLE_ADMIN,ROLE_ACTIVE_COMPTE_BANQUE">
+                                                <button ng-if="cpt.compteBanqueDTO.id&&cpt.statutCompte=='ACTIVE'" style="margin-left:3px" ng-click="vm.changeStatutCompteBanque(cpt,'DESACTIVE')" ng-class="{'btn btn-success btn-sm':cpt.statutCompte!='ACTIVE',
+                                                            'btn btn-danger btn-sm':cpt.statutCompte=='ACTIVE'}" title="Changer de statut">
+                                                    <span ng-if="cpt.statutCompte==='ACTIVE'"> Désactiver</span>
+                                                </button>
+                                                <button ng-if="cpt.compteBanqueDTO.id&&cpt.statutCompte!='ACTIVE'" style="margin-left:3px"
+                                                        ng-click="vm.changeStatutCompteBanque(cpt,'ACTIVE')" title="Changer de statut" ng-class="{'btn btn-success btn-sm':cpt.statutCompte!='ACTIVE','btn btn-danger btn-sm':cpt.statutCompte=='ACTIVE'}" >
+                                                    <span ng-if="cpt.statutCompte!=='ACTIVE'"> Activer</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </fieldset>
+                        <br><br>
+
+                        <fieldset class="mf-fieldset row">
+                            <div class="header ">
+                                <lengend>Comptes Autres</lengend><div ng-if="vm.tail ===0"><button ng-click="vm.ajouterCompteComo(vm.client)"><span>Ajouter compte</span></button></div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr class="mf-table-header">
+                                        <th class="col-xs-2" >
+                                            <span>Catégorie Compte</span>
+                                        </th>
+                                        <th class="col-xs-2">
+                                            <span>Etiquette</span>
+                                        </th>
+                                        <th class="col-xs-2">
+                                            <span>Valeur Compte</span>
+                                        </th>
+                                        <th class="col-xs-1" >
+                                            <span>Etat</span>
+                                        </th>
+                                        <th class="col-xs-1" >
+                                            <span>Statut</span>
+                                        </th>
+                                        <th class="col-xs-2" >
+                                            <span>Solde</span>
+                                        </th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="cpt in vm.comptesAll" ng-click="vm.setCurentCompteAutreId(cpt.cpt.compteAutreDTO.id)">
+                                        <td class="col-xs-2">{{cpt.cpt.categorieCompte}}</td>
+                                        <td class="col-xs-2">{{cpt.cpt.etiquette}}</td>
+                                        <td class="col-xs-2">{{cpt.cpt.valeurCompte}}</td>
+                                        <td><span ng-class="{'bg-danger white':cpt.cpt.etatCompte=='FERME',
+                                                            'bg-success white':cpt.cpt.etatCompte=='OUVERT'}">{{cpt.cpt.etatCompte}}
+                                    </span>
+                                        </td>
+                                        <td><span ng-class="{'bg-danger white':cpt.cpt.statutCompte=='DESACTIVE',
+                                                            'bg-success white':cpt.cpt.statutCompte=='ACTIVE'}">{{cpt.cpt.statutCompte}}
+                                        </span>
+                                        </td>
+                                        <td class="col-xs-2">{{cpt.compteAutre.solde|number}}</td>
+                                        <td class="text-right">
+                                            <div class="btn-group flex-btn-group-container">
+                                                <button ng-if="cpt.compteAutre.id&&!cpt.compteAutre.solde &&cpt.cpt.etatCompte=='OUVERT'" ng-click="vm.changeEtat(cpt)"
+                                                        ng-class="{'btn btn-danger btn-sm':cpt.cpt.etatCompte=='OUVERT'}" title="Changer d'etat">
+                                                    <span ng-if="cpt.cpt.etatCompte=='OUVERT'">Fermer</span>
+                                                    <!--<span ng-if="cpt.cpt.etatCompte!='OUVERT'">Ouvrir</span>-->
+                                                </button>
+                                                <button ng-if="cpt.compteAutre.id&&cpt.cpt.statutCompte=='ACTIVE'" style="margin-left:3px" ng-click="vm.changeStatut(cpt)" ng-class="{'btn btn-success btn-sm':cpt.cpt.statutCompte!='ACTIVE',
+                                                            'btn btn-danger btn-sm':cpt.cpt.statutCompte=='ACTIVE'}" title="Changer de statut">
+                                                    <span ng-if="cpt.cpt.statutCompte=='ACTIVE'"> Désactiver</span>
+                                                </button>
+                                                <button ng-if="cpt.compteAutre.id&&cpt.cpt.statutCompte!='ACTIVE'&&cpt.cpt.etatCompte=='OUVERT'"
+                                                        ng-click="vm.changeStatut(cpt)" title="Changer de statut" ng-class="{'btn btn-success btn-sm':cpt.cpt.statutCompte!='ACTIVE','btn btn-danger btn-sm':cpt.cpt.statutCompte=='ACTIVE'}" >
+                                                    <span ng-if="cpt.cpt.statutCompte!='ACTIVE'&&cpt.cpt.etatCompte=='OUVERT'"> Activer</span>
+                                                </button>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </fieldset>
+                        <br><br>
+                        <fieldset class="mf-fieldset row">
+                            <div class="row header ">
+                                <div class="col-xs-11 no-padding-left">
+                                    <lengend class="col-xs-3">Compte Carte</lengend>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr class="mf-table-header">
+                                        <th class="col-xs-2">
+                                            <span>Etiquette</span>
+                                        </th>
+                                        <th class="col-xs-2">
+                                            <span>Customer ID</span>
+                                        </th>
+                                        <th class="col-xs-2">
+                                            <span>Last4 Digit</span>
+                                        </th>
+                                           <th class="col-xs-2">
+                                            <span>Code FSE</span>
+                                        </th>
+                                        
+                                       
+                                        <!-- <th class="col-xs-1" >
+                                             <span>Etat</span>
+                                         </th>-->
+                                        <th class="col-xs-1" >
+                                            <span>Statut</span>
+                                        </th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="cpt in vm.comptesCartes">
+                                        <td class="col-xs-2">{{cpt.etiquette}}</td>
+                                        <td class="col-xs-2">{{cpt.valeurCompte}}</td>
+                                        <td class="col-xs-2">{{cpt.carteDTO.codeAgence}}</td>
+                                     
+                                        <td class="col-xs-2">{{cpt.carteDTO.codeFse}}</td>
+                                        <!--                  <td><span ng-class="{'bg-danger white':cpt.etatCompte=='FERME',
+                                                                                              'bg-success white':cpt.etatCompte=='OUVERT'}">{{cpt.etatCompte}}
+                                                                      </span>
+                                                          </td>-->
+                                        <td><span ng-class="{'bg-danger white':cpt.statutCompte==='DESACTIVE',
+                                                            'bg-success white':cpt.statutCompte==='ACTIVE'}">{{cpt.statutCompte}}
+                            </span>
+                                        </td>
+
+                                        <td class="text-right">
+                                            <div class="btn-group flex-btn-group-container" has-any-authority="ROLE_ADMIN,ROLE_ACTIVE_COMPTE_BANQUE">
+                                                <button ng-if="cpt.carteDTO.id&&cpt.statutCompte=='ACTIVE'" style="margin-left:3px" ng-click="vm.changeStatutCompteCarte(cpt,'DESACTIVE')" ng-class="{'btn btn-success btn-sm':cpt.statutCompte!='ACTIVE',
+                                                            'btn btn-danger btn-sm':cpt.statutCompte=='ACTIVE'}" title="Changer de statut">
+                                                    <span ng-if="cpt.statutCompte==='ACTIVE'"> Désactiver</span>
+                                                </button>
+                                                <button ng-if="cpt.carteDTO.id&&cpt.statutCompte!='ACTIVE'" style="margin-left:3px"
+                                                        ng-click="vm.changeStatutCompteCarte(cpt,'ACTIVE')" title="Changer de statut" ng-class="{'btn btn-success btn-sm':cpt.statutCompte!='ACTIVE','btn btn-danger btn-sm':cpt.statutCompte=='ACTIVE'}" >
+                                                    <span ng-if="cpt.statutCompte!=='ACTIVE'"> Activer</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div uib-accordion-group class="panel-default" heading="Transaction">
+                        <div class="container-fluid">
+                            <div class="well with-header" style="margin-top:10px ">
+                                <div class="header bg-blue ">
+                                    <div class="col-xs-8">
+
+                                    </div>
+                                    <div class="no-padding-left col-xs-4">
+
+                                        <div class="btn-group mr15" uib-dropdown>
+                                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                                                    aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                                                éléments par page <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row primary" ng-if="vm.canShowResultCount">
+                                    <i ng-if="vm.totalItems>1">{{vm.totalItems}} éléments trouvés</i>
+                                    <i ng-if="vm.totalItems==1" >{{vm.totalItems}} élément trouvé</i>
+                                    <i ng-if="vm.totalItems<1">Aucun résultat</i>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <select class=" col-sm-5" id="filed_format" name="format" ng-model="vm.format" >
+                                            <option value="">Format</option>
+                                            <option value="PDF">PDF</option>
+                                            <option value="XLSX">XLSX</option>
+                                            <option value="CSV">CSV</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button  ng-click="vm.exporterTransClient()" class="btn btn-primary mt5">
+                                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Exporter</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row" >
+                                    <div class="form-group col-sm-4">
+                                        <div class="input-group">
+                                            <input autocomplete="off" class="form-control" id="dateDebutT" is-open="vm.datePickerOpenStatus.dateDebutT"
+                                                   name="dateDebutT" ng-model="vm.itemSearch.dateDebutT"
+                                                   placeholder=" Date debut" show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" />
+                                            <span class="input-group-btn">
+                                             <button class="btn btn-default btn-xs" ng-click="vm.openCalendar('dateDebutT')"
+                                                     type="button"><i
+                                                     class="glyphicon glyphicon-calendar"></i></button>
+                                             </span>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <div class="input-group">
+                                            <input autocomplete="off" class="form-control" id="dateFinT" is-open="vm.datePickerOpenStatus.dateFinT"
+                                                   name="dateFinT" ng-model="vm.itemSearch.dateFinT" placeholder=" Date fin"
+                                                   show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" />
+                                            <span class="input-group-btn">
+                                            <button class="btn btn-default btn-xs" ng-click="vm.openCalendar('dateFinT')" type="button"><i
+                                                    class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <select class="form-control input-xs" id="field_type" name="type"
+                                                ng-model="vm.typeTransaction">
+                                            <option value="">Choisir le Type</option>
+                                            <option value="DEBIT">DEBIT</option>
+                                            <option value="CREDIT">CREDIT</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="form-group col-sm-4">
+                                        <button class="btn btn-primary btn-md " ng-click="vm.getTransactionFiltre()">
+                                            <span class="glyphicon glyphicon-search">Chercher</span>
+                                        </button>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <button class="btn btn-warnig btn-md " ng-click="vm.initFiltre()">
+                                            <span class="glyphicon glyphicon-search">Annuler</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr class="mf-table-header">
+                                        <th ng-click="vm.sortBy('date')">
+                                            <span>Date</span>
+                                            <span ng-if="vm.isCurrentColumn('date')"
+                                                  ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                        </th>
+                                        <th ng-click="vm.sortBy('type')">
+                                            <span>Type</span>
+                                            <span ng-if="vm.isCurrentColumn('type')"
+                                                  ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                        </th>
+                                        <th ng-click="vm.sortBy('montant')">
+                                            <span>Montant</span>
+                                            <span ng-if="vm.isCurrentColumn('montant')"
+                                                  ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                        </th>
+                                        <th ng-click="vm.sortBy('soldeCourant')">
+                                            <span>Solde Courant</span>
+                                            <span ng-if="vm.isCurrentColumn('soldeCourant')"
+                                                  ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                        </th>
+                                        <th ng-click="vm.sortBy('soldeApres')">
+                                            <span>Solde Apres</span>
+                                            <span ng-if="vm.isCurrentColumn('soldeApres')"
+                                                  ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                        </th>
+
+                                        <th ng-click="vm.sortBy('etat')">
+                                            <span>Etat</span>
+                                            <span ng-if="vm.isCurrentColumn('etat')"
+                                                  ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                        </th>
+                                        <th>
+                                            <span>Operation Motif</span>
+                                        </th>
+                                        <th>
+                                            <span>Code Opération</span>
+                                        </th>
+                                        
+                                        <th>
+                                            <span>Compte source</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="mf-table-body" ng-repeat="transation in vm.transactions track by transation.id">
+                                        <td><span>{{transation.date | date:'medium' }}</span></td>
+                                        <td><span>{{transation.type}}</span></td>
+                                        <td><span>{{transation.montant | currency:""}}</span></td>
+                                        <td><span>{{transation.soldeCourant | currency:""}}</span></td>
+                                        <td><span>{{transation.soldeApres | currency:"" }}</span></td>
+                                        <td><span>{{transation.etat}}</span></td>
+                                        <td><span>{{transation.operationMotif}}</span></td>
+                                         <td><span>{{transation.codeExterne}}</span></td>
+                                      
+                                       
+                                        <td>{{transation.operationCompteSrc}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="center-block text-center" ng-show="vm.totalItems>vm.queryCount">
+                            <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+                            </uib-pagination>
+                        </div>
+                    </div>
+                    <div uib-accordion-group class="panel-default" heading="Evènement">
+                        <div class="mf-fieldset row">
+                            <div class="well with-header" >
+                                <div class="header  ">
+                                    <div class="col-xs-8">
+                                    </div>
+                                    <div class="no-padding-left col-xs-4">
+
+                                        <div class="btn-group mr15" uib-dropdown>
+                                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                                                    aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                                                éléments par page <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row primary" ng-if="vm.canShowResultCount2">
+                                    <i ng-if="vm.totalItems2>1">{{vm.totalItems2}} éléments trouvés</i>
+                                    <i ng-if="vm.totalItems2==1" >{{vm.totalItems2}} élément trouvé</i>
+                                    <i ng-if="vm.totalItems2<1">Aucun résultat</i>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <select class=" col-sm-5" id="filed_format" name="format" ng-model="vm.format" >
+                                            <option value="">Format</option>
+                                            <option value="PDF">PDF</option>
+                                            <option value="XLSX">XLSX</option>
+                                            <option value="CSV">CSV</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button   class="btn btn-primary mt5" disabled>
+                                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Exporter</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr class="mf-table-header">
+                                        <th >
+                                            <span>Date</span>
+                                        </th>
+                                        <th>
+                                            <span>Montant</span>
+                                        </th>
+                                        <th>
+                                            <span>Type de service</span>
+                                        </th>
+                                        <th>
+                                            <span>Description</span>
+                                        </th>
+                                        <th>
+                                            <span>Actions</span>
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="mf-table-body" ng-repeat="evenement in vm.evenementsOperation track by evenement.id">
+                                        <td><span>{{evenement.createdDate | date:'medium' }}</span></td>
+                                        <td><span>{{evenement.montant}}</span></td>
+                                        <td><span>{{evenement.typeService}}</span></td>
+                                        <td><span>{{evenement.description}}</span></td>
+                                        <td >
+                                            <div class="btn-group flex-btn-group-container">
+                                                <button  style="margin-left:3px" ng-click="vm.leverEvenement(1,evenement)" class="btn btn-success btn-sm"  title="Changer de statut">
+                                                    <span > Lever</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="center-block text-center" ng-show="vm.totalItems2>vm.queryCount2">
+                            <uib-pagination total-items="vm.totalItems2" ng-model="vm.page2" items-per-page="vm.itemsPerPage">
+                            </uib-pagination>
+                        </div>
+                    </div>
+
+                    <div uib-accordion-group class="panel-default" heading="Bilan Des Opérations">
+                        <div class="mf-fieldset row">
+                            <div class="well with-header" >
+                                <div class="header  ">
+                                    <div class="col-xs-8">
+                                    </div>
+                                    <div class="no-padding-left col-xs-4">
+
+                                        <div class="btn-group mr15" uib-dropdown>
+                                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                                                    aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                                                éléments par page <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row primary" ng-if="vm.canShowResultCount2">
+                                    <i ng-if="vm.totalItems2>1">{{vm.totalItems2}} éléments trouvés</i>
+                                    <i ng-if="vm.totalItems2==1" >{{vm.totalItems2}} élément trouvé</i>
+                                    <i ng-if="vm.totalItems2<1">Aucun résultat</i>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <select class=" col-sm-5" id="filed_format" name="format" ng-model="vm.format" >
+                                            <option value="">Format</option>
+                                            <option value="PDF">PDF</option>
+                                            <option value="XLSX">XLSX</option>
+                                            <option value="CSV">CSV</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button   class="btn btn-primary mt5" disabled>
+                                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Exporter</span>
+                                        </button>
+
+                                    </div>
+
+                                </div>
+                                <br>
+                                <div class="row" >
+                                    <div class="form-group col-sm-4">
+                                        <div class="input-group">
+                                            <input autocomplete="off" class="form-control" id="deteDebut" is-open="vm.datePickerOpenStatus.deteDebut"
+                                                   name="deteDebut" ng-model="vm.itemSearch.dateDebut"
+                                                   placeholder=" Date debut" show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" />
+                                            <span class="input-group-btn">
+                                             <button class="btn btn-default btn-xs" ng-click="vm.openCalendar('deteDebut')"
+                                            type="button"><i
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                                             </span>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <div class="input-group">
+                                            <input autocomplete="off" class="form-control" id="dateFin" is-open="vm.datePickerOpenStatus.dateFin"
+                                                   name="dateFin" ng-model="vm.itemSearch.dateFin" placeholder=" Date fin"
+                                                   show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" />
+                                            <span class="input-group-btn">
+                                            <button class="btn btn-default btn-xs" ng-click="vm.openCalendar('dateFin')" type="button"><i
+                                                 class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class=" col-sm-2">
+                                        <button class="btn btn-primary btn-md " ng-click="vm.getBilanOp()">
+                                            <span class="glyphicon glyphicon-search">Chercher</span>
+                                        </button>
+                                    </div>
+                                    <div class=" col-sm-2">
+                                        <button class="btn btn-warnig btn-md " ng-click="vm.initFiltre()">
+                                            <span class="glyphicon glyphicon-search">Annuler</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr class="mf-table-header">
+                                        <th >
+                                            <span>Date Dernière Opération</span>
+                                        </th>
+                                        <th>
+                                            <span>Montant</span>
+                                        </th>
+                                        <th>
+                                            <span>Nombre</span>
+                                        </th>
+                                        <th>
+                                            <span>Type de service</span>
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="mf-table-body" ng-repeat="bilanOp in vm.bilanOp track by bilanOp.id">
+                                        <td><span>{{bilanOp.dateDerniereOperation | date:'medium' }}</span></td>
+                                        <td><span>{{bilanOp.montant}}</span></td>
+                                        <td><span>{{bilanOp.nombre}}</span></td>
+                                        <td><span>{{bilanOp.typeServiceLibelle}}</span></td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="center-block text-center" ng-show="vm.totalItems4>vm.queryCount4">
+                            <uib-pagination total-items="vm.totalItems4" ng-model="vm.page4" items-per-page="vm.itemsPerPage">
+                            </uib-pagination>
+                        </div>
+                    </div>
+
+                    <div uib-accordion-group class="panel-default" heading="Informations audit">
+                        <div class="mf-fieldset row">
+                            <div class="well with-header" >
+                                <div class="header  ">
+                                    <div class="col-xs-8">
+                                    </div>
+                                    <div class="no-padding-left col-xs-4">
+
+                                        <div class="btn-group mr15" uib-dropdown>
+                                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                                                    aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                                                éléments par page <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row primary" ng-if="vm.canShowResultCount3">
+                                    <i ng-if="vm.totalItems3>1">{{vm.totalItems3}} éléments trouvés</i>
+                                    <i ng-if="vm.totalItems3==1" >{{vm.totalItems3}} élément trouvé</i>
+                                    <i ng-if="vm.totalItems3<1">Aucun résultat</i>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <select class=" col-sm-5" id="filed_format" name="format" ng-model="vm.format" >
+                                            <option value="">Format</option>
+                                            <option value="PDF">PDF</option>
+                                            <option value="XLSX">XLSX</option>
+                                            <option value="CSV">CSV</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button   class="btn btn-primary mt5" disabled>
+                                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Exporter</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr class="mf-table-header">
+                                        <th >
+                                            <span>Nom</span>
+                                        </th>
+                                        <th>
+                                            <span>Prénom(s)</span>
+                                        </th>
+                                        <th>
+                                            <span>Pays de Résidence</span>
+                                        </th>
+                                        <th>
+                                            <span>Adresse</span>
+                                        </th>
+                                        <th>
+                                            <span>Email</span>
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="mf-table-body" ng-repeat="audit in vm.auditEvent ">
+                                        <td><span>{{audit.objetAvantModif.personnePhysique.nomClient }}</span></td>
+                                        <td><span>{{audit.objetAvantModif.personnePhysique.prenomClient}}</span></td>
+                                        <td><span>{{audit.objetAvantModif.personnePhysique.paysResidence.libelle}}</span></td>
+                                        <td><span>{{audit.objetAvantModif.adresse}}</span></td>
+                                        <td><span>{{audit.objetAvantModif.email}}</span></td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="center-block text-center" ng-show="vm.totalItems3>vm.queryCount3">
+                            <uib-pagination total-items="vm.totalItems3" ng-model="vm.page3" items-per-page="vm.itemsPerPage">
+                            </uib-pagination>
+                        </div>
+
+                        <div class="row">
+                            <div  class="form-group col-sm-3 ">
+                                <label  class="col-sm-4 control-label" for="field_dirigeant">Date de création</label>
+                                <div class="col-sm-6">
+                                    <input autocomplete="off" ng-disabled="vm.disabled" type="text"
+                                           class="form-control input-xs"
+                                           name="createdDate" id="createdDate" ng-model="vm.client.createdDate | date:'yyyy-MM-dd HH:mm:ss' "
+                                    />
+                                </div>
+                            </div>
+                            <div  class="form-group col-sm-3 ">
+                                <label  class="col-sm-4 control-label" for="field_dirigeant">Créer Par</label>
+                                <div class="col-sm-6">
+                                    <input autocomplete="off" ng-disabled="vm.disabled" type="text"
+                                           class="form-control input-xs"
+                                           name="createdBy" id="createdBy" ng-model="vm.client.createdBy"
+                                    />
+                                </div>
+                            </div>
+
+                            <div  class="form-group col-sm-3 ">
+                                <label  class="col-sm-4 control-label" for="field_dirigeant">Date de dernière modification</label>
+                                <div class="col-sm-6">
+                                    <input autocomplete="off" ng-disabled="vm.disabled" type="text"
+                                           class="form-control input-xs"
+                                           name="lastModifiedDate" id="lastModifiedDate" ng-model="vm.client.lastModifiedDate | date:'yyyy-MM-dd HH:mm:ss' "
+                                    />
+                                </div>
+                            </div>
+                            <div  class="form-group col-sm-3 ">
+                                <label  class="col-sm-4 control-label" for="field_dirigeant">Modifier Par</label>
+                                <div class="col-sm-6">
+                                    <input autocomplete="off" ng-disabled="vm.disabled" type="text"
+                                           class="form-control input-xs"
+                                           name="lastModifiedBy" id="lastModifiedBy" ng-model="vm.client.lastModifiedBy"
+                                    />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div uib-accordion-group class="panel-default" heading="Trace Sur le compte">
+
+                        <div class="mf-fieldset row">
+                            <div class="well with-header" >
+                                <div class="header  ">
+                                    <div class="col-xs-8">
+                                    </div>
+                                    <div class="no-padding-left col-xs-4">
+
+                                        <div class="btn-group mr15" uib-dropdown>
+                                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                                                    aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                                                éléments par page <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row primary" ng-if="vm.canShowResultCount2">
+                                    <i ng-if="vm.totalItems5>1">{{vm.totalItems5}} éléments trouvés</i>
+                                    <i ng-if="vm.totalItems5==1" >{{vm.totalItems5}} élément trouvé</i>
+                                    <i ng-if="vm.totalItems5<1">Aucun résultat</i>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <select class=" col-sm-5" id="filed_format" name="format" ng-model="vm.format" >
+                                            <option value="">Format</option>
+                                            <option value="PDF">PDF</option>
+                                            <option value="XLSX">XLSX</option>
+                                            <option value="CSV">CSV</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button   class="btn btn-primary mt5" disabled>
+                                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Exporter</span>
+                                        </button>
+
+                                    </div>
+
+                                </div>
+                                <br>
+                                <div class="row" >
+                                    <div class="form-group col-sm-4">
+                                        <div class="input-group">
+                                            <input autocomplete="off" class="form-control" id="deteDebut" is-open="vm.datePickerOpenStatus.deteDebut"
+                                                   name="deteDebut" ng-model="vm.itemSearch.dateDebut"
+                                                   placeholder=" Date debut" show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" />
+                                            <span class="input-group-btn">
+                                             <button class="btn btn-default btn-xs" ng-click="vm.openCalendar('deteDebut')"
+                                                     type="button"><i
+                                                     class="glyphicon glyphicon-calendar"></i></button>
+                                             </span>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <div class="input-group">
+                                            <input autocomplete="off" class="form-control" id="dateFin" is-open="vm.datePickerOpenStatus.dateFin"
+                                                   name="dateFin" ng-model="vm.itemSearch.dateFin" placeholder=" Date fin"
+                                                   show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" />
+                                            <span class="input-group-btn">
+                                            <button class="btn btn-default btn-xs" ng-click="vm.openCalendar('dateFin')" type="button"><i
+                                                    class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class=" col-sm-2">
+                                        <button class="btn btn-primary btn-md " ng-click="vm.getTracePersonne()">
+                                            <span class="glyphicon glyphicon-search">Chercher</span>
+                                        </button>
+                                    </div>
+                                    <div class=" col-sm-2">
+                                        <button class="btn btn-warnig btn-md " ng-click="vm.initFiltre()">
+                                            <span class="glyphicon glyphicon-search">Annuler</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr class="mf-table-header">
+                                        <th >
+                                            <span>Date De Modification</span>
+                                        </th>
+                                        <th>
+                                            <span>Initier Par</span>
+                                        </th>
+                                        <th>
+                                            <span>Login</span>
+                                        </th>
+                                        <th>
+                                            <span>Action</span>
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="mf-table-body" ng-repeat="userControl in vm.userControl track by userControl.id">
+                                        <td><span>{{userControl.createdDate | date:'medium' }}</span></td>
+                                        <td><span>{{userControl.createdBy}}</span></td>
+                                        <td><span>{{userControl.login}}</span></td>
+                                        <td><span>{{userControl.action}}</span></td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="center-block text-center" ng-show="vm.totalItems5>vm.queryCount5">
+                            <uib-pagination total-items="vm.totalItems5" ng-model="vm.page4" items-per-page="vm.itemsPerPage">
+                            </uib-pagination>
+                        </div>
+                    </div>
+                </uib-accordion>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="footer actions actions-footer" id="simplewizard-actions">
+    <div class="btn-group">
+        <button ng-click="vm.clear()" type="button" class="btn btn-default btn-sm"> Fermer</button>
+    </div>
+</div>
+</div>

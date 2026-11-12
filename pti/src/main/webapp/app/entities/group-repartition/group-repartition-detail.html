@@ -1,0 +1,23 @@
+
+<div>
+    <h2><span data-translate="ptiApp.groupRepartition.detail.title">Group Repartition</span> {{vm.groupRepartition.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.groupRepartition.libelleGroup">Libelle Group</span></dt>
+        <dd>
+            <span>{{vm.groupRepartition.libelleGroup}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="group-repartition-detail.edit({id:vm.groupRepartition.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

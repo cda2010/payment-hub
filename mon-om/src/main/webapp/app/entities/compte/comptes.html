@@ -1,0 +1,119 @@
+<div>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel m-b-none" style="border: 2px solid #e2e4ec; border-radius: 5px;">
+                    <div class="panel-body">
+                        <h3 class="m-b-xs text-center m-t-n">
+                            <i class="pe pe-7s-config text-warning m-r-xs"></i> 
+                            <span class="text-primary">Comptes</span>
+                        </h3>
+                        <hr style="border-top: 2px solid #7485e6;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <label for="teneur">Teneur du compte</label>
+                    <select class="form-control" id="teneur" name="teneur" ng-model="vm.fseTeneur" ng-options="fournisseurService as fournisseurService.nom for fournisseurService in vm.fournisseurServices track by fournisseurService.id">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <label for="titulaire">Titulaire du compte</label>
+                    <select class="form-control" id="titulaire" name="titulaire" ng-model="vm.fseTitulaire" ng-options="fournisseurService as fournisseurService.nom for fournisseurService in vm.fournisseurServices track by fournisseurService.id">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <label for="typeCompte">Type compte</label>
+                    <div class="input-group">
+                        <select required class="form-control" id="typeCompte" name="typeCompte" ng-model="vm.typeCompte" ng-options="typecompte as typecompte.nomTypeCompte for typecompte in vm.typecomptes track by typecompte.id">
+                            <option value=""></option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" ng-click="vm.affiche()">
+                                <span class="glyphicon glyphicon-search"></span> Chercher
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-3 text-right">
+                <div class="form-group" style="margin-top: 25px;">
+                    <button class="btn btn-primary" ui-sref="relation" ng-show="vm.rel">
+                        <span class="glyphicon glyphicon-arrow-left"></span> Retour
+                    </button>
+                    <button class="btn btn-primary" ui-sref="compte.new({type:vm.typeCompte.id, teneur:vm.fseTeneur.id, titulaire:vm.fseTitulaire.id})">
+                        <span class="glyphicon glyphicon-plus"></span> Nouveau
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover" style="border: 2px solid #e3e4e9;">
+            <thead>
+                <tr class="bg-primary">
+                    <th class="text-center text-white"><span>Type Service</span></th>
+                    <th class="text-center text-white"><span>Teneur</span></th>
+                    <th class="text-center text-white"><span>Titulaire</span></th>
+                    <th class="text-center text-white"><span>Code Banque</span></th>
+                    <th class="text-center text-white"><span>Code Agence</span></th>
+                    <th class="text-center text-white"><span>Numero Compte</span></th>
+                    <th class="text-center text-white"><span>Libellé</span></th>
+                    <th class="text-center text-white"><span>Type</span></th>
+                    <th class="text-center text-white"><span>Code Paramètre</span></th>
+                    <th class="text-center text-white"><span>Code UO Titulaire</span></th>
+                    <th class="text-center text-white"><span>Compte Mirroir</span></th>
+                    <th class="text-center text-white">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="compte in vm.comptes track by compte.id">
+                    <td class="text-center">{{compte.service.libelleTypeService}}</td>
+                    <td class="text-center">{{compte.fseTeneur.nom}}</td>
+                    <td class="text-center">{{compte.fseTitulaire.nom}}</td>
+                    <td class="text-center">{{compte.codeBanque}}</td>
+                    <td class="text-center">{{compte.codeAgence}}</td>
+                    <td class="text-center"><span class="badge badge-primary"><strong>{{compte.numeroCompte}}</strong></span></td>
+                    <td class="text-center">{{compte.libelleCompte}}</td>
+                    <td class="text-center"><span class="badge badge-info">{{compte.typeCompte.nomTypeCompte}}</span></td>
+                    <td class="text-center">{{compte.typeCompte.codeParametre}}</td>
+                    <td class="text-center">{{compte.typeCompte.codeUoTitulaire}}</td>
+                    <td class="text-center">{{compte.typeCompte.mirroir}}</td>
+                    <td class="text-center">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit" ui-sref="compte-detail({id:compte.id})" class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+                            <button type="submit" ui-sref="compte.edit({id:compte.id})" class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button type="submit" ui-sref="compte.delete({id:compte.id})" class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition(vm.fseTitulaire.id)"></uib-pagination>
+    </div>
+</div>

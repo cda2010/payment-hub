@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!--
+        Added the entity RegleCommission.
+    -->
+    <changeSet id="20190402111646-1" author="jhipster">
+        <createTable tableName="regle_commission">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="client" type="bit">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="etiquette" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="type_operateur" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="date_debut" type="date">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="date_fin" type="date">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="pris_en_charge" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="type_service_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="teneur_src_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="teneur_dest_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+        
+    </changeSet>
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+</databaseChangeLog>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_8.0.xsd">
+
+  <grid name="biller-product-grid" title="Produits facturier"
+        model="com.gateway.payment.billing.domain.BillerProduct"
+        edit-form="biller-product-form" new-action-view="biller-product-new"
+        rest-resource="/api/v1/admin/billers/products"
+        canNew="false" canDelete="false">
+    <field name="code"/>
+    <field name="name"/>
+    <field name="billerCode" title="Facturier"/>
+    <field name="journeyCode"/>
+    <field name="lookupMode"/>
+    <field name="amountPolicy"/>
+    <field name="provider"/>
+    <field name="actif"/>
+    <field name="ordreAffichage"/>
+  </grid>
+
+  <form name="biller-product-form" title="Produit facturier"
+        model="com.gateway.payment.billing.domain.BillerProduct"
+        rest-resource="/api/v1/admin/billers/products">
+    <panel name="main" title="Produit">
+      <field name="code" required="true" colSpan="4"/>
+      <field name="name" required="true" colSpan="8"/>
+      <field name="description" colSpan="12" widget="Text"/>
+      <field name="billerCode" title="Facturier" readonly="true" colSpan="4"/>
+      <field name="provider" colSpan="8"
+                title="Fournisseur FACTURIER (optionnel — hérite du facturier)"
+                domain="self.participantKind = 'FACTURIER' AND self.actif = true"/>
+      <field name="actif" colSpan="2"/>
+      <field name="ordreAffichage" colSpan="2"/>
+      <field name="journeyCode" required="true" colSpan="4"/>
+      <field name="lookupMode" required="true" colSpan="4"/>
+      <field name="amountPolicy" required="true" colSpan="4"/>
+      <field name="minAmount" colSpan="3"/>
+      <field name="maxAmount" colSpan="3"/>
+      <field name="allowOverpay" colSpan="3"/>
+      <field name="paymentFlowId" colSpan="6"/>
+    </panel>
+    <panel name="schemas" title="Schémas UI (JSON) — édition riche via /admin/billers">
+      <field name="lookupFieldsJson" colSpan="12" widget="Text"/>
+      <field name="confirmFieldsJson" colSpan="12" widget="Text"/>
+      <field name="amountFieldsJson" colSpan="12" widget="Text"/>
+    </panel>
+  </form>
+
+</object-views>

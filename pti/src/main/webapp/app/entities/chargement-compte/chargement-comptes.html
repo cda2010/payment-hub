@@ -1,0 +1,192 @@
+<div>
+<!--    <h2 data-translate="ptiApp.chargementCompte.home.title">Chargement Comptes</h2>-->
+<!--    <jhi-alert></jhi-alert>-->
+<!--    <div class="container-fluid">-->
+<!--        <div class="row">-->
+<!--            <div class="col-xs-4 no-padding-left">-->
+<!--                <button class="btn btn-primary" ui-sref="chargement-compte.new" >-->
+<!--                    <span class="glyphicon glyphicon-plus"></span>-->
+<!--                    <span  data-translate="ptiApp.chargementCompte.home.createLabel">-->
+<!--                        Create new Chargement Compte-->
+<!--                    </span>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+    <br/>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="well with-header" style="margin-top:10px" >
+                <div class="header  " >
+                    <br>
+                    <div  ng-show="vm.afficheFichier">
+                        <div class="form-group">
+                            <label class="control-label">Profil des comptes</label>
+                            <select class="form-control" name="profil" id="profil"
+                                    ng-model="vm.profilCpt"
+                                    ng-options="group.id as group.nom for group in vm.groupeProfils"  >
+                            </select>
+                        </div>
+                        <div class="form-group ">
+                            <form name="myForm">
+                                <label class="btn btn-primary btn-file">
+                                    Charger le fichier ici <input type="file" ngf-select=""  ng-model="picFile" name="file"
+                                                                  ngf-max-size="2MB" required accept=".txt,.csv"
+                                                                  ngf-model-invalid="errorFile"  ng-change="vm.progressingBarAzeroCompte(picFile)"style="display: none;">
+                                </label>
+                                <button ng-click="vm.lireFichierCompte(picFile)" class="btn btn-primary waves-effect" ng-disabled="vm.ctrlbtnsave">Enregistrer</button>
+                                <button ng-click="vm.clearCompte(picFile)" class="btn btn-primary waves-effect">Annuler</button>
+                                {{vm.fileName}}
+                                <br>
+                                <br>
+                                <div class="progress progress-striped active"  >
+                                    <div class="progress-bar progress-bar-warning ng-binding" role="progressbar" aria-valuenow="{{vm.progressionBar}}"  aria-valuemin="0" aria-valuemax="100" style="width:{{vm.progressionBar}}%">
+                                                     <span class="sr-only">
+                                                         20% Complete (success)
+                                                     </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <button ng-click="vm.supprimerFichierCompte()" class="btn btn-primary"  ng-disabled="!vm.defchargement.id|| vm.click||vm.defchargement.statut==='V'">Supprimer</button>
+                <div class="table-responsive scrollbar" style="height: 500px">
+                    <div class="row primary" ng-if="vm.canShowResultCount2">
+                        <i ng-if="vm.totalItems2>1">{{vm.totalItems2}} éléments trouvés</i>
+                        <i ng-if="vm.totalItems2==1" >{{vm.totalItems2}} élément trouvé</i>
+
+                    </div>
+                    <table class="jh-table table ">
+                        <thead>
+                        <tr>
+                            <th><span>Reference</span></th>
+                            <th><span >Nom Fichier</span></th>
+                            <th><span >Date Chargement</span></th>
+                            <th><span >Nombre Ligne</span></th>
+                            <th><span >Nombre Ligne Charge</span></th>
+                            <th><span >Nombre Ligne Erreur</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="chargementCompte in vm.chargementComptes track by chargementCompte.id" ng-click="vm.getChargementCompte(chargementCompte,$index)" ng-class="{'selected':$index == vm.selectedRow}">
+                            <td>{{chargementCompte.reference}}</td>
+                            <td>{{chargementCompte.nomFichier}}</td>
+                            <td>{{chargementCompte.dateChargement | date:'mediumDate'}}</td>
+                            <td>{{chargementCompte.nombreLigne}}</td>
+                            <td>{{chargementCompte.nombreLigneCharge}}</td>
+                            <td>{{chargementCompte.nombreLigneErreur}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="center-block text-center" ng-show="vm.totalItems2>vm.queryCount2">
+                    <uib-pagination total-items="vm.totalItems2" ng-model="vm.page2" items-per-page="vm.itemsPerPage">
+                    </uib-pagination>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 "  >
+            <div class="well with-header" style="margin-top:10px" >
+                <div class="header  " >
+                    <h4>Détail des chargements {{vm.defchargement.reference}}</h4>
+                    <p> Nombre: {{vm.defchargement.nombreLigne}}</p>
+                </div>
+                <br>
+                <br>
+                <br>
+                <div class="container-fluid" >
+                    <div class="row" >
+                        <button class="btn btn-primary"  ng-click="vm.validerChrgmtCompte(vm.defchargement)" ng-disabled="!vm.defchargement.id|| vm.click||vm.defchargement.statut==='V'" ng-show="vm.afficheFichier" >
+                            <span class="fa fa-check"></span>
+                            <span >Valider</span>
+                        </button>
+                        <select  id="filed_format" name="format" ng-model="vm.format" ng-show="vm.afficheFichier" >
+                            <option value="">Format</option>
+                            <option value="PDF">PDF</option>
+                            <option value="XLSX">XLSX</option>
+                            <option value="CSV">CSV</option>
+                        </select>
+                        <button type="button"   ng-click="vm.imprimerRapportCompte(vm.defchargement.id)" class="btn btn-raised btn-info"  ng-disabled="!vm.defchargement.id||vm.isPrint"  ng-show="vm.afficheFichier">   <span class="glyphicon glyphicon-print"></span><span>Imprimer</span></button>
+
+                    </div>
+                </div>
+                <br/>
+                <div  class="panel-default" >
+                <div class="container-fluid">
+                <div class="well with-header" style="height: 600px;overflow: scroll;">
+                    <div class="row primary" ng-if="vm.canShowResultCount">
+                        <i ng-if="vm.totalItems>1">{{vm.totalItems}} éléments trouvés</i>
+                        <i ng-if="vm.totalItems==1" >{{vm.totalItems}} élément trouvé</i>
+                        <i ng-if="vm.totalItems<1">Aucun résultat</i>
+                    </div>
+                    <table class="table table-striped  table-sm">
+                        <thead>
+                        <tr>
+                                
+                            <th><span >Nom</span></th>
+                            <th><span >Prénom(s)</span></th>
+                            <th><span >Telephone</span></th>
+                            <th><span >Date de naissance</span></th>
+                            <th><span >Lieu de naissance</span></th>
+                            <th><span>Nom de la mère</span></th>
+                            <th><span>Personne à prevenir</span></th>
+                            <th><span>Email</span></th>
+                            <th><span>Adresse</span></th>
+                            <th><span>Type de personne</span></th>
+                              <th><span>Type piece</span></th>
+                               <th><span>reference</span></th>
+                                 <th><span>Date delivrance</span></th>
+                                   <th><span>Lieu delivrance</span></th>
+                            <th><span>Statut</span></th>
+                                    <th><span>Error</span></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="ligneChargement in vm.ligneChargements track by ligneChargement.id ">
+                            <td>{{ligneChargement.nom}}</td>
+                            <td>{{ligneChargement.prenom}}</td>
+                            <td>{{ligneChargement.telephone}}</td>
+                            <td>{{ligneChargement.dateNaissance}}</td>
+                            <td>{{ligneChargement.lieuNaissance}}</td>
+                            <td>{{ligneChargement.nomMere}}</td>
+                            <td>{{ligneChargement.personnePrevenir}}</td>
+                            <td>{{ligneChargement.email}}</td>
+                            <td>{{ligneChargement.adresse}}</td>
+                            <td>{{ligneChargement.typePersonne}}</td>
+                            <td>{{ligneChargement.codeTypePiece}}</td>
+                            <td>{{ligneChargement.reference}}</td>
+                             <td>{{ligneChargement.dateDelivrance}}</td>
+                             <td>{{ligneChargement.lieuDelivrance}}</td>
+                            <td>{{ligneChargement.statutLigne}}</td>
+                             <td>{{ligneChargement.error}}</td>
+<!--                            <td class="text-right">-->
+<!--                                <button type="submit" ng-click="vm.openModalCompte(ligneChargement)"-->
+<!--                                        class="btn btn-danger btn-sm waves-effect">-->
+<!--                                    <span class="hidden-sm-down" >Solde</span>-->
+<!--                                </button>-->
+<!--                            </td>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+                    <div class="center-block text-center" ng-show="vm.totalItems>vm.queryCount">
+                        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+                        </uib-pagination>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

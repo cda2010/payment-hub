@@ -1,0 +1,113 @@
+
+<!--<div>
+    <h2><span data-translate="ptiApp.lien.detail.title">Lien</span> {{vm.lien.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.lien.lienPotentiel">Lien Potentiel</span></dt>
+        <dd>
+            <span>{{vm.lien.lienPotentiel}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.lien.valider">Valider</span></dt>
+        <dd>
+            <span>{{vm.lien.valider}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.lien.personne">Personne</span></dt>
+        <dd>
+            <a ui-sref="personne-detail({id:vm.lien.personneId})">{{vm.lien.personneId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="lien-detail.edit({id:vm.lien.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>-->
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="vm.clear()">&times;
+    </button>
+</div>
+<div class="modal-body">
+    <div class="container-fluid">
+        <div class="well with-header" style="margin-top:10px ">
+            <div class="header bg-blue ">
+                <div class="no-padding-left col-xs-4">
+
+                    <div class="btn-group mr15" uib-dropdown>
+                        <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                                aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                            éléments par page <span class="caret"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row primary" ng-if="vm.canShowResultCount">
+                <i ng-if="vm.totalItems>1">{{vm.totalItems}} éléments trouvés</i>
+                <i ng-if="vm.totalItems==1">{{vm.totalItems}} élément trouvé</i>
+                <i ng-if="vm.totalItems<1">Aucun résultat</i>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                <tr class="mf-table-header">
+                    <th>
+                        <span>Nom</span>
+                    </th>
+                    <th>
+                        <span>Prénom(s)</span>
+                    </th>
+                    <th>
+                        <span>Telephone</span>
+                    </th>
+                    <th>
+                        <span>Type Personne</span>
+                    </th>
+                    <th>
+                        <span>Adresse</span>
+                    </th>
+                    <th>
+                        <span>Hash</span>
+                    </th>
+                    <th>
+                        <span>Type de piece</span>
+                    </th>
+                    <th>
+                        <span>Réference de la piece</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="mf-table-body" >
+                    <td ng-if="vm.result.personneDTO.typePersonne==='PHYSIQUE'"><span>{{vm.result.personnePhysiqueDTO.nomClient}}</span></td>
+                    <td ng-if="vm.result.personneDTO.typePersonne==='PHYSIQUE'"><span>{{vm.result.personnePhysiqueDTO.prenomClient}}</span></td>
+                    <td ng-if="vm.result.personneDTO.typePersonne==='MORALE'"><span>{{vm.result.personneMoraleDTO.raisonSociale}}</span></td>
+                    <td ng-if="vm.result.personneDTO.typePersonne==='MORALE'"><span>{{vm.result.personneMoraleDTO.numreoIfu}}</span></td>
+                    <td><span>{{vm.result.personneDTO.telephone}}</span></td>
+                    <td><span>{{vm.result.personneDTO.typePersonne}}</span></td>
+                    <td><span>{{vm.result.personneDTO.adresse}}</span></td>
+                    <td><span>{{vm.result.personneDTO.keyHash}}</span></td>
+                    <td><span>{{vm.result.pieceDTO.typePieceLibelleTypePiece}}</span></td>
+                    <td><span>{{vm.result.pieceDTO.referencePiece}}</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="center-block text-center" ng-show="vm.totalItems>vm.queryCount">
+        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+        </uib-pagination>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+        <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+    >Fermer</span>
+    </button>
+</div>
+

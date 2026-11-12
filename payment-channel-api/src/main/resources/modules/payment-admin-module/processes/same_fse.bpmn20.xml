@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             targetNamespace="http://payment-gateway/orchestration"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+
+  <!--
+    Workflow same-FSE = SchemaEcrit.workflow_name.
+    ServiceTask = LigneSchemaEcrit (step_id transfertSource).
+  -->
+  <error id="callFseStepFailed" errorCode="CALL_FSE_STEP_FAILED" name="CALL_FSE_STEP_FAILED"/>
+
+  <process id="same_fse" name="Transfert same-FSE" isExecutable="true">
+    <startEvent id="start" name="Start"/>
+    <sequenceFlow id="flow_start" sourceRef="start" targetRef="transfertSource"/>
+
+    <serviceTask id="transfertSource"
+                 name="Transfert source"
+                 flowable:delegateExpression="${gatewayCallFseTaskDelegate}"/>
+    <boundaryEvent id="errorSource" name="Erreur source" attachedToRef="transfertSource">
+      <errorEventDefinition errorRef="callFseStepFailed"/>
+    </boundaryEvent>
+    <sequenceFlow id="flow_error_source" sourceRef="errorSource" targetRef="endFailed"/>
+    <sequenceFlow id="flow_source_ok" sourceRef="transfertSource" targetRef="endOk"/>
+
+    <endEvent id="endOk" name="OK"/>
+    <endEvent id="endFailed" name="Échec"/>
+  </process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_same_fse">
+    <bpmndi:BPMNPlane id="BPMNPlane_same_fse" bpmnElement="same_fse">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <omgdc:Bounds x="100" y="162" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="transfertSource_di" bpmnElement="transfertSource">
+        <omgdc:Bounds x="200" y="140" width="140" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="errorSource_di" bpmnElement="errorSource">
+        <omgdc:Bounds x="262" y="202" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endOk_di" bpmnElement="endOk">
+        <omgdc:Bounds x="420" y="162" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endFailed_di" bpmnElement="endFailed">
+        <omgdc:Bounds x="262" y="300" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="flow_start_di" bpmnElement="flow_start">
+        <omgdi:waypoint x="136" y="180"/>
+        <omgdi:waypoint x="200" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_source_ok_di" bpmnElement="flow_source_ok">
+        <omgdi:waypoint x="340" y="180"/>
+        <omgdi:waypoint x="420" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_error_source_di" bpmnElement="flow_error_source">
+        <omgdi:waypoint x="280" y="238"/>
+        <omgdi:waypoint x="280" y="300"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

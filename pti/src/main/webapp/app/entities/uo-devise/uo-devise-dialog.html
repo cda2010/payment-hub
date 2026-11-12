@@ -1,0 +1,48 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myUoDeviseLabel" data-translate="ptiApp.uoDevise.home.createOrEditLabel">Create or edit a Uo Devise</h4>
+    </div>
+    <div class="modal-body">
+        
+        <div class="row">
+            <div class="checkbox col-sm-offset-5">
+                <label >
+                    <input autocomplete="off"type="checkbox" class="checkbox-slider colored-blue checkbox-lg" 
+                           ng-model="vm.uoDevise.defaultDevise"/>
+                    <span class="text">Devise par défaut?</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" mf-required data-translate="ptiApp.uoDevise.devise" for="field_devise">Devise</label>
+            <div class="col-sm-6">
+                <select required class="form-control" id="field_devise" name="devise" ng-model="vm.uoDevise.deviseId" ng-options="devise.id as devise.libelle for devise in vm.devises"            >
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="control-label col-sm-4" mf-required  for="field_uniteOrganisation">Pays</label>
+            <div class="col-sm-6">
+                <select required class="form-control" id="field_uniteOrganisation" name="uniteOrganisation" ng-model="vm.uoDevise.uniteOrganisationId" ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.uniteorganisations"            >
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

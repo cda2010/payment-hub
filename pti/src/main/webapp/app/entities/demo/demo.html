@@ -1,0 +1,10 @@
+<ui-select ng-model="selected.value">
+    <ui-select-match>
+        <span ng-bind="$select.selected.name"></span>
+    </ui-select-match>
+    <ui-select-choices repeat="item in (vm.countries | filter: $select.search) track by item.code">
+        <span ng-bind="item.name">{{item.name}}</span>
+    </ui-select-choices>
+</ui-select>
+
+{{vm.countries}}

@@ -1,0 +1,36 @@
+{
+    "ptiApp": {
+        "tableauCumul" : {
+            "home": {
+                "title": "TableauCumuls",
+                "createLabel": "Créer un nouveau Tableau Cumul",
+                "createOrEditLabel": "Créer ou éditer un Tableau Cumul"
+            },
+            "created": "Un nouveau Tableau Cumul a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Tableau Cumul avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Tableau Cumul avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Tableau Cumul {{ id }} ?"
+            },
+            "detail": {
+                "title": "Tableau Cumul"
+            },
+            "poidsNum": "Poids Num",
+            "codeRegle": "Code Regle",
+            "temps": "Temps",
+            "nombre": "Nombre",
+            "montant": "Montant",
+            "action": "Action",
+            "dateDebut": "Date Debut",
+            "dateFin": "Date Fin",
+            "typeRegle": "Type Regle",
+            "operateur": "Operateur",
+            "typeService": "Type Service",
+            "canal": "Canal",
+            "beneficiaire": "Beneficiaire",
+            "emetteur": "Emetteur",
+            "organisationEm": "Organisation Em",
+            "organisationAcq": "Organisation Acq"
+        }
+    }
+}

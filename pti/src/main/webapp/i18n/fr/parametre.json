@@ -1,0 +1,23 @@
+
+{
+    "ptiApp": {
+        "parametre" : {
+            "home": {
+                "title": "Parametres",
+                "createLabel": "Créer un nouveau Parametre",
+                "createOrEditLabel": "Créer ou éditer un Parametre"
+            },
+            "created": "Un nouveau Parametre a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Parametre avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Parametre avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Parametre {{ id }} ?"
+            },
+            "detail": {
+                "title": "Parametre"
+            },
+            "nom": "Nom",
+            "valeur": "Valeur"
+        }
+    }
+}

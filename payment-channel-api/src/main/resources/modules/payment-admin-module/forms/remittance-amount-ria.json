@@ -1,0 +1,61 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "hidden",
+        "key": "providerCode",
+        "defaultValue": "RIA",
+        "input": true
+      },
+      {
+        "type": "number",
+        "key": "amount",
+        "label": "Montant à envoyer (RIA)",
+        "input": true,
+        "validate": { "required": true, "min": 1000 }
+      },
+      {
+        "type": "textfield",
+        "key": "currency",
+        "label": "Devise d'envoi",
+        "input": true,
+        "defaultValue": "XOF"
+      },
+      {
+        "type": "textfield",
+        "key": "purpose",
+        "label": "Motif / nature de l'envoi",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "riaPromoCode",
+        "label": "Code promo RIA (optionnel)",
+        "input": true
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Montant à envoyer (RIA)": "Montant à envoyer (RIA)",
+      "Devise d'envoi": "Devise d'envoi",
+      "Motif / nature de l'envoi": "Motif / nature de l'envoi",
+      "Code promo RIA (optionnel)": "Code promo RIA (optionnel)"
+    },
+    "en": {
+      "Montant à envoyer (RIA)": "Send amount (RIA)",
+      "Devise d'envoi": "Send currency",
+      "Motif / nature de l'envoi": "Purpose",
+      "Code promo RIA (optionnel)": "RIA promo code (optional)"
+    }
+  }
+}

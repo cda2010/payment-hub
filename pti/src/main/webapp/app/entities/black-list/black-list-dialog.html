@@ -1,0 +1,102 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myBlackListLabel" data-translate="ptiApp.blackList.home.createOrEditLabel">Create or edit a Black List</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.blackList.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form -control" id="id" name="id"
+                    ng-model="vm.blackList.id" readonly />
+        </div>
+        <div class="row mt5">
+            <div class="col-sm-3" >
+                <div class="form-group">
+                    <label class="control-label" for="code">Code indicatif</label>
+                    <select class="form-control" name="code" id="code" ng-model="vm.itemSearch.code"
+                     ng-options="nationalite.code as nationalite.libelle for nationalite in vm.nationalites"  >
+                        <option value=""> </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-3" >
+                    <div class="form-group">
+                        <label class="control-label" for="numero">telephone</label>
+                        <input type="text" id="numero"  class="form-control"
+                                ng-model="vm.itemSearch.numero">
+                    </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label mf-required data-translate="" for="action">Action</label>
+                    <select required class="form-control" id="action" name="action" ng-model="vm.blackList.actionBlackList">
+                        <option value="FOLLOW" >FOLLOW</option>
+                        <option value="BANISHED" >BANISHED</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <button type="button" class="btn btn-info btn-md" ng-click="vm.afficherFiltre()">
+                        <span class="glyphicon glyphicon-search">Filtrer</span>
+                    </button>
+                    <button ng-if="vm.annul" type="button" class="btn btn-danger btn-md" ng-click="vm.annuler()">
+                        <span class="glyphicon glyphicon-remove-circle">Annuler</span>
+                    </button>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+<!--            <div class="col-sm-3" ng-if="vm.ctrlClient1">
+        <div class="form-group">
+            <label data-translate="ptiApp.blackList.client" for="field_client" >Client</label>
+            <select class="form-control" name="field_client" id="field_client" ng-model="vm.blackList.clientId">
+                <option ng-repeat="client in vm.clients" value="{{client.id}}">{{client.personne.personnePhysique.nomClient }}  {{client.personne.personnePhysique.prenomClient }} </option>
+            </select>
+        </div>
+            </div>-->
+<!--            <div class="col-sm-3" ng-if="vm.ctrlClient2">
+                <div class="form-group">
+                    <label class="control-label" for="field_client" >Client</label>
+                    <input class="form-control" name="field_client" id="field_client" ng-model="vm.blackList.clientIdent" readonly/>
+                </div>
+            </div>-->
+            <div class="form-group" >
+                <div class="col-sm-4">
+                    <select disabled required class="form-control" id="field_cli"  name="clientB" ng-model="vm.clientIds"
+                            ng-options="client.id as client.title  for client in vm.clientP">
+                    </select>
+                </div>
+                <i  title="Sélectionnez les organisations" class="btn btn-primary btn-xs"
+                    j-select-dialog
+                    j-multiple="false"
+                    j-model="vm.clientIds"
+                    j-list="vm.clientPList"
+                    j-columns='vm.clientColums'
+                    j-event-name="onLoadRoles"
+                >Choisir...</i>
+            </div>
+     <!--       <div class="col-sm-3" ng-if="vm.annul" >
+                <div class="form-group">
+
+                </div>
+            </div>-->
+
+        </div>
+        </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,32 @@
+{
+    "ptiApp": {
+        "factureOnea" : {
+            "home": {
+                "title": "FactureOneas",
+                "createLabel": "Créer un nouveau Facture Onea",
+                "createOrEditLabel": "Créer ou éditer un Facture Onea"
+            },
+            "created": "Un nouveau Facture Onea a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Facture Onea avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Facture Onea avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Facture Onea {{ id }} ?"
+            },
+            "detail": {
+                "title": "Facture Onea"
+            },
+            "refAbonne": "Ref Abonne",
+            "typePiece": "Type Piece",
+            "numeroPiece": "Numero Piece",
+            "soldePiece": "Solde Piece",
+            "dateLimitePiece": "Date Limite Piece",
+            "dateAppliPenalite": "Date Appli Penalite",
+            "dateLettrage": "Date Lettrage",
+            "categorieComAbonne": "Categorie Com Abonne",
+            "nomAbonne": "Nom Abonne",
+            "anneeFacture": "Annee Facture",
+            "moisFacture": "Mois Facture",
+            "facture": "Facture"
+        }
+    }
+}

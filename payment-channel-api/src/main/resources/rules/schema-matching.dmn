@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
+             id="definitions_schema_matching"
+             name="schema-matching"
+             namespace="https://omnicanal.m2i.com/dmn/schema-matching"
+             exporter="omnicanal"
+             exporterVersion="1.0">
+
+  <description>
+    Matching SchemaEcriture par pattern_code.
+    Les flags sameFse / samePays / siege* / banques sont pré-calculés en Java.
+  </description>
+
+  <inputData id="input_patternCode" name="patternCode">
+    <variable name="patternCode" typeRef="string"/>
+  </inputData>
+  <inputData id="input_sameFse" name="sameFse">
+    <variable name="sameFse" typeRef="boolean"/>
+  </inputData>
+  <inputData id="input_samePays" name="samePays">
+    <variable name="samePays" typeRef="boolean"/>
+  </inputData>
+  <inputData id="input_siege" name="siege">
+    <variable name="siege" typeRef="number"/>
+  </inputData>
+  <inputData id="input_siegeTruthy" name="siegeTruthy">
+    <variable name="siegeTruthy" typeRef="boolean"/>
+  </inputData>
+  <inputData id="input_bothBanque" name="bothBanque">
+    <variable name="bothBanque" typeRef="boolean"/>
+  </inputData>
+  <inputData id="input_sourceFse" name="sourceFse">
+    <variable name="sourceFse" typeRef="string"/>
+  </inputData>
+  <inputData id="input_destFse" name="destFse">
+    <variable name="destFse" typeRef="string"/>
+  </inputData>
+
+  <decision id="decision_SchemaMatch" name="SchemaMatch">
+    <variable name="SchemaMatch" typeRef="boolean"/>
+    <informationRequirement>
+      <requiredInput href="#input_patternCode"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_sameFse"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_samePays"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_siege"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_siegeTruthy"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_bothBanque"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_sourceFse"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_destFse"/>
+    </informationRequirement>
+
+    <decisionTable id="dt_SchemaMatch" hitPolicy="FIRST">
+      <input id="in_patternCode" label="patternCode">
+        <inputExpression typeRef="string"><text>patternCode</text></inputExpression>
+      </input>
+      <input id="in_sameFse" label="sameFse">
+        <inputExpression typeRef="boolean"><text>sameFse</text></inputExpression>
+      </input>
+      <input id="in_samePays" label="samePays">
+        <inputExpression typeRef="boolean"><text>samePays</text></inputExpression>
+      </input>
+      <input id="in_siege" label="siege">
+        <inputExpression typeRef="number"><text>siege</text></inputExpression>
+      </input>
+      <input id="in_siegeTruthy" label="siegeTruthy">
+        <inputExpression typeRef="boolean"><text>siegeTruthy</text></inputExpression>
+      </input>
+      <input id="in_bothBanque" label="bothBanque">
+        <inputExpression typeRef="boolean"><text>bothBanque</text></inputExpression>
+      </input>
+      <input id="in_sourceFse" label="sourceFse">
+        <inputExpression typeRef="string"><text>sourceFse</text></inputExpression>
+      </input>
+      <input id="in_destFse" label="destFse">
+        <inputExpression typeRef="string"><text>destFse</text></inputExpression>
+      </input>
+      <output id="out_matched" label="matched" name="matched" typeRef="boolean"/>
+
+      <!-- SAME_FSE_ANY -->
+      <rule id="r_same_fse_any">
+        <inputEntry id="r1_c1"><text>"SAME_FSE_ANY"</text></inputEntry>
+        <inputEntry id="r1_c2"><text>true</text></inputEntry>
+        <inputEntry id="r1_c3"><text>-</text></inputEntry>
+        <inputEntry id="r1_c4"><text>-</text></inputEntry>
+        <inputEntry id="r1_c5"><text>-</text></inputEntry>
+        <inputEntry id="r1_c6"><text>-</text></inputEntry>
+        <inputEntry id="r1_c7"><text>-</text></inputEntry>
+        <inputEntry id="r1_c8"><text>-</text></inputEntry>
+        <outputEntry id="r1_o"><text>true</text></outputEntry>
+      </rule>
+
+      <!-- SAME_FSE_SIEGE_1 -->
+      <rule id="r_same_fse_siege_1">
+        <inputEntry id="r2_c1"><text>"SAME_FSE_SIEGE_1"</text></inputEntry>
+        <inputEntry id="r2_c2"><text>true</text></inputEntry>
+        <inputEntry id="r2_c3"><text>-</text></inputEntry>
+        <inputEntry id="r2_c4"><text>1</text></inputEntry>
+        <inputEntry id="r2_c5"><text>-</text></inputEntry>
+        <inputEntry id="r2_c6"><text>-</text></inputEntry>
+        <inputEntry id="r2_c7"><text>-</text></inputEntry>
+        <inputEntry id="r2_c8"><text>-</text></inputEntry>
+        <outputEntry id="r2_o"><text>true</text></outputEntry>
+      </rule>
+
+      <!-- SAME_FSE_SIEGE_0 -->
+      <rule id="r_same_fse_siege_0">
+        <inputEntry id="r3_c1"><text>"SAME_FSE_SIEGE_0"</text></inputEntry>
+        <inputEntry id="r3_c2"><text>true</text></inputEntry>
+        <inputEntry id="r3_c3"><text>-</text></inputEntry>
+        <inputEntry id="r3_c4"><text>0</text></inputEntry>
+        <inputEntry id="r3_c5"><text>-</text></inputEntry>
+        <inputEntry id="r3_c6"><text>-</text></inputEntry>
+        <inputEntry id="r3_c7"><text>-</text></inputEntry>
+        <inputEntry id="r3_c8"><text>-</text></inputEntry>
+        <outputEntry id="r3_o"><text>true</text></outputEntry>
+      </rule>
+
+      <!-- SAME_FSE_SIEGE_TRUTHY -->
+      <rule id="r_same_fse_siege_truthy">
+        <inputEntry id="r4_c1"><text>"SAME_FSE_SIEGE_TRUTHY"</text></inputEntry>
+        <inputEntry id="r4_c2"><text>true</text></inputEntry>
+        <inputEntry id="r4_c3"><text>-</text></inputEntry>
+        <inputEntry id="r4_c4"><text>-</text></inputEntry>
+        <inputEntry id="r4_c5"><text>true</text></inputEntry>
+        <inputEntry id="r4_c6"><text>-</text></inputEntry>
+        <inputEntry id="r4_c7"><text>-</text></inputEntry>
+        <inputEntry id="r4_c8"><text>-</text></inputEntry>
+        <outputEntry id="r4_o"><text>true</text></outputEntry>
+      </rule>
+
+      <!-- DIFF_FSE_SIEGE_1 -->
+      <rule id="r_diff_fse_siege_1">
+        <inputEntry id="r5_c1"><text>"DIFF_FSE_SIEGE_1"</text></inputEntry>
+        <inputEntry id="r5_c2"><text>false</text></inputEntry>
+        <inputEntry id="r5_c3"><text>-</text></inputEntry>
+        <inputEntry id="r5_c4"><text>1</text></inputEntry>
+        <inputEntry id="r5_c5"><text>-</text></inputEntry>
+        <inputEntry id="r5_c6"><text>-</text></inputEntry>
+        <inputEntry id="r5_c7"><text>-</text></inputEntry>
+        <inputEntry id="r5_c8"><text>-</text></inputEntry>
+        <outputEntry id="r5_o"><text>true</text></outputEntry>
+      </rule>
+
+      <!-- DIFF_FSE_SIEGE_0 -->
+      <rule id="r_diff_fse_siege_0">
+        <inputEntry id="r6_c1"><text>"DIFF_FSE_SIEGE_0"</text></inputEntry>
+        <inputEntry id="r6_c2"><text>false</text></inputEntry>
+        <inputEntry id="r6_c3"><text>-</text></inputEntry>
+        <inputEntry id="r6_c4"><text>0</text></inputEntry>
+        <inputEntry id="r6_c5"><text>-</text></inputEntry>
+        <inputEntry id="r6_c6"><text>-</text></inputEntry>
+        <inputEntry id="r6_c7"><text>-</text></inputEntry>
+        <inputEntry id="r6_c8"><text>-</text></inputEntry>
+        <outputEntry id="r6_o"><text>true</text></outputEntry>
+      </rule>
+
+      <!-- DIFF_FSE_ANY -->
+      <rule id="r_diff_fse_any">
+        <inputEntry id="r7_c1"><text>"DIFF_FSE_ANY"</text></inputEntry>
+        <inputEntry id="r7_c2"><text>false</text></inputEntry>
+        <inputEntry id="r7_c3"><text>-</text></inputEntry>
+        <inputEntry id="r7_c4"><text>-</text></inputEntry>
+        <inputEntry id="r7_c5"><text>-</text></inputEntry>
+        <inputEntry id="r7_c6"><text>-</text></inputEntry>
+        <inputEntry id="r7_c7"><text>-</text></inputEntry>
+        <inputEntry id="r7_c8"><text>-</text></inputEntry>
+        <outputEntry id="r7_o"><text>true</text></outputEntry>
+      </rule>
+
+      <!-- INTERNATIONAL : FSE diff + pays diff -->
+      <rule id="r_international">
+        <inputEntry id="r8_c1"><text>"INTERNATIONAL"</text></inputEntry>
+        <inputEntry id="r8_c2"><text>false</text></inputEntry>
+        <inputEntry id="r8_c3"><text>false</text></inputEntry>
+        <inputEntry id="r8_c4"><text>-</text></inputEntry>
+        <inputEntry id="r8_c5"><text>-</text></inputEntry>
+        <inputEntry id="r8_c6"><text>-</text></inputEntry>
+        <inputEntry id="r8_c7"><text>-</text></inputEntry>
+        <inputEntry id="r8_c8"><text>-</text></inputEntry>
+        <outputEntry id="r8_o"><text>true</text></outputEntry>
+      </rule>
+
+      <!-- BANQUE_BANQUE -->
+      <rule id="r_banque_banque">
+        <inputEntry id="r9_c1"><text>"BANQUE_BANQUE"</text></inputEntry>
+        <inputEntry id="r9_c2"><text>false</text></inputEntry>
+        <inputEntry id="r9_c3"><text>-</text></inputEntry>
+        <inputEntry id="r9_c4"><text>-</text></inputEntry>
+        <inputEntry id="r9_c5"><text>-</text></inputEntry>
+        <inputEntry id="r9_c6"><text>true</text></inputEntry>
+        <inputEntry id="r9_c7"><text>-</text></inputEntry>
+        <inputEntry id="r9_c8"><text>-</text></inputEntry>
+        <outputEntry id="r9_o"><text>true</text></outputEntry>
+      </rule>
+
+      <!-- NON_BANQUE_SAME_PAYS : même pays, FSE diff, pas les deux BANQUE -->
+      <rule id="r_non_banque_same_pays">
+        <inputEntry id="r10_c1"><text>"NON_BANQUE_SAME_PAYS"</text></inputEntry>
+        <inputEntry id="r10_c2"><text>false</text></inputEntry>
+        <inputEntry id="r10_c3"><text>true</text></inputEntry>
+        <inputEntry id="r10_c4"><text>-</text></inputEntry>
+        <inputEntry id="r10_c5"><text>-</text></inputEntry>
+        <inputEntry id="r10_c6"><text>false</text></inputEntry>
+        <inputEntry id="r10_c7"><text>-</text></inputEntry>
+        <inputEntry id="r10_c8"><text>-</text></inputEntry>
+        <outputEntry id="r10_o"><text>true</text></outputEntry>
+      </rule>
+
+      <!-- DEST_FSE_0006 -->
+      <rule id="r_dest_0006">
+        <inputEntry id="r11_c1"><text>"DEST_FSE_0006"</text></inputEntry>
+        <inputEntry id="r11_c2"><text>-</text></inputEntry>
+        <inputEntry id="r11_c3"><text>-</text></inputEntry>
+        <inputEntry id="r11_c4"><text>-</text></inputEntry>
+        <inputEntry id="r11_c5"><text>-</text></inputEntry>
+        <inputEntry id="r11_c6"><text>-</text></inputEntry>
+        <inputEntry id="r11_c7"><text>-</text></inputEntry>
+        <inputEntry id="r11_c8"><text>"0006"</text></inputEntry>
+        <outputEntry id="r11_o"><text>true</text></outputEntry>
+      </rule>
+
+      <!-- SOURCE_FSE_0007 -->
+      <rule id="r_source_0007">
+        <inputEntry id="r12_c1"><text>"SOURCE_FSE_0007"</text></inputEntry>
+        <inputEntry id="r12_c2"><text>-</text></inputEntry>
+        <inputEntry id="r12_c3"><text>-</text></inputEntry>
+        <inputEntry id="r12_c4"><text>-</text></inputEntry>
+        <inputEntry id="r12_c5"><text>-</text></inputEntry>
+        <inputEntry id="r12_c6"><text>-</text></inputEntry>
+        <inputEntry id="r12_c7"><text>"0007"</text></inputEntry>
+        <inputEntry id="r12_c8"><text>-</text></inputEntry>
+        <outputEntry id="r12_o"><text>true</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

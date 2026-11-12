@@ -1,0 +1,30 @@
+{
+    "ptiApp": {
+        "profilActeur" : {
+            "home": {
+                "title": "ProfilActeurs",
+                "createLabel": "Créer un nouveau Profil Acteur",
+                "createOrEditLabel": "Créer ou éditer un Profil Acteur"
+            },
+            "created": "Un nouveau Profil Acteur a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Profil Acteur avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Profil Acteur avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Profil Acteur {{ id }} ?"
+            },
+            "detail": {
+                "title": "Profil Acteur"
+            },
+            "nom": "Nom",
+            "description": "Description",
+            "active": "Active",
+            "type": "Type",
+            "horaireAuthentification": "Horaire Authentification",
+            "tableauFrais": "Tableau Frais",
+            "organisation": "Organisation",
+            "client": "Client",
+            "tableauCumul": "Tableau Cumul",
+            "tableauRepartitionCommission": "Tableau Repartition Commission"
+        }
+    }
+}

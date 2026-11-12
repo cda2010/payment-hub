@@ -1,0 +1,24 @@
+{
+    "ptiApp": {
+        "structureOrganisationFacturier" : {
+            "home": {
+                "title": "StructureOrganisationFacturiers",
+                "createLabel": "Créer un nouveau Structure Organisation Facturier",
+                "createOrEditLabel": "Créer ou éditer un Structure Organisation Facturier"
+            },
+            "created": "Un nouveau Structure Organisation Facturier a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Structure Organisation Facturier avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Structure Organisation Facturier avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Structure Organisation Facturier {{ id }} ?"
+            },
+            "detail": {
+                "title": "Structure Organisation Facturier"
+            },
+            "niveau": "Niveau",
+            "niveausup": "Niveausup",
+            "libelle": "Libelle",
+            "uniteOrganisationId": "Unite Organisation Id"
+        }
+    }
+}

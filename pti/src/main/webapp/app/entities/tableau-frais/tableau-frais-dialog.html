@@ -1,0 +1,154 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myTableauFraisLabel" data-translate="ptiApp.tableauFrais.home.createOrEditLabel">
+            Create or edit a Tableau Frais</h4>
+    </div>
+    <div class="modal-body">
+
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.tableauFrais.typeService"
+                for="field_typeService">Type Service</label>
+            <div class="col-sm-6">
+                <select class="form-control" id="field_typeService" name="typeService"
+                    ng-model="vm.tableauFrais.typeServiceId"
+                    ng-options="typeService.id as typeService.libelle for typeService in vm.typeservices" required>
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.tableauFrais.canal"
+                for="field_canal">Canal</label>
+            <div class="col-sm-6">
+                <select class="form-control" id="field_canal" name="canal" ng-model="vm.tableauFrais.canalId"
+                    ng-options="canal.id as canal.libelleCanal for canal in vm.canals">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.tableauFrais.typeUoEmetteur"
+                for="field_typeUoEmetteur">Type Uo Emetteur</label>
+            <div class="col-sm-6">
+                <select ng-change="vm.typeUOChange(vm.tableauFrais.typeUoEmetteurId, 'EM')" class="form-control"
+                    id="field_typeUoEmetteur" name="typeUoEmetteur" ng-model="vm.tableauFrais.typeUoEmetteurId"
+                    ng-options="typeUniteOrganisation.id as typeUniteOrganisation.libelleTypeUO
+                for typeUniteOrganisation in vm.typeuniteorganisations">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.tableauFrais.organisationEm"
+                for="field_organisationEm">Organisation Em</label>
+            <div class="col-sm-6">
+                <select disabled class="form-control" id="field_organisationEm" name="organisationEm"
+                    ng-model="vm.tableauFrais.organisationEmId"
+                    ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.uniteorganisationsEm">
+                    <option value=""></option>
+                </select>
+            </div>
+            <i title="Sélectionnez l'organisation" class="btn btn-primary btn-xs" j-select-dialog j-multiple="false"
+                j-model="vm.tableauFrais.organisationEmId" j-list="vm.uniteorganisationsEm"
+                j-columns='vm.organisationColums' j-event-name="onLoadOrganisation">Choisir...</i>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.tableauFrais.typeUoAcquereur"
+                for="field_typeUoAcquereur">Type Uo Acquereur</label>
+            <div class="col-sm-6">
+                <select ng-change="vm.typeUOChange(vm.tableauFrais.typeUoAcquereurId, 'ACQ')" class="form-control"
+                    id="field_typeUoAcquereur" name="typeUoAcquereur" ng-model="vm.tableauFrais.typeUoAcquereurId"
+                    ng-options="typeUniteOrganisation.id as
+                typeUniteOrganisation.libelleTypeUO for typeUniteOrganisation in vm.typeuniteorganisations">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.tableauFrais.organisationAcq"
+                for="field_organisationAcq">Organisation Acq</label>
+            <div class="col-sm-6">
+                <select disabled class="form-control" id="field_organisationAcq" name="organisationAcq"
+                    ng-model="vm.tableauFrais.organisationAcqId"
+                    ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.uniteorganisationsAcq">
+                    <option value=""></option>
+                </select>
+            </div>
+            <i title="Sélectionnez l'organisation" class="btn btn-primary btn-xs" j-select-dialog j-multiple="false"
+                j-model="vm.tableauFrais.organisationAcqId" j-list="vm.uniteorganisationsAcq"
+                j-columns='vm.organisationColums' j-event-name="onLoadOrganisation">Choisir...</i>
+        </div>
+
+        <div class="form-group">
+            <label for="field_libelle" class="control-label col-sm-4">Libellé</label>
+            <div class="col-sm-6">
+                <input type="text" id="field_libelle" class="form-control" name="libelle"
+                       ng-model="vm.tableauFrais.libelle"
+                required>
+            </div>
+        </div>
+      <div class="form-group">
+            <label mf-required class="control-label col-sm-4"  for="field_acteur">Qui paye les frais?</label>
+            <div class="col-sm-6">
+                <select required class="form-control" name="regle" ng-model="vm.tableauFrais.typeRegle" id="field_regle">
+                    <option value="ACTEUR" >ACTEUR</option>
+                    <option value="CLIENT">CLIENT</option>
+                   
+                </select>
+            </div>
+        </div>
+        
+        
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4"  for="field_acteur">Source de calcul?</label>
+            <div class="col-sm-6">
+                <select required class="form-control" name="source" ng-model="vm.tableauFrais.sourceCalcul" id="field_source_c">
+                    <option value="MONTANT" >MONTANT</option>
+                    <option value="CULMUL_JOURNALIER">CULMUL JOURNALIER</option>
+                   
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+        <div class="checkbox col-sm-6 col-sm-offset-4">
+            <label>
+                <input autocomplete="off"class="colored-success" type="checkbox" name="obligatoire" id="field_obligatoire"
+                       ng-model="vm.tableauFrais.activated" />
+                <b class="text">Active ?</b>
+            </label>
+        </div>
+    </div>
+</div>
+
+        <!-- <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.tableauFrais.dateDebut" for="field_dateDebut">Date Debut</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" ng-focus="vm.openCalendar('dateDebut')" id="field_dateDebut" type="text" class="form-control" name="dateDebut" uib-datepicker-popup="{{dateformat}}" ng-model="vm.tableauFrais.dateDebut"
+                       is-open="vm.datePickerOpenStatus.dateDebut" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.tableauFrais.dateFin" for="field_dateFin">Date Fin</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" ng-focus="vm.openCalendar('dateFin')" id="field_dateFin" type="text" class="form-control" name="dateFin" uib-datepicker-popup="{{dateformat}}" ng-model="vm.tableauFrais.dateFin"
+                       is-open="vm.datePickerOpenStatus.dateFin" />
+            </div>
+        </div> -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                    data-translate="entity.action.cancel">Cancel</span>
+            </button>
+            <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+                <span class="glyphicon glyphicon-save"></span>&nbsp;<span
+                    data-translate="entity.action.save">Save</span>
+            </button>
+        </div>
+</form>

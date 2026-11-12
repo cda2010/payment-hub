@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "repartionFraisEmAcq" : {
+            "home": {
+                "title": "RepartionFraisEmAcqs",
+                "createLabel": "Créer un nouveau Repartion Frais Em Acq",
+                "createOrEditLabel": "Créer ou éditer un Repartion Frais Em Acq"
+            },
+            "created": "Un nouveau Repartion Frais Em Acq a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Repartion Frais Em Acq avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Repartion Frais Em Acq avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Repartion Frais Em Acq {{ id }} ?"
+            },
+            "detail": {
+                "title": "Repartion Frais Em Acq"
+            },
+            "partEm": "Part Em",
+            "partAcq": "Part Acq",
+            "typeService": "Type Service"
+        }
+    }
+}

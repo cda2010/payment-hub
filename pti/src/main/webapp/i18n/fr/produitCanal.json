@@ -1,0 +1,22 @@
+{
+    "ptiApp": {
+        "produitCanal" : {
+            "home": {
+                "title": "ProduitCanals",
+                "createLabel": "Créer un nouveau Produit Canal",
+                "createOrEditLabel": "Créer ou éditer un Produit Canal"
+            },
+            "created": "Un nouveau Produit Canal a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Produit Canal avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Produit Canal avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Produit Canal {{ id }} ?"
+            },
+            "detail": {
+                "title": "Produit Canal"
+            },
+            "canal": "Canal",
+            "produit": "Produit"
+        }
+    }
+}

@@ -1,0 +1,31 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "intro",
+        "tag": "p",
+        "content": "Saisissez la référence de l'envoi (MTCN / remittanceReference / paymentId)."
+      },
+      {
+        "type": "textfield",
+        "key": "remittanceReference",
+        "label": "Référence envoi",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": { "Référence envoi": "Référence envoi" },
+    "en": { "Référence envoi": "Send reference" }
+  }
+}

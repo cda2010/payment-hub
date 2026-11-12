@@ -1,0 +1,10 @@
+# Profil local : base dédiée du docker-compose (service alias-postgres, port 5439).
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5439/payment_alias
+    username: alias
+    password: alias
+
+logging:
+  level:
+    com.gateway.payment.alias: DEBUG

@@ -1,0 +1,45 @@
+<div class="data-table-container">
+    <!-- En-tête avec titre -->
+    <div class="table-header-panel">
+        <div class="panel-body">
+            <h3 class="text-center">
+                <i class="pe pe-7s-{{icon}} text-warning m-r-xs"></i>
+                {{title}} <sup>{{subtitle}}</sup>
+            </h3>
+            <hr/>
+        </div>
+    </div>
+
+    <!-- Boutons d'action -->
+    <div class="table-actions">
+        <button class="btn btn-primary" ui-sref="{{entityName}}.new">
+            <span class="glyphicon glyphicon-plus"></span>
+            <span>Nouveau</span>
+        </button>
+    </div>
+
+    <!-- Tableau -->
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <!-- En-têtes de colonnes -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Corps du tableau -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="text-center pagination-container">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" 
+                       total-items="vm.totalItems" 
+                       items-per-page="vm.itemsPerPage" 
+                       ng-model="vm.page" 
+                       ng-change="vm.transition()">
+        </uib-pagination>
+    </div>
+</div> 

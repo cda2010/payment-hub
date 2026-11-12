@@ -1,0 +1,44 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myParamExecutionJobLabel" >Create or edit a Param Execution Job</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.paramExecutionJob.id">
+            <label for="id" >ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.paramExecutionJob.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label"  for="field_cle">Cle</label>
+            <input type="text" class="form-control" name="cle" id="field_cle"
+                    ng-model="vm.paramExecutionJob.cle" 
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_valeur">Valeur</label>
+            <input type="text" class="form-control" name="valeur" id="field_valeur"
+                    ng-model="vm.paramExecutionJob.valeur"
+                    />
+        </div>
+
+<!--        <div class="form-group">
+            <label data-translate="ptiApp.paramExecutionJob.ptiJobDetail" for="field_ptiJobDetail">Pti Job Detail</label>
+            <select class="form-control" id="field_ptiJobDetail" name="ptiJobDetail" ng-model="vm.paramExecutionJob.ptiJobDetail" ng-options="ptiJobDetail as ptiJobDetail. for ptiJobDetail in vm.ptijobdetails track by ptiJobDetail.id">
+                <option value=""></option>
+            </select>
+        </div>-->
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

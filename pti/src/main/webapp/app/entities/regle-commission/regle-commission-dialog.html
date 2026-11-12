@@ -1,0 +1,243 @@
+<form class="form-horizontal" name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myRegleCommissionLabel"
+            data-translate="ptiApp.regleCommission.home.createOrEditLabel">Create or edit a Regle Commission</h4>
+    </div>
+    <div class="modal-body">
+
+
+        <div class="form-group">
+            <label  class="control-label col-sm-4" data-translate="ptiApp.regleCommission.typeService"
+                for="field_typeService">Type Service</label>
+            <div class="col-sm-6">
+                <select  class="form-control" id="field_typeService" name="typeService"
+                    ng-model="vm.regleCommission.typeServiceId"
+                    ng-options="typeService.id as typeService.libelle for typeService in vm.typeservices">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="control-label col-sm-4" 
+                for="field_typeOperateur">Type Operateur</label>
+            <div class="col-sm-6">
+                <select  class="form-control" name="typeOperateur" ng-model="vm.regleCommission.typeOperateur"
+                    id="field_typeOperateur" >
+                    <option value=""></option>
+                    <option value="AGENCE" >AGENCE</option>
+                    <option value="MASTER" >MASTER</option>
+                    <option value="SOUS_DISTRIBUTEUR">
+                        SOUS_DISTRIBUTEUR</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="control-label col-sm-4" data-translate="ptiApp.regleCommission.teneurSrc"
+                for="field_teneurSrc">Teneur Src</label>
+            <div class="col-sm-6">
+                <select  class="form-control" id="field_teneurSrc" name="teneurSrc"
+                    ng-model="vm.regleCommission.teneurSrcId"
+                    ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.uniteorganisations">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.regleCommission.teneurDest"
+                for="field_teneurDest">Teneur Dest</label>
+            <div class="col-sm-6">
+                <select  class="form-control" id="field_teneurDest" name="teneurDest"
+                    ng-model="vm.regleCommission.teneurDestId"
+                    ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.uniteorganisations">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label  class="control-label col-sm-4"
+                for="field_uoSrc">Uo Src</label>
+            <div class="col-sm-6">
+                <select  class="form-control" id="field_uoSrc" name="uoSrc"
+                    ng-model="vm.regleCommission.uoSrcId"
+                    ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.pays">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-4"
+                for="field_uoDest">Uo Dest</label>
+            <div class="col-sm-6">
+                <select  class="form-control" id="field_uoDest" name="uoDest"
+                    ng-model="vm.regleCommission.uoDestId"
+                    ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.pays">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+         <div class="form-group">
+                <label class="control-label col-sm-4" for="field_numeroCmpt">Montant Min
+                    </label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"type="text" class="form-control" name="min" id="field_Min"
+                        ng-model="vm.regleCommission.min"  />
+                </div>
+            </div>
+         <div class="form-group">
+                <label class="control-label col-sm-4"  for="field_numeroCmpt">Montant Max
+                    </label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"type="text" class="form-control" name="numeroCmpt" id="field_Max"
+                        ng-model="vm.regleCommission.max"  />
+                </div>
+            </div>
+        <fieldset class="mf-fieldset">
+            <legend>Prise En Charge</legend>
+            <div class="form-group">
+                <label mf-required class="control-label col-sm-4" 
+                    for="field_prisEnCharge">Responsable</label>
+                <div class="col-sm-6">
+                    <select required class="form-control" id="field_uoDest" name="uoDest"
+                    ng-model="vm.regleCommission.priseEnChargeId"
+                    ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.uniteorganisations">
+                    <option value=""></option>
+                </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label mf-required class="control-label col-sm-4" 
+                    for="field_prisEnCharge">Teneur</label>
+                <div class="col-sm-6">
+                    <select required class="form-control" id="field_uoDest" name="uoDest"
+                    ng-model="vm.regleCommission.codeFse"
+                    ng-options="uniteOrganisation.codeFse as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.uniteorganisations">
+                    <option value=""></option>
+                </select>
+                </div>
+            </div>
+            <!-- <div class="form-group" ng-if="vm.regleCommission.prisEnCharge!='CLIENT'">
+                <label mf-required class="control-label col-sm-4" data-translate="ptiApp.regleCommission.etiquette"
+                    for="field_etiquette">Etiquette</label>
+                <div class="col-sm-6">
+                    <select class="form-control" id="field_etiquett" name="etiquette"
+                        ng-model="vm.regleCommission.etiquette"
+                        ng-options="etiquette.code as etiquette.code for etiquette in vm.etiquetteComptes" required>
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div> -->
+    
+            <div class="form-group">
+                <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4"
+                    for="field_type">Type
+                    compte</label>
+                <div class="col-xs-6 col-sm-6 col-lg-6">
+                    <select required class="form-control input-xs" id="field_type" name="fse"
+                        ng-model="vm.regleCommission.categorieCompte">
+                        <option value="BANQUE">Compte Banque</option>
+                        <option value="AUTRE">Compte Virtuel</option>
+                    </select>
+                </div>
+            </div>
+    
+            <div class="form-group" ng-if="vm.regleCommission.categorieCompte=='BANQUE'">
+                <label class="control-label col-sm-4" mf-required
+                     for="field_codeAgence">Code
+                    Agence</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"type="text" class="form-control" name="codeAgence" id="field_codeAgence"
+                        ng-model="vm.regleCommission.codeAgence" required />
+                </div>
+            </div>
+    
+            <div class="form-group" ng-if="vm.regleCommission.categorieCompte=='BANQUE'">
+                <label class="control-label col-sm-4" mf-required for="field_codeBanque">Code
+                    Banque</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"type="text" class="form-control" name="codeBanque" id="field_codeBanque"
+                        ng-model="vm.regleCommission.codeBanque" required />
+                </div>
+            </div>
+    
+            <div class="form-group" ng-if="vm.regleCommission.categorieCompte=='BANQUE'">
+                <label class="control-label col-sm-4" mf-required for="field_numeroCmpt">N
+                    compte</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"type="text" class="form-control" name="numeroCmpt" id="field_numeroCmpt"
+                        ng-model="vm.regleCommission.valeurCompte" required />
+                </div>
+            </div>
+    
+    
+            <div class="form-group" ng-if="vm.regleCommission.categorieCompte=='BANQUE'">
+                <label ng-if="!vm.isViewing" mf-required class="control-label col-sm-4"
+                    for="field_codeClient">Rib</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"required type="text" class="form-control" name="rib" id="field_rib"
+                        ng-model="vm.regleCommission.rib" />
+                </div>
+            </div>
+    
+            <div ng-if="vm.regleCommission.categorieCompte=='AUTRE'">
+                <div class="form-group">
+                    <label mf-required class="control-label col-sm-4"
+                        for="field_valeurCompte">Refererence</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off"required type="text" class="form-control" name="valeurCompte"
+                            id="field_valeurCompte" ng-model="vm.regleCommission.valeurCompte" />
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    
+        <!-- <div class="form-group">
+            <label mf-required class="control-label col-sm-4" for="field_dateDebut">Date Debut</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"required uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false"
+                    ng-focus="vm.openCalendar('dateDebut')" id="field_dateDebut" type="text" class="form-control"
+                    name="dateDebut" uib-datepicker-popup="{{dateformat}}" ng-model="vm.regleCommission.dateDebut"
+                    is-open="vm.datePickerOpenStatus.dateDebut" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" for="field_dateFin">Date Fin</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"required uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false"
+                    ng-focus="vm.openCalendar('dateFin')" id="field_dateFin" type="text" class="form-control"
+                    name="dateFin" uib-datepicker-popup="{{dateformat}}" ng-model="vm.regleCommission.dateFin"
+                    is-open="vm.datePickerOpenStatus.dateFin" />
+            </div>
+        </div> -->
+
+
+        <div class="form-group">
+            <div class="checkbox col-sm-6 col-sm-offset-4">
+                <label>
+                    <input autocomplete="off"class="colored-success" type="checkbox" name="obligatoire" id="field_obligatoire"
+                        ng-model="vm.regleCommission.activated" />
+                    <b class="text">Active ?</b>
+                </label>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

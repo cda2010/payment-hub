@@ -1,0 +1,130 @@
+<div class="container">
+    <div class="row well">
+        <div class="col-sm-8">
+            <form name="editForm" role="form" novalidate ng-submit="vm.chercherCompte(vm.valeurCompte)" class="form-horizontal">
+                <div class="modal-body">
+                    <div class="mb20 ">
+                        <div class="well" style="margin-top:10px ">
+                                <div class="form-group ">
+                                    <label class="control-label col-sm-4" for="field_valeur_comte">Numéro Compte</label>
+                                    <div class="col-sm-7">
+                                        <div class="col-sm-10">
+                                            <input class="form-control" id="field_valeur_comte"
+                                                   ng-model="vm.valeurCompte" required/>
+                                        </div>
+                                        <div class="col-sm-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" for="dateDebut">date Début</label>
+                                    <div class="col-sm-7">
+                                        <!--                                    <input autocomplete="off"id="dateOperation" show-button-bar="false"-->
+                                        <!--                                           placeholder=" Date debut" is-open="vm.datePickerOpenStatus.dateOperation"-->
+                                        <!--                                           uib-datepicker-popup="dd/MM/yyyy" ng-focus="vm.openCalendar('dateOperation')"-->
+                                        <!--                                           class="form-control"  ng-model="vm.dateDebut" name="dateOperation"/>-->
+                                        <div class="col-sm-10">
+                                            <input id="dateDebut"
+                                                   type="text" class="form-control"
+                                                   name="datedebut" datetime-picker="{{dateformat}}"
+                                                   ng-model="vm.dateDebut"
+                                                   is-open="vm.datePickerOpenStatus.dateDebut"
+                                            />
+                                        </div>
+                                        <span class="input-group-btn col-sm-1">
+                                     <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateDebut')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                   </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4" for="dateFin">date Fin</label>
+                                    <div class="col-sm-7">
+                                        <!--                                    <input autocomplete="off"id="dateFin" show-button-bar="false" placeholder=" Date fin"-->
+                                        <!--                                           is-open="vm.datePickerOpenStatus.dateFin" uib-datepicker-popup="dd/MM/yyyy"-->
+                                        <!--                                           ng-focus="vm.openCalendar('dateFin')"  class="form-control"-->
+                                        <!--                                           ng-model="vm.dateFin" name="dateFin"/>-->
+                                        <div class="col-sm-10">
+                                            <input id="dateFin"
+                                                   type="text" class="form-control"
+                                                   name="datefin" datetime-picker="{{dateformat}}"
+                                                   ng-model="vm.dateFin"
+                                                   is-open="vm.datePickerOpenStatus.dateFin"
+                                            />
+                                        </div>
+                                        <span class="input-group-btn col-sm-1">
+                                     <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateFin')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                   </span>
+                                    </div>
+                                </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-search"></span>&nbsp;<span>Chercher</span>
+                    </button>
+
+                    <select  id="filed_format" name="format" ng-model="vm.format" ng-if="vm.transactions.length>0">
+                        <option value="">Format</option>
+                        <option value="PDF">PDF</option>
+                        <option value="XLSX">XLSX</option>
+                        <option value="CSV">CSV</option>
+                    </select>
+                    <button type="button" class="btn btn-raised btn-info" ng-if="vm.transactions.length>0" ng-click="vm.imprimer()"> <span class="glyphicon glyphicon-print"></span><span>Imprimer</span></button>
+
+                </div>
+            </form>
+        </div>
+        <div ng-if="vm.compte.id" class="col-sm-4 well" style="margin-top:25px ">
+            <h1 class="primary">Solde: {{vm.compte.solde|number}}&nbsp FCFA</h1>
+            <h3 class="primary" ng-if="!vm.compte.libelle && vm.compte.nomClient">{{vm.compte.nomClient}} {{vm.compte.prenomClient}}</h3>
+            <h3 class="primary" ng-if="vm.compte.libelle">{{vm.compte.libelle}}</h3>
+            <h3 class="primary" ng-if="vm.compte.raisonSociale">{{vm.compte.raisonSociale}}</h3>
+            <h3 class="primary" ng-if="vm.compte.telephone"><span ng-if="vm.compte.codeTel">+</span>{{vm.compte.codeTel}} {{vm.compte.telephone}}</h3>
+            <h3 class="primary" ng-if="vm.compte.telephoneOrganisation"><span ng-if="vm.compte.indicatifPaysOrganisation">+</span>{{vm.compte.indicatifPaysOrganisation}} {{vm.compte.telephoneOrganisation}}</h3>
+        </div>
+        <div ng-if="vm.onSearch&&!vm.compte.id"  class="col-sm-4 well" style="margin-top:25px ">
+            <div class="alert alert-danger">Compte introuvable</div>
+        </div>
+
+</div>
+
+</div>
+<!--<commentaire>Liste des operations</commentaire>-->
+<div ng-if="vm.transactions.length==0&&vm.compte.id" class="alert alert-warning">Aucune opération</div>
+<div ng-if="vm.transactions.length>0">
+    <div class="well with-header" style="margin-top:10px; overflow: scroll; max-height: 800px ">
+        <div class="header bg-blue ">
+            <div class="col-xs-12">
+                <h4 >Liste des transactions</h4>
+            </div>
+
+        </div>
+        <table class="jh-table table table-hover">
+            <thead>
+            <tr>
+                <th><span>ID</span></th>
+                <th><span>Type</span></th>
+                <th><span >Etat</span></th>
+                <th><span>Date</span></th>
+                <th><span >Montant</span></th>
+                <th><span >Solde courant</span></th>
+                <th><span >Solde après</span></th>
+                <th><span >Opération Id</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="transaction in vm.transactions track by transaction.id">
+                <td>{{transaction.id}}</td>
+                <td>{{transaction.type}}</td>
+                <td>{{transaction.etat}}</td>
+                <td>{{transaction.date|date:'medium'}}</td>
+                <td>{{transaction.montant | currency:""}}</td>
+                <td>{{transaction.soldeCourant | currency:""}}</td>
+                <td>{{transaction.soldeApres | currency:""}}</td>
+                <td>{{transaction.operationId}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

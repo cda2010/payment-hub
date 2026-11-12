@@ -1,0 +1,72 @@
+<div>
+    <h2 data-translate="ptiApp.ligneMessage.home.title">Ligne Messages</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="ligne-message.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="ptiApp.ligneMessage.home.createLabel">
+                        Create new Ligne Message
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="codeIndicatif"><span data-translate="ptiApp.ligneMessage.codeIndicatif">Code Indicatif</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="numeroTelephone"><span data-translate="ptiApp.ligneMessage.numeroTelephone">Numero Telephone</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="email"><span data-translate="ptiApp.ligneMessage.email">Email</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="message"><span data-translate="ptiApp.ligneMessage.message">Message</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="error"><span data-translate="ptiApp.ligneMessage.error">Error</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="chargementMessage.id"><span data-translate="ptiApp.ligneMessage.chargementMessage">Chargement Message</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="ligneMessage in vm.ligneMessages track by ligneMessage.id">
+                    <td><a ui-sref="ligne-message-detail({id:ligneMessage.id})">{{ligneMessage.id}}</a></td>
+                    <td>{{ligneMessage.codeIndicatif}}</td>
+                    <td>{{ligneMessage.numeroTelephone}}</td>
+                    <td>{{ligneMessage.email}}</td>
+                    <td>{{ligneMessage.message}}</td>
+                    <td>{{ligneMessage.error}}</td>
+                    <td>
+                        <a ui-sref="chargement-message-detail({id:ligneMessage.chargementMessage.id})">{{ligneMessage.chargementMessage.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="ligne-message-detail({id:ligneMessage.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="ligne-message.edit({id:ligneMessage.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="ligne-message.delete({id:ligneMessage.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

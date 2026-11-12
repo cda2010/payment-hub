@@ -1,0 +1,23 @@
+
+{
+    "ptiApp": {
+        "uniteOragnisation" : {
+            "home": {
+                "title": "UniteOragnisations",
+                "createLabel": "Créer un nouveau Unite Oragnisation",
+                "createOrEditLabel": "Créer ou éditer un Unite Oragnisation"
+            },
+            "created": "Un nouveau Unite Oragnisation a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Unite Oragnisation avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Unite Oragnisation avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Unite Oragnisation {{ id }} ?"
+            },
+            "detail": {
+                "title": "Unite Oragnisation"
+            },
+            "operation": "Operation",
+            "operationEffectue": "Operation Effectue"
+        }
+    }
+}

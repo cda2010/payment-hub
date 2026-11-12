@@ -1,0 +1,13 @@
+
+entity Produit{
+  nomProduit String,
+  numeroOrdre Integer,
+  actif Integer,
+  facturierId Long,
+}
+entity Ecran{
+  numeroOrdre Integer,
+}
+relationship OneToMany {
+	Produit to Ecran{produit}
+}

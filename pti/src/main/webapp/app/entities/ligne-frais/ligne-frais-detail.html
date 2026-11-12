@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span data-translate="ptiApp.ligneFrais.detail.title">Ligne Frais</span> {{vm.ligneFrais.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.ligneFrais.typeFrais">Type Frais</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.TypeTarif.' + vm.ligneFrais.typeFrais}}">{{vm.ligneFrais.typeFrais}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneFrais.maximun">Maximun</span></dt>
+        <dd>
+            <span>{{vm.ligneFrais.maximun}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneFrais.minimun">Minimun</span></dt>
+        <dd>
+            <span>{{vm.ligneFrais.minimun}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneFrais.valeur">Valeur</span></dt>
+        <dd>
+            <span>{{vm.ligneFrais.valeur}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneFrais.tableauFrais">Tableau Frais</span></dt>
+        <dd>
+            <a ui-sref="tableau-frais-detail({id:vm.ligneFrais.tableauFraisId})">{{vm.ligneFrais.tableauFraisId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="ligne-frais-detail.edit({id:vm.ligneFrais.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

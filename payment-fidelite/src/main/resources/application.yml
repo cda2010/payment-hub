@@ -1,0 +1,71 @@
+spring:
+  application:
+    name: payment-fidelite
+  profiles:
+    default: prod
+  datasource:
+    url: ${FIDELITE_DB_URL:jdbc:postgresql://localhost:5446/payment_fidelite}
+    username: ${FIDELITE_DB_USER:fidelite}
+    password: ${FIDELITE_DB_PASSWORD:fidelite}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+
+server:
+  port: ${SERVER_PORT:8103}
+  error:
+    include-message: never
+    include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+fidelite:
+  security:
+    keycloak:
+      enabled: ${KEYCLOAK_ENABLED:true}
+      issuer-uri: ${KEYCLOAK_ISSUER:http://localhost:8180/realms/payment}
+      jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:}
+      audience: ${KEYCLOAK_AUDIENCE:payment-api}
+    jwt:
+      secret: ${JWT_SECRET:change-me-to-a-very-long-secret-key-at-least-256-bits}
+      issuer: ${JWT_ISSUER:payment-gateway}
+    cors:
+      allowed-origins: ${CORS_ORIGINS:http://localhost:4200,http://127.0.0.1:4200,http://localhost:4205,http://127.0.0.1:4205,http://localhost:4210,http://127.0.0.1:4210}
+
+spend:
+  kafka:
+    enabled: false
+    consumer-enabled: ${SPEND_KAFKA_CONSUMER_ENABLED:false}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
+    topic: ${SPEND_KAFKA_TOPIC:payment.spend}
+    consumer-group: payment-fidelite
+
+logging:
+  level:
+    root: INFO
+    com.gateway.payment.fidelite: INFO

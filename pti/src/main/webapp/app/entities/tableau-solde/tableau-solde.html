@@ -1,0 +1,107 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="well with-header" style="margin-top:10px; width: 100%;height: 100%">
+                <div class="row">
+                    <div class="form-group">
+                        <label class="control-label" for="field_pereUOId">FSE propriétaire</label>
+                        <select name="type" id="field_pereUOId"  class="form-control"
+                                ng-model="vm.item.pereUoId"
+                                ng-options="FSE.id as FSE.libelleUniteOrganisation for FSE in vm.FSEs"
+                        >
+                            <option></option>
+                        </select>
+                    </div>
+                    <div ng-if="vm.item.pereUoId">
+                    <button  class="btn btn-primary mt5" ng-click="vm.afficherSolde()">
+                        <span class="glyphicon glyphicon-search" >Afficher</span>
+                    </button>
+                        <button  class="btn btn-danger mt5" ng-click="vm.soldeCancel()">
+                            <span  >Annuler</span>
+                        </button>
+                        <select class=" mt5" id="filed_format" name="format" ng-model="vm.format" ng-if="vm.formatCtl">
+                            <option value="">Format</option>
+                            <option value="PDF">PDF</option>
+                            <option value="XLSX">XLSX</option>
+                            <option value="CSV">CSV</option>
+                        </select>
+                        <button  class="btn btn-primary mt5" ng-if="vm.formatCtl" ng-click="vm.genererAll()">
+                            <span>Exporter</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="header text-align-center" >
+                    <B class="">BILAN DES SOLDES </B>
+                </div>
+                <br>
+                <div ng-if="vm.tabAffiche" class="table-responsive" >
+                    <table class="jh-table table table-striped"  >
+                        <tbody>
+                        <tr>
+                            <th><span>Somme Compte distribution</span></th>
+                            <td ng-if="vm.principal.distribution!=null">{{vm.principal.distribution | currency :""}} {{vm.devise}}</td>
+                            <td ng-if="vm.principal.distribution==null">{{0 | currency :""}}{{vm.devise}}</td>
+                        </tr>
+                        <tr>
+                            <th ><span >Somme des Soldes clients</span> </th>
+                            <td ng-if="vm.principal.clients!=null">{{vm.principal.clients | currency :""}}{{vm.devise}}</td>
+                            <td ng-if="vm.principal.clients==null">{{0 | currency :""}}{{vm.devise}}</td>
+
+                        </tr>
+                        <tr>
+                            <th ><span>Somme des Soldes marchands</span> </th>
+                            <td ng-if="vm.principal.marchands!=null">{{vm.principal.marchands | currency :""}}{{vm.devise}}</td>
+                            <td ng-if="vm.principal.marchands==null">{{0 | currency :""}}{{vm.devise}}</td>
+                        </tr>
+                        <tr>
+                            <th ><span>Somme des Soldes agences</span> </th>
+                            <td ng-if="vm.principal.agence!=null">{{vm.principal.agence | currency :""}}{{vm.devise}}</td>
+                            <td ng-if="vm.principal.agence==null">{{0 | currency :""}}{{vm.devise}}</td>
+
+                        </tr>
+                        <tr>
+                            <th ><span>Somme des Soldes agents</span> </th>
+                            <td ng-if="vm.principal.master!=null">{{vm.principal.master | currency :""}}{{vm.devise}}</td>
+                            <td ng-if="vm.principal.master==null">{{0 | currency :""}}{{vm.devise}}</td>
+
+                        </tr>
+                        <tr>
+                            <th ><span>Somme des Soldes des commissions</span> </th>
+                            <td ng-if="vm.principal.commission!=null">{{vm.principal.commission | currency :""}}{{vm.devise}}</td>
+                            <td ng-if="vm.principal.commission==null">{{0 | currency :""}}{{vm.devise}}</td>
+                        </tr>
+                        <tr>
+                            <th ><span>Somme des Soldes des commissions en attentes</span> </th>
+                            <td ng-if="vm.principal.commissionAtt!=null">{{vm.principal.commissionAtt | currency :""}}{{vm.devise}}</td>
+                            <td ng-if="vm.principal.commissionAtt==null">{{0 | currency :""}}{{vm.devise}}</td>
+                        </tr>
+                        <tr>
+                            <th ><span>Somme des Soldes des transferts en attentes</span> </th>
+                            <td ng-if="vm.principal.transfertAtt!=null">{{vm.principal.transfertAtt | currency :""}}{{vm.devise}}</td>
+                            <td ng-if="vm.principal.transfertAtt==null">{{0 | currency :""}}{{vm.devise}}</td>
+
+                        </tr>
+                        <tr>
+                            <th ><span>Somme des Soldes taxes</span> </th>
+                            <td ng-if="vm.principal.taxe!=null">{{vm.principal.taxe | currency :""}}{{vm.devise}}</td>
+                            <td ng-if="vm.principal.taxe==null">{{0 | currency :""}}{{vm.devise}}</td>
+
+                        </tr>
+                        <tr>
+                            <th ><span>Somme des frais de la plateforme</span> </th>
+                            <td ng-if="vm.principal.plateforme!=null">{{vm.principal.plateforme | currency :""}}{{vm.devise}}</td>
+                            <td ng-if="vm.principal.plateforme==null">{{0 | currency :""}}{{vm.devise}}</td>
+
+                        </tr>
+                        <tr>
+                            <th><span>Solde Total</span></th>
+                            <td>{{vm.principal.distribution+vm.principal.clients+vm.principal.marchands+vm.principal.agence+vm.principal.master+vm.principal.commission+vm.principal.commissionAtt+vm.principal.transfertAtt+vm.principal.taxe+vm.principal.plateforme | currency :""}}{{vm.devise}}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "number",
+        "key": "amount",
+        "label": "Montant à déposer (cash)",
+        "input": true,
+        "validate": { "required": true, "min": 500 }
+      },
+      {
+        "type": "textfield",
+        "key": "currency",
+        "label": "Devise",
+        "input": true,
+        "defaultValue": "XOF"
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Montant à déposer (cash)": "Montant à déposer (cash)",
+      "Devise": "Devise"
+    },
+    "en": {
+      "Montant à déposer (cash)": "Cash amount to deposit",
+      "Devise": "Currency"
+    }
+  }
+}

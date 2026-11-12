@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Stub méta : UI réelle = ContentCmsAdminComponent (RF_CUSTOM_ACTION_VIEWS). -->
+<action-view name="content-cms-all" title="Rubriques &amp; articles"
+             model="com.gateway.payment.payment.domain.PaymentTransaction" icon="pi pi-folder">
+  <view type="grid" name="transaction-grid"/>
+</action-view>

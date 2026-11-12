@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "templateMessage" : {
+            "home": {
+                "title": "TemplateMessages",
+                "createLabel": "Créer un nouveau Template Message",
+                "createOrEditLabel": "Créer ou éditer un Template Message"
+            },
+            "created": "Un nouveau Template Message a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Template Message avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Template Message avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Template Message {{ id }} ?"
+            },
+            "detail": {
+                "title": "Template Message"
+            },
+            "etiquette": "Etiquette",
+            "contenu": "Contenu",
+            "langue": "Langue"
+        }
+    }
+}

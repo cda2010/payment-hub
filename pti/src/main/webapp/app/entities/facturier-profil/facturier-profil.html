@@ -1,0 +1,68 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="well with-header" style="margin-top:10px ">
+            <div class="header bg-blue ">
+                <div class="col-xs-8">
+                    <span>Liste des profils facturiers</span>
+                </div>
+                <div class="row">
+                <div class="no-padding-left col-xs-4">
+                    <button  class="btn btn-default  btn-circle btn-xs
+                                            " ng-click="vm.addItem()">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                    <div class="btn-group mr15" uib-dropdown>
+                        <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                                    aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                                éléments par page <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row primary" ng-if="vm.canShowResultCount">
+            <i ng-if="vm.totalItems>1">{{vm.totalItems}} éléments trouvés</i>
+            <i ng-if="vm.totalItems==1">{{vm.totalItems}} élément trouvé</i>
+            <i ng-if="vm.totalItems<1">Aucun résultat</i>
+        </div>
+        <table class="table table-hover">
+            <thead class="bordered-blue">
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="facturier"><span>Facturier</span></th>
+                    <th ><span>Type Acteur</span></th>
+                    <th ><span>Profils</span></th>
+                    <th></th>
+                </tr>
+            </thead> 
+            <tbody>
+             <tr ng-repeat="facturierProfil in vm.datas">
+                
+                    <td>{{ facturierProfil.facturier.nomFacturier }}</td>
+                    <td>{{ facturierProfil.facturier.typeActeur }}</td>
+                    <td>
+                        <span ng-repeat="groupeProfilActeurDTOs in facturierProfil.facturier.groupeProfilActeurDTOs track by $index" class="badge badge-success">{{ groupeProfilActeurDTOs.nom }}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

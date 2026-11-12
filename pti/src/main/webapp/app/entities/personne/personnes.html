@@ -1,0 +1,198 @@
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="vm.close()">&times;</button>
+        <h4 class="modal-title" id="myCompteLabel">Informations</h4>
+    </div>
+    <div>
+        <div class="container">
+            <div class="control-group row">
+
+                <div class="radio col-sm-3">
+                    <label>
+                        <input autocomplete="off" value="COMPTE" ng-model="vm.typeSearch" name="form-field-radio"
+                            type="radio" class="colored-blue">
+                        <span class="text"> Compte</span>
+                    </label>
+                </div>
+                <div class="radio col-sm-3 mt5">
+                    <label>
+                        <input autocomplete="off" ng-model="vm.typeSearch" value="IDENTITE" name="form-field-radio"
+                            type="radio" class="colored-blue">
+                        <span class="text"> Identité</span>
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="row mt5" ng-if="vm.typeSearch=='IDENTITE'">
+                <div class="col-sm-2" ng-if="vm.typeSearch=='IDENTITE'">
+                    <select class="form-control input-xs" id="field_nationalite" name="nationalite"
+                        ng-model="vm.codePaysTelephone"
+                        ng-options="nationalite.code as nationalite.libelle for nationalite in vm.nationalites">
+                        <option value="">Code</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-4">
+                    <input autocomplete="off" title="Telephone" placeholder="Telephone" ng-disabled="vm.isViewing"
+                        type="text" class="form-control" name="telephone" id="field_telephoneE"
+                        ng-model="vm.telephone" />
+                </div>
+            </div>
+            <div class="row mt5" ng-if="vm.typeSearch=='IDENTITE'">
+
+                <div class="form-group col-sm-4">
+                    <select title="Type Doc" ng-disabled="vm.isViewing" class="form-control" id="field_typePieceE"
+                        name="typePiece" ng-model="vm.typePieceId"
+                        ng-options="typePiece.id as typePiece.libelleTypePiece for typePiece in vm.typepieces">
+                        <option value="">Type Doc</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-4">
+                    <input autocomplete="off" title="Reference Doc" placeholder="Reference Doc"
+                        ng-disabled="vm.isViewing" type="text" class="form-control" name="referencePiece"
+                        id="field_referencePieceE" ng-model="vm.referencePiece" required />
+                </div>
+
+                <div class="col-sm-1 mt5">
+                    <button class="btn btn-warnig btn-xs" ng-click="vm.initFiltre()">
+                        <span class="glyphicon glyphicon-search">Annuler</span>
+                    </button>
+                </div>
+                <div class="col-sm-1  mt5">
+                    <button class="btn btn-info btn-xs " ng-click="vm.save()">
+                        <span class="glyphicon glyphicon-search">Filtrer</span>
+                    </button>
+                </div>
+            </div>
+            <div class="row" ng-if="vm.typeSearch=='COMPTE'">
+                <div class="form-group col-sm-4">
+                    <select required class="form-control input-xs" id="field_type" name="fse" ng-model="vm.type">
+                        <option value="">Type compte</option>
+                        <option value="BANQUE">Compte Banque</option>
+                        <option value="AUTRE">Compte Virtuel</option>
+                          <option value="CARTE">Carte</option>
+                    </select>
+                </div>
+                <div ng-if="!vm.type=='BANQUE'" class="col-sm-4">
+                    <div class="form-group">
+                        <input autocomplete="off" placeholder="reference" required type="text" class="form-control"
+                            name="valeurCompte" id="field_valeurCompte" ng-model="vm.referenceC" />
+                    </div>
+                </div>
+                <div class="col-sm-1 mt5" ng-if="!vm.type=='BANQUE'">
+                    <button class="btn btn-warnig btn-xs" ng-click="vm.initFiltre()">
+                        <span class="glyphicon glyphicon-search">Annuler</span>
+                    </button>
+                </div>
+                <div class="col-sm-1  mt5" ng-if="!vm.type=='BANQUE'">
+                    <button class="btn btn-info btn-xs " ng-click="vm.findTitulaireCompte()">
+                        <span class="glyphicon glyphicon-search">Filtrer</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row" ng-if="vm.typeSearch=='COMPTE'">
+                <div class="form-group col-sm-4" ng-if="!vm.type=='BANQUE'">
+                    <input autocomplete="off" title="Code agence" placeholder="Code agence" type="text"
+                        class="form-control" name="codeAgence" id="field_codeAgence" ng-model="vm.codeAgence"
+                        required />
+                </div>
+
+                <div class="form-group col-sm-4" ng-if="vm.type=='BANQUE'">
+                    <input autocomplete="off" title="Code banque" placeholder="Code banque" type="text"
+                        class="form-control" name="codeBanque" id="field_codeBanque" ng-model="vm.codeBanque"
+                        required />
+                </div>
+            </div>
+
+            <div class="row" ng-if="vm.typeSearch=='COMPTE' && vm.type=='BANQUE'">
+                <div class="form-group col-sm-4">
+                    <input autocomplete="off" title="Numéro compte" placeholder="Numéro compte" type="text"
+                        class="form-control" name="numeroCmpt" id="field_numeroCmpt" ng-model="vm.referenceC"
+                        required />
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <input autocomplete="off" title="Rib" placeholder="rib" required type="text" class="form-control"
+                        name="rib" id="field_rib" ng-model="vm.rib" />
+                </div>
+                <div class="col-sm-1 mt5">
+                    <button class="btn btn-warnig btn-xs" ng-click="vm.clear()">
+                        <span class="glyphicon glyphicon-search">Annuler</span>
+                    </button>
+                </div>
+                <div class="col-sm-1  mt5">
+                    <button class="btn btn-info btn-xs " ng-click="vm.findTitulaireCompte()">
+                        <span class="glyphicon glyphicon-search">Filtrer</span>
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        <h4>
+                            Liste des personnes
+                        </h4>
+                    </div>
+                    
+                    
+                    
+                    
+                    <table class="table table-hover table-responsive">
+                        <thead>
+                            <tr class="mf-table-header">
+                                <th>Telephone</th>
+                                <th ng-if="vm.typeP=='PHYSIQUE'">Nom</th>
+                                <th ng-if="vm.typeP=='PHYSIQUE'">Prénom</th>
+                                <th ng-if="vm.typeP=='MORALE'">Raison sociale</th>
+                                <th>Statut</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        
+                        
+                    
+                        <tbody class="mb10">
+                            <tr class="mf-table-body" ng-repeat="personne in vm.datas">
+                                <td>{{personne.personneDTO.telephone}}</td>
+                                <td ng-if="vm.typeP=='PHYSIQUE'">{{personne.personnePhysiqueDTO.nomClient}}</td>
+                                <td ng-if="vm.typeP=='PHYSIQUE'">{{personne.personnePhysiqueDTO.prenomClient}}</td>
+                                <td ng-if="vm.typeP=='MORALE'">{{personne.personneMoraleDTO.raisonSociale}}</td>
+                                <td >
+                                    <button disabled class="btn btn-danger btn-xs"
+                                        ng-click="vm.setActive(personne.personneDTO, true)"
+                                        ng-if="!personne.personneDTO.activated">Deactivated
+                                    </button>
+                                    <button  class="btn btn-success btn-xs"
+                                        ng-click="vm.setActive(personne.personneDTO, false)"
+                                        ng-if="personne.personneDTO.activated">
+                                        Activated
+                                    </button>
+                                </td>
+                                <td>
+<!--                                    <button  title="Transactions du client" type="submit"-->
+<!--                                        ui-sref="operations-personne({personneId:personne.personneDTO.id})"-->
+<!--                                        class="btn btn-success btn-xs btn-round">-->
+<!--                                        <span class="glyphicon glyphicon-transfer"></span>-->
+<!--                                    </button>-->
+                                    <button title="Informations du client" type="submit"
+                                        ng-click="vm.detailsPersonne(personne)"
+                                        class="btn btn-primary btn-xs btn-round">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="center-block text-center" >
+                    <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+                    </uib-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

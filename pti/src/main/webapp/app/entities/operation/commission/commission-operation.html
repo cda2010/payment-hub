@@ -1,0 +1,47 @@
+<div >
+    <div class="modal-header">
+        <h4 style="background-color: #1758a3 !important; color: white !important;text-align: center;">Liste des Commissions</h4>
+    </div>
+    <div class="modal-body">
+        <div class="table-responsive">
+            <table class="jh-table table table-striped" >
+                <thead>
+                <th ><span>Montant</span></th>
+                <th><span>Type de service</span></th>
+                <th ><span >Est Paye?</span> </th>
+                <th><span>Est Comptabilisé?</span></th>
+                <th ><span >Date Paiement</span></th>
+                <th ><span >Date Enregistrement</span></th>
+                <th><span >Operation</span></th>
+                <th ><span >Organisation</span></th>
+                </thead>
+                <tbody ng-repeat="commission in vm.commission">
+                <tr>
+                    <td>{{commission.montant | currency:""}}</td>
+                    <td>{{commission.typeService}}</td>
+                    <td ng-if="commission.estPaye==true"><span class="bg-success white">OUI</span></td>
+                    <td ng-if="commission.estPaye==false || commission.estPaye==null "><span class="bg-danger white">NON</span></td>
+                    <td ng-if="commission.estComptabilise==true"><span class="bg-success white">OUI</span></td>
+                    <td ng-if="commission.estComptabilise==false|| commission.estComptabilise==null"><span class="bg-danger white">NON</span></td>
+                    <td>{{commission.datePaiement |date:'medium'}}</td>
+                    <td>{{commission.dateEnregistrement|date:'medium'}}</td>
+                    <td>{{commission.operationCodeOperation}}</td>
+                    <td>{{commission.organisationLibelleUniteOrganisation}}</td>
+                <tr>
+                </tbody>
+            </table>
+        </div>
+        <div  class="center-block text-center" ng-show="vm.canShowResultCount">
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+            <uib-pagination total-items="vm.queryCount" ng-model="vm.page" items-per-page="vm.itemsPerPage" ng-change="vm.transition()" >
+            </uib-pagination>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-default"  ng-click="fermerM()">
+                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Fermer</span>
+            </button>
+        </div>
+    </div>
+</div>

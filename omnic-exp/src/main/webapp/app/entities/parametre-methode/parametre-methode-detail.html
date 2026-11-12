@@ -1,0 +1,31 @@
+
+<div>
+    <h2><span>Parametre Methode</span> {{vm.parametreMethode.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Nom Parametre Util</span></dt>
+        <dd>
+            <span>{{vm.parametreMethode.nomParametreUtil}}</span>
+        </dd>
+        <dt><span>Valeur</span></dt>
+        <dd>
+            <span>{{vm.parametreMethode.valeur}}</span>
+        </dd>
+        <dt><span>Methode</span></dt>
+        <dd>
+            <a ui-sref="methode-detail({id:vm.parametreMethode.methode.id})">{{vm.parametreMethode.methode.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="parametre-methode-detail.edit({id:vm.parametreMethode.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,64 @@
+<div>
+    <h2>Fournisseur Services</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="fournisseur-service.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Fournisseur Service
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Code Fse</span></th>
+                    <th><span>Nom</span></th>
+                    <th><span>Statut</span></th>
+                    <th><span>Groupe</span></th>
+                      <th><span>Pays</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="fournisseurService in vm.fournisseurServices track by fournisseurService.id">
+                    <td><a ui-sref="fournisseur-service-detail({id:fournisseurService.id})">{{fournisseurService.id}}</a></td>
+                    <td>{{fournisseurService.codeFse}}</td>
+                    <td>{{fournisseurService.nom}}</td>
+                    <td>{{fournisseurService.statut}}</td>
+                    <td>{{fournisseurService.groupe}}</td>
+                      <td>{{fournisseurService.pays.nomPays}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="fournisseur-service-detail({id:fournisseurService.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="fournisseur-service.edit({id:fournisseurService.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="fournisseur-service.delete({id:fournisseurService.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+
+{
+    "ptiApp": {
+        "prametreExport" : {
+            "home": {
+                "title": "PrametreExports",
+                "createLabel": "Créer un nouveau Prametre Export",
+                "createOrEditLabel": "Créer ou éditer un Prametre Export"
+            },
+            "created": "Un nouveau Prametre Export a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Prametre Export avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Prametre Export avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Prametre Export {{ id }} ?"
+            },
+            "detail": {
+                "title": "Prametre Export"
+            },
+            "nomParametre": "Nom Parametre",
+            "nomChamps": "Nom Champs",
+            "valeur": "Valeur"
+        }
+    }
+}

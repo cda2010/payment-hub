@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "paramExecutionJob" : {
+            "home": {
+                "title": "ParamExecutionJobs",
+                "createLabel": "Créer un nouveau Param Execution Job",
+                "createOrEditLabel": "Créer ou éditer un Param Execution Job"
+            },
+            "created": "Un nouveau Param Execution Job a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Param Execution Job avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Param Execution Job avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Param Execution Job {{ id }} ?"
+            },
+            "detail": {
+                "title": "Param Execution Job"
+            },
+            "cle": "Cle",
+            "valeur": "Valeur",
+            "ptiJobDetail": "Pti Job Detail"
+        }
+    }
+}

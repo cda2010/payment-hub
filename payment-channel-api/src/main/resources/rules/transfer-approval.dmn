@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
+             id="definitions_transfer_approval"
+             name="transfer-approval"
+             namespace="https://payment-gateway/dmn/transfer-approval"
+             exporter="payment-gateway"
+             exporterVersion="1.0">
+
+  <description>
+    ACCOUNT_TRANSFER / RTGS / SWIFT : montant (+ devise + catalogServiceCode) → niveaux d'approbation.
+    Hit policy FIRST — règles SWIFT puis RTGS d'abord, puis bandes ACCOUNT_TRANSFER.
+    Seuils XOF ; surcharger via édition DMN ou désactiver approvalPolicy.enabled.
+  </description>
+
+  <inputData id="input_amount" name="amount">
+    <variable name="amount" typeRef="number"/>
+  </inputData>
+  <inputData id="input_currency" name="currency">
+    <variable name="currency" typeRef="string"/>
+  </inputData>
+  <inputData id="input_catalogServiceCode" name="catalogServiceCode">
+    <variable name="catalogServiceCode" typeRef="string"/>
+  </inputData>
+
+  <decision id="decision_TransferApproval" name="TransferApproval">
+    <variable name="TransferApproval" typeRef="number"/>
+    <informationRequirement>
+      <requiredInput href="#input_amount"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_currency"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_catalogServiceCode"/>
+    </informationRequirement>
+
+    <decisionTable id="dt_TransferApproval" hitPolicy="FIRST">
+      <input id="in_amount" label="amount">
+        <inputExpression typeRef="number"><text>amount</text></inputExpression>
+      </input>
+      <input id="in_currency" label="currency">
+        <inputExpression typeRef="string"><text>currency</text></inputExpression>
+      </input>
+      <input id="in_catalogServiceCode" label="catalogServiceCode">
+        <inputExpression typeRef="string"><text>catalogServiceCode</text></inputExpression>
+      </input>
+
+      <output id="out_levels" label="approvalLevelsRequired" name="approvalLevelsRequired" typeRef="number"/>
+      <output id="out_g1" label="approvalCandidateGroupL1" name="approvalCandidateGroupL1" typeRef="string"/>
+      <output id="out_g2" label="approvalCandidateGroupL2" name="approvalCandidateGroupL2" typeRef="string"/>
+
+      <!-- SWIFT : toujours ≥ L1 ; XOF ≥ 10M → L1+L2 ; autres devises ≥ L1 -->
+      <rule id="r_swift_l2_xof">
+        <inputEntry id="rs2_c1"><text>&gt;= 10000000</text></inputEntry>
+        <inputEntry id="rs2_c2"><text>"XOF"</text></inputEntry>
+        <inputEntry id="rs2_c3"><text>"SWIFT"</text></inputEntry>
+        <outputEntry id="rs2_o1"><text>2</text></outputEntry>
+        <outputEntry id="rs2_o2"><text>"TRANSFER_APPROVER_L1"</text></outputEntry>
+        <outputEntry id="rs2_o3"><text>"TRANSFER_APPROVER_L2"</text></outputEntry>
+      </rule>
+
+      <rule id="r_swift_l1">
+        <inputEntry id="rs1_c1"><text>-</text></inputEntry>
+        <inputEntry id="rs1_c2"><text>-</text></inputEntry>
+        <inputEntry id="rs1_c3"><text>"SWIFT"</text></inputEntry>
+        <outputEntry id="rs1_o1"><text>1</text></outputEntry>
+        <outputEntry id="rs1_o2"><text>"TRANSFER_APPROVER_L1"</text></outputEntry>
+        <outputEntry id="rs1_o3"><text>""</text></outputEntry>
+      </rule>
+
+      <!-- RTGS : toujours au moins L1 ; ≥ 5M → L1+L2 -->
+      <rule id="r_rtgs_l2">
+        <inputEntry id="rr2_c1"><text>&gt;= 5000000</text></inputEntry>
+        <inputEntry id="rr2_c2"><text>"XOF"</text></inputEntry>
+        <inputEntry id="rr2_c3"><text>"RTGS"</text></inputEntry>
+        <outputEntry id="rr2_o1"><text>2</text></outputEntry>
+        <outputEntry id="rr2_o2"><text>"TRANSFER_APPROVER_L1"</text></outputEntry>
+        <outputEntry id="rr2_o3"><text>"TRANSFER_APPROVER_L2"</text></outputEntry>
+      </rule>
+
+      <rule id="r_rtgs_l1">
+        <inputEntry id="rr1_c1"><text>-</text></inputEntry>
+        <inputEntry id="rr1_c2"><text>"XOF"</text></inputEntry>
+        <inputEntry id="rr1_c3"><text>"RTGS"</text></inputEntry>
+        <outputEntry id="rr1_o1"><text>1</text></outputEntry>
+        <outputEntry id="rr1_o2"><text>"TRANSFER_APPROVER_L1"</text></outputEntry>
+        <outputEntry id="rr1_o3"><text>""</text></outputEntry>
+      </rule>
+
+      <!-- &lt; 100_000 XOF → pas d'approbation -->
+      <rule id="r_skip_low">
+        <inputEntry id="r0_c1"><text>&lt; 100000</text></inputEntry>
+        <inputEntry id="r0_c2"><text>"XOF"</text></inputEntry>
+        <inputEntry id="r0_c3"><text>-</text></inputEntry>
+        <outputEntry id="r0_o1"><text>0</text></outputEntry>
+        <outputEntry id="r0_o2"><text>""</text></outputEntry>
+        <outputEntry id="r0_o3"><text>""</text></outputEntry>
+      </rule>
+
+      <!-- 100_000 ≤ amount &lt; 1_000_000 → L1 -->
+      <rule id="r_l1">
+        <inputEntry id="r1_c1"><text>&lt; 1000000</text></inputEntry>
+        <inputEntry id="r1_c2"><text>"XOF"</text></inputEntry>
+        <inputEntry id="r1_c3"><text>-</text></inputEntry>
+        <outputEntry id="r1_o1"><text>1</text></outputEntry>
+        <outputEntry id="r1_o2"><text>"TRANSFER_APPROVER_L1"</text></outputEntry>
+        <outputEntry id="r1_o3"><text>""</text></outputEntry>
+      </rule>
+
+      <!-- ≥ 1_000_000 XOF → L1 puis L2 -->
+      <rule id="r_l2">
+        <inputEntry id="r2_c1"><text>-</text></inputEntry>
+        <inputEntry id="r2_c2"><text>"XOF"</text></inputEntry>
+        <inputEntry id="r2_c3"><text>-</text></inputEntry>
+        <outputEntry id="r2_o1"><text>2</text></outputEntry>
+        <outputEntry id="r2_o2"><text>"TRANSFER_APPROVER_L1"</text></outputEntry>
+        <outputEntry id="r2_o3"><text>"TRANSFER_APPROVER_L2"</text></outputEntry>
+      </rule>
+
+      <!-- Autres devises : L1 dès 1 unité (sécurisant) -->
+      <rule id="r_other_currency">
+        <inputEntry id="r3_c1"><text>-</text></inputEntry>
+        <inputEntry id="r3_c2"><text>-</text></inputEntry>
+        <inputEntry id="r3_c3"><text>-</text></inputEntry>
+        <outputEntry id="r3_o1"><text>1</text></outputEntry>
+        <outputEntry id="r3_o2"><text>"TRANSFER_APPROVER_L1"</text></outputEntry>
+        <outputEntry id="r3_o3"><text>""</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

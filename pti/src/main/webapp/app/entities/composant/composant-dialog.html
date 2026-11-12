@@ -1,0 +1,114 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myComposantLabel" data-translate="ptiApp.composant.home.createOrEditLabel">Create or edit a Composant</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.composant.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   ng-model="vm.composant.id" readonly />
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.composant.typeComposant" for="field_typeComposant">Type Composant</label>
+            <select class="form-control" name="typeComposant" ng-model="vm.composant.typeComposant" id="field_typeComposant" required>
+                <option value="TEXTBOX" data-translate="ptiApp.TypeComposant.TEXTBOX">TEXTBOX</option>
+                <option value="BOUTON" data-translate="ptiApp.TypeComposant.BOUTON">BOUTON</option>
+                <option value="LISTE">LISTE</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.composant.code" for="field_code">Code</label>
+            <input type="text" class="form-control" name="code" id="field_code"
+                   ng-model="vm.composant.code"
+                   />
+        </div>
+        <div ng-if="vm.composant.typeComposant != 'BOUTON'" class="form-group">
+            <label class="control-label" data-translate="ptiApp.composant.type" for="field_type">Type</label>
+            <select class="form-control" name="type" ng-model="vm.composant.type" id="field_type" required>
+                <option value="String" >String</option>
+                <option value="Integer" >Integer</option>
+                <option value="Decimal">Decimal</option>
+                <option value="Boolean">Boolean</option>
+                <option value="Date">Date</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.composant.label" for="field_label">Label</label>
+            <input type="text" class="form-control" name="label" id="field_label"
+                   ng-model="vm.composant.label" required
+                   />
+        </div>
+
+        <div ng-if="vm.composant.typeComposant != 'BOUTON'" class="form-group">
+            <label class="control-label">Valeur par défaut</label>
+            <input type="text" class="form-control" id="field_default"  ng-model="vm.composant.defaultValue">
+        </div>
+
+        <div ng-if="vm.composant.typeComposant != 'BOUTON'" class="form-group">
+            <label class="control-label" for="field_attribut">Attribut</label>
+            <input type="text" class="form-control" id="field_attribut"  ng-model="vm.composant.attribut">
+        </div>
+
+        <div ng-if="vm.composant.typeComposant == 'BOUTON'" class="form-group">
+            <label class="control-label" for="field_action">Action</label>
+            <input type="text" class="form-control" name="action" id="field_action"
+                   ng-model="vm.composant.bouton.action"
+                   />
+        </div>
+        <div ng-if="vm.composant.typeComposant == 'LISTE'" class="form-group row">
+            <label class="control-label col-md-4" for="field_options">Options</label>
+            <div class="col-md-8">Format: <b>clé_1<strong class="warning">:</strong>valeur_1<strong class="danger">;</strong>clé_2<strong class="warning">:</strong>valeur_2<span class="danger">;</span>...<strong class="danger">;</strong>clé_n<strong class="warning">:</strong>valeur_n</b> </div>
+            <textarea class="form-control" name="options" id="field_options" cols="30" rows="10"
+                      ng-model="vm.composant.liste.options"
+                      ></textarea>
+
+            <!--<label class="control-label" for="field_multiple">Multiple</label>
+            <span id="field_multiple" ng-if="!vm.composant.liste.multiple" ng-click="vm.composant.liste.multiple=true" class="btn btn-danger">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+            </span>
+            <span id="field_multiple" ng-if="vm.composant.liste.multiple" ng-click="vm.composant.liste.multiple=false" class="btn btn-success">
+                <span class="glyphicon glyphicon-ok-circle"></span>
+            </span>-->
+
+            <span id="field_multiple" ng-if="!vm.composant.liste.multiple" ng-click="vm.enableMultiple(true)" class="btn btn-danger" >
+                <span class="glyphicon glyphicon-remove-circle"></span>
+            </span>
+            <span ng-if="!vm.composant.liste.multiple">Sélection Multiple désactivée</span>
+
+            <span id="field_multiple" ng-if="vm.composant.liste.multiple" ng-click="vm.enableMultiple(false)" class="btn btn-success">
+                <span class="glyphicon glyphicon-ok-circle"></span>
+            </span>
+            <span ng-if="vm.composant.liste.multiple">Sélection Multiple activée</span>
+            
+            
+            
+            
+            
+            <span id="field_eststatique" ng-if="vm.composant.liste.estStatic" ng-click="vm.enableEstStatic(true)" class="btn btn-success">
+                <span class="glyphicon glyphicon-ok-circle"></span>
+            </span>
+            <span ng-if="vm.composant.liste.estStatic">Donnée statique</span>
+
+            
+            <span id="field_eststatique" ng-if="vm.composant.liste.estStatic===false|| vm.composant.liste.estStatic===null" ng-click="vm.enableEstStatic(false)" class="btn btn-danger">
+                <span class="glyphicon glyphicon-ok-circle"></span>
+            </span>
+            <span ng-if="vm.composant.liste.estStatic===false|| vm.composant.liste.estStatic===null">Données dynamique</span>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

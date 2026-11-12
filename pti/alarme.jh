@@ -1,0 +1,10 @@
+entity RecepteurAlarme{
+	etiquette String,
+    emails String,
+    sms String,
+}
+paginate all with pagination
+
+dto * with mapstruct
+
+service all with serviceClass

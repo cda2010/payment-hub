@@ -1,0 +1,9 @@
+{
+    "ptiApp": {
+        "Sexe" : {
+            "null": "",
+            "MASCULIN": "MASCULIN",
+            "FEMININ": "FEMININ"
+        }
+    }
+}

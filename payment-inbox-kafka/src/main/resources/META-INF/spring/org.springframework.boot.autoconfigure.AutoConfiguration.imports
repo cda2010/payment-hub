@@ -1,0 +1,2 @@
+com.gateway.payment.inbox.kafka.InboxKafkaAutoConfiguration
+com.gateway.payment.spend.kafka.SpendKafkaAutoConfiguration

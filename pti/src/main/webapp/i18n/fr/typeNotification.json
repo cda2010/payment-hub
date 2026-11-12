@@ -1,0 +1,9 @@
+{
+    "ptiApp": {
+        "TypeNotification" : {
+            "null": "",
+            "SMS": "SMS",
+            "MESSAGEPUSH": "MESSAGEPUSH"
+        }
+    }
+}

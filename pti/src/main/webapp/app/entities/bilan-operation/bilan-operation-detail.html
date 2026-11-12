@@ -1,0 +1,59 @@
+
+<div>
+    <h2><span data-translate="ptiApp.bilanOperation.detail.title">Bilan Operation</span> {{vm.bilanOperation.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.bilanOperation.nombre">Nombre</span></dt>
+        <dd>
+            <span>{{vm.bilanOperation.nombre}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.bilanOperation.montant">Montant</span></dt>
+        <dd>
+            <span>{{vm.bilanOperation.montant}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.bilanOperation.dateDerniereOperation">Date Derniere Operation</span></dt>
+        <dd>
+            <span>{{vm.bilanOperation.dateDerniereOperation | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.bilanOperation.typeService">Type Service</span></dt>
+        <dd>
+            <a ui-sref="type-service-detail({id:vm.bilanOperation.typeServiceId})">{{vm.bilanOperation.typeServiceLibelle}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.bilanOperation.canal">Canal</span></dt>
+        <dd>
+            <a ui-sref="canal-detail({id:vm.bilanOperation.canalId})">{{vm.bilanOperation.canalLibelleCanal}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.bilanOperation.beneficiaire">Beneficiaire</span></dt>
+        <dd>
+            <a ui-sref="client-detail({id:vm.bilanOperation.beneficiaireId})">{{vm.bilanOperation.beneficiaireCodeClient}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.bilanOperation.emetteur">Emetteur</span></dt>
+        <dd>
+            <a ui-sref="client-detail({id:vm.bilanOperation.emetteurId})">{{vm.bilanOperation.emetteurCodeClient}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.bilanOperation.organisationEm">Organisation Em</span></dt>
+        <dd>
+            <a ui-sref="unite-organisation-detail({id:vm.bilanOperation.organisationEmId})">{{vm.bilanOperation.organisationEmLibelleUniteOrganisation}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.bilanOperation.organisationAcq">Organisation Acq</span></dt>
+        <dd>
+            <a ui-sref="unite-organisation-detail({id:vm.bilanOperation.organisationAcqId})">{{vm.bilanOperation.organisationAcqLibelleUniteOrganisation}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.bilanOperation.acteur">Acteur</span></dt>
+        <dd>
+            <a ui-sref="unite-organisation-detail({id:vm.bilanOperation.acteurId})">{{vm.bilanOperation.acteurLibelleUniteOrganisation}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="bilan-operation-detail.edit({id:vm.bilanOperation.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

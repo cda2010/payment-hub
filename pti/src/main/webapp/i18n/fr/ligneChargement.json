@@ -1,0 +1,29 @@
+{
+    "ptiApp": {
+        "ligneChargement" : {
+            "home": {
+                "title": "LigneChargements",
+                "createLabel": "Créer un nouveau Ligne Chargement",
+                "createOrEditLabel": "Créer ou éditer un Ligne Chargement"
+            },
+            "created": "Un nouveau Ligne Chargement a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Ligne Chargement avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Ligne Chargement avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Ligne Chargement {{ id }} ?"
+            },
+            "detail": {
+                "title": "Ligne Chargement"
+            },
+            "nom": "Nom",
+            "prenom": "Prenom",
+            "numeroCompte": "Numero Compte",
+            "numeroTelephone": "Numero Telephone",
+            "montant": "Montant",
+            "error": "Error",
+
+            "statutLigne": "Statut Ligne",
+            "chargementTransfert": "Chargement Transfert"
+        }
+    }
+}

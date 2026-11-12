@@ -1,0 +1,9 @@
+
+entity Liste {
+	options  String,
+    multiple Boolean,
+}
+entity Bouton {
+	action  String,
+}
+

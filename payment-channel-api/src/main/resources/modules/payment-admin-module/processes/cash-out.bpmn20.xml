@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:pay="http://payment-gateway/schema/bpmn/pay"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             targetNamespace="http://payment-gateway/catalog"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+
+  <!--
+    CASH_OUT client-initié — branchement withdrawalChannel (GAB | AGENT | AGENCY).
+    Clé Flowable : cashOut
+    GAB : code retrait (voucher) → attente saisie GAB.
+    AGENT : débit réseau agent → attente remise (sans voucher).
+    AGENCY : stub fulfill jusqu'au rail hôte.
+  -->
+  <process id="cashOut" name="Cash-out (Catalog)" isExecutable="true">
+    <documentation>
+      Montant → compte source → branche withdrawalChannel → frais → rules → récap → OTP →
+      fulfill (GAB voucher | agent | agence) → notify.
+    </documentation>
+
+    <startEvent id="start" name="Start"/>
+    <sequenceFlow id="flow_start" sourceRef="start" targetRef="CAPTURE_AMOUNT"/>
+
+    <userTask id="CAPTURE_AMOUNT" name="01 Capture amount"
+              flowable:formKey="cash-out-amount"/>
+    <sequenceFlow id="flow_01" sourceRef="CAPTURE_AMOUNT" targetRef="SELECT_SOURCE"/>
+
+    <userTask id="SELECT_SOURCE" name="02 Select source account"
+              flowable:formKey="cash-out-source"/>
+    <sequenceFlow id="flow_02" sourceRef="SELECT_SOURCE" targetRef="gw_withdrawalChannel"/>
+
+    <!-- ── withdrawalChannel : capture ───────────────────────────────────── -->
+    <exclusiveGateway id="gw_withdrawalChannel" name="Withdrawal channel?"
+                      default="flow_to_agent_default"/>
+    <sequenceFlow id="flow_to_agent" sourceRef="gw_withdrawalChannel" targetRef="SELECT_AGENT_CHANNEL">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${withdrawalChannel == 'AGENT'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_to_gab" sourceRef="gw_withdrawalChannel" targetRef="CAPTURE_GAB">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${withdrawalChannel == 'GAB'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_to_agency" sourceRef="gw_withdrawalChannel" targetRef="CAPTURE_AGENCY">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${withdrawalChannel == 'AGENCY'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_to_agent_default" sourceRef="gw_withdrawalChannel" targetRef="SELECT_AGENT_CHANNEL"/>
+
+    <userTask id="SELECT_AGENT_CHANNEL" name="03 Select agent network"
+              flowable:formKey="cash-out-agent"/>
+    <sequenceFlow id="flow_agent_01" sourceRef="SELECT_AGENT_CHANNEL" targetRef="CALCULATE_FEES"/>
+
+    <userTask id="CAPTURE_GAB" name="03 Capture GAB details"
+              flowable:formKey="cash-out-gab"/>
+    <sequenceFlow id="flow_gab_01" sourceRef="CAPTURE_GAB" targetRef="CALCULATE_FEES"/>
+
+    <userTask id="CAPTURE_AGENCY" name="03 Capture agency details"
+              flowable:formKey="cash-out-agency"/>
+    <sequenceFlow id="flow_agency_01" sourceRef="CAPTURE_AGENCY" targetRef="CALCULATE_FEES"/>
+
+    <!-- ── shared mid-path ───────────────────────────────────────────────── -->
+    <serviceTask id="CALCULATE_FEES" name="04 Calculate fees"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="CALCULATE_FEES"/>
+    <sequenceFlow id="flow_04" sourceRef="CALCULATE_FEES" targetRef="EVALUATE_RULES"/>
+
+    <serviceTask id="EVALUATE_RULES" name="05 Evaluate rules"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="EVALUATE_RULES"
+                 pay:actorRole="SOURCE"/>
+    <sequenceFlow id="flow_05" sourceRef="EVALUATE_RULES" targetRef="CONFIRM"/>
+
+    <userTask id="CONFIRM" name="06 Recap confirm"
+              flowable:formKey="product-recap"/>
+    <sequenceFlow id="flow_06" sourceRef="CONFIRM" targetRef="generateOtp"/>
+
+    <serviceTask id="generateOtp" name="07 Authenticate — generate OTP"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="GENERATE_OTP"
+                 pay:actorRole="SOURCE"/>
+    <sequenceFlow id="flow_07a" sourceRef="generateOtp" targetRef="enterOtp"/>
+
+    <userTask id="enterOtp" name="07 Authenticate — enter OTP"
+              flowable:formKey="provider-otp-code"/>
+    <sequenceFlow id="flow_07b" sourceRef="enterOtp" targetRef="gw_withdrawalFulfill"/>
+
+    <!-- ── withdrawalChannel : fulfill ───────────────────────────────────── -->
+    <exclusiveGateway id="gw_withdrawalFulfill" name="Fulfill by channel?"
+                      default="flow_fulfill_agent_default"/>
+    <sequenceFlow id="flow_fulfill_agent" sourceRef="gw_withdrawalFulfill" targetRef="EXECUTE_CASHOUT">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${withdrawalChannel == 'AGENT'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_fulfill_gab" sourceRef="gw_withdrawalFulfill" targetRef="GENERATE_VOUCHER">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${withdrawalChannel == 'GAB'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_fulfill_agency" sourceRef="gw_withdrawalFulfill" targetRef="FULFILL_AGENCY">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${withdrawalChannel == 'AGENCY'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_fulfill_agent_default" sourceRef="gw_withdrawalFulfill" targetRef="EXECUTE_CASHOUT"/>
+
+    <!-- AGENT : débit → attente remise (pas de voucher) -->
+    <serviceTask id="EXECUTE_CASHOUT" name="08 Debit source (agent)"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="EXECUTE_CASHOUT"
+                 pay:actorRole="SOURCE"
+                 pay:operation="TRANSFERT"/>
+    <sequenceFlow id="flow_08" sourceRef="EXECUTE_CASHOUT" targetRef="WAIT_AGENT_PAYOUT"/>
+
+    <serviceTask id="WAIT_AGENT_PAYOUT" name="09 Wait agent payout"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="WAIT"/>
+    <sequenceFlow id="flow_10" sourceRef="WAIT_AGENT_PAYOUT" targetRef="NOTIFY"/>
+
+    <!-- GAB : code retrait → attente saisie au distributeur -->
+    <serviceTask id="GENERATE_VOUCHER" name="08 Generate GAB withdrawal code"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="GENERATE_CODE"/>
+    <sequenceFlow id="flow_09" sourceRef="GENERATE_VOUCHER" targetRef="WAIT_GAB_WITHDRAWAL"/>
+
+    <serviceTask id="WAIT_GAB_WITHDRAWAL" name="09 Wait GAB withdrawal"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="WAIT"/>
+    <sequenceFlow id="flow_gab_wait" sourceRef="WAIT_GAB_WITHDRAWAL" targetRef="NOTIFY"/>
+
+    <!-- AGENCY (stub rail — soft PASS jusqu'à capability agence) -->
+    <serviceTask id="FULFILL_AGENCY" name="08 Fulfill agency withdrawal"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="WAIT"/>
+    <sequenceFlow id="flow_agency_fulfill" sourceRef="FULFILL_AGENCY" targetRef="NOTIFY"/>
+
+    <serviceTask id="NOTIFY" name="11 Notify"
+                 flowable:delegateExpression="${catalogStepDelegate}"
+                 pay:capability="NOTIFY"/>
+    <sequenceFlow id="flow_11" sourceRef="NOTIFY" targetRef="end"/>
+
+    <endEvent id="end" name="End"/>
+  </process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_cashOut">
+    <bpmndi:BPMNPlane id="BPMNPlane_cashOut" bpmnElement="cashOut">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <omgdc:Bounds x="40" y="162" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CAPTURE_AMOUNT_di" bpmnElement="CAPTURE_AMOUNT">
+        <omgdc:Bounds x="110" y="140" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SELECT_SOURCE_di" bpmnElement="SELECT_SOURCE">
+        <omgdc:Bounds x="260" y="140" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="gw_withdrawalChannel_di" bpmnElement="gw_withdrawalChannel">
+        <omgdc:Bounds x="425" y="165" width="40" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SELECT_AGENT_CHANNEL_di" bpmnElement="SELECT_AGENT_CHANNEL">
+        <omgdc:Bounds x="510" y="80" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CAPTURE_GAB_di" bpmnElement="CAPTURE_GAB">
+        <omgdc:Bounds x="510" y="200" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CAPTURE_AGENCY_di" bpmnElement="CAPTURE_AGENCY">
+        <omgdc:Bounds x="510" y="320" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CALCULATE_FEES_di" bpmnElement="CALCULATE_FEES">
+        <omgdc:Bounds x="680" y="140" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EVALUATE_RULES_di" bpmnElement="EVALUATE_RULES">
+        <omgdc:Bounds x="830" y="140" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CONFIRM_di" bpmnElement="CONFIRM">
+        <omgdc:Bounds x="980" y="140" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="generateOtp_di" bpmnElement="generateOtp">
+        <omgdc:Bounds x="110" y="460" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="enterOtp_di" bpmnElement="enterOtp">
+        <omgdc:Bounds x="260" y="460" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="gw_withdrawalFulfill_di" bpmnElement="gw_withdrawalFulfill">
+        <omgdc:Bounds x="425" y="485" width="40" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EXECUTE_CASHOUT_di" bpmnElement="EXECUTE_CASHOUT">
+        <omgdc:Bounds x="510" y="400" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WAIT_AGENT_PAYOUT_di" bpmnElement="WAIT_AGENT_PAYOUT">
+        <omgdc:Bounds x="660" y="400" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GENERATE_VOUCHER_di" bpmnElement="GENERATE_VOUCHER">
+        <omgdc:Bounds x="510" y="520" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WAIT_GAB_WITHDRAWAL_di" bpmnElement="WAIT_GAB_WITHDRAWAL">
+        <omgdc:Bounds x="660" y="520" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="FULFILL_AGENCY_di" bpmnElement="FULFILL_AGENCY">
+        <omgdc:Bounds x="510" y="640" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="NOTIFY_di" bpmnElement="NOTIFY">
+        <omgdc:Bounds x="980" y="520" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="end_di" bpmnElement="end">
+        <omgdc:Bounds x="1140" y="542" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

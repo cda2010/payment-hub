@@ -1,0 +1,19 @@
+version: '2'
+services:
+    pti-app:
+        image: pti
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mysql://pti-mysql:3306/pti?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=pti-elasticsearch:9300
+        ports:
+            - 8080:8080
+    pti-mysql:
+        extends:
+            file: mysql.yml
+            service: pti-mysql
+    pti-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: pti-elasticsearch

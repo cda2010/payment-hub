@@ -1,0 +1,82 @@
+<div>
+    <jhi-alert></jhi-alert>
+    <div class="well with-header" style="margin-top:10px ">
+        <div class="header bg-blue ">
+            <div class="col-xs-11">
+                <h4 >Liste des champs</h4>
+            </div>
+            <div class="no-padding-left col-xs-1">
+                <button class="btn btn-default  btn-circle btn-xs" ui-sref="champs.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+        <table class="jh-table table table-hover">
+            <thead>
+                <tr>
+                    <th><span >ID</span></th>
+                    <th><span>A saisir</span></th>
+                    <th><span >Min</span></th>
+                    <th><span>Max</span></th>
+                    <th><span>Min Length</span></th>
+                    <th><span>Max Length</span></th>
+                    <th><span>Est visible</span></th>
+                    <th><span>Pattern</span></th>
+                    <th><span>Ecran</span></th>
+                    <th><span>Composant</span></th>
+                    <th><span>Default value</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="champs in vm.champs track by champs.id">
+                    <td><a ui-sref="champs-detail({id:champs.id})">{{champs.id}}</a></td>
+                    <td>
+                        <span ng-if="champs.aSaisir" class=" btn-success btn-sm" >
+                            <span  class="glyphicon glyphicon-ok"></span>
+                        </span>
+                        <span ng-if="!champs.aSaisir" class="btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </span>
+                    </td>
+                    <td>{{champs.min}}</td>
+                    <td>{{champs.max}}</td>
+                    <td>{{champs.minLength}}</td>
+                    <td>{{champs.maxLength}}</td>
+                    <td>
+                        <span ng-if="champs.isVisible" class=" btn-success btn-sm" >
+                            <span  class="glyphicon glyphicon-ok"></span>
+                        </span>
+                        <span ng-if="!champs.isVisible" class="btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </span>
+                    </td>
+                    <td>{{champs.pattern}}</td>
+                    <td>Ecran n°: {{champs.ecran.numeroOrdre}} {{champs.ecran.produit.nomProduit}}</td>
+
+                    <td>{{champs.composant.typeComposant}} ({{champs.composant.label}}: {{champs.composant.type}})</td>
+                    <td>{{champs.defaultValue}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="champs-detail({id:champs.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="champs.edit({id:champs.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="champs.delete({id:champs.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

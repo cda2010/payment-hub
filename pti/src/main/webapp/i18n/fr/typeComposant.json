@@ -1,0 +1,10 @@
+{
+    "ptiApp": {
+        "TypeComposant" : {
+            "null": "",
+            "TEXTBOX": "TEXTBOX",
+            "COMBOBOX": "COMBOBOX",
+            "BOUTON": "BOUTON"
+        }
+    }
+}

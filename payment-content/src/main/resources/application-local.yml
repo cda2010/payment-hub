@@ -1,0 +1,19 @@
+# Profil local : base dédiée du docker-compose (content-postgres, port 5443).
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5443/payment_content
+    username: content
+    password: content
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
+content:
+  cache:
+    # false si Redis local non démarré : Caffeine seul.
+    redis-enabled: ${CONTENT_REDIS_ENABLED:true}
+
+logging:
+  level:
+    com.gateway.payment.content: DEBUG

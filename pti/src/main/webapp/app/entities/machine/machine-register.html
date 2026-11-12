@@ -1,0 +1,76 @@
+<form ng-if="!vm.successMsg" name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="label">Enregistrer une machine</h4>
+    </div>
+    <div class="modal-body">
+            <div class="form-group" ngf-drop ngf-change="vm.setBordereau($file, vm.machine)">
+                <label   mf-required class="control-label col-sm-4" for="field_detailsMachine">Informations de la machine</label>
+                <div class="col-sm-6">
+                    <div  ng-if="vm.machine.detailsMachine" class="help-block clearfix">
+                        <a class="pull-left" ng-click="vm.openFile(vm.machine.detailsMachineContentType, vm.machine.detailsMachine)" data-translate="entity.action.open">open</a><br>
+                        <span class="pull-left">{{vm.machine.detailsMachineContentType}}, {{vm.byteSize(vm.machine.detailsMachine)}}</span>
+                        <button  ng-if="!vm.isViewing" type="button" ng-click="vm.machine.detailsMachine=null;vm.machine.detailsMachineContentType=null;"
+                                 class="btn btn-default btn-xs pull-right">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </div>
+                    <button  ng-if="!vm.isViewing" type="button" ngf-select class="btn btn-default btn-block"
+                             ngf-change="vm.setBordereau($file, vm.machine)">
+                        Ajouter
+                    </button>
+                </div>
+                <input autocomplete="off"required type="hidden" class="form-control" name="detailsMachine" id="field_detailsMachine"
+                       ng-model="vm.machine.detailsMachine"
+                />
+                <input autocomplete="off"required type="hidden" class="form-control" name="detailsMachineContentType" id="field_detailsMachineContentType"
+                       ng-model="vm.machine.detailsMachineContentType" />
+            </div>
+            
+            <div class="form-group">
+                <label mf-required class="control-label col-sm-4" for="adresse">Adresse Ip</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" required type="text" class="form-control" name="adresse" id="adresse" ng-model="vm.machine.adresseIp" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label   mf-required class="control-label col-sm-4" for="field_detailsMachine">Organisation</label>
+                <div class="input-group col-sm-6">
+                    <input autocomplete="off" required ng-model="vm.organisation.libelleUniteOrganisation" class="form-control input-xs" type="text" placeholder="Organisation" disabled/>
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-xs btn-primary" ng-click="vm.choisirUo()">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" mf-required 
+                    for="field_emailCertificat">Mail certificat</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" type="email" class="form-control input-xs" name="emailCertificat" id="field_emailCertificat"
+                        ng-model="vm.machine.emailCertificat" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" mf-required 
+                    for="field_email">Mail code</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" type="email" class="form-control input-xs" name="emailCodeAcces" id="field_email"
+                        ng-model="vm.machine.emailCodeAcces" required />
+                </div>
+            </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Annuler</span>
+        </button>
+        <button  ng-disabled="editForm.$invalid || vm.isSaving" type="submit" class="btn btn-primary btn-sm">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Envoyer</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,53 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "hidden",
+        "key": "sourceRail",
+        "defaultValue": "ORANGE_MONEY",
+        "input": true
+      },
+      {
+        "type": "phoneNumber",
+        "key": "msisdn",
+        "label": "Mobile Orange Money (émetteur)",
+        "placeholder": "22670001122",
+        "input": true,
+        "validate": {
+          "required": true,
+          "pattern": "^226\\d{8}$",
+          "customMessage": "Format 226 + 8 chiffres"
+        }
+      },
+      {
+        "type": "phoneNumber",
+        "key": "sourceAccount",
+        "label": "Identifiant compte source (MSISDN)",
+        "placeholder": "22670001122",
+        "input": true,
+        "validate": {
+          "required": true,
+          "pattern": "^226\\d{8}$"
+        }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Mobile Orange Money (émetteur)": "Mobile Orange Money (émetteur)",
+      "Identifiant compte source (MSISDN)": "Identifiant compte source (MSISDN)"
+    },
+    "en": {
+      "Mobile Orange Money (émetteur)": "Orange Money mobile (sender)",
+      "Identifiant compte source (MSISDN)": "Source account id (MSISDN)"
+    }
+  }
+}

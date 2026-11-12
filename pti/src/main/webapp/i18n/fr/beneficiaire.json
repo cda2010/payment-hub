@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "beneficiaire" : {
+            "home": {
+                "title": "Beneficiaires",
+                "createLabel": "Créer un nouveau Beneficiaire",
+                "createOrEditLabel": "Créer ou éditer un Beneficiaire"
+            },
+            "created": "Un nouveau Beneficiaire a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Beneficiaire avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Beneficiaire avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Beneficiaire {{ id }} ?"
+            },
+            "detail": {
+                "title": "Beneficiaire"
+            },
+            "code": "Code",
+            "personne": "Personne",
+            "operation": "Operation"
+        }
+    }
+}

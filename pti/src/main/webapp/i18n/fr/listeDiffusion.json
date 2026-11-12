@@ -1,0 +1,22 @@
+{
+    "ptiApp": {
+        "listeDiffusion" : {
+            "home": {
+                "title": "ListeDiffusions",
+                "createLabel": "Créer un nouveau Liste Diffusion",
+                "createOrEditLabel": "Créer ou éditer un Liste Diffusion"
+            },
+            "created": "Un nouveau Liste Diffusion a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Liste Diffusion avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Liste Diffusion avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Liste Diffusion {{ id }} ?"
+            },
+            "detail": {
+                "title": "Liste Diffusion"
+            },
+            "nomListe": "Nom Liste",
+            "detailListeDiffusion": "Detail Liste Diffusion"
+        }
+    }
+}

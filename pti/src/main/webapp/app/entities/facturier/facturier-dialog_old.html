@@ -1,0 +1,118 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myFacturierLabel" data-translate="ptiApp.facturier.home.createOrEditLabel">Create or edit a Facturier</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.facturier.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.facturier.id" readonly />
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.facturier.typeFacturier" for="field_typeFacturier">Type Facturier</label>
+            <select class="form-control" name="typeFacturier" ng-model="vm.facturier.typeFacturier" id="field_typeFacturier" required>
+                <option value="FSE" data-translate="ptiApp.TypeFacturier.FSE">FSE</option>
+                <option value="MARCHAND" data-translate="ptiApp.TypeFacturier.MARCHAND">MARCHAND</option>
+                <option value="AUTRES" data-translate="ptiApp.TypeFacturier.AUTRES">AUTRES</option>
+            </select>
+        </div>
+
+        <div ng-if="vm.facturier.typeFacturier=='AUTRES'" class="form-group">
+            <label class="control-label" data-translate="ptiApp.facturier.nomFacturier" for="field_nomFacturier">Nom Facturier</label>
+            <input type="text" class="form-control" name="nomFacturier" id="field_nomFacturier"
+                    ng-model="vm.facturier.nomFacturier"
+                    />
+        </div>
+        <div ng-if="vm.facturier.typeFacturier=='MARCHAND'" class="form-group">
+            <label class="control-label" for="field_marchand">Unité Organisation</label>
+            <select  class="form-control" id="field_marchand" name="marchand" ng-model="vm.facturier.uniteOrganisation.id"
+                     ng-options="uo.id as uo.libelleUniteOrganisation for uo in vm.MARCHANDs " required>
+            </select>
+        </div>
+        <div ng-if="vm.facturier.typeFacturier=='FSE'" class="form-group">
+            <label class="control-label" for="field_uniteOrganisation">Unité Organisation</label>
+
+            <select class="form-control" id="field_uniteOrganisation" name="fse" ng-model="vm.facturier.uniteOrganisation.id"
+                    ng-options="uo.id as uo.libelleUniteOrganisation for uo in vm.FSEs " required>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.facturier.codeFacturier" for="field_codeFacturier">Code Facturier</label>
+            <input type="text" class="form-control" name="codeFacturier" id="field_codeFacturier"
+                    ng-model="vm.facturier.codeFacturier" required
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.facturier.possesseur" for="field_possesseur">Possesseur</label>
+            <select ng-change="vm.initClassifications(vm.facturier.possesseur.id)" class="form-control" id="field_possesseur" name="posseseur" ng-model="vm.facturier.possesseur.id"
+                    ng-options="uo.id as uo.libelleUniteOrganisation for uo in vm.FSEs " required>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_classification">Classification</label>
+            <select class="form-control" id="field_classification" name="classification" ng-model="vm.facturier.classification.id"
+                    ng-options="classification.id as classification.libelleClassification for classification in vm.classifications " required>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_fse">FSE</label>
+
+            <select class="form-control" id="field_fse" name="fse" ng-model="vm.facturier.fse"
+                    ng-options="fournisseur.codeFse as fournisseur.libelleFse for fournisseur in vm.fournisseurs " required>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_secteurActivite">Secteur d'activité</label>
+            <select class="form-control" id="field_secteurActivite" name="secteurActivite" ng-model="vm.facturier.secteurActivite"
+                     required>
+                <option value="TELEPHONIE" >TELEPHONIE</option>
+                <option value="SERVICEPUBLIC" >SERVICE PUBLIC</option>
+                <option value="TELEVISION">TELEVISION</option>
+                <option value="AUTRE">AUTRE</option>
+            </select>
+        </div>
+        <div  class="form-group ">
+            <div class="form-group" ngf-drop ngf-change="vm.setBordereau($file, vm.facturier)">
+                <label  class="control-label col-sm-4" for="field_valeur">Information</label>
+                <div class="row">
+                <div class="col-sm-6">
+                    <div  ng-if="vm.facturier.valeur" class="help-block clearfix">
+                        <a class="pull-left" ng-click="vm.openFile(vm.facturier.valeurContentType, vm.facturier.valeur)" data-translate="entity.action.open">open</a><br>
+                        <span class="pull-left">{{vm.facturier.valeurContentType}}, {{vm.byteSize(vm.facturier.valeur)}}</span>
+                        <button  ng-if="!vm.isViewing" type="button" ng-click="vm.facturier.valeur=null;vm.facturier.valeurContentType=null;"
+                                 class="btn btn-default btn-xs pull-right">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </div>
+                    <button  ng-if="!vm.isViewing" type="button" ngf-select class="btn btn-default btn-block"
+                             ngf-change="vm.setBordereau($file, vm.facturier)">
+                        Ajouter image
+                    </button>
+                </div>
+                <div class="col-sm-6">
+                <input autocomplete="off"  type="hidden" class="form-control" name="valeur" id="field_valeur"
+                       ng-model="vm.facturier.valeur"
+                />
+                <input autocomplete="off"  type="hidden" class="form-control" name="valeurContentType" id="field_valeurContentType"
+                       ng-model="vm.facturier.valeurContentType" />
+                </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

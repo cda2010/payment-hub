@@ -1,0 +1,54 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "intro",
+        "tag": "p",
+        "content": "Contrôle d'identité du bénéficiaire (retrait cash)."
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryIdType",
+        "label": "Type de pièce",
+        "input": true,
+        "defaultValue": "CNI",
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryIdNumber",
+        "label": "N° pièce d'identité",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryNameConfirm",
+        "label": "Nom présenté (contrôle)",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Type de pièce": "Type de pièce",
+      "N° pièce d'identité": "N° pièce d'identité",
+      "Nom présenté (contrôle)": "Nom présenté (contrôle)"
+    },
+    "en": {
+      "Type de pièce": "ID type",
+      "N° pièce d'identité": "ID number",
+      "Nom présenté (contrôle)": "Presented name (check)"
+    }
+  }
+}

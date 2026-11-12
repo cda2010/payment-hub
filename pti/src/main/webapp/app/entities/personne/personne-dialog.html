@@ -1,0 +1,93 @@
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="vm.close()">&times;</button>
+        <h4 class="modal-title" id="myCompteLabel"> Rechercher une personne</h4>
+    </div>
+    <div>
+        <div class="container">
+            <div class="row mt5">
+                <div class="col-sm-2">
+                    <select  class="form-control input-xs" id="field_nationalite"
+                        name="nationalite" ng-model="vm.codePaysTelephone"
+                        ng-options="nationalite.code as nationalite.libelle for nationalite in vm.nationalites">
+                        <option value="">Code</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-4">
+                    <input autocomplete="off" placeholder="Telephone"  type="text" class="form-control"
+                        name="telephone" id="field_telephoneE" ng-model="vm.telephone" />
+                </div>
+            </div>
+            <div class="row mt5">
+                <div class="form-group col-sm-4">
+                    <select  class="form-control" id="field_typePieceE" name="typePiece"
+                        ng-model="vm.typePieceId"
+                        ng-options="typePiece.id as typePiece.libelleTypePiece for typePiece in vm.typepieces">
+                        <option value="">Type Doc</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-4">
+                    <input autocomplete="off"placeholder="Reference Doc"  type="text" class="form-control"
+                        name="referencePiece" id="field_referencePieceE" ng-model="vm.referencePiece" required />
+                </div>
+
+                <div class="col-sm-1 mt5">
+                    <button class="btn btn-warnig btn-xs" ng-click="vm.initFiltre()">
+                        <span class="glyphicon glyphicon-search">Annuler</span>
+                    </button>
+                </div>
+                <div class="col-sm-1 col-sm-offset-1 mt5">
+                    <button class="btn btn-info btn-xs " ng-click="vm.save()">
+                        <span class="glyphicon glyphicon-search">Filtrer</span>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        <h4>
+                            Liste des personnes
+                        </h4>
+                    </div>
+                    <table class="table table-hover table-responsive">
+                        <thead>
+                            <tr class="">
+                                <th></th>
+                                <th>Telephone</th>
+                                <th ng-if="vm.typeP=='PHYSIQUE'">Nom</th>
+                                <th ng-if="vm.typeP=='PHYSIQUE'">Prénom</th>
+                                <th ng-if="vm.typeP=='MORALE'">Raison sociale</th>
+                                <th ng-if="vm.typeP=='MORALE'">Nom du dirigeant</th>
+                            </tr>
+                        </thead>
+                        <tbody class="mb10">
+                            <tr class="mf-table-body" ng-repeat="personne in vm.datas">
+                                <td style="width:7%;" ng-click="vm.toggle(personne)">
+                                    <input autocomplete="off" ng-checked="vm.isChecked(personne)" class="colored-success"
+                                        type="checkbox" />
+                                    <b class="text"></b>
+                                </td>
+                                <td>{{personne.personneDTO.telephone}}</td>
+                                <td ng-if="vm.typeP=='PHYSIQUE'">{{personne.personnePhysiqueDTO.nomClient}}</td>
+                                <td ng-if="vm.typeP=='PHYSIQUE'">{{personne.personnePhysiqueDTO.prenomClient}}</td>
+                                <td ng-if="vm.typeP=='MORALE'">{{personne.personneMoraleDTO.raisonSociale}}</td>
+                                <td ng-if="vm.typeP=='MORALE'">{{personne.personneMoraleDTO.dirigeant}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="center-block text-center" ng-show="vm.canShowPagination()">
+                    <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+                    </uib-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer actions actions-footer" id="simplewizard-actions">
+    <div class="btn-group">
+        <button ng-click="vm.clear()" type="button" class="btn btn-default btn-sm"> Fermer</button>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Stub méta : l'UI réelle est AdminDashboardComponent (RF_CUSTOM_ACTION_VIEWS). -->
+<action-view name="admin-dashboard" title="Tableau de bord"
+             model="com.gateway.payment.payment.domain.PaymentTransaction" icon="pi pi-home">
+  <view type="grid" name="transaction-grid"/>
+</action-view>

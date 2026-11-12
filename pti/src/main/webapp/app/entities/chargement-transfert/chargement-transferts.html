@@ -1,0 +1,449 @@
+<div>
+
+    <!--    <jhi-alert></jhi-alert>-->
+    <!--    <div class="container-fluid">-->
+    <!--        <div class="header-content">-->
+    <!--            <div class="col-xs-4 no-padding-left">-->
+    <!--                <label class="btn-secondary">Numero de compte</label>-->
+    <!--                <input type="text" class="form-control" >-->
+    <!--&lt;!&ndash;                <button class="btn btn-primary" ui-sref="chargement-transfert.new" >&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <span class="glyphicon glyphicon-plus"></span>&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <span  data-translate="ptiApp.chargementTransfert.home.createLabel">&ndash;&gt;-->
+    <!--&lt;!&ndash;                        Create new Chargement Transfert&ndash;&gt;-->
+    <!--&lt;!&ndash;                    </span>&ndash;&gt;-->
+    <!--&lt;!&ndash;                </button>&ndash;&gt;-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="well with-header" style="margin-top:10px" >
+                <div class="header  " >
+                    <div class="form-group">
+                        <label class="control-label" for="codePays" >Choisir Pays</label>
+                        <select  class="form-control" name="codePays" id="codePays"
+                                 ng-model="vm.codePays"
+                                 ng-options="nationalite.code as nationalite.libelle for nationalite in vm.nationalites">
+                        </select>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="control-label" for="entrpId" >Choisir client entreprie</label>
+                        <select ng-change="vm.getCompte(vm.clientEtprId)" required class="form-control" name="entrpId" id="entrpId"
+                                ng-model="vm.clientEtprId"
+                                ng-options="client.clientDTO.id as client.nom for client in vm.entrepriseMorale">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="btn-secondary">Numero de compte</label>
+                        <select  required class="form-control" name="numCpt" id="numCpt"
+                                 ng-model="vm.numeroCompte"
+                                 ng-options="etat.valeurCompte as etat.valeurCompte for etat in vm.cptEntrp">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="btn-secondary" for="montant" >Montant</label>
+                        <input class="form-control" name="montant" id="montant" type="text" ng-model="vm.montant">
+                    </div>
+                    <div class="form-group" ng-show="!vm.afficheFichier">
+                        <label class="control-label" for="motifOp" >Choisir Motif</label>
+                        <select  class="form-control" name="motifOp" required id="motifOp"
+                                 ng-model="vm.motifOp"
+                                 ng-options="motif.code as motif.libelle for motif in vm.motifOperation">
+                        </select>
+                    </div>
+                    <br>
+                    <div class="radio " ng-show="!vm.afficheFichier">
+                        <label>
+                            <input autocomplete="off" ng-model="vm.typeTransfert" value="0" name="form-field-radio"
+                                   type="radio" class="colored-blue">
+                            <span class="text">Transfert vers compte</span>
+                        </label>
+                        <label>
+                            <input autocomplete="off" ng-model="vm.typeTransfert" value="1" name="form-field-radio"
+                                   type="radio" class="colored-blue">
+                            <span class="text">Transfert vers cash</span>
+                        </label>
+                        <label>
+                            <input autocomplete="off" ng-model="vm.typeTransfert" value="2" name="form-field-radio"
+                                   type="radio" class="colored-blue">
+                            <span class="text">Débit des comptes</span>
+                        </label>
+
+                    </div>
+                  
+                      <div class="radio">
+                         <label>
+                            <input  autocomplete="off" ng-model="vm.retraitGratuit" value="0" name="form-field-radio" type="checkbox" class="colored-blue">
+                            <span   class="text">Retrait Gratuit</span>
+                        </label>
+                          </div>
+                    <div  ng-show="vm.afficheFichier === false">
+                        <div class="form-group ">
+                            <form name="myForm">
+                                <label class="btn btn-primary btn-file">
+                                    Charger le fichier ici <input type="file" ngf-select=""  ng-model="picFile" name="file"
+                                                                  ngf-max-size="2MB" required accept=".txt,.csv"
+                                                                  ngf-model-invalid="errorFile"  ng-change="vm.progressingBarAzero(picFile)"style="display: none;">
+                                </label>
+                                <button ng-click="vm.lireFichier(picFile)" class="btn btn-primary waves-effect" ng-disabled="vm.ctrlbtnsave">Enregistrer</button>
+                                <button ng-click="vm.clear(picFile)" class="btn btn-primary waves-effect">Annuler</button>
+                                {{vm.fileName}}
+                                <br>
+                                <br>
+                                <div class="progress progress-striped active"  >
+                                    <div class="progress-bar progress-bar-warning ng-binding" role="progressbar" aria-valuenow="{{vm.progressionBar}}"  aria-valuemin="0" aria-valuemax="100" style="width:{{vm.progressionBar}}%">
+                                        <span class="sr-only">
+                                            20% Complete (success)
+                                        </span>
+                                    </div>
+                                </div>
+                                <br>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <button ng-click="vm.supprimerFichier()" class="btn btn-primary"  ng-disabled="!vm.defchargement.id || vm.click || vm.defchargement.statut === 'V'">Supprimer</button>
+                <br>
+                <br>
+                <br>
+                <div class="container-fluid">
+                    <div class="panel-default">
+                        <div ng-if="vm.chargementTransfert.length == 0"><p>Aucun chargement enregistré</p></div>
+                        <div ng-if="vm.chargementTransferts.length != 0"  class="well with-header" style="margin-top:10px ">
+                            <div class="row primary" ng-if="vm.canShowResultCount2">
+                                <i ng-if="vm.totalItems2 > 1">{{vm.totalItems2}} éléments trouvés</i>
+                                <i ng-if="vm.totalItems2 == 1" >{{vm.totalItems2}} élément trouvé</i>
+
+                            </div>
+                         
+                            <table ng-if="vm.ctrlTabC" class="table table-hover ">
+                                <thead>
+                                    <tr>
+                                        <th><span>Reference</span></th>
+                                        <th><span data-translate="ptiApp.chargementTransfert.nomFichier">Nom Fichier</span></th>
+                                        <th><span >Date Chargement</span></th>
+                                        <th><span data-translate="ptiApp.chargementTransfert.montantTotal">Montant Total</span></th>
+                                        <th><span data-translate="ptiApp.chargementTransfert.montantCharge">Montant Charge</span></th>
+                                        <th><span data-translate="ptiApp.chargementTransfert.soldeDebut">Solde Debut</span></th>
+                                        <th><span data-translate="ptiApp.chargementTransfert.soldeFin">Solde fin</span></th>
+                                        <th><span >Nombre Ligne</span></th>
+                                        <th><span >Nombre Ligne Charge</span></th>
+                                        <th><span >Nombre Ligne Erreur</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="chargementTransfert in vm.chargementTransferts track by chargementTransfert.id" ng-click="vm.getChargement(chargementTransfert, $index)" ng-class="{'selected':$index == vm.selectedRow}">
+                                        <td>{{chargementTransfert.reference}}</td>
+                                        <td>{{chargementTransfert.nomFichier}}</td>
+                                        <td >{{chargementTransfert.dateFichier==null ? chargementTransfert.dateChargement : chargementTransfert.dateFichier}}</td>
+                                        <td>{{chargementTransfert.montantTotal}}</td>
+                                        <td>{{chargementTransfert.montantCharger}}</td>
+                                        <td>{{chargementTransfert.soldeCompteAvant}}</td>
+                                        <td>{{chargementTransfert.soldeCompteApres}}</td>
+
+
+
+                                        <td>{{chargementTransfert.nombreLigne}}</td>
+                                        <td>{{chargementTransfert.nombreLigneCharge}}</td>
+                                        <td>{{chargementTransfert.nombreLigneErreur}}</td>
+                                        <td>
+                                            <div class="task-state">
+                                                <span class="label label-yellow" ng-if="chargementTransfert.batchExecution !== null && chargementTransfert.batchExecution.status !== 'COMPLETED'">
+                                                    En cours
+                                                </span>
+                                                <span class="label label label-palegreen" ng-if="chargementTransfert.batchExecution !== null && chargementTransfert.batchExecution.status === 'COMPLETED'">
+                                                    Terminé
+                                                </span>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="center-block text-center" ng-show="vm.totalItems2 > vm.queryCount2">
+                        <uib-pagination total-items="vm.totalItems2" ng-model="vm.page2" items-per-page="vm.itemsPerPage">
+                        </uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 " >
+            <div class="well with-header" style="margin-top:10px" >
+                <div class="header  " >
+                    <h4>Détail des chargements {{vm.defchargement.reference}}</h4>
+                    <p> Montant Total: {{vm.defchargement.montantTotal}}</p>
+                    <p> Nombre: {{vm.defchargement.nombreLigne}}</p>
+                </div>
+                <br>
+                <br>
+                <br>
+                <!-- <div class="container-fluid">
+                    <div class="row">
+                        <button class="btn btn-primary"  ng-click="vm.validerChrgmt(vm.defchargement)" ng-disabled="!vm.defchargement.id||vm.click||vm.defchargement.statut==='V'" ng-show="vm.afficheFichier" >
+                            <span class="fa fa-check"></span>
+                            <span >Valider</span>
+                        </button>
+                        <select  id="filed_format" name="format" ng-model="vm.format"  ng-show="vm.afficheFichier">
+                            <option value="">Format</option>
+                            <option value="PDF">PDF</option>
+                            <option value="XLSX">XLSX</option>
+                            <option value="CSV">CSV</option>
+                        </select>
+                        <button type="button"   ng-click="vm.imprimerRapport(vm.defchargement.id)" class="btn btn-raised btn-info"  ng-disabled="!vm.defchargement.id||vm.isPrint"  ng-show="vm.afficheFichier">   <span class="glyphicon glyphicon-print"></span><span>Imprimer</span></button>
+    
+                    </div>
+                </div> -->
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <select class="form-control input-xs ng-pristine ng-untouched ng-valid ng-empty"  ng-model="vm.filterStatut" id="field_sattutChargement" name="statutChargement"  aria-invalid="false" ng-change="vm.filtrerParStatut(vm.defchargement.id)">
+                            <option value="">Statut</option>
+                            <option value="RJCT">Rejeté</option>
+                            <option value="ACCT">Accepté</option>
+                        </select>
+                        <br>
+                        <button class="btn btn-primary"  ng-click="vm.validerChrgmt(vm.defchargement)" ng-disabled="!vm.defchargement.id || vm.click || vm.defchargement.statut === 'V' || vm.defchargement.statut === 'I'" ng-show="vm.afficheFichier" >
+                            <span class="fa fa-check"></span>
+                            <span >Valider</span>
+                        </button>
+                        <select  id="filed_format" name="format" ng-model="vm.format" >
+                            <option value="">Format</option>
+                            <option value="PDF">PDF</option>
+                            <option value="XLSX">XLSX</option>
+                            <option value="CSV">CSV</option>
+                        </select>
+                        <button type="button" class="btn btn-raised btn-info"  ng-click="vm.imprimerSelonStatut(vm.defchargement.id)" ng-disabled="!vm.filterStatut || !vm.ligneChargements.length != 0"><span class="glyphicon glyphicon-print"></span><span>Imprimer</span></button>
+
+                    </div>
+                </div>
+                  
+                  
+                <br/>
+                <div  class="panel-default" >
+                    <div class="container-fluid">
+                        <div class="well with-header" style="margin-top:10px ">
+                            <div class="row primary" ng-if="vm.canShowResultCount">
+                                <i ng-if="vm.totalItems > 1">{{vm.totalItems}} éléments trouvés</i>
+                                <i ng-if="vm.totalItems == 1" >{{vm.totalItems}} élément trouvé</i>
+                                <i ng-if="vm.totalItems < 1">Aucun résultat</i>
+                            </div>
+                             <span class="label label label-blueberry">
+                                NC: Non chargé, IC:instance de chargement, OC: Chargé
+                            </span>
+                                <br/>
+                            <table class="table table-hover">
+
+                                <thead>
+                                    <tr>
+                                        <th><span >Nom</span></th>
+                                        <th><span >Prénom(s)</span></th>
+                                        <th><span >Numero Teléphone</span></th>
+                                        <th><span >Montant</span></th>
+                                        <th><span>Statut Ligne</span></th>
+                                        <th><span>Erreur</span></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="ligneChargement in vm.ligneChargements track by ligneChargement.id" >                                       
+                                        <td>{{ligneChargement.nom}}</td>
+                                        <td>{{ligneChargement.prenom}}</td>
+                                        <td>{{ligneChargement.numeroTelephone}}</td>
+                                        <td>{{ligneChargement.montant}}</td>
+                                        <td>{{ligneChargement.statutLigne}}</td>
+                                        <td>{{ligneChargement.error}}</td>
+                                        <td class="text-right">
+                                            <button type="submit" ng-click="vm.openModal(ligneChargement)"
+                                                    class="btn btn-danger btn-sm waves-effect">
+                                                <span class="hidden-sm-down" >Solde</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="center-block text-center" ng-show="vm.totalItems > vm.queryCount">
+                        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+                        </uib-pagination>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="row">-->
+<!--    <div class="col-sm-5">-->
+<!--        <div  ng-show="vm.afficheFichier">-->
+<!--            <div class="form-group ">-->
+<!--                <form name="myForm">-->
+<!--                    <label class="btn btn-primary btn-file">-->
+<!--                        Charger le fichier ici <input type="file" ngf-select=""  ng-model="picFile" name="file"-->
+<!--                                                      ngf-max-size="2MB" required accept=".txt,.csv"-->
+<!--                                                      ngf-model-invalid="errorFile"  ng-change="vm.progressingBarAzero(picFile)"style="display: none;">-->
+<!--                    </label>-->
+<!--                    <button ng-click="vm.lireFichier(picFile)" class="btn btn-primary waves-effect" ng-disabled="vm.ctrlbtnsave">Enregistrer</button>-->
+<!--                    <button ng-click="vm.clear(picFile)" class="btn btn-primary waves-effect">Annuler</button>-->
+<!--                    {{vm.fileName}}-->
+<!--                    <br>-->
+<!--                    <br>-->
+<!--                    <div class="progress progress-striped active"  >-->
+<!--                        <div class="progress-bar progress-bar-warning ng-binding" role="progressbar" aria-valuenow="{{vm.progressionBar}}"  aria-valuemin="0" aria-valuemax="100" style="width:{{vm.progressionBar}}%">-->
+<!--                                                     <span class="sr-only">-->
+<!--                                                         20% Complete (success)-->
+<!--                                                     </span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <button ng-click="vm.supprimerFichier()" class="btn btn-primary"  ng-disabled="!vm.defchargement.id|| vm.click||vm.defchargement.statut==='V'">Supprimer</button>-->
+<!--        <div class="table-responsive scrollbar" style="height: 500px">-->
+<!--            <table class="jh-table table ">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th><span>Reference</span></th>-->
+<!--                    <th><span data-translate="ptiApp.chargementTransfert.nomFichier">Nom Fichier</span></th>-->
+<!--                    <th><span >Date Chargement</span></th>-->
+<!--                    <th><span data-translate="ptiApp.chargementTransfert.montantTotal">Montant Total</span></th>-->
+<!--                    <th><span >Nombre Ligne</span></th>-->
+<!--                    <th><span >Nombre Ligne Charge</span></th>-->
+<!--                    <th><span >Nombre Ligne Erreur</span></th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr ng-repeat="chargementTransfert in vm.chargementTransferts track by chargementTransfert.id" ng-click="vm.getChargement(chargementTransfert,$index)" ng-class="{'selected':$index == vm.selectedRow}">-->
+<!--                    <td>{{chargementTransfert.reference}}</td>-->
+<!--                    <td>{{chargementTransfert.nomFichier}}</td>-->
+<!--                    <td>{{chargementTransfert.dateChargement | date:'mediumDate'}}</td>-->
+<!--                    <td>{{chargementTransfert.montantTotal}}</td>-->
+<!--                    <td>{{chargementTransfert.nombreLigne}}</td>-->
+<!--                    <td>{{chargementTransfert.nombreLigneCharge}}</td>-->
+<!--                    <td>{{chargementTransfert.nombreLigneErreur}}</td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="col-sm-7 " >-->
+<!--        <h4>Détail des chargements {{vm.defchargement.reference}}</h4>-->
+<!--        <p> Montant Total: {{vm.defchargement.montantTotal}}</p>-->
+<!--        <p> Nombre: {{vm.defchargement.nombreLigne}}</p>-->
+<!--        <div class="container-fluid">-->
+<!--            <div class="row">-->
+<!--                <div class="col-xs-4 no-padding-left">-->
+
+<!--                    <button class="btn btn-primary"  ng-click="vm.valider(vm.defchargement)" ng-disabled="!vm.defchargement.id|| vm.click||vm.defchargement.statut==='V'" ng-show="vm.afficheFichier" >-->
+<!--                        <span class="fa fa-check"></span>-->
+<!--                        <span >-->
+<!--                        Valider-->
+<!--                    </span>-->
+<!--                    </button>-->
+<!--                    <button type="button"   ng-click="vm.imprimerRapport(vm.defchargement.id)" class="btn btn-raised btn-info"  ng-disabled="!vm.defchargement.id||vm.isPrint"  ng-show="vm.afficheFichier">   <span class="glyphicon glyphicon-print"></span><span>Imprimer</span></button>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </div>-->
+<!--        <br/>-->
+<!--        <div class="table-responsive scrollbar" style="height: 650px">-->
+<!--            <table class="jh-table table table-striped">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th><span >Nom</span></th>-->
+<!--                    <th><span >Prénom(s)</span></th>-->
+<!--                    <th><span >Numero Compte</span></th>-->
+<!--                    <th><span >Numero Teléphone</span></th>-->
+<!--                    <th><span >Montant</span></th>-->
+<!--                    <th><span>Statut Ligne</span></th>-->
+<!--                    <th></th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr ng-repeat="ligneChargement in vm.ligneChargements track by ligneChargement.id ">-->
+<!--                    <td>{{ligneChargement.nom}}</td>-->
+<!--                    <td>{{ligneChargement.prenom}}</td>-->
+<!--                    <td>{{ligneChargement.numeroCompte}}</td>-->
+<!--                    <td>{{ligneChargement.numeroTelephone}}</td>-->
+<!--                    <td>{{ligneChargement.montant}}</td>-->
+<!--                    <td>{{ligneChargement.statutLigne}}</td>-->
+<!--                    <td class="text-right">-->
+<!--                        <button type="submit" ng-click="vm.openModal(ligneChargement)"-->
+<!--                                class="btn btn-danger btn-sm waves-effect">-->
+<!--                            <span class="hidden-sm-down" >Solde</span>-->
+<!--                        </button>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+
+<!--    </div>-->
+<!--</div>-->
+<!--    <div class="table-responsive">-->
+<!--        <table class="jh-table table table-striped">-->
+<!--            <thead>-->
+<!--                <tr>-->
+<!--                    <th><span data-translate="global.field.id">ID</span></th>-->
+<!--                    <th><span data-translate="ptiApp.chargementTransfert.nomFichier">Nom Fichier</span></th>-->
+<!--                    <th><span data-translate="ptiApp.chargementTransfert.montantTotal">Montant Total</span></th>-->
+<!--                    <th></th>-->
+<!--                </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--                <tr ng-repeat="chargementTransfert in vm.chargementTransferts track by chargementTransfert.id">-->
+<!--                    <td><a ui-sref="chargement-transfert-detail({id:chargementTransfert.id})">{{chargementTransfert.id}}</a></td>-->
+<!--                    <td>{{chargementTransfert.nomFichier}}</td>-->
+<!--                    <td>{{chargementTransfert.montantTotal}}</td>-->
+<!--                    <td class="text-right">-->
+<!--                        <div class="btn-group flex-btn-group-container">-->
+<!--                            <button type="submit"-->
+<!--                                    ui-sref="chargement-transfert-detail({id:chargementTransfert.id})"-->
+<!--                                    class="btn btn-info btn-sm">-->
+<!--                                <span class="glyphicon glyphicon-eye-open"></span>-->
+<!--                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>-->
+<!--                            </button>-->
+<!--                            <button type="submit"-->
+<!--                                    ui-sref="chargement-transfert.edit({id:chargementTransfert.id})"-->
+<!--                                    class="btn btn-primary btn-sm">-->
+<!--                                <span class="glyphicon glyphicon-pencil"></span>-->
+<!--                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>-->
+<!--                            </button>-->
+<!--                            <button type="submit"-->
+<!--                                    ui-sref="chargement-transfert.delete({id:chargementTransfert.id})"-->
+<!--                                    class="btn btn-danger btn-sm">-->
+<!--                                <span class="glyphicon glyphicon-remove-circle"></span>-->
+<!--                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+

@@ -1,0 +1,31 @@
+
+<div>
+    <h2><span data-translate="ptiApp.personneMorale.detail.title">Personne Morale</span> {{vm.personneMorale.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.personneMorale.raisonSociale">Raison Sociale</span></dt>
+        <dd>
+            <span>{{vm.personneMorale.raisonSociale}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.personneMorale.registreCommerce">Registre Commerce</span></dt>
+        <dd>
+            <span>{{vm.personneMorale.registreCommerce}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.personneMorale.numreoIfu">Numreo Ifu</span></dt>
+        <dd>
+            <span>{{vm.personneMorale.numreoIfu}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="personne-morale-detail.edit({id:vm.personneMorale.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

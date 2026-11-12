@@ -1,0 +1,46 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "select",
+        "key": "payoutMethod",
+        "label": "Mode de réception",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "Retrait cash (pickup)", "value": "CASH_PICKUP" },
+            { "label": "Compte bancaire", "value": "BANK_DEPOSIT" },
+            { "label": "Wallet mobile", "value": "WALLET" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "payoutAccount",
+        "label": "Compte / IBAN / MSISDN (si applicable)",
+        "input": true
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Mode de réception": "Mode de réception",
+      "Compte / IBAN / MSISDN (si applicable)": "Compte / IBAN / MSISDN (si applicable)"
+    },
+    "en": {
+      "Mode de réception": "Payout method",
+      "Compte / IBAN / MSISDN (si applicable)": "Account / IBAN / MSISDN (if applicable)"
+    }
+  }
+}

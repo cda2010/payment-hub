@@ -1,0 +1,25 @@
+{
+    "ptiApp": {
+        "instructionComptable" : {
+            "home": {
+                "title": "InstructionComptables",
+                "createLabel": "Créer un nouveau Instruction Comptable",
+                "createOrEditLabel": "Créer ou éditer une Instruction Comptable"
+            },
+            "created": "Un nouveau Instruction Comptable a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Instruction Comptable avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Instruction Comptable avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer l'Instruction Comptable {{ id }} ?"
+            },
+            "detail": {
+                "title": "Instruction Comptable"
+            },
+            "numeroOrdre": "Numero Ordre",
+            "instruction": "Instruction",
+            "etiquetteComptable": "Etiquette Comptable",
+            "montant": "Montant",
+            "typeService": "Type Service"
+        }
+    }
+}

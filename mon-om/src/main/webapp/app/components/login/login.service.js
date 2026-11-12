@@ -1,0 +1,37 @@
+(function() {
+    'use strict';
+
+    angular
+        .module('omnicanalApp')
+        .factory('LoginService', LoginService);
+
+    LoginService.$inject = ['$uibModal','$state'];
+
+    function LoginService ($uibModal,$state) {
+        var service = {
+            open: open
+        };
+
+        var modalInstance = null;
+        var resetModal = function () {
+            modalInstance = null;
+        };
+
+        return service;
+
+        function open () {
+             $state.go('connexion');
+            if (modalInstance !== null) return;
+//            modalInstance = $uibModal.open({
+//                animation: true,
+//                templateUrl: 'app/components/login/login.html',
+//                controller: 'LoginController',
+//                controllerAs: 'vm'
+//            });
+//            modalInstance.result.then(
+//                resetModal,
+//                resetModal
+//            );
+        }
+    }
+})();

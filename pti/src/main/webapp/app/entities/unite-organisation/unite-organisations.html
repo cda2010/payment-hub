@@ -1,0 +1,65 @@
+<script type="text/ng-template" id="tree-dnd-template-render.html">
+    <div >
+        <table ng-class="$tree_class" class="table-responsive table table-hover">
+            <thead>
+                <tr class="mf-table-header">
+                    <th ng-class="expandingProperty.titleClass " hidden-xs ng-style="expandingProperty.titleStyle" compile="expandingProperty.titleTemplate" class="text-center">
+                        <b> {{expandingProperty.field || expandingProperty}}</b>
+                    </th>
+                    <th ng-repeat="col in colDefinitions" ng-class="col.titleClass" ng-style="col.titleStyle" compile="col.titleTemplate" class="text-center">
+                        <b>{{col.field}}</b>
+                    </th>
+                </tr>
+            </thead>
+            <tbody tree-dnd-nodes>
+                <tr tree-dnd-node="node" ng-repeat="node in tree_nodes track by node.__hashKey__ " ng-show="enabledFilter ? node.__filtered_visible__ === true && node.__visible__ : node.__visible__" ng-class="enabledFilter ? (node.__filtered__ === true? 'success': '') : (node.__selected__ ? ' active':'')"
+                    ng-click="onSelect(node)">
+                    <td tree-dnd-node-handle class="panel-title" ng-style="expandingProperty.cellStyle ? expandingProperty.cellStyle : {'padding-left': $callbacks.calsIndent(node.__level__)}" ng-class="expandingProperty.cellClass" compile="expandingProperty.cellTemplate"
+                        title="{{node[expandingProperty.displayName]}}">
+
+                        <a data-nodrag ng-class="node.__icon_class__" ng-click="toggleExpand(node)"> <i class="tree-icon"></i>
+                            <b>{{node[expandingProperty.displayName] | characters:30 }}</b>
+                        </a>
+                    </td>
+                    <td ng-repeat="col in colDefinitions" ng-class="col.cellClass" ng-style="col.cellStyle" compile="col.cellTemplate" title="{{node[col.displayName]}}" class="text-center">
+                        {{node[col.displayName] | characters:35 }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</script>
+
+ 
+    <uib-tabset >
+
+    <!-- Begin init Filter-Inside -->
+    <uib-tab heading="Liste des Organisations" class="text-center">
+        <panel>
+            <div class="row">
+                <div class="form-group form-inline clearfix col-lg-offset-9">
+                    <label>Recherche: <input autocomplete="off"class="form-control input-xs" ng-model="_filter._$"></label>
+                </div>
+            </div>
+             <div   style="min-height:500px;overflow-y: scroll;">
+          
+            <tree-dnd tree-class="table table-bordered table-hover table-striped" tree-data="tree_data" tree-control="my_tree" filter="_filter" primary-key="id" column-defs="col_defs_inside" expand-on="expanding_property_inside" template-url="tree-dnd-template-render.html"
+                indent="30" indent-plus="20" indent-unit="px" enable-hotkey="false" enable-drag="false" enable-drop="false" enable-status="false" enable-move="false">
+            </tree-dnd>
+            </div>
+        </panel>
+    </uib-tab>
+
+
+    <div class="btn-group mr15" ng-if="!vm.isConsult">
+        <button class="btn btn-primary shiny" ng-click="vm.addChild(null)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span>
+                            Nouveau
+                        </span>
+        </button>
+    </div>
+
+</uib-tabset>
+
+

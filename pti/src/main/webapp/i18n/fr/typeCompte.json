@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "typeCompte" : {
+            "home": {
+                "title": "TypeComptes",
+                "createLabel": "Créer un nouveau Type Compte",
+                "createOrEditLabel": "Créer ou éditer un Type Compte"
+            },
+            "created": "Un nouveau Type Compte a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Type Compte avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Type Compte avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Type Compte {{ id }} ?"
+            },
+            "detail": {
+                "title": "Type Compte"
+            },
+            "codeTypeCompte": "Code Type Compte",
+            "libelleTypeCompte": "Libelle Type Compte",
+            "compte": "Compte"
+        }
+    }
+}

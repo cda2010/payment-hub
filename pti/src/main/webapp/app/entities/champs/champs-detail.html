@@ -1,0 +1,56 @@
+
+<div>
+    <h2><span data-translate="ptiApp.champs.detail.title">Champs</span> {{vm.champs.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.champs.aSaisir">A Saisir</span></dt>
+        <dd>
+            <span>{{vm.champs.aSaisir}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.champs.min">Min</span></dt>
+        <dd>
+            <span>{{vm.champs.min}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.champs.max">Max</span></dt>
+        <dd>
+            <span>{{vm.champs.max}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.champs.minLength">Min Length</span></dt>
+        <dd>
+            <span>{{vm.champs.minLength}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.champs.maxLength">Max Length</span></dt>
+        <dd>
+            <span>{{vm.champs.maxLength}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.champs.isVisible">Is Visible</span></dt>
+        <dd>
+            <span>{{vm.champs.isVisible}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.champs.pattern">Pattern</span></dt>
+        <dd>
+            <span>{{vm.champs.pattern}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.champs.ecranId">Ecran Id</span></dt>
+        <dd>
+            <span>{{vm.champs.ecranId}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.champs.composant">Composant</span></dt>
+        <dt><span data-translate="ptiApp.champs.defaultValue">Default value</span></dt>
+        <dd>
+            <a ui-sref="composant-detail({id:vm.champs.composant.id})">{{vm.champs.composant.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="champs-detail.edit({id:vm.champs.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

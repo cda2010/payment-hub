@@ -1,0 +1,194 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0046",
+  "providerCodeHint": "FSE_0046",
+  "providerLibelle": "ORANGE GUINEE",
+  "participantKindHint": "WALLET",
+  "fseStatut": "NONBANQUE",
+  "groupCode": "ENF",
+  "codeExterne": "0",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "Api ORANGE GUINEE",
+    "codeApi": "0044",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "NONE"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "GETINFOS",
+      "codeMethode": "004401",
+      "operationCode": "GETINFOS",
+      "nom": "/api/service/gui/orange/getInfo",
+      "httpMethod": "GET",
+      "path": "api/service/gui/orange/getInfo",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"telephone\": \"${telephone}\", \"key\": \"${key}\", \"agence\": \"${agence}\", \"numeroCompte\": \"${numeroCompte}\", \"motif\": \"${motif}\", \"option\": \"${option}\"}",
+      "parameters": [
+        {
+          "code": "telephone",
+          "nomExterne": "telephone",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "key",
+          "nomExterne": "key",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "agence",
+          "nomExterne": "agence",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "numeroCompte",
+          "nomExterne": "numeroCompte",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "motif",
+          "nomExterne": "motif",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "option",
+          "nomExterne": "option",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "SETTLEMENT",
+      "codeMethode": "004402",
+      "operationCode": "SETTLEMENT",
+      "nom": "api/service/gui/orange/doSubscription",
+      "httpMethod": "POST",
+      "path": "api/service/gui/orange/doSubscription",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"telephone\": \"${telephone}\", \"key\": \"${key}\", \"numeroCompte\": \"${numeroCompte}\", \"nom\": \"${nom}\", \"devise\": \"${devise}\", \"prenom\": \"${prenom}\", \"codeagence\": \"${codeagence}\", \"codepays\": \"${codepays}\", \"option\": \"${option}\", \"motif\": \"${motif}\"}",
+      "parameters": [
+        {
+          "code": "telephone",
+          "nomExterne": "telephone",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "key",
+          "nomExterne": "key",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "numeroCompte",
+          "nomExterne": "numeroCompte",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nom",
+          "nomExterne": "nom",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "devise",
+          "nomExterne": "devise",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "prenom",
+          "nomExterne": "prenom",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeagence",
+          "nomExterne": "codeagence",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codepays",
+          "nomExterne": "codepays",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "option",
+          "nomExterne": "option",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "motif",
+          "nomExterne": "motif",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "GETMONTANT",
+      "codeMethode": "004403",
+      "operationCode": "GETMONTANT",
+      "nom": "api/service/gui/orange/getmontant",
+      "httpMethod": "POST",
+      "path": "api/service/gui/orange/getmontant",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"nombre\": \"${nombre}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "VERIFREGLEFACTURIER",
+      "codeMethode": "004404",
+      "operationCode": "VERIFREGLEFACTURIER",
+      "nom": "api/service/gui/orange/getregle",
+      "httpMethod": "POST",
+      "path": "api/service/gui/orange/getregle",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"reference\": \"${reference}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

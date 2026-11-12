@@ -1,0 +1,10 @@
+{
+    "ptiApp": {
+        "EtatValidite" : {
+            "null": "",
+            "PROVISOIRE": "PROVISOIRE",
+            "VALIDE": "VALIDE",
+            "ANNULEE": "ANNULEE"
+        }
+    }
+}

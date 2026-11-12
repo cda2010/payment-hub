@@ -1,0 +1,43 @@
+<form ng-if="!vm.successMsg" name="editForm" role="form" novalidate ng-submit="vm.updateMachine()" class="form-horizontal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="label">Enregistrer une machine</h4>
+    </div>
+    <div class="modal-body">
+
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" for="adresse">Adresse Ip</label>
+            <div class="col-sm-6">
+                <input autocomplete="off" required type="text" class="form-control" name="adresse" id="adresse" ng-model="vm.machine.adresseIp" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" mf-required
+                   for="field_emailCertificat">Mail certificat</label>
+            <div class="col-sm-6">
+                <input autocomplete="off" type="email" class="form-control input-xs" name="emailCertificat" id="field_emailCertificat"
+                       ng-model="vm.machine.emailCertificat" readonly required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" mf-required
+                   for="field_email">Mail code</label>
+            <div class="col-sm-6">
+                <input autocomplete="off" type="email" class="form-control input-xs" name="emailCodeAcces" id="field_email"
+                       ng-model="vm.machine.emailCodeAcces" readonly required />
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Annuler</span>
+        </button>
+        <button  ng-disabled="editForm.$invalid || vm.isSaving" type="submit" class="btn btn-primary btn-sm">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Envoyer</span>
+        </button>
+    </div>
+</form>

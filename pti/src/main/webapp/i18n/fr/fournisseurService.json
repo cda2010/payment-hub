@@ -1,0 +1,24 @@
+{
+    "ptiApp": {
+        "fournisseurService" : {
+            "home": {
+                "title": "FournisseurServices",
+                "createLabel": "Créer un nouveau Fournisseur Service",
+                "createOrEditLabel": "Créer ou éditer un Fournisseur Service"
+            },
+            "created": "Un nouveau Fournisseur Service a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Fournisseur Service avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Fournisseur Service avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Fournisseur Service {{ id }} ?"
+            },
+            "detail": {
+                "title": "Fournisseur Service"
+            },
+            "codeFse": "Code Fse",
+            "libelleFse": "Libelle Fse",
+            "organisation": "Organisation",
+            "pays": "Pays"
+        }
+    }
+}

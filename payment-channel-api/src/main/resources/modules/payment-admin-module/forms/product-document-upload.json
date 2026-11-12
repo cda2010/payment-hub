@@ -1,0 +1,31 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "documentsPlaceholder",
+        "tag": "p",
+        "content": "Pièces justificatives générées dynamiquement (requiredDocs / DocumentPolicy DMN)."
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "gateway": {
+    "nextAction": "FORM"
+  },
+  "i18n": {
+    "fr": {
+      "Pièces justificatives": "Pièces justificatives"
+    },
+    "en": {
+      "Pièces justificatives": "Supporting documents"
+    }
+  }
+}

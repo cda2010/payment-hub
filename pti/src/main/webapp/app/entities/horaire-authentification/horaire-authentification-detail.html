@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span data-translate="ptiApp.horaireAuthentification.detail.title">Horaire Authentification</span> {{vm.horaireAuthentification.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.horaireAuthentification.jour">Jour</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.Jour.' + vm.horaireAuthentification.jour}}">{{vm.horaireAuthentification.jour}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.horaireAuthentification.heureDebut">Heure Debut</span></dt>
+        <dd>
+            <span>{{vm.horaireAuthentification.heureDebut}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.horaireAuthentification.heureFin">Heure Fin</span></dt>
+        <dd>
+            <span>{{vm.horaireAuthentification.heureFin}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.horaireAuthentification.dateDebut">Date Debut</span></dt>
+        <dd>
+            <span>{{vm.horaireAuthentification.dateDebut | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.horaireAuthentification.dateFin">Date Fin</span></dt>
+        <dd>
+            <span>{{vm.horaireAuthentification.dateFin | date:'mediumDate'}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="horaire-authentification-detail.edit({id:vm.horaireAuthentification.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

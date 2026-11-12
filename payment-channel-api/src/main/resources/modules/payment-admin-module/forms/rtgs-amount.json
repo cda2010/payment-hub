@@ -1,0 +1,47 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "number",
+        "key": "amount",
+        "label": "Montant RTGS",
+        "input": true,
+        "validate": { "required": true, "min": 1000000 }
+      },
+      {
+        "type": "textfield",
+        "key": "currency",
+        "label": "Devise",
+        "input": true,
+        "defaultValue": "XOF"
+      },
+      {
+        "type": "textfield",
+        "key": "purpose",
+        "label": "Motif / code économique",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Montant RTGS": "Montant RTGS",
+      "Devise": "Devise",
+      "Motif / code économique": "Motif / code économique"
+    },
+    "en": {
+      "Montant RTGS": "RTGS amount",
+      "Devise": "Currency",
+      "Motif / code économique": "Purpose / economic code"
+    }
+  }
+}

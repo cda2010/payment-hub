@@ -1,0 +1,49 @@
+
+<div class="container-fluid">
+    <div class="panel m-b-none" style="border: 2px solid #7485e6; border-radius: 5px;">
+        <div class="panel-body">
+            <h2 class="m-b-xs text-center m-t-n">
+                <i class="pe pe-7s-display2 text-warning m-r-xs"></i>
+                <span class="text-primary">Interface Utilisateur</span> 
+                <span class="badge badge-info">{{vm.interfaceUtilisateur.id}}</span>
+            </h2>
+            <hr style="border-top: 2px solid #7485e6;"/>
+            
+            <jhi-alert-error></jhi-alert-error>
+            
+            <div class="panel panel-filled" style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 5px; padding: 20px;">
+                <dl class="dl-horizontal jh-entity-details">
+                    <dt class="text-primary"><span>Code Interface</span></dt>
+                    <dd class="well well-sm" style="background-color: white; border: 1px solid #7485e6; border-radius: 4px; padding: 10px; margin-bottom: 15px;">
+                        <span>{{vm.interfaceUtilisateur.codeInterface}}</span>
+                    </dd>
+                    
+                    <dt class="text-primary"><span>Nom Interface</span></dt>
+                    <dd class="well well-sm" style="background-color: white; border: 1px solid #7485e6; border-radius: 4px; padding: 10px; margin-bottom: 15px;">
+                        <span>{{vm.interfaceUtilisateur.nomInterface}}</span>
+                    </dd>
+                    
+                    <dt class="text-primary"><span>Type Interface</span></dt>
+                    <dd class="well well-sm" style="background-color: white; border: 1px solid #7485e6; border-radius: 4px; padding: 10px;">
+                        <span class="badge" style="background-color: #7485e6;">{{vm.interfaceUtilisateur.typeInterface}}</span>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="text-center" style="margin-top: 20px;">
+                <button type="submit"
+                        ui-sref="{{ vm.previousState }}"
+                        class="btn btn-info" style="margin-right: 10px;">
+                    <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>Retour</span>
+                </button>
+
+                <button type="button" 
+                        ui-sref="interface-utilisateur-detail.edit({id:vm.interfaceUtilisateur.id})" 
+                        class="btn btn-primary">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span class="hidden-sm-down">Modifier</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

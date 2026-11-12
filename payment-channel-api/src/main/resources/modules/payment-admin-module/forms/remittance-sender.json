@@ -1,0 +1,44 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "textfield",
+        "key": "senderName",
+        "label": "Nom de l'expéditeur",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "phoneNumber",
+        "key": "senderPhone",
+        "label": "Téléphone expéditeur",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "senderIdNumber",
+        "label": "N° pièce d'identité (optionnel)",
+        "input": true
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Nom de l'expéditeur": "Nom de l'expéditeur",
+      "Téléphone expéditeur": "Téléphone expéditeur"
+    },
+    "en": {
+      "Nom de l'expéditeur": "Sender name",
+      "Téléphone expéditeur": "Sender phone"
+    }
+  }
+}

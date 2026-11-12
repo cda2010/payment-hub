@@ -1,0 +1,37 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myBwAccountLabel" >Comptes</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+       <div class="table-responsive">
+        <table class="jh-table table">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                  
+                    <th >Code Banque</span> </th>
+                    <th >Code Agence</th>
+                    <th >Numero Compte</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="bwAccount in vm.bwAccounts track by bwAccount.id">
+                    <td>{{bwAccount.codeBanque}}</td>
+                    <td>{{bwAccount.codeAgence}}</td>
+                    <td>{{bwAccount.numeroCompte}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+      
+    </div>
+</form>

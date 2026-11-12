@@ -1,0 +1,64 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title text-white" id="mySchemaEcritureLabel" ng-show="vm.schemaEcriture.id">
+            <i class="fa fa-edit"></i> Editer un schéma d'écriture
+        </h4>
+        <h4 class="modal-title text-white" id="mySchemaEcritureLabel" ng-show="vm.schemaEcriture.id == undefined">
+            <i class="fa fa-plus-circle"></i> Ajouter un schéma d'écriture
+        </h4>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group row" ng-show="vm.schemaEcriture.id">
+            <label class="col-sm-3 col-form-label" for="id">ID</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.schemaEcriture.id" readonly />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_nomSchema">Nom Schéma</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="nomSchema" id="field_nomSchema"
+                    ng-model="vm.schemaEcriture.nomSchema"
+                    placeholder="Entrez le nom du schéma"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_typeService">Type Service</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="field_typeService" name="typeService" 
+                    ng-model="vm.schemaEcriture.typeService" 
+                    ng-options="typeService as typeService.libelleTypeService for typeService in vm.typeServices track by typeService.id">
+                    <option value="">Sélectionnez un type de service</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_codeGroovy">Code Groovy</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" name="codeGroovy" id="field_codeGroovy"
+                    ng-model="vm.schemaEcriture.codeGroovy"
+                    rows="8"
+                    placeholder="Entrez le code Groovy"></textarea>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="vm.clear()">
+            <i class="fa fa-ban"></i>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <i class="fa fa-save"></i>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+
+</form>

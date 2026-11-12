@@ -1,0 +1,82 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" ng-show="vm.compte.id === undefined || vm.compte.id === null" id="myCompteLabel">Créer un Compte</h4>
+        <h4 class="modal-title" ng-show="vm.compte.id" id="myCompteLabel">Editer un Compte</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.compte.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input autocomplete="off"type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.compte.id" readonly />
+        </div>
+        <div class="form-group">
+            <div>
+                <select class="form-control" name="categorieCompte" ng-model="vm.compte.categorieCompte"
+                        id="field_categorieCompte">
+                    <option value="">Choisir la categorie</option>
+                    <option value="BANQUE">BANQUE</option>
+                    <option value="AUTRE">AUTRE</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-if="vm.compte.categorieCompte === 'BANQUE'">
+            <label class="control-label col-sm-4" mf-required  for="field_codeAgence">Code Agence</label>
+            <input autocomplete="off" type="text" class="form-control"
+                   name="codeAgence" id="field_codeAgence" ng-model="vm.compte.codeAgence" required />
+        </div>
+        <div class="form-group" ng-if="vm.compte.categorieCompte === 'BANQUE'">
+            <label class="control-label col-sm-4" mf-required  for="field_codeAgence">Code Banque</label>
+            <input autocomplete="off" type="text" class="form-control"
+                   name="codeBanque" id="field_codeBanque" ng-model="vm.compte.codeBanque" required />
+        </div>
+        <div class="form-group" ng-if="vm.compte.categorieCompte === 'BANQUE' || vm.compte.categorieCompte === 'AUTRE'">
+            <label class="control-label col-sm-4"  for="field_valeurCompte">Valeur Compte</label>
+            <input autocomplete="off"type="text" class="form-control" name="valeurCompte" id="field_valeurCompte"
+                   ng-model="vm.compte.valeurCompte"
+            />
+        </div>
+        <div class="form-group" ng-if="vm.compte.categorieCompte === 'BANQUE'">
+            <label mf-required class="control-label col-sm-4"    for="field_rib">Rib</label>
+            <input autocomplete="off" required  type="text" class="form-control" name="rib" id="field_rib"
+                   ng-model="vm.compte.rib" />
+        </div>
+        <div class="form-group" ng-if="vm.compte.categorieCompte === 'BANQUE' || vm.compte.categorieCompte === 'AUTRE'">
+        <label mf-required class="control-label col-sm-4"    for="field_codeFse">Code Fse</label>
+        <!--            <input autocomplete="off" required  type="text" class="form-control" name="codeFse" id="field_codeFse"-->
+        <!--                   ng-model="vm.compte.codeFse" />-->
+
+        <select class="form-control" id="field_codeFse" name="codeFse" ng-model="vm.compte.fse"
+                ng-options="fse  as fse.codeFse for fse in vm.fse track by fse.id" required>
+            <option value=""></option>
+        </select>
+    </div>
+        <div class="form-group" ng-if="vm.compte.categorieCompte === 'BANQUE' || vm.compte.categorieCompte === 'AUTRE'">
+            <label mf-required class="control-label col-sm-4"    for="field_codeFseProprietaire">Code Fse Titulaire</label>
+            <!--            <input autocomplete="off" required  type="text" class="form-control" name="codeFse" id="field_codeFse"-->
+            <!--                   ng-model="vm.compte.codeFse" />-->
+
+            <select class="form-control" id="field_codeFseProprietaire" name="codeFseProprietaire" ng-model="vm.compte.fseProprietaire"
+                    ng-options="fse  as fse.codeFse for fse in vm.fse track by fse.id" required>
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group" ng-if="vm.compte.categorieCompte === 'AUTRE'">
+            <label mf-required class="control-label col-sm-4"    for="field_solde">Solde</label>
+            <input autocomplete="off" required  type="text" class="form-control" name="solde" id="field_solde"
+                   ng-model="vm.compte.solde" />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

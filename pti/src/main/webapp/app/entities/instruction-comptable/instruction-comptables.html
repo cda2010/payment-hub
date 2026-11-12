@@ -1,0 +1,164 @@
+<div class="container-fluid">
+    <div class="row mt5" >
+        <div class="row" ng-if="vm.filtrer">
+            <div class="form-group col-sm-4">
+                <select class="form-control input-xs" id="field_instruction" name="instruction" ng-model="vm.itemSearch.instruction">
+                    <option value="">Choisir instruction</option>
+                    <option value="DEBITER" data-translate="ptiApp.InstructionEcriture.DEBITER">DEBITER</option>
+                    <option value="CREDITER" data-translate="ptiApp.InstructionEcriture.CREDITER">CREDITER</option>
+                    <option value="SOLDER" data-translate="ptiApp.InstructionEcriture.SOLDER">SOLDER</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-4">
+                <select class="form-control input-xs" id="field_typeService" name="typeService" ng-model="vm.itemSearch.typeServiceId" ng-options="typeService.id as typeService.libelle for typeService in vm.typeServices">
+                    <option value="">Choisir typeService</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row" ng-if="vm.filtrer">
+            <div class="form-group col-sm-4">
+                <select  class="form-control input-xs" id="field_etiquette" name="etiquette" ng-model="vm.itemSearch.etiquetteComptable"  ng-options="etiquette.code as etiquette.code for etiquette in vm.etiquetteComptes">
+                    <option value="">Choisir etiquette</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-4">
+                <select class="form-control" name="montant" ng-model="vm.itemSearch.montant" id="field_montant">
+                    <option value="">Choisir montant</option>
+                    <option value="MONTANT" data-translate="ptiApp.MontantsAComptabiliser.MONTANT">MONTANT</option>
+                    <option value="FRAIS" data-translate="ptiApp.MontantsAComptabiliser.FRAIS">FRAIS</option>
+                    <option value="FRAISEMT" data-translate="ptiApp.MontantsAComptabiliser.FRAISEMT">FRAISEMT</option>
+                    <option value="FRAISACQ" data-translate="ptiApp.MontantsAComptabiliser.FRAISACQ">FRAISACQ</option>
+                    <option value="MONTANTHT">MONTANTHT</option>
+                    <option value="MONTANTTVA" >MONTANTTVA</option>
+                    <option value="MONTANTCOMM" >MONTANTCOMM</option>
+                    <option value="MONTANTCOMACQ" >MONTANTCOMACQ</option> 
+                    <option value="MONTANTCOMEMT" >MONTANTCOMEMT</option> 
+                    <option value="MONTANTHTCOMACQ" >MONTANTHTCOMACQ</option> 
+                </select>
+            </div>
+        </div>
+        <div class="row" ng-if="vm.filtrer">
+            <div class="form-group col-sm-4">
+            </div>
+            <div class="form-group col-sm-4">
+                <div class="col-sm-6 ">
+                    <button  class="btn btn-warnig btn-md"  ng-click="vm.initFiltre()" >
+                        <span class="glyphicon glyphicon-search">Annuler</span>
+                    </button>
+                </div>
+                <div class="col-sm-6 ">
+                    <button class="btn btn-info btn-md "  ng-click="vm.filtre()">
+                        <span class="glyphicon glyphicon-search">Filtrer</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group " ng-if="!vm.filtrer">
+            <div class="col-sm-3">
+                <button class="btn btn-info btn-md" ng-click="vm.filtrer=true">
+                    <span class="glyphicon glyphicon-search">Filtrer</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <div class="well with-header" style="margin-top:10px ">
+                <div class="header bg-blue " >
+                    <div class="col-xs-8">
+                        <h4>Liste des instructions comptables</h4>
+                    </div>
+                    <div class="no-padding-left col-xs-4" >
+                        <button class="btn btn-default  btn-circle btn-xs
+                        " ng-click="vm.addItem()">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <div class="btn-group mr15" uib-dropdown>
+                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                                éléments par page <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-hover">
+                    <thead class="bordered-blue">
+                    <tr>
+                        <th ng-click="vm.sortBy('numeroOrdre') ">
+                                    <span>Numero</span>
+                                    <span ng-if="vm.isCurrentColumn('numeroOrdre')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+
+                        <th ng-click="vm.sortBy('typeServiceLibelle') ">
+                            <span>Type Service</span>
+                            <span ng-if="vm.isCurrentColumn('typeServiceLibelle')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('instruction') ">
+                            <span>Instruction</span>
+                            <span ng-if="vm.isCurrentColumn('instruction')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('etiquetteComptable') ">
+                            <span>Etiquette</span>
+                            <span ng-if="vm.isCurrentColumn('etiquetteComptable')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+
+                        <th ng-click="vm.sortBy('montant') ">
+                            <span>Montant</span>
+                            <span ng-if="vm.isCurrentColumn('montant')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('instructionUo') ">
+                                <span>instruction Uo</span>
+                                <span ng-if="vm.isCurrentColumn('instructionUo')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="instructionComptable in vm.datas track by instructionComptable.id">
+                        <td>{{instructionComptable.numeroOrdre}}</td>
+                        <td>{{instructionComptable.typeServiceLibelle}}</td>
+                        <td >{{instructionComptable.instruction}}</td>
+                        <td>{{instructionComptable.instructionUo}}</td>
+                        <td>{{instructionComptable.etiquetteComptable}}</td>
+                        <td >{{instructionComptable.montant}}</td>
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+                                <!-- <button type="submit" ng-click="vm.detailItem($event,instructionComptable)" class="btn btn-primary btn-xs btn-round">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button> -->
+                                <button  type="submit" ng-click="vm.editItem($event,instructionComptable)" class="btn btn-warning btn-xs btn-round">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                                <button type="submit" ng-click="vm.deleteItem($event,instructionComptable)" class="btn btn-danger btn-xs btn-round">
+                                    <span class="glyphicon glyphicon-remove-circle"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="center-block text-center" ng-show="vm.canShowPagination()">
+                <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+                </uib-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+
+

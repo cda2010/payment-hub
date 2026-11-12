@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="20261105190000-1" author="payment">
+        <createTable tableName="ordre_partenaire">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cle_idempotence" type="varchar(200)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="code_fse" type="varchar(40)"/>
+            <column name="code_api" type="varchar(40)"/>
+            <column name="code_methode" type="varchar(80)"/>
+            <column name="mode_execution" type="varchar(30)"/>
+            <column name="statut" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="err_code" type="int"/>
+            <column name="message" type="varchar(500)"/>
+            <column name="reponse" type="text"/>
+            <column name="callback_url" type="varchar(500)"/>
+            <column name="cree_le" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mis_a_jour_le" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

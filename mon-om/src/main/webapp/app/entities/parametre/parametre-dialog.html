@@ -1,0 +1,59 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+    <div class="modal-header" style="background-color: #5d4cf5; color: white; border-radius: 5px 5px 0 0;">
+        <h4 class="modal-title" id="myParametreLabel">
+            <i class="fa fa-cogs text-warning me-2"></i>
+            Create or edit a Parametre
+        </h4>
+    </div>
+    <div class="modal-body" style="background-color: #f8f9fa; padding: 20px;">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.parametre.id">
+            <label for="id" class="text-primary">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.parametre.id" readonly 
+                    style="border: 1px solid #7485e6; border-radius: 4px;"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_nomParametre">Nom Parametre</label>
+            <input type="text" class="form-control" name="nomParametre" id="field_nomParametre"
+                    ng-model="vm.parametre.nomParametre"
+                    required
+                    style="border: 1px solid #7485e6; border-radius: 4px;"/>
+            <div ng-show="editForm.nomParametre.$invalid">
+                <p class="help-block text-danger"
+                    ng-show="editForm.nomParametre.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_typeParametre">Type Parametre</label>
+            <select class="form-control" name="typeParametre" ng-model="vm.parametre.typeParametre" 
+                    id="field_typeParametre" required
+                    style="border: 1px solid #7485e6; border-radius: 4px;">
+                <option value="STRING">STRING</option>
+                <option value="DOUBLE">DOUBLE</option>
+                <option value="INTEGER">INTEGER</option>
+                <option value="FLOAT">FLOAT</option>
+                <option value="LONG">LONG</option>
+            </select>
+            <div ng-show="editForm.typeParametre.$invalid">
+                <p class="help-block text-danger"
+                    ng-show="editForm.typeParametre.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer" style="background-color: #f8f9fa; border-top: 2px solid #7485e6;">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()"
+                style="background-color: white; border: 1px solid #7485e6; color: #7485e6;">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary"
+                style="background-color: #2610ee;">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+</form>

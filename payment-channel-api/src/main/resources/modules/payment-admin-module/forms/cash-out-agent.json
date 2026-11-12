@@ -1,0 +1,63 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "agentInfo",
+        "tag": "p",
+        "content": "Choisissez le réseau d'agents où vous retirerez le cash (souvent le même que votre wallet)."
+      },
+      {
+        "type": "select",
+        "key": "agentNetwork",
+        "label": "Réseau agent (remise cash)",
+        "input": true,
+        "dataSrc": "values",
+        "data": { "values": [] },
+        "widget": "choicesjs",
+        "validate": { "required": true },
+        "properties": {
+          "rfDataSource": {
+            "code": "CATALOG_PARTICIPANTS",
+            "origin": "LOCAL",
+            "params": { "role": "AGENT_NETWORK" }
+          }
+        }
+      },
+      {
+        "type": "textfield",
+        "key": "agentCode",
+        "label": "Code unité / point",
+        "placeholder": "Ex. AG-OUAHIGOUYA",
+        "input": true,
+        "description": "Code UO du réseau (ex. AG-OUAHIGOUYA). Vérifié contre payment-network (FSE CORIS).",
+        "validate": { "required": true },
+        "customConditional": "show = ['CORIS_MONEY','0011'].indexOf(String(data.agentNetwork || '').trim().toUpperCase()) >= 0;",
+        "properties": {
+          "rfShowWhen": {
+            "field": "agentNetwork",
+            "in": ["CORIS_MONEY", "0011"]
+          }
+        }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Réseau agent (remise cash)": "Réseau agent (remise cash)",
+      "Code unité / point": "Code unité / point"
+    },
+    "en": {
+      "Réseau agent (remise cash)": "Agent network (cash pickup)",
+      "Code unité / point": "Unit / outlet code"
+    }
+  }
+}

@@ -1,0 +1,110 @@
+<div class="container-fluid">
+        <div class="row">
+            <div>
+                    <div class="well with-header" style="margin-top:10px ">
+                            <div class="header bg-blue " >
+                                <div class="col-xs-8">
+                                    Liste des types de service
+                                </div>
+                                    <div class="no-padding-left col-xs-4" >
+                                            <button  class="btn btn-default  btn-circle btn-xs
+                                            " ng-click="vm.addItem()">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                            <div class="btn-group mr15" uib-dropdown>
+                                                <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}} 
+                                                    éléments par page <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                                    <li>
+                                                        <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                            </div>
+                <table class="table table-hover">
+                    <thead class="bordered-blue">
+                        <tr >
+                        <th ng-click="vm.sortBy('poidsNum') ">
+                            <span>Libelle</span>
+                            <span ng-if="vm.isCurrentColumn('poidsNum')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                            <th ng-click="vm.sortBy('description') ">
+                                <span>Description</span>
+                                <span ng-if="vm.isCurrentColumn('description')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                            </th>
+                        <th ng-click="vm.sortBy('cmpteClientSournce') ">
+                            <span>Cmpte Client Source ?</span>
+                            <span ng-if="vm.isCurrentColumn('cmpteClientSournce')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('cmpteClientDest') ">
+                            <span>Cmpte Client Dest ?</span>
+                            <span ng-if="vm.isCurrentColumn('cmpteClientDest')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('operationClient') ">
+                            <span>operation Client ?</span>
+                            <span ng-if="vm.isCurrentColumn('cmpteClientDest')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('fraisApplicable') ">
+                            <span>Frais Applicable ?</span>
+                            <span ng-if="vm.isCurrentColumn('fraisApplicable')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                            <th ng-click="vm.sortBy('etiquetteCompteCode') ">
+                                <span>Source Frais</span>
+                                <span ng-if="vm.isCurrentColumn('etiquetteCompteCode')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                            </th>
+                        <th class="text-right"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="typeService in vm.datas track by typeService.id">
+                        <td>{{typeService.libelle}}</td>
+                        <td>{{typeService.description}}</td>
+                        <td>
+                            <span class="label label-success" ng-if="typeService.cmpteClientSournce">Oui</span>
+                            <span class="label label-danger" ng-if="!typeService.cmpteClientSournce">Non</span>
+                        </td>
+                        <td>
+                            <span class="label label-success" ng-if="typeService.cmpteClientDest">Oui</span>
+                            <span class="label label-danger" ng-if="!typeService.cmpteClientDest">Non</span>
+                        </td>
+                        <td>
+                            <span class="label label-success" ng-if="typeService.operationClient">Oui</span>
+                            <span class="label label-danger" ng-if="!typeService.operationClient">Non</span>
+                        </td>
+                        <td>
+                            <span class="label label-success" ng-if="typeService.fraisApplicable">Oui</span>
+                            <span class="label label-danger" ng-if="!typeService.fraisApplicable">Non</span>
+                        </td>
+                        <td>{{typeService.etiquetteCompteCode}}</td>
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+                                <button type="submit" ng-click="vm.editItem($event,typeService)" class="btn btn-warning btn-xs btn-round">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                                <button type="submit" ng-click="vm.deleteItem($event,typeService)" class="btn btn-danger btn-xs btn-round">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="center-block text-center" ng-show="vm.canShowPagination()">
+            <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+            </uib-pagination>
+        </div>
+    </div>
+</div>
+</div>

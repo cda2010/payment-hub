@@ -1,0 +1,21 @@
+{
+    "ptiApp": {
+        "reglement-template" : {
+            "home": {
+                "title": "Template de Reglements",
+                "createLabel": "Créer un nouveau Template",
+                "createOrEditLabel": "Créer ou éditer un Reglement"
+            },
+            "created": "Un nouveau  Template Reglement a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Reglement avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Reglement avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Template Reglement {{ id }} ?"
+            },
+            "detail": {
+                "title": "Template Reglement"
+            },
+            "dateReglement": "Date Reglement"
+        }
+    }
+}

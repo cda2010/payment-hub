@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span>Autre Parametre</span> {{vm.autreParametre.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Code Parametre</span></dt>
+        <dd>
+            <span>{{vm.autreParametre.codeParametre}}</span>
+        </dd>
+        <dt><span>Nom Parametre</span></dt>
+        <dd>
+            <span>{{vm.autreParametre.nomParametre}}</span>
+        </dd>
+        <dt><span>Valeur</span></dt>
+        <dd>
+            <span>{{vm.autreParametre.valeur}}</span>
+        </dd>
+        <dt><span>Fournisseur Service</span></dt>
+        <dd>
+            <a ui-sref="fournisseur-service-detail({id:vm.autreParametre.fournisseurService.id})">{{vm.autreParametre.fournisseurService.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="autre-parametre-detail.edit({id:vm.autreParametre.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0027",
+  "providerCodeHint": "FSE_0027",
+  "providerLibelle": "MOOV AFRICA BURKINA",
+  "participantKindHint": "WALLET",
+  "fseStatut": "AUTRE",
+  "groupCode": "ENF",
+  "codeExterne": "0",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "API MOOV AFRICA BF1",
+    "codeApi": "0021",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7911",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7911",
+    "authType": "OAUTH2_CLIENT_CREDENTIALS",
+    "tokenUrl": "http://172.27.4.186:7911/oauth/token",
+    "grantType": "client_credentials"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "GETAIRTIME",
+      "codeMethode": "002101",
+      "operationCode": "GETAIRTIME",
+      "nom": "api/moovbf/onatel-recharge",
+      "httpMethod": "POST",
+      "path": "api/moovbf/onatel-recharge",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"numero\": \"${numero}\", \"montant\": \"${montant}\", \"transExt\": \"${transExt}\", \"username\": \"${username}\", \"sourceID\": \"${sourceID}\", \"password\": \"${password}\", \"processTypeID\": \"${processTypeID}\"}",
+      "parameters": [
+        {
+          "code": "numero",
+          "nomExterne": "numero",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "transExt",
+          "nomExterne": "transExt",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "username",
+          "nomExterne": "username",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "sourceID",
+          "nomExterne": "sourceID",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "password",
+          "nomExterne": "password",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "processTypeID",
+          "nomExterne": "processTypeID",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

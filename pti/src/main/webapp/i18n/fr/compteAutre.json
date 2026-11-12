@@ -1,0 +1,23 @@
+
+{
+    "ptiApp": {
+        "compteAutre" : {
+            "home": {
+                "title": "CompteAutres",
+                "createLabel": "Créer un nouveau Compte Autre",
+                "createOrEditLabel": "Créer ou éditer un Compte Autre"
+            },
+            "created": "Un nouveau Compte Autre a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Compte Autre avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Compte Autre avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Compte Autre {{ id }} ?"
+            },
+            "detail": {
+                "title": "Compte Autre"
+            },
+            "solde": "Solde",
+            "transactionComptePti": "Transaction Compte Pti"
+        }
+    }
+}

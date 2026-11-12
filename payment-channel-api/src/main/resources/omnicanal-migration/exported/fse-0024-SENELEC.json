@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0024",
+  "providerCodeHint": "FSE_0024",
+  "providerLibelle": "Senelec",
+  "participantKindHint": "FACTURIER",
+  "fseStatut": "AUTRE",
+  "groupCode": "ENF",
+  "codeExterne": "0",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "Api SENELEC",
+    "codeApi": "0022",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "NONE"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "GETMONTANT",
+      "codeMethode": "001901",
+      "operationCode": "GETMONTANT",
+      "nom": "/api/hexpay/v1/getmontant",
+      "httpMethod": "POST",
+      "path": "api/hexpay/v1/getmontant",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"nombre\": \"${nombre}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "CONSULTATIONFACTURE",
+      "codeMethode": "001902",
+      "operationCode": "CONSULTATIONFACTURE",
+      "nom": "/api/hexpay/v1/userBills",
+      "httpMethod": "POST",
+      "path": "api/hexpay/v1/userBills",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"custId\": \"${custId}\", \"userNo\": \"${userNo}\", \"utility\": \"${utility}\"}",
+      "parameters": [
+        {
+          "code": "custId",
+          "nomExterne": "custId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "userNo",
+          "nomExterne": "userNo",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "utility",
+          "nomExterne": "utility",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "SETTLEMENT",
+      "codeMethode": "001903",
+      "operationCode": "SETTLEMENT",
+      "nom": "/api/hexpay/v1/chargePower",
+      "httpMethod": "POST",
+      "path": "api/hexpay/v1/chargePower",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"userNo\": \"${userNo}\", \"custId\": \"${custId}\", \"utility\": \"${utility}\", \"billNo\": \"${billNo}\", \"montant\": \"${montant}\", \"sessionId\": \"${sessionId}\"}",
+      "parameters": [
+        {
+          "code": "userNo",
+          "nomExterne": "userNo",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "custId",
+          "nomExterne": "custId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "utility",
+          "nomExterne": "utility",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "billNo",
+          "nomExterne": "billNo",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "sessionId",
+          "nomExterne": "sessionId",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "VERIFREGLEFACTURIER",
+      "codeMethode": "001904",
+      "operationCode": "VERIFREGLEFACTURIER",
+      "nom": "/api/hexpay/v1/getregle",
+      "httpMethod": "POST",
+      "path": "api/hexpay/v1/getregle",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"reference\": \"${reference}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

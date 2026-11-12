@@ -1,0 +1,118 @@
+<form name="editForm">
+<div class="container-fluid">
+    <div class="row">
+        <div class="well with-header" style="margin-top:10px ">
+            <div class="header bg-blue ">
+                <div class="col-xs-8">
+                    <span >
+                        Historique des soldes
+                    </span>
+                </div>
+            </div>
+            <div class="row mt5">
+                <div class="row mt5" >
+
+                    <div class="col-sm-3">
+                        <label mf-required for="field_typeHistorique">Type</label>
+                        <select required class="form-control" id="field_typeHistorique" name="typeHistorique"
+                                ng-model="vm.itemSearch.typeHistorique">
+                            <option value="SOLDECLIENT">Solde des clients</option>
+                            <option value="SOLDEAGENT">Solde des agents</option>
+                            <option value="TABLEAUSOLDE">Tableau des soldes</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label mf-required  for="field_dateEnregistrement">Date Enregistrement</label>
+
+                            <input required autocomplete="off" id="field_dateEnregistrement" show-button-bar="false"  popup-placement="top"
+                                   placeholder=" Date" is-open="vm.datePickerOpenStatus.dateEnregistrement"
+                                   uib-datepicker-popup="dd/MM/yyyy" ng-focus="vm.openCalendar('dateEnregistrement')"
+                                   class="form-control"  ng-model="vm.dateEnregistrement" name="dateEnregistrement"/>
+
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="field_telephoneE">Téléphone</label>
+                        <input autocomplete="off" title="Telephone"
+                               type="text" class="form-control" name="telephone" id="field_telephoneE"
+                               ng-model="vm.itemSearch.telephone" />
+                    </div>
+                </div>
+                <div class="row mt5" >
+                    <div class="form-group col-sm-12" >
+                        <div class="col-sm-3" ng-if="vm.selected" >
+                            <select class=" col-sm-5" id="filed_format" name="format" ng-model="vm.format" >
+                                <option value="">Format</option>
+                                <option value="PDF">PDF</option>
+                                <option value="XLSX">XLSX</option>
+                                <option value="CSV">CSV</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3" ng-if="vm.selected" >
+                            <button class="btn btn-primary btn-md " ng-click="vm.generateAll()">
+                                <span class="glyphicon glyphicon-save">Exporter</span>
+                            </button>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <button   class="btn btn-info btn-md " ng-click="vm.chercherHistorique()" ng-disabled="editForm.$invalid" >
+                                <span class="glyphicon glyphicon-search">Chercher</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <table class="table table-hover">
+                    <thead class="bordered-blue">
+                    <tr >
+                        <th ><span >Numero de compte</span> </th>
+                        <th ><span >Libelle</span> </th>
+                        <th ng-if="vm.itemSearch.typeHistorique=='SOLDEAGENT'"><span >Type Organisation</span> </th>
+                        <th ng-if="vm.itemSearch.typeHistorique=='SOLDEAGENT'" ><span >Code UO</span> </th>
+                        <th ><span >Telephone</span> </th>
+                        <th> <span>Solde</span> </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="detailHistorique in vm.datas track by detailHistorique.id">
+                        <td>{{detailHistorique.numeroCpt}}</td>
+                        <td>{{detailHistorique.libelle}}</td>
+                        <td ng-if="vm.itemSearch.typeHistorique=='SOLDEAGENT'">{{detailHistorique.typeUo}}</td>
+                        <td ng-if="vm.itemSearch.typeHistorique=='SOLDEAGENT'">{{detailHistorique.codeUo}}</td>
+                        <td>{{detailHistorique.telephone}}</td>
+                        <td>{{detailHistorique.description}}</td>
+                        <td>{{detailHistorique.solde | currency :""}}</td>
+                        <!--<td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+                                <button type="submit"
+                                        ui-sref="detail-historique-detail({id:detailHistorique.id})"
+                                        class="btn btn-info btn-sm">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                    <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                                </button>
+                                <button type="submit"
+                                        ui-sref="detail-historique.edit({id:detailHistorique.id})"
+                                        class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                    <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                                </button>
+                                <button type="submit"
+                                        ui-sref="detail-historique.delete({id:detailHistorique.id})"
+                                        class="btn btn-danger btn-sm">
+                                    <span class="glyphicon glyphicon-remove-circle"></span>
+                                    <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                                </button>
+                            </div>
+                        </td>-->
+                    </tr>
+                    </tbody>
+                </table>
+
+        </div>
+        <div class="text-center" ng-show="vm.canShowResultCount">
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ></uib-pagination>
+        </div>
+    </div>
+</div>
+</form>

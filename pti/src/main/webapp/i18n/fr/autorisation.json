@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "autorisation" : {
+            "home": {
+                "title": "Autorisations",
+                "createLabel": "Créer un nouveau Autorisation",
+                "createOrEditLabel": "Paramétrer une Autorisation"
+            },
+            "created": "Un nouveau Autorisation a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Autorisation avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Autorisation avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Autorisation {{ id }} ?"
+            },
+            "detail": {
+                "title": "Autorisation"
+            },
+            "code": "Code",
+            "uniteOrganisation": "Unite Organisation",
+            "typeService": "Type Service"
+        }
+    }
+}

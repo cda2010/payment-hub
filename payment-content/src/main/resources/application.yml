@@ -1,0 +1,83 @@
+spring:
+  application:
+    name: payment-content
+  profiles:
+    default: prod
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 3MB
+  datasource:
+    url: ${CONTENT_DB_URL:jdbc:postgresql://localhost:5443/payment_content}
+    username: ${CONTENT_DB_USER:content}
+    password: ${CONTENT_DB_PASSWORD:content}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+  data:
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      database: ${CONTENT_REDIS_DB:2}
+
+server:
+  port: ${SERVER_PORT:8098}
+  error:
+    include-message: never
+    include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+content:
+  cache:
+    redis-enabled: ${CONTENT_REDIS_ENABLED:true}
+    caffeine-max-size: ${CONTENT_CAFFEINE_MAX_SIZE:500}
+    caffeine-ttl-seconds: ${CONTENT_CAFFEINE_TTL:60}
+    redis-ttl-seconds: ${CONTENT_REDIS_TTL:300}
+  media:
+    storage-dir: ${CONTENT_MEDIA_DIR:./data/content-media}
+    public-base-url: ${CONTENT_MEDIA_PUBLIC_URL:http://127.0.0.1:8098/api/v1/content/media}
+    max-size-bytes: ${CONTENT_MEDIA_MAX_BYTES:2000000}
+  security:
+    keycloak:
+      enabled: ${KEYCLOAK_ENABLED:true}
+      issuer-uri: ${KEYCLOAK_ISSUER:http://localhost:8180/realms/payment}
+      jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:}
+      audience: ${KEYCLOAK_AUDIENCE:payment-api}
+    jwt:
+      secret: ${JWT_SECRET:change-me-to-a-very-long-secret-key-at-least-256-bits}
+      issuer: ${JWT_ISSUER:payment-gateway}
+    cors:
+      allowed-origins: ${CORS_ORIGINS:http://localhost:4200,http://127.0.0.1:4200,http://localhost:4205,http://127.0.0.1:4205,http://localhost:4210,http://127.0.0.1:4210,http://localhost:8100,http://127.0.0.1:8100}
+
+logging:
+  level:
+    root: INFO
+    com.gateway.payment.content: INFO

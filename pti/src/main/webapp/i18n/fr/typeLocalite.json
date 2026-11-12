@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "typeLocalite" : {
+            "home": {
+                "title": "TypeLocalites",
+                "createLabel": "Créer un nouveau Type Localite",
+                "createOrEditLabel": "Créer ou éditer un Type Localite"
+            },
+            "created": "Un nouveau Type Localite a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Type Localite avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Type Localite avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Type Localite {{ id }} ?"
+            },
+            "detail": {
+                "title": "Type Localite"
+            },
+            "libelle": "Libelle",
+            "niveau": "Niveau",
+            "pays": "Pays"
+        }
+    }
+}

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             targetNamespace="http://payment-gateway/catalog"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+
+  <!--
+    ENROLEMENT — reconnaissance d'un compte Coris, puis ouverture Coris Money.
+    Ce n'est pas un paiement. Clé Flowable : enrolement.
+    Le formulaire d'identité dépend du pays (bindings catalogue).
+  -->
+  <process id="enrolement" name="Enrôlement" isExecutable="true">
+    <startEvent id="start" name="Début"/>
+    <sequenceFlow id="f0" sourceRef="start" targetRef="PORTEFEUILLE"/>
+
+    <userTask id="PORTEFEUILLE" name="Compte Coris Money" flowable:formKey="enrolement-portefeuille"/>
+    <sequenceFlow id="f1" sourceRef="PORTEFEUILLE" targetRef="gwMoney"/>
+
+    <exclusiveGateway id="gwMoney" name="Money ?" default="fMoneyNon"/>
+    <sequenceFlow id="fMoneyOui" sourceRef="gwMoney" targetRef="CODE">
+      <conditionExpression xsi:type="tFormalExpression">${reponse == 'OUI'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="fMoneyNon" sourceRef="gwMoney" targetRef="COMPTE"/>
+
+    <userTask id="COMPTE" name="Compte Bank ou Meso" flowable:formKey="enrolement-compte"/>
+    <sequenceFlow id="f2" sourceRef="COMPTE" targetRef="gwCompte"/>
+
+    <exclusiveGateway id="gwCompte" name="Compte ?" default="fCompteNon"/>
+    <sequenceFlow id="fCompteOui" sourceRef="gwCompte" targetRef="CODE">
+      <conditionExpression xsi:type="tFormalExpression">${reponse == 'OUI'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="fCompteNon" sourceRef="gwCompte" targetRef="TELEPHONE"/>
+
+    <userTask id="TELEPHONE" name="Téléphone" flowable:formKey="enrolement-telephone"/>
+    <sequenceFlow id="f3" sourceRef="TELEPHONE" targetRef="CODE"/>
+
+    <userTask id="CODE" name="Code" flowable:formKey="enrolement-code"/>
+    <sequenceFlow id="f4" sourceRef="CODE" targetRef="gwOrigine"/>
+
+    <exclusiveGateway id="gwOrigine" name="Déjà Money ?" default="fPasMoney"/>
+    <sequenceFlow id="fDejaMoney" sourceRef="gwOrigine" targetRef="endEntre">
+      <conditionExpression xsi:type="tFormalExpression">${origine == 'MONEY'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="fPasMoney" sourceRef="gwOrigine" targetRef="PROPOSER"/>
+
+    <userTask id="PROPOSER" name="Ouvrir Coris Money" flowable:formKey="enrolement-proposer"/>
+    <sequenceFlow id="f5" sourceRef="PROPOSER" targetRef="gwOuvrir"/>
+
+    <exclusiveGateway id="gwOuvrir" name="Ouvrir ?" default="fNePasOuvrir"/>
+    <sequenceFlow id="fOuvrir" sourceRef="gwOuvrir" targetRef="PAYS">
+      <conditionExpression xsi:type="tFormalExpression">${reponse == 'OUI'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="fNePasOuvrir" sourceRef="gwOuvrir" targetRef="endTermine"/>
+
+    <userTask id="PAYS" name="Pays" flowable:formKey="enrolement-pays"/>
+    <sequenceFlow id="f6" sourceRef="PAYS" targetRef="IDENTITE"/>
+
+    <userTask id="IDENTITE" name="Identité" flowable:formKey="enrolement-identite"/>
+    <sequenceFlow id="f7" sourceRef="IDENTITE" targetRef="PIECE"/>
+
+    <userTask id="PIECE" name="Pièce d'identité" flowable:formKey="enrolement-piece"/>
+    <sequenceFlow id="f8" sourceRef="PIECE" targetRef="endOuvert"/>
+
+    <endEvent id="endEntre" name="Compte reconnu"/>
+    <endEvent id="endTermine" name="Sans portefeuille"/>
+    <endEvent id="endOuvert" name="Portefeuille ouvert"/>
+  </process>
+
+  <bpmndi:BPMNDiagram id="diagram-enrolement">
+    <bpmndi:BPMNPlane id="plane-enrolement" bpmnElement="enrolement">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start"><omgdc:Bounds x="40" y="122" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PORTEFEUILLE_di" bpmnElement="PORTEFEUILLE"><omgdc:Bounds x="110" y="100" width="120" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="gwMoney_di" bpmnElement="gwMoney" isMarkerVisible="true"><omgdc:Bounds x="270" y="115" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="COMPTE_di" bpmnElement="COMPTE"><omgdc:Bounds x="360" y="220" width="120" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="gwCompte_di" bpmnElement="gwCompte" isMarkerVisible="true"><omgdc:Bounds x="520" y="235" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TELEPHONE_di" bpmnElement="TELEPHONE"><omgdc:Bounds x="620" y="340" width="120" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CODE_di" bpmnElement="CODE"><omgdc:Bounds x="620" y="100" width="120" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="gwOrigine_di" bpmnElement="gwOrigine" isMarkerVisible="true"><omgdc:Bounds x="790" y="115" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endEntre_di" bpmnElement="endEntre"><omgdc:Bounds x="890" y="40" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PROPOSER_di" bpmnElement="PROPOSER"><omgdc:Bounds x="890" y="220" width="140" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="gwOuvrir_di" bpmnElement="gwOuvrir" isMarkerVisible="true"><omgdc:Bounds x="1080" y="235" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endTermine_di" bpmnElement="endTermine"><omgdc:Bounds x="1180" y="360" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PAYS_di" bpmnElement="PAYS"><omgdc:Bounds x="1180" y="100" width="100" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IDENTITE_di" bpmnElement="IDENTITE"><omgdc:Bounds x="1330" y="100" width="120" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PIECE_di" bpmnElement="PIECE"><omgdc:Bounds x="1500" y="100" width="130" height="80"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endOuvert_di" bpmnElement="endOuvert"><omgdc:Bounds x="1680" y="122" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="f0_di" bpmnElement="f0"><omgdi:waypoint x="76" y="140"/><omgdi:waypoint x="110" y="140"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f1_di" bpmnElement="f1"><omgdi:waypoint x="230" y="140"/><omgdi:waypoint x="270" y="140"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fMoneyOui_di" bpmnElement="fMoneyOui"><omgdi:waypoint x="320" y="140"/><omgdi:waypoint x="620" y="140"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fMoneyNon_di" bpmnElement="fMoneyNon"><omgdi:waypoint x="295" y="165"/><omgdi:waypoint x="295" y="260"/><omgdi:waypoint x="360" y="260"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f2_di" bpmnElement="f2"><omgdi:waypoint x="480" y="260"/><omgdi:waypoint x="520" y="260"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fCompteOui_di" bpmnElement="fCompteOui"><omgdi:waypoint x="545" y="235"/><omgdi:waypoint x="545" y="140"/><omgdi:waypoint x="620" y="140"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fCompteNon_di" bpmnElement="fCompteNon"><omgdi:waypoint x="545" y="285"/><omgdi:waypoint x="545" y="380"/><omgdi:waypoint x="620" y="380"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f3_di" bpmnElement="f3"><omgdi:waypoint x="680" y="340"/><omgdi:waypoint x="680" y="180"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f4_di" bpmnElement="f4"><omgdi:waypoint x="740" y="140"/><omgdi:waypoint x="790" y="140"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fDejaMoney_di" bpmnElement="fDejaMoney"><omgdi:waypoint x="815" y="115"/><omgdi:waypoint x="815" y="58"/><omgdi:waypoint x="890" y="58"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fPasMoney_di" bpmnElement="fPasMoney"><omgdi:waypoint x="815" y="165"/><omgdi:waypoint x="815" y="260"/><omgdi:waypoint x="890" y="260"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f5_di" bpmnElement="f5"><omgdi:waypoint x="1030" y="260"/><omgdi:waypoint x="1080" y="260"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fOuvrir_di" bpmnElement="fOuvrir"><omgdi:waypoint x="1105" y="235"/><omgdi:waypoint x="1105" y="140"/><omgdi:waypoint x="1180" y="140"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fNePasOuvrir_di" bpmnElement="fNePasOuvrir"><omgdi:waypoint x="1105" y="285"/><omgdi:waypoint x="1105" y="378"/><omgdi:waypoint x="1180" y="378"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f6_di" bpmnElement="f6"><omgdi:waypoint x="1280" y="140"/><omgdi:waypoint x="1330" y="140"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f7_di" bpmnElement="f7"><omgdi:waypoint x="1450" y="140"/><omgdi:waypoint x="1500" y="140"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f8_di" bpmnElement="f8"><omgdi:waypoint x="1630" y="140"/><omgdi:waypoint x="1680" y="140"/></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

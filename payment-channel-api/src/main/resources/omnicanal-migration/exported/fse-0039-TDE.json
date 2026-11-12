@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0039",
+  "providerCodeHint": "FSE_0039",
+  "providerLibelle": "TDE",
+  "participantKindHint": "FACTURIER",
+  "fseStatut": "AUTRE",
+  "groupCode": "ENF",
+  "codeExterne": "0",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "TDE",
+    "codeApi": "0036",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "OAUTH2_CLIENT_CREDENTIALS",
+    "clientId": "",
+    "tokenUrl": "http://172.27.4.186:7930/oauth/token",
+    "grantType": "client_credentials"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "GETMONTANT",
+      "codeMethode": "003601",
+      "operationCode": "GETMONTANT",
+      "nom": "api/tde/getmontant",
+      "httpMethod": "POST",
+      "path": "api/tde/getmontant",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"nombre\": \"${nombre}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "VERIFREGLEFACTURIER",
+      "codeMethode": "003602",
+      "operationCode": "VERIFREGLEFACTURIER",
+      "nom": "api/tde/getregle",
+      "httpMethod": "POST",
+      "path": "api/tde/getregle",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"reference\": \"${reference}\", \"montant\": \"${montant}\"}",
+      "parameters": [
+        {
+          "code": "reference",
+          "nomExterne": "REFERENCE",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "CONSULTATIONFACTURE",
+      "codeMethode": "003603",
+      "operationCode": "CONSULTATIONFACTURE",
+      "nom": "api/tde/impayes",
+      "httpMethod": "GET",
+      "path": "api/tde/impayes",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"abon\": \"${abon}\", \"tiers\": \"${tiers}\"}",
+      "parameters": [
+        {
+          "code": "abon",
+          "nomExterne": "abon",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "tiers",
+          "nomExterne": "tiers",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "SETTLEMENT",
+      "codeMethode": "003604",
+      "operationCode": "SETTLEMENT",
+      "nom": "api/tde/settlement",
+      "httpMethod": "POST",
+      "path": "api/tde/settlement",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"codtrg\": \"${codtrg}\", \"tranrg\": \"${tranrg}\", \"referg\": \"${referg}\", \"piecrg\": \"${piecrg}\", \"montrg\": \"${montrg}\", \"perirg\": \"${perirg}\"}",
+      "parameters": [
+        {
+          "code": "codtrg",
+          "nomExterne": "codtrg",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "tranrg",
+          "nomExterne": "tranrg",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "referg",
+          "nomExterne": "referg",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "piecrg",
+          "nomExterne": "piecrg",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montrg",
+          "nomExterne": "montrg",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "perirg",
+          "nomExterne": "perirg",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

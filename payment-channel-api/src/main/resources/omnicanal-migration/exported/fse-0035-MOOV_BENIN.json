@@ -1,0 +1,154 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0035",
+  "providerCodeHint": "FSE_0035",
+  "providerLibelle": "MOOV BENIN",
+  "participantKindHint": "WALLET",
+  "fseStatut": "NONBANQUE",
+  "groupCode": "ENF",
+  "codeExterne": "0",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "API MOOV BENIN",
+    "codeApi": "0033",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "OAUTH2_CLIENT_CREDENTIALS",
+    "tokenUrl": "http://172.27.4.186:7930/oauth/token",
+    "grantType": "client_credentials"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "GETINFOS",
+      "codeMethode": "003301",
+      "operationCode": "GETINFOS",
+      "nom": "api/v1/moovbj/mobileAccount",
+      "httpMethod": "POST",
+      "path": "api/v1/moovbj/mobileAccount",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"msisdn\": \"${msisdn}\", \"montant\": \"${montant}\"}",
+      "parameters": [
+        {
+          "code": "msisdn",
+          "nomExterne": "msisdn",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "GETMONTANT",
+      "codeMethode": "003302",
+      "operationCode": "GETMONTANT",
+      "nom": "api/v1/moovbj/getmontant",
+      "httpMethod": "POST",
+      "path": "api/v1/moovbj/getmontant",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"nombre\": \"${nombre}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "VERIFREGLEFACTURIER",
+      "codeMethode": "003303",
+      "operationCode": "VERIFREGLEFACTURIER",
+      "nom": "api/v1/moovbj/getregle",
+      "httpMethod": "POST",
+      "path": "api/v1/moovbj/getregle",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"reference\": \"${reference}\", \"montant\": \"${montant}\"}",
+      "parameters": [
+        {
+          "code": "reference",
+          "nomExterne": "REFERENCE",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "SETTLEMENT",
+      "codeMethode": "003304",
+      "operationCode": "SETTLEMENT",
+      "nom": "api/v1/moovbj/bankToWalletApi",
+      "httpMethod": "POST",
+      "path": "api/v1/moovbj/bankToWalletApi",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"transamount\": \"${transamount}\", \"msisdn\": \"${msisdn}\", \"firstname\": \"${firstname}\", \"lastname\": \"${lastname}\", \"secondname\": \"${secondname}\", \"accountnumber\": \"${accountnumber}\", \"btrid\": \"${btrid}\"}",
+      "parameters": [
+        {
+          "code": "transamount",
+          "nomExterne": "transamount",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "msisdn",
+          "nomExterne": "msisdn",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "firstname",
+          "nomExterne": "firstname",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "lastname",
+          "nomExterne": "lastname",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "secondname",
+          "nomExterne": "secondname",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "accountnumber",
+          "nomExterne": "accountnumber",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "btrid",
+          "nomExterne": "banktransactionreferenceid",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

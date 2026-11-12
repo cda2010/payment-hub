@@ -1,0 +1,60 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "select",
+        "key": "sourceRail",
+        "label": "Réseau source",
+        "input": true,
+        "dataSrc": "values",
+        "data": { "values": [] },
+        "widget": "choicesjs",
+        "validate": { "required": true },
+        "description": "Rails autorisés par le casting produit (filtre). Le compte débité lui-même vient des alias du client.",
+        "properties": {
+          "rfDataSource": {
+            "code": "CATALOG_PARTICIPANTS",
+            "origin": "LOCAL",
+            "params": { "role": "SOURCE" }
+          }
+        }
+      },
+      {
+        "type": "textfield",
+        "key": "sourceAccount",
+        "label": "Compte à débiter",
+        "input": true,
+        "validate": { "required": true },
+        "description": "Référence wallet / compte du client (payment-alias.external_ref). Rempli dynamiquement par le canal selon la party connectée."
+      },
+      {
+        "type": "phoneNumber",
+        "key": "phoneNumber",
+        "label": "Téléphone du compte",
+        "input": true,
+        "validate": { "required": true },
+        "description": "MSISDN de la party (identity), pas l'identifiant wallet."
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Réseau source": "Réseau source",
+      "Compte à débiter": "Compte à débiter",
+      "Téléphone du compte": "Téléphone du compte"
+    },
+    "en": {
+      "Réseau source": "Source network",
+      "Compte à débiter": "Account to debit",
+      "Téléphone du compte": "Account phone number"
+    }
+  }
+}

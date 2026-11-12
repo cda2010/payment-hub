@@ -1,0 +1,76 @@
+<div>
+    <h2 data-translate="ptiApp.ligneChargementCompte.home.title">Ligne Chargement Comptes</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="ligne-chargement-compte.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="ptiApp.ligneChargementCompte.home.createLabel">
+                        Create new Ligne Chargement Compte
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="ptiApp.ligneChargementCompte.nom">Nom</span></th>
+                    <th><span data-translate="ptiApp.ligneChargementCompte.prenom">Prenom</span></th>
+                    <th><span data-translate="ptiApp.ligneChargementCompte.telephone">Telephone</span></th>
+                    <th><span data-translate="ptiApp.ligneChargementCompte.dateNaissance">Date Naissance</span></th>
+                    <th><span data-translate="ptiApp.ligneChargementCompte.lieuNaissance">Lieu Naissance</span></th>
+                    <th><span data-translate="ptiApp.ligneChargementCompte.nomMere">Nom Mere</span></th>
+                    <th><span data-translate="ptiApp.ligneChargementCompte.personnePrevenir">Personne Prevenir</span></th>
+                    <th><span data-translate="ptiApp.ligneChargementCompte.email">Email</span></th>
+                    <th><span data-translate="ptiApp.ligneChargementCompte.adresse">Adresse</span></th>
+                    <th><span data-translate="ptiApp.ligneChargementCompte.typePersonne">Type Personne</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="ligneChargementCompte in vm.ligneChargementComptes track by ligneChargementCompte.id">
+                    <td><a ui-sref="ligne-chargement-compte-detail({id:ligneChargementCompte.id})">{{ligneChargementCompte.id}}</a></td>
+                    <td>{{ligneChargementCompte.nom}}</td>
+                    <td>{{ligneChargementCompte.prenom}}</td>
+                    <td>{{ligneChargementCompte.telephone}}</td>
+                    <td>{{ligneChargementCompte.dateNaissance}}</td>
+                    <td>{{ligneChargementCompte.lieuNaissance}}</td>
+                    <td>{{ligneChargementCompte.nomMere}}</td>
+                    <td>{{ligneChargementCompte.personnePrevenir}}</td>
+                    <td>{{ligneChargementCompte.email}}</td>
+                    <td>{{ligneChargementCompte.adresse}}</td>
+                    
+                     <td>{{ligneChargementCompte.error}}</td>
+                    <td data-translate="{{'ptiApp.TypeLignePersonne.' + ligneChargementCompte.typePersonne}}">{{ligneChargementCompte.typePersonne}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="ligne-chargement-compte-detail({id:ligneChargementCompte.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="ligne-chargement-compte.edit({id:ligneChargementCompte.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="ligne-chargement-compte.delete({id:ligneChargementCompte.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

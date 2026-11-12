@@ -1,0 +1,44 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "intro",
+        "tag": "p",
+        "content": "Choisissez le wallet qui finance l'envoi (débit + OTP)."
+      },
+      {
+        "type": "select",
+        "key": "sourceRail",
+        "label": "Compte / wallet de financement",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "WAVE", "value": "WAVE" },
+            { "label": "ORANGE_MONEY", "value": "ORANGE_MONEY" },
+            { "label": "CORIS_MONEY", "value": "CORIS_MONEY" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Compte / wallet de financement": "Compte / wallet de financement"
+    },
+    "en": {
+      "Compte / wallet de financement": "Funding wallet / account"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+    "ptiApp": {
+        "MontantsAComptabiliser" : {
+            "null": "",
+            "MONTANT": "MONTANT",
+            "FRAIS": "FRAIS",
+            "FRAISEMT": "FRAISEMT",
+            "FRAISACQ": "FRAISACQ"
+        }
+    }
+}

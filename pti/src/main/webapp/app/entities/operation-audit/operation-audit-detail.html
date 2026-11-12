@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span data-translate="ptiApp.operationAudit.detail.title">Operation Audit</span> {{vm.operationAudit.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.operationAudit.date">Date</span></dt>
+        <dd>
+            <span>{{vm.operationAudit.date | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.operationAudit.statutPrecedent">Statut Precedent</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.StatutOperation.' + vm.operationAudit.statutPrecedent}}">{{vm.operationAudit.statutPrecedent}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.operationAudit.statutApres">Statut Apres</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.StatutOperation.' + vm.operationAudit.statutApres}}">{{vm.operationAudit.statutApres}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.operationAudit.operation">Operation</span></dt>
+        <dd>
+            <a ui-sref="operation-detail({id:vm.operationAudit.operationId})">{{vm.operationAudit.operationCodeOperation}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="operation-audit-detail.edit({id:vm.operationAudit.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

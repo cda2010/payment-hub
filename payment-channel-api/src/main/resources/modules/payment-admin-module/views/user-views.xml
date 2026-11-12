@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_8.0.xsd">
+<grid name="user-grid" title="Utilisateurs"
+        model="com.gateway.payment.security.domain.GatewayUser"
+        edit-form="user-form" new-action-view="user-new"
+        rest-resource="/api/v1/admin/users">
+    <field name="username"/>
+    <field name="email"/>
+    <field name="fullName"/>
+    <field name="enabled"/>
+    <field name="locked"/>
+    <field name="lastLoginAt"/>
+  </grid>
+
+  <form name="user-form" title="Utilisateur"
+        model="com.gateway.payment.security.domain.GatewayUser">
+    <panel name="main" title="Compte">
+      <field name="username" required="true" colSpan="4"/>
+      <field name="email" required="true" colSpan="4"/>
+      <field name="fullName" colSpan="4"/>
+      <field name="enabled" colSpan="3"/>
+      <field name="locked" colSpan="3"/>
+      <field name="lastLoginAt" readonly="true" colSpan="6"/>
+    </panel>
+  </form>
+
+</object-views>

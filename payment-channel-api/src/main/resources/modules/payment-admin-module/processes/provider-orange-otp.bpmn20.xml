@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             targetNamespace="http://payment-gateway/provider"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+
+  <process id="providerOrangeOtp" name="Provider Orange OTP" isExecutable="true">
+    <documentation>Orange : saisie OTP puis CONFIRM_PAYMENT (pas de GENERATE_OTP).</documentation>
+
+    <startEvent id="start" name="Start"/>
+    <sequenceFlow id="flow_start" sourceRef="start" targetRef="enterOtp"/>
+
+    <userTask id="enterOtp" name="Saisie OTP" flowable:formKey="provider-otp-code"/>
+    <sequenceFlow id="flow_otp" sourceRef="enterOtp" targetRef="confirmPayment"/>
+
+    <serviceTask id="confirmPayment" name="Confirmer paiement"
+                 flowable:delegateExpression="${gatewayProviderCallDelegate}"/>
+    <sequenceFlow id="flow_end" sourceRef="confirmPayment" targetRef="end"/>
+
+    <endEvent id="end" name="End"/>
+  </process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_providerOrangeOtp">
+    <bpmndi:BPMNPlane id="BPMNPlane_providerOrangeOtp" bpmnElement="providerOrangeOtp">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <omgdc:Bounds x="100" y="162" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="enterOtp_di" bpmnElement="enterOtp">
+        <omgdc:Bounds x="180" y="140" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="confirmPayment_di" bpmnElement="confirmPayment">
+        <omgdc:Bounds x="350" y="140" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="end_di" bpmnElement="end">
+        <omgdc:Bounds x="520" y="162" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="flow_start_di" bpmnElement="flow_start">
+        <omgdi:waypoint x="136" y="180"/><omgdi:waypoint x="180" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_otp_di" bpmnElement="flow_otp">
+        <omgdi:waypoint x="300" y="180"/><omgdi:waypoint x="350" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_end_di" bpmnElement="flow_end">
+        <omgdi:waypoint x="470" y="180"/><omgdi:waypoint x="520" y="180"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

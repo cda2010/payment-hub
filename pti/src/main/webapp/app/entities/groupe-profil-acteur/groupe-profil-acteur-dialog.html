@@ -1,0 +1,75 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myGroupeProfilActeurLabel" data-translate="ptiApp.groupeProfilActeur.home.createOrEditLabel">Create or edit a Groupe Profil Acteur</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="row">
+
+            <div class="form-group col-sm-12">
+                <label mf-required class="control-label col-sm-4" for="field_nom">Nom</label>
+                <div class="col-sm-8">
+                    <input autocomplete="off"ng-disabled="vm.isViewing" type="text" class="form-control" name="nom" id="field_nom"
+                           ng-model="vm.groupeProfilActeur.nom" required />
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label class="control-label col-sm-4" for="field_description">Description</label>
+                <div class="col-sm-8">
+                            <textarea ng-disabled="vm.isViewing" type="text" class="form-control" name="description"
+                                      id="field_description" ng-model="vm.groupeProfilActeur.description"
+                            rows="5"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="checkbox col-sm-offset-4 col-sm-8">
+                <label>
+                    <input autocomplete="off"type="checkbox" class="checkbox-slider colored-blue checkbox-lg"
+                           ng-model="vm.groupeProfilActeur.active" />
+                    <span class="text">Groupe par defaut?</span>
+                </label>
+            </div>
+            <div class="form-group col-sm-12">
+                <label mf-required class="control-label col-sm-4" for="field_type">Type</label>
+                <div class="col-sm-8">
+                    <select ng-disabled="vm.profilActeur.id!=null" type="text" class="form-control" name="type"
+                            id="field_type" ng-model="vm.groupeProfilActeur.type" required>
+                        <option value="ORGANISATION">Organisation</option>
+                        <option value="CLIENT"> Client</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label class="col-sm-4" for="field_fournisseur">
+                    Fournisseur
+                </label>
+                <div class="col-sm-8">
+                    <select class="form-control input-xs"  id="field_fournisseur"
+                            name="fournisseur" ng-model="vm.groupeProfilActeur.codeFSE"
+                            ng-options="fournisseurService.codeFse as fournisseurService.libelleFse for fournisseurService in vm.fournisseurservices">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button ng-if="vm.isViewing" ng-click="vm.clear()" type="button" class="btn btn-default">
+            Fermer</button>
+        <button ng-if="!vm.isViewing" type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button ng-if="!vm.isViewing" type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

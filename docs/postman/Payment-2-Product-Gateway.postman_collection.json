@@ -1,0 +1,1778 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-4789-a012-payment2-gateway",
+    "name": "Payment-2 Product Gateway",
+    "description": "Exécuter CHECKOUT, BILL_PAYMENT, ACCOUNT_TRANSFER, RTGS et SWIFT via `/api/v1/gateway`.\n\n## Setup\n1. Importer cette collection dans Postman\n2. Vérifier `baseUrl` = `http://localhost:8080`\n3. Lancer **00 Auth › Login (admin)** — le token est stocké automatiquement\n4. Enchaîner les dossiers produit (start → submit form → OTP / poll / approve)\n\nComptes locaux :\n- `admin` / `Admin@123` (initiateur)\n- `chef` / `Chef@1234` (validateur LEVEL_1 — ACCOUNT_TRANSFER)\n\nDoc : `docs/INTEGRATION.md`",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "refreshToken",
+      "value": ""
+    },
+    {
+      "key": "chefAccessToken",
+      "value": ""
+    },
+    {
+      "key": "paymentId",
+      "value": ""
+    },
+    {
+      "key": "billerId",
+      "value": ""
+    },
+    {
+      "key": "billerCode",
+      "value": "SONABEL"
+    },
+    {
+      "key": "productCode",
+      "value": "PREPAID"
+    },
+    {
+      "key": "billId",
+      "value": ""
+    },
+    {
+      "key": "billReference",
+      "value": ""
+    },
+    {
+      "key": "providerCheckout",
+      "value": "ORANGE_MONEY"
+    },
+    {
+      "key": "providerTransferSrc",
+      "value": "WAVE"
+    },
+    {
+      "key": "providerTransferDst",
+      "value": "CORIS_MONEY"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "00 Auth",
+      "item": [
+        {
+          "name": "Login (admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Login OK', () => pm.response.to.have.status(200));",
+                  "const j = pm.response.json();",
+                  "pm.collectionVariables.set('accessToken', j.accessToken);",
+                  "pm.collectionVariables.set('refreshToken', j.refreshToken || '');",
+                  "console.log('admin token set, user=', j.user && j.user.username);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Admin@123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/auth/login"
+          }
+        },
+        {
+          "name": "Login (chef — validateur)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Chef login OK', () => pm.response.to.have.status(200));",
+                  "const j = pm.response.json();",
+                  "pm.collectionVariables.set('chefAccessToken', j.accessToken);",
+                  "console.log('chef token set');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"chef\",\n  \"password\": \"Chef@1234\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/auth/login"
+          }
+        },
+        {
+          "name": "Refresh token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const j = pm.response.json();",
+                  "  pm.collectionVariables.set('accessToken', j.accessToken);",
+                  "  if (j.refreshToken) pm.collectionVariables.set('refreshToken', j.refreshToken);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/auth/refresh"
+          }
+        }
+      ]
+    },
+    {
+      "name": "01 Catalogue",
+      "item": [
+        {
+          "name": "Providers — checkout",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/providers?product=checkout"
+          }
+        },
+        {
+          "name": "Providers — bill-payment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/providers?product=bill-payment"
+          }
+        },
+        {
+          "name": "Providers — account-transfer (émetteurs)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/providers?product=account-transfer"
+          }
+        },
+        {
+          "name": "Providers — rtgs (banques)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/providers?product=rtgs"
+          }
+        },
+        {
+          "name": "Providers — swift (banques)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/providers?product=swift"
+          }
+        },
+        {
+          "name": "Transfer destinations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/transfer-destinations"
+          }
+        },
+        {
+          "name": "Billers",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const arr = pm.response.json();",
+                  "  if (Array.isArray(arr) && arr.length) {",
+                  "    pm.collectionVariables.set('billerId', arr[0].id);",
+                  "    if (arr[0].code) pm.collectionVariables.set('billerCode', arr[0].code);",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/billers"
+          }
+        },
+        {
+          "name": "Biller products (by id)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const arr = pm.response.json();",
+                  "  if (Array.isArray(arr) && arr.length && arr[0].code) {",
+                  "    pm.collectionVariables.set('productCode', arr[0].code);",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/billers/{{billerId}}/products"
+          }
+        },
+        {
+          "name": "Biller products (by code path)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const arr = pm.response.json();",
+                  "  if (Array.isArray(arr) && arr.length && arr[0].code) {",
+                  "    pm.collectionVariables.set('productCode', arr[0].code);",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/billers/{{billerCode}}/products",
+            "description": "Accepte le code métier du facturier (ex. SENELEC) au lieu de l'UUID."
+          }
+        },
+        {
+          "name": "Biller products (by billerCode query)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const arr = pm.response.json();",
+                  "  if (Array.isArray(arr) && arr.length && arr[0].code) {",
+                  "    pm.collectionVariables.set('productCode', arr[0].code);",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/gateway/biller-products?billerCode={{billerCode}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gateway",
+                "biller-products"
+              ],
+              "query": [
+                {
+                  "key": "billerCode",
+                  "value": "{{billerCode}}"
+                }
+              ]
+            },
+            "description": "Sélection des produits en fonction du facturier (paramètre billerCode)."
+          }
+        },
+        {
+          "name": "Bills search",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const j = pm.response.json();",
+                  "  const bills = j.bills || j.items || [];",
+                  "  if (bills.length) {",
+                  "    pm.collectionVariables.set('billId', bills[0].id || bills[0].billId || '');",
+                  "    pm.collectionVariables.set('billReference', bills[0].billReference || bills[0].reference || '');",
+                  "  }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/gateway/bills/search?billerCode={{billerCode}}&productCode={{productCode}}&subscriberReference=AB-2002",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gateway",
+                "bills",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "billerCode",
+                  "value": "{{billerCode}}"
+                },
+                {
+                  "key": "productCode",
+                  "value": "{{productCode}}"
+                },
+                {
+                  "key": "subscriberReference",
+                  "value": "AB-2002"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 Checkout",
+      "item": [
+        {
+          "name": "1. Start checkout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Created', () => pm.response.to.have.status(201));",
+                  "const j = pm.response.json();",
+                  "const pid = j.meta && j.meta.paymentId;",
+                  "if (pid) pm.collectionVariables.set('paymentId', pid);",
+                  "console.log('type=', j.type, 'formKey=', j.formKey, 'paymentId=', pid);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"provider\": \"{{providerCheckout}}\",\n  \"amount\": 2500,\n  \"currency\": \"XOF\",\n  \"phoneNumber\": \"22670000001\",\n  \"customerReference\": \"ORD-POSTMAN-{{$timestamp}}\",\n  \"idempotencyKey\": \"checkout-{{$guid}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/checkout"
+          }
+        },
+        {
+          "name": "2. Get screen",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}"
+          }
+        },
+        {
+          "name": "3. Submit FORM (ex. téléphone)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json();",
+                  "console.log('type=', j.type, 'status=', j.meta && j.meta.status);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"phoneNumber\": \"22670000001\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "4. Submit OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_OTP\",\n  \"data\": {\n    \"otp\": \"123456\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "5. Poll screen (WAIT / REDIRECT)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 Bill payment",
+      "item": [
+        {
+          "name": "1. Start bill-payment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Created', () => pm.response.to.have.status(201));",
+                  "const j = pm.response.json();",
+                  "const pid = j.meta && j.meta.paymentId;",
+                  "if (pid) pm.collectionVariables.set('paymentId', pid);",
+                  "console.log('type=', j.type, 'formKey=', j.formKey);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currency\": \"XOF\",\n  \"customerReference\": \"BILL-POSTMAN-{{$timestamp}}\",\n  \"billerCode\": \"{{billerCode}}\",\n  \"productCode\": \"{{productCode}}\",\n  \"subscriberReference\": \"AB-2002\",\n  \"idempotencyKey\": \"bill-{{$guid}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/bill-payment"
+          }
+        },
+        {
+          "name": "2. Get screen",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}"
+          }
+        },
+        {
+          "name": "3. Submit FORM (collect / confirm / select pay)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"billerCode\": \"{{billerCode}}\",\n    \"productCode\": \"{{productCode}}\",\n    \"subscriberReference\": \"AB-2002\",\n    \"billReference\": \"{{billReference}}\",\n    \"confirmPay\": true,\n    \"payProvider\": \"{{providerCheckout}}\",\n    \"phoneNumber\": \"22670000001\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "3b. Select pay provider",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"payProvider\": \"{{providerCheckout}}\",\n    \"phoneNumber\": \"22670000001\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions",
+            "description": "Après confirmBill : choix Orange / Wave / … puis parcours wallet."
+          }
+        },
+        {
+          "name": "4. Submit OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_OTP\",\n  \"data\": {\n    \"otp\": \"123456\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "5. Poll screen",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 Account transfer (+ validation)",
+      "item": [
+        {
+          "name": "1. Start account-transfer (2M XOF → LEVEL_1)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Created', () => pm.response.to.have.status(201));",
+                  "const j = pm.response.json();",
+                  "const pid = j.meta && j.meta.paymentId;",
+                  "if (pid) pm.collectionVariables.set('paymentId', pid);",
+                  "console.log('type=', j.type, 'formKey=', j.formKey, 'paymentId=', pid);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 2000000,\n  \"currency\": \"XOF\",\n  \"customerReference\": \"TRF-POSTMAN-{{$timestamp}}\",\n  \"idempotencyKey\": \"trf-{{$guid}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/account-transfer"
+          }
+        },
+        {
+          "name": "2a. Submit FORM — source",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json(); console.log('→', j.type, j.formKey, j.meta && j.meta.status);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"sourceRail\": \"WAVE\",\n    \"sourceAccount\": \"77000001\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "2b. Submit FORM — destination",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json(); console.log('→', j.type, j.formKey, j.meta && j.meta.status);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"destPhone\": \"22670000002\",\n    \"destAccount\": \"77000002\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "2c. Submit FORM — amount",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json(); console.log('→', j.type, j.formKey, j.meta && j.meta.status);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"amount\": 2000000,\n    \"currency\": \"XOF\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "2d. Submit FORM — rail",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json(); console.log('→', j.type, j.formKey, j.meta && j.meta.status);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"destRail\": \"CORIS_MONEY\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "2e. Submit FORM — confirm",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json();",
+                  "console.log('→', j.type, j.message, j.meta && j.meta.status);",
+                  "pm.test('En attente approbation ou suite', () => {",
+                  "  pm.expect(['WAIT','FORM','ENTER_OTP','SUCCESS','FAILURE']).to.include(j.type);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"confirmRecap\": true\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "3. Poll screen (WAITING_APPROVAL)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}"
+          }
+        },
+        {
+          "name": "4. Inbox validations (chef)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{chefAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/approvals/inbox"
+          }
+        },
+        {
+          "name": "5. Detail by payment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{chefAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/approvals/by-payment/{{paymentId}}"
+          }
+        },
+        {
+          "name": "6. Decide APPROVE (chef)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json();",
+                  "console.log('after approve →', j.type, j.meta && j.meta.status, j.message);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{chefAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"APPROVE\",\n  \"data\": {\n    \"approvalComment\": \"OK Postman chef\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/approvals/{{paymentId}}/decide"
+          }
+        },
+        {
+          "name": "7. Submit OTP (après approbation)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_OTP\",\n  \"data\": {\n    \"otp\": \"123456\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "8. Poll final",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 RTGS (+ validation)",
+      "item": [
+        {
+          "name": "1. Start RTGS (2.5M XOF → L1)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Created', () => pm.response.to.have.status(201));",
+                  "const j = pm.response.json();",
+                  "const pid = j.meta && j.meta.paymentId;",
+                  "if (pid) pm.collectionVariables.set('paymentId', pid);",
+                  "console.log('type=', j.type, 'formKey=', j.formKey, 'paymentId=', pid);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 2500000,\n  \"currency\": \"XOF\",\n  \"customerReference\": \"RTGS-POSTMAN-{{$timestamp}}\",\n  \"idempotencyKey\": \"rtgs-{{$guid}}\",\n  \"skipCutoffCheck\": true\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/rtgs"
+          }
+        },
+        {
+          "name": "2a. Submit FORM — source bank",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"sourceRail\": \"CORIS_BANK\",\n    \"sourceAccount\": \"00047324101\",\n    \"accountName\": \"Client Demo\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "2b. Submit FORM — destination",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"destRail\": \"CORIS_BANK\",\n    \"destAccount\": \"00047324999\",\n    \"beneficiaryName\": \"Benef Demo\",\n    \"bankCode\": \"0004\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "2c. Submit FORM — amount",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"amount\": 2500000,\n    \"currency\": \"XOF\",\n    \"purpose\": \"REGLEMENT FOURNISSEUR\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "3. Submit FORM — confirm",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"confirmRecap\": true\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "4. Login chef (approbateur)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json();",
+                  "if (j.accessToken) pm.collectionVariables.set('token', j.accessToken);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"chef\",\n  \"password\": \"Chef@1234\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/auth/login"
+          }
+        },
+        {
+          "name": "5. Approve",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"APPROVE\",\n  \"data\": {\n    \"comment\": \"OK RTGS Postman\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/approvals/{{paymentId}}/decide"
+          }
+        },
+        {
+          "name": "6. Login admin (OTP)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json();",
+                  "if (j.accessToken) pm.collectionVariables.set('token', j.accessToken);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Admin@123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/auth/login"
+          }
+        },
+        {
+          "name": "7. Submit OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_OTP\",\n  \"data\": {\n    \"otp\": \"123456\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "8. Poll final",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 SWIFT (+ validation)",
+      "item": [
+        {
+          "name": "1. Start SWIFT (1500 EUR → L1)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Created', () => pm.response.to.have.status(201));",
+                  "const j = pm.response.json();",
+                  "const pid = j.meta && j.meta.paymentId;",
+                  "if (pid) pm.collectionVariables.set('paymentId', pid);",
+                  "console.log('type=', j.type, 'formKey=', j.formKey, 'paymentId=', pid);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 1500,\n  \"currency\": \"EUR\",\n  \"customerReference\": \"SWIFT-POSTMAN-{{$timestamp}}\",\n  \"idempotencyKey\": \"swift-{{$guid}}\",\n  \"skipComplianceCheck\": true\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/swift"
+          }
+        },
+        {
+          "name": "2a. Submit FORM — source bank",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"sourceRail\": \"CORIS_BANK\",\n    \"sourceAccount\": \"BF00047324101\",\n    \"accountName\": \"Client Demo\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "2b. Submit FORM — destination BIC/IBAN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"destRail\": \"CORIS_BANK\",\n    \"bic\": \"BNPAFRPPXXX\",\n    \"iban\": \"FR7630006000011234567890189\",\n    \"beneficiaryName\": \"Benef Demo\",\n    \"countryCode\": \"FR\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "2c. Submit FORM — amount",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"amount\": 1500,\n    \"currency\": \"EUR\",\n    \"chargeBearer\": \"SHA\",\n    \"purpose\": \"INVOICE 2026-42\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "3. Submit FORM — confirm",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": {\n    \"confirmRecap\": true\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "4. Login chef (approbateur)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json();",
+                  "if (j.accessToken) pm.collectionVariables.set('token', j.accessToken);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"chef\",\n  \"password\": \"Chef@1234\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/auth/login"
+          }
+        },
+        {
+          "name": "5. Approve",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"APPROVE\",\n  \"data\": {\n    \"comment\": \"OK SWIFT Postman\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/approvals/{{paymentId}}/decide"
+          }
+        },
+        {
+          "name": "6. Login admin (OTP)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json();",
+                  "if (j.accessToken) pm.collectionVariables.set('token', j.accessToken);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Admin@123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/auth/login"
+          }
+        },
+        {
+          "name": "7. Submit OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_OTP\",\n  \"data\": {\n    \"otp\": \"123456\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "8. Poll final",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 Cash-out",
+      "item": [
+        {
+          "name": "1. Start CASH_OUT",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Created',()=>pm.response.to.have.status(201));",
+                  "const j=pm.response.json(); if(j.meta&&j.meta.paymentId) pm.collectionVariables.set('paymentId', j.meta.paymentId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 25000,\n  \"currency\": \"XOF\",\n  \"idempotencyKey\": \"co-{{$guid}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/cash-out"
+          }
+        },
+        {
+          "name": "2. Amount (if form)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": { \"amount\": 25000, \"currency\": \"XOF\" }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "3. Source wallet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": { \"sourceRail\": \"WAVE\", \"phoneNumber\": \"22670000001\" }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "4. Agent network",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": { \"agentNetwork\": \"WAVE\", \"agentCode\": \"AG-001\" }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "5. Confirm recap",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": { \"confirmRecap\": true }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "6. OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_OTP\",\n  \"data\": { \"otp\": \"123456\" }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions"
+          }
+        },
+        {
+          "name": "7. Poll (voucher)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 Cash-in",
+      "item": [
+        {
+          "name": "1. Start CASH_IN",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/gateway/cash-in",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 25000,\n  \"currency\": \"XOF\",\n  \"idempotencyKey\": \"ci-{{$guid}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Created',()=>pm.response.to.have.status(201));",
+                  "const j=pm.response.json(); if(j.meta&&j.meta.paymentId) pm.collectionVariables.set('paymentId', j.meta.paymentId);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "2. Amount (if form)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": { \"amount\": 25000, \"currency\": \"XOF\" }\n}"
+            }
+          }
+        },
+        {
+          "name": "3. Destination wallet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": { \"destinationRail\": \"WAVE\", \"phoneNumber\": \"22670000001\" }\n}"
+            }
+          }
+        },
+        {
+          "name": "4. Agent network",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": { \"agentNetwork\": \"WAVE\", \"agentCode\": \"AG-OUAGA-12\" }\n}"
+            }
+          }
+        },
+        {
+          "name": "5. Confirm recap",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": { \"confirmRecap\": true }\n}"
+            }
+          }
+        },
+        {
+          "name": "6. Submit OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_OTP\",\n  \"data\": { \"otp\": \"123456\" }\n}"
+            }
+          }
+        },
+        {
+          "name": "7. Poll final",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 Link / Register",
+      "item": [
+        {
+          "name": "1. Start LINK",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/gateway/link",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phoneNumber\": \"22670000001\",\n  \"currency\": \"XOF\",\n  \"idempotencyKey\": \"link-{{$guid}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Created',()=>pm.response.to.have.status(201));",
+                  "const j=pm.response.json(); if(j.meta&&j.meta.paymentId) pm.collectionVariables.set('paymentId', j.meta.paymentId);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "1b. Start via REGISTER alias",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/gateway/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phoneNumber\": \"22670000001\",\n  \"idempotencyKey\": \"reg-{{$guid}}\"\n}"
+            }
+          }
+        },
+        {
+          "name": "2. Select provider",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": { \"providerRail\": \"WAVE\" }\n}"
+            }
+          }
+        },
+        {
+          "name": "3. Capture account",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": { \"phoneNumber\": \"22670000001\", \"accountAlias\": \"Mon Wave\" }\n}"
+            }
+          }
+        },
+        {
+          "name": "4. Confirm recap",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_FORM\",\n  \"data\": { \"confirmRecap\": true }\n}"
+            }
+          }
+        },
+        {
+          "name": "5. Submit OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}/actions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"SUBMIT_OTP\",\n  \"data\": { \"otp\": \"123456\" }\n}"
+            }
+          }
+        },
+        {
+          "name": "6. Poll final",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/gateway/payments/{{paymentId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 Simulate approval (admin)",
+      "item": [
+        {
+          "name": "Simulate DMN (2M XOF)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 2000000,\n  \"currency\": \"XOF\",\n  \"catalogServiceCode\": \"ACCOUNT_TRANSFER\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/admin/approvals/simulate"
+          }
+        },
+        {
+          "name": "Simulate DMN (15M XOF → LEVEL_1_2)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 15000000,\n  \"currency\": \"XOF\",\n  \"catalogServiceCode\": \"ACCOUNT_TRANSFER\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/admin/approvals/simulate"
+          }
+        },
+        {
+          "name": "Simulate DMN RTGS (2.5M → L1)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 2500000,\n  \"currency\": \"XOF\",\n  \"catalogServiceCode\": \"RTGS\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/admin/approvals/simulate"
+          }
+        },
+        {
+          "name": "Simulate DMN RTGS (6M → L1+L2)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 6000000,\n  \"currency\": \"XOF\",\n  \"catalogServiceCode\": \"RTGS\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/admin/approvals/simulate"
+          }
+        },
+        {
+          "name": "Simulate DMN SWIFT (1500 EUR → L1)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 1500,\n  \"currency\": \"EUR\",\n  \"catalogServiceCode\": \"SWIFT\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/admin/approvals/simulate"
+          }
+        }
+      ]
+    }
+  ]
+}

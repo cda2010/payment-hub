@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowable="http://flowable.org/bpmn" xmlns:pay="http://payment-gateway/schema/bpmn/pay" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" targetNamespace="http://payment-gateway/catalog" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <process id="accountTransfer" name="Account Transfer (Catalog)" isExecutable="true">
+    <documentation>
+      Parcours produit ACCOUNT_TRANSFER : bénéficiaire → validation compte → montant →
+      compte à débiter → solde → plafonds → frais → récap → (approbation DMN) →
+      débit → exécution → wait → notify.
+
+      Le client renseigne d'abord « à qui et combien », puis « avec quel compte ». Le compte
+      à débiter reste néanmoins en amont des frais : la tarification résout une grille
+      SAME_PROVIDER ou CROSS_PROVIDER en comparant l'émetteur au bénéficiaire
+      (TransferCatalogService.resolveFeeRule), donc un récap construit avant ce choix
+      afficherait un tarif invérifiable. CHECK_BALANCE et CHECK_LIMITS suivent la même
+      contrainte : ils dépendent du compte retenu.
+    </documentation>
+    <startEvent id="start" name="Start" />
+    <sequenceFlow id="flow_start" sourceRef="start" targetRef="CAPTURE_DESTINATION" />
+    <userTask id="CAPTURE_DESTINATION" name="01 Capture destination" flowable:formKey="account-transfer-destination" />
+    <sequenceFlow id="flow_02" sourceRef="CAPTURE_DESTINATION" targetRef="VALIDATE_ACCOUNT" />
+    <serviceTask id="VALIDATE_ACCOUNT" name="02 Validate beneficiary account" flowable:delegateExpression="${gatewayCatalogStepDelegate}" />
+    <sequenceFlow id="flow_03" sourceRef="VALIDATE_ACCOUNT" targetRef="CAPTURE_AMOUNT" />
+    <userTask id="CAPTURE_AMOUNT" name="03 Capture amount" flowable:formKey="account-transfer-amount" />
+    <sequenceFlow id="flow_04" sourceRef="CAPTURE_AMOUNT" targetRef="SELECT_SOURCE_ACCOUNT" />
+    <userTask id="SELECT_SOURCE_ACCOUNT" name="04 Select debit account" flowable:formKey="account-transfer-source" />
+    <sequenceFlow id="flow_01" sourceRef="SELECT_SOURCE_ACCOUNT" targetRef="CHECK_BALANCE" />
+    <serviceTask id="CHECK_BALANCE" name="05 Check balance" flowable:delegateExpression="${gatewayCatalogStepDelegate}" />
+    <sequenceFlow id="flow_05" sourceRef="CHECK_BALANCE" targetRef="CHECK_LIMITS" />
+    <serviceTask id="CHECK_LIMITS" name="06 Check limits" flowable:delegateExpression="${gatewayCatalogStepDelegate}" pay:capability="EVALUATE_RULES" pay:actorRole="DESTINATION" />
+    <sequenceFlow id="flow_06" sourceRef="CHECK_LIMITS" targetRef="CALCULATE_FEES" />
+    <serviceTask id="CALCULATE_FEES" name="07 Calculate fees" flowable:delegateExpression="${gatewayCatalogStepDelegate}" />
+    <sequenceFlow id="flow_07" sourceRef="CALCULATE_FEES" targetRef="CONFIRM" />
+    <userTask id="CONFIRM" name="08 Confirm (recap)" flowable:formKey="account-transfer-confirm">
+      <outgoing>Flow_1ju8ig4</outgoing>
+    </userTask>
+    <sequenceFlow id="flow_09" sourceRef="CONFIRM" targetRef="EVALUATE_APPROVAL" />
+    <serviceTask id="EVALUATE_APPROVAL" name="09b Evaluate approval" flowable:delegateExpression="${gatewayTransferApprovalEvaluateDelegate}" />
+    <sequenceFlow id="flow_09b" sourceRef="EVALUATE_APPROVAL" targetRef="gw_approvalNeeded" />
+    <exclusiveGateway id="gw_approvalNeeded" name="Approval needed?" />
+    <sequenceFlow id="flow_skip_approval" sourceRef="gw_approvalNeeded" targetRef="DEBIT">
+      <conditionExpression xsi:type="tFormalExpression">${approvalLevelsRequired == null || approvalLevelsRequired &lt; 1}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_to_l1" sourceRef="gw_approvalNeeded" targetRef="APPROVAL_L1">
+      <conditionExpression xsi:type="tFormalExpression">${approvalLevelsRequired &gt;= 1}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="APPROVAL_L1" name="09c Approval L1" flowable:candidateGroups="${approvalCandidateGroupL1}" flowable:formKey="account-transfer-approval" />
+    <sequenceFlow id="flow_l1_done" sourceRef="APPROVAL_L1" targetRef="gw_l1_result" />
+    <exclusiveGateway id="gw_l1_result" name="L1 result" />
+    <sequenceFlow id="flow_l1_reject" sourceRef="gw_l1_result" targetRef="APPROVAL_RETURNED">
+      <conditionExpression xsi:type="tFormalExpression">${approved == false}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_l1_to_l2" sourceRef="gw_l1_result" targetRef="APPROVAL_L2">
+      <conditionExpression xsi:type="tFormalExpression">${approved == true &amp;&amp; approvalLevelsRequired &gt;= 2}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_l1_to_otp" sourceRef="gw_l1_result" targetRef="DEBIT">
+      <conditionExpression xsi:type="tFormalExpression">${approved == true &amp;&amp; approvalLevelsRequired &lt; 2}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="APPROVAL_L2" name="09d Approval L2" flowable:candidateGroups="${approvalCandidateGroupL2}" flowable:formKey="account-transfer-approval" />
+    <sequenceFlow id="flow_l2_done" sourceRef="APPROVAL_L2" targetRef="gw_l2_result" />
+    <exclusiveGateway id="gw_l2_result" name="L2 result" />
+    <sequenceFlow id="flow_l2_reject" sourceRef="gw_l2_result" targetRef="APPROVAL_RETURNED">
+      <conditionExpression xsi:type="tFormalExpression">${approved == false}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_l2_to_l3" sourceRef="gw_l2_result" targetRef="APPROVAL_L3">
+      <conditionExpression xsi:type="tFormalExpression">${approved == true &amp;&amp; approvalLevelsRequired &gt;= 3}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_l2_to_otp" sourceRef="gw_l2_result" targetRef="DEBIT">
+      <conditionExpression xsi:type="tFormalExpression">${approved == true &amp;&amp; approvalLevelsRequired &lt; 3}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="APPROVAL_L3" name="09e Approval L3" flowable:candidateGroups="${approvalCandidateGroupL3}" flowable:formKey="account-transfer-approval" />
+    <sequenceFlow id="flow_l3_done" sourceRef="APPROVAL_L3" targetRef="gw_l3_result" />
+    <exclusiveGateway id="gw_l3_result" name="L3 result" />
+    <sequenceFlow id="flow_l3_reject" sourceRef="gw_l3_result" targetRef="APPROVAL_RETURNED">
+      <conditionExpression xsi:type="tFormalExpression">${approved == false}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_l3_to_otp" sourceRef="gw_l3_result" targetRef="DEBIT">
+      <conditionExpression xsi:type="tFormalExpression">${approved == true}</conditionExpression>
+    </sequenceFlow>
+    <serviceTask id="APPROVAL_RETURNED" name="Mark returned to initiator" flowable:delegateExpression="${gatewayCatalogStepDelegate}" />
+    <sequenceFlow id="flow_returned_to_correct" sourceRef="APPROVAL_RETURNED" targetRef="CORRECT_TRANSFER" />
+    <userTask id="CORRECT_TRANSFER" name="Correct and resubmit" flowable:formKey="account-transfer-return" />
+    <sequenceFlow id="flow_correct_to_confirm" sourceRef="CORRECT_TRANSFER" targetRef="CONFIRM" />
+    <serviceTask id="DEBIT" name="11 Debit" flowable:delegateExpression="${gatewayCatalogStepDelegate}">
+      <incoming>Flow_1ju8ig4</incoming>
+    </serviceTask>
+    <sequenceFlow id="flow_11" sourceRef="DEBIT" targetRef="EXECUTE_TRANSFER" />
+    <serviceTask id="EXECUTE_TRANSFER" name="12 Execute transfer" flowable:delegateExpression="${gatewayProviderCallDelegate}" />
+    <sequenceFlow id="flow_12" sourceRef="EXECUTE_TRANSFER" targetRef="WAIT_CONFIRMATION" />
+    <serviceTask id="WAIT_CONFIRMATION" name="13 Wait confirmation" flowable:delegateExpression="${gatewayCatalogStepDelegate}" />
+    <sequenceFlow id="flow_13" sourceRef="WAIT_CONFIRMATION" targetRef="NOTIFY" />
+    <serviceTask id="NOTIFY" name="14 Notify" flowable:delegateExpression="${gatewayCatalogStepDelegate}" />
+    <sequenceFlow id="flow_14" sourceRef="NOTIFY" targetRef="end" />
+    <endEvent id="end" name="End" />
+    <sequenceFlow id="Flow_1ju8ig4" sourceRef="CONFIRM" targetRef="DEBIT" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_accountTransfer">
+    <bpmndi:BPMNPlane id="BPMNPlane_accountTransfer" bpmnElement="accountTransfer">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <omgdc:Bounds x="40" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CAPTURE_DESTINATION_di" bpmnElement="CAPTURE_DESTINATION">
+        <omgdc:Bounds x="110" y="80" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="VALIDATE_ACCOUNT_di" bpmnElement="VALIDATE_ACCOUNT">
+        <omgdc:Bounds x="260" y="80" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CAPTURE_AMOUNT_di" bpmnElement="CAPTURE_AMOUNT">
+        <omgdc:Bounds x="410" y="80" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SELECT_SOURCE_ACCOUNT_di" bpmnElement="SELECT_SOURCE_ACCOUNT">
+        <omgdc:Bounds x="560" y="80" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CHECK_BALANCE_di" bpmnElement="CHECK_BALANCE">
+        <omgdc:Bounds x="710" y="80" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CHECK_LIMITS_di" bpmnElement="CHECK_LIMITS">
+        <omgdc:Bounds x="860" y="80" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CALCULATE_FEES_di" bpmnElement="CALCULATE_FEES">
+        <omgdc:Bounds x="1010" y="80" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CONFIRM_di" bpmnElement="CONFIRM">
+        <omgdc:Bounds x="1260" y="60" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DEBIT_di" bpmnElement="DEBIT">
+        <omgdc:Bounds x="710" y="330" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EXECUTE_TRANSFER_di" bpmnElement="EXECUTE_TRANSFER">
+        <omgdc:Bounds x="980" y="340" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WAIT_CONFIRMATION_di" bpmnElement="WAIT_CONFIRMATION">
+        <omgdc:Bounds x="1220" y="460" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="NOTIFY_di" bpmnElement="NOTIFY">
+        <omgdc:Bounds x="1390" y="270" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="end_di" bpmnElement="end">
+        <omgdc:Bounds x="1612" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1640" y="183" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="flow_start_di" bpmnElement="flow_start">
+        <omgdi:waypoint x="76" y="120" />
+        <omgdi:waypoint x="110" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_02_di" bpmnElement="flow_02">
+        <omgdi:waypoint x="230" y="120" />
+        <omgdi:waypoint x="260" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_03_di" bpmnElement="flow_03">
+        <omgdi:waypoint x="380" y="120" />
+        <omgdi:waypoint x="410" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_04_di" bpmnElement="flow_04">
+        <omgdi:waypoint x="530" y="120" />
+        <omgdi:waypoint x="560" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_01_di" bpmnElement="flow_01">
+        <omgdi:waypoint x="680" y="120" />
+        <omgdi:waypoint x="710" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_05_di" bpmnElement="flow_05">
+        <omgdi:waypoint x="830" y="120" />
+        <omgdi:waypoint x="860" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_06_di" bpmnElement="flow_06">
+        <omgdi:waypoint x="980" y="120" />
+        <omgdi:waypoint x="1010" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_07_di" bpmnElement="flow_07">
+        <omgdi:waypoint x="1130" y="120" />
+        <omgdi:waypoint x="1195" y="120" />
+        <omgdi:waypoint x="1195" y="100" />
+        <omgdi:waypoint x="1260" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_11_di" bpmnElement="flow_11">
+        <omgdi:waypoint x="830" y="370" />
+        <omgdi:waypoint x="905" y="370" />
+        <omgdi:waypoint x="905" y="380" />
+        <omgdi:waypoint x="980" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_12_di" bpmnElement="flow_12">
+        <omgdi:waypoint x="1100" y="380" />
+        <omgdi:waypoint x="1280" y="380" />
+        <omgdi:waypoint x="1280" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_13_di" bpmnElement="flow_13">
+        <omgdi:waypoint x="1340" y="500" />
+        <omgdi:waypoint x="1350" y="500" />
+        <omgdi:waypoint x="1350" y="310" />
+        <omgdi:waypoint x="1390" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_14_di" bpmnElement="flow_14">
+        <omgdi:waypoint x="1510" y="310" />
+        <omgdi:waypoint x="1550" y="310" />
+        <omgdi:waypoint x="1550" y="160" />
+        <omgdi:waypoint x="1612" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ju8ig4_di" bpmnElement="Flow_1ju8ig4">
+        <omgdi:waypoint x="1260" y="100" />
+        <omgdi:waypoint x="1045" y="100" />
+        <omgdi:waypoint x="1045" y="340" />
+        <omgdi:waypoint x="830" y="340" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

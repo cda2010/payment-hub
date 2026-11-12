@@ -1,0 +1,45 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "constitue",
+            "otherEntityName": "serviceApi",
+            "otherEntityRelationshipName": "api"
+        },
+        {
+            "relationshipName": "fournisseurService",
+            "otherEntityName": "fournisseurService",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "nomApi",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "TypeApi",
+            "fieldValues": "WEBSERVICE,REST,RMI"
+        },
+        {
+            "fieldName": "host",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "port",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "codeApi",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170404133237",
+    "entityTableName": "api",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

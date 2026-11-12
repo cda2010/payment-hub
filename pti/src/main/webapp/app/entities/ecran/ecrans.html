@@ -1,0 +1,56 @@
+<div>
+    <jhi-alert></jhi-alert>
+    <div class="well with-header" style="margin-top:10px ">
+        <div class="header bg-blue ">
+            <div class="col-xs-11">
+                <h4 >Liste des écrans</h4>
+            </div>
+            <div class="no-padding-left col-xs-1">
+                <button class="btn btn-default  btn-circle btn-xs" ui-sref="ecran.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+        <table class="jh-table table table-hover">
+            <thead>
+                <tr>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="ptiApp.ecran.numeroOrdre">Numero Ordre</span></th>
+                    <th><span data-translate="ptiApp.ecran.produit">Produit</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="ecran in vm.ecrans track by ecran.id">
+                    <td><a ui-sref="ecran-detail({id:ecran.id})">{{ecran.id}}</a></td>
+                    <td>{{ecran.numeroOrdre}}</td>
+                    <td>
+                        <a ui-sref="produit-detail({id:ecran.produit.id})">{{ecran.produit.nomProduit}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                           <!-- <button type="submit"
+                                    ui-sref="ecran-detail({id:ecran.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>-->
+                            <button type="submit"
+                                    ui-sref="ecran.edit({id:ecran.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <!-- <span class="hidden-sm-down" data-translate="entity.action.edit"></span>-->
+                            </button>
+                            <button type="submit"
+                                    ui-sref="ecran.delete({id:ecran.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <!-- <span class="hidden-sm-down" data-translate="entity.action.delete"></span>-->
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

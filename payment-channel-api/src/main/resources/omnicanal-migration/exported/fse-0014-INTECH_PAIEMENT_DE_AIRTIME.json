@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0014",
+  "providerCodeHint": "FSE_0014",
+  "providerLibelle": "INTECH (Paiement de airtime)",
+  "participantKindHint": "FACTURIER",
+  "fseStatut": "AUTRE",
+  "groupCode": "ENF",
+  "codeExterne": "0",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "Api INTECH Paiement de Airtime",
+    "codeApi": "0012",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "OAUTH2_CLIENT_CREDENTIALS",
+    "tokenUrl": "http://172.27.4.186:7930/yolce/oauth/token",
+    "grantType": "client_credentials"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "GETAIRTIME",
+      "codeMethode": "001201",
+      "operationCode": "GETAIRTIME",
+      "nom": "/api/services/intech/credit",
+      "httpMethod": "POST",
+      "path": "api/services/intech/credit",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"telephone\": \"${telephone}\", \"amount\": \"${amount}\", \"operatorName\": \"${operatorName}\"}",
+      "parameters": [
+        {
+          "code": "telephone",
+          "nomExterne": "telephone",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "amount",
+          "nomExterne": "amount",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "operatorName",
+          "nomExterne": "operatorName",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

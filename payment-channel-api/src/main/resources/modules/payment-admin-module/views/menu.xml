@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Menus métier : action= → onglets module.
+  Les action-views listées dans RF_CUSTOM_ACTION_VIEWS ouvrent les écrans Angular riches
+  (même UX que /admin/billers, etc.).
+-->
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_8.0.xsd">
+
+  <menuitem name="menu-root" title="Payment Gateway" icon="pi pi-wallet"/>
+
+  <menuitem name="menu-dashboard" parent="menu-root" title="Tableau de bord"
+            action="admin-dashboard" icon="pi pi-home" order="5"/>
+
+  <menuitem name="menu-config" parent="menu-root" title="Configuration" icon="pi pi-cog" order="10"/>
+  <menuitem name="menu-providers" parent="menu-config" title="Fournisseurs"
+            action="provider-all" icon="pi pi-sitemap" order="10"/>
+  <menuitem name="menu-pays" parent="menu-config" title="Pays"
+            action="pays-all" icon="pi pi-globe" order="12"/>
+  <menuitem name="menu-catalog" parent="menu-config" title="Catalogue FSE"
+            action="catalog-all" icon="pi pi-book" order="15"/>
+  <menuitem name="menu-catalog-services" parent="menu-config" title="Catalogue de services"
+            action="catalog-services-all" icon="pi pi-box" order="16"/>
+  <menuitem name="menu-schema-ecritures" parent="menu-config" title="Schémas d'écriture"
+            action="schema-ecritures-all" icon="pi pi-sitemap" order="18"/>
+  <menuitem name="menu-interface-utilisateurs" parent="menu-config" title="Interfaces utilisateur"
+            action="interface-utilisateurs-all" icon="pi pi-plug" order="19"/>
+  <menuitem name="menu-comptes-fse" parent="menu-config" title="Comptes FSE"
+            action="comptes-fse-all" icon="pi pi-credit-card" order="22"/>
+  <menuitem name="menu-billers" parent="menu-config" title="Facturiers"
+            action="biller-all" icon="pi pi-wallet" order="20"/>
+  <menuitem name="menu-approvals" parent="menu-config" title="Approbations" icon="pi pi-check-square" order="25"/>
+  <menuitem name="menu-approval-profiles" parent="menu-approvals" title="Profils"
+            action="approval-profile-all" icon="pi pi-list" order="10"/>
+  <menuitem name="menu-approval-inbox" parent="menu-approvals" title="Validations en attente"
+            action="approval-inbox" icon="pi pi-inbox" order="20"/>
+
+  <menuitem name="menu-tarif" parent="menu-root" title="Tarification" icon="pi pi-calculator" order="15"/>
+  <menuitem name="menu-tarif-grilles" parent="menu-tarif" title="Grilles tarifaires"
+            action="tarif-grilles-all" icon="pi pi-table" order="10"/>
+  <menuitem name="menu-tarif-formules" parent="menu-tarif" title="Formules"
+            action="tarif-formules-all" icon="pi pi-percentage" order="20"/>
+  <menuitem name="menu-tarif-simulateur" parent="menu-tarif" title="Simulateur"
+            action="tarif-simulateur-all" icon="pi pi-play" order="30"/>
+
+  <menuitem name="menu-reseau" parent="menu-root" title="Réseau" icon="pi pi-sitemap" order="16"/>
+  <menuitem name="menu-reseau-arbre" parent="menu-reseau" title="Arbre du réseau"
+            action="reseau-arbre-all" icon="pi pi-sitemap" order="10"/>
+  <menuitem name="menu-reseau-unites" parent="menu-reseau" title="Unités d'organisation"
+            action="reseau-unites-all" icon="pi pi-building" order="20"/>
+  <menuitem name="menu-reseau-regroupements" parent="menu-reseau" title="Regroupements"
+            action="reseau-regroupements-all" icon="pi pi-th-large" order="30"/>
+  <menuitem name="menu-reseau-zones" parent="menu-reseau" title="Zones"
+            action="reseau-zones-all" icon="pi pi-globe" order="40"/>
+  <menuitem name="menu-reseau-import" parent="menu-reseau" title="Import en masse"
+            action="reseau-import-all" icon="pi pi-upload" order="50"/>
+
+  <menuitem name="menu-identite" parent="menu-root" title="Identité" icon="pi pi-id-card" order="17"/>
+  <menuitem name="menu-identite-parties" parent="menu-identite" title="Identités"
+            action="identite-parties-all" icon="pi pi-users" order="10"/>
+  <menuitem name="menu-identite-profils-svc" parent="menu-identite" title="Profils service"
+            action="identite-profils-service-all" icon="pi pi-box" order="20"/>
+  <menuitem name="menu-identite-profils-fee" parent="menu-identite" title="Profils tarifaires"
+            action="identite-profils-tarif-all" icon="pi pi-percentage" order="30"/>
+  <menuitem name="menu-identite-profils-lim" parent="menu-identite" title="Profils de limite"
+            action="identite-profils-limite-all" icon="pi pi-sliders-h" order="40"/>
+
+  <menuitem name="menu-commission" parent="menu-root" title="Commissionnement" icon="pi pi-percentage" order="18"/>
+  <menuitem name="menu-commission-grilles" parent="menu-commission" title="Grilles de commission"
+            action="commission-grilles-all" icon="pi pi-table" order="10"/>
+  <menuitem name="menu-commission-simulateur" parent="menu-commission" title="Simulateur"
+            action="commission-simulateur-all" icon="pi pi-play" order="20"/>
+
+  <menuitem name="menu-rules" parent="menu-root" title="Règles &amp; limites" icon="pi pi-shield" order="19"/>
+  <menuitem name="menu-rules-catalogue" parent="menu-rules" title="Catalogue"
+            action="rules-all" icon="pi pi-list" order="10"/>
+  <menuitem name="menu-rules-simulateur" parent="menu-rules" title="Simulateur"
+            action="rules-simulateur-all" icon="pi pi-play" order="20"/>
+
+  <menuitem name="menu-contenu" parent="menu-root" title="Contenu mobile" icon="pi pi-megaphone" order="12"/>
+  <menuitem name="menu-content-promos" parent="menu-contenu" title="Publicité home"
+            action="content-promo-all" icon="pi pi-images" order="10"/>
+  <menuitem name="menu-content-cms" parent="menu-contenu" title="Rubriques &amp; articles"
+            action="content-cms-all" icon="pi pi-folder" order="20"/>
+
+  <menuitem name="menu-ops" parent="menu-root" title="Supervision" icon="pi pi-eye" order="20"/>
+  <menuitem name="menu-transactions" parent="menu-ops" title="Transactions"
+            action="transaction-all" icon="pi pi-list" order="10"/>
+  <menuitem name="menu-ops-approval-inbox" parent="menu-ops" title="Validations en attente"
+            action="approval-inbox" icon="pi pi-inbox" order="15"/>
+  <menuitem name="menu-audit" parent="menu-ops" title="Audit"
+            action="audit-all" icon="pi pi-history" order="20"/>
+
+  <menuitem name="menu-security" parent="menu-root" title="Sécurité" icon="pi pi-shield" order="30"/>
+  <menuitem name="menu-users" parent="menu-security" title="Utilisateurs"
+            action="user-all" icon="pi pi-users" order="10"/>
+
+  <menuitem name="menu-links" parent="menu-root" title="Liens" icon="pi pi-link" order="90"/>
+  <menuitem name="menu-payment" parent="menu-links" title="Parcours produits"
+            route="/products" icon="pi pi-shopping-cart" order="10"/>
+  <menuitem name="menu-history" parent="menu-links" title="Historique transactions"
+            route="/history" icon="pi pi-history" order="15"/>
+  <menuitem name="menu-logout" parent="menu-links" title="Déconnexion"
+            route="/admin/logout" icon="pi pi-sign-out" order="20"/>
+
+</object-views>

@@ -1,0 +1,131 @@
+<div>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel m-b-none" style="border: 2px solid #e5e6ec; border-radius: 5px;">
+                    <div class="panel-body">
+                        <h3 class="m-b-xs text-center m-t-n">
+                            <i class="pe pe-7s-config text-warning m-r-xs"></i> 
+                            <span class="text-primary">Apis</span>
+                        </h3>
+                        <hr style="border-top: 2px solid #7485e6;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+    <br/>
+    <div class="panel panel-default m-b-lg">
+        <div class="panel-heading">
+            <h4 class="panel-title">Filtres de recherche</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>Nom Api</label>
+                        <select class="form-control" ng-model="vm.nomApiFilter">
+                            <option value="">Tous les APIs</option>
+                            <option ng-repeat="api in vm.uniqueNomApis" value="{{api}}">{{api}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>Fournisseur</label>
+                        <select class="form-control" ng-model="vm.fournisseurFilter">
+                            <option value="">Tous les fournisseurs</option>
+                            <option ng-repeat="fournisseur in vm.uniqueFournisseurs" value="{{fournisseur}}">{{fournisseur}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-primary btn-block" ng-click="vm.loadAll()">
+                        <span class="glyphicon glyphicon-search"></span> Rechercher
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-right">
+            <button class="btn btn-primary" ui-sref="api.new" >
+                <span class="glyphicon glyphicon-plus"></span>
+                <span >
+                    Nouveau
+                </span>
+            </button>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover" style="border: 2px solid #e3e5ec;">
+            <thead>
+                <tr class="bg-primary text-white">
+                    <th class="text-center text-white"><span>Code Api</span></th>
+                    <th class="text-center text-white"><span>Nom Api</span></th>
+                    <th class="text-center text-white"><span>Type</span></th>
+                    <th class="text-center text-white"><span>Host</span></th>
+                    <th class="text-center text-white"><span>Port</span></th>
+                    <th class="text-center text-white"><span>Fournisseur Service</span></th>
+                     <th class="text-center text-white">Statut</th>
+                    <th class="text-center text-white">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="api in vm.apis track by api.id" class="align-middle">
+                    <td class="text-center"><a class="text-primary">{{api.codeApi}}</a></td>
+                    <td class="text-center">{{api.nomApi}}</td>
+                    <td class="text-center"><span class="badge badge-info">{{api.type}}</span></td>
+                    <td class="text-center">{{api.host}}</td>
+                    <td class="text-center">{{api.port}}</td>
+                    <td class="text-center">{{api.fournisseurService.nom}}</td>
+                    
+                         <td>
+                    <button class="btn btn-danger btn-xs" ng-click="vm.setActive(api, 1)" ng-show="!api.actif"
+                           >Deactivated</button>
+                    <button class="btn btn-success btn-xs" ng-click="vm.setActive(api, 0)" ng-show="api.actif">Activated</button>
+                </td>
+
+                    <td class="text-center">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="api-detail({id:api.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="api.edit({id:api.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="api.delete({id:api.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="api.duplicate({id:api.id})"
+                                    class="btn btn-success btn-sm">
+                                <span class="glyphicon glyphicon-duplicate"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="methode({idapi:api.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-cog"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

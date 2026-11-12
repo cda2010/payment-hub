@@ -1,0 +1,90 @@
+2020-09-19 18:10:42,543 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ApplicationEnvironmentPreparedEvent
+2020-09-19 18:10:43,357 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ApplicationPreparedEvent
+2020-09-19 18:10:43,459 DEBUG org.jboss.logging.LoggerProviders [background-preinit] Logging Provider: org.jboss.logging.Slf4jLoggerProvider found via system property
+2020-09-19 18:10:45,032 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: EnvironmentChangeEvent
+2020-09-19 18:10:45,054 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ApplicationPreparedEvent
+2020-09-19 18:10:45,056 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ContextRefreshedEvent
+2020-09-19 18:10:45,085 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ApplicationReadyEvent
+2020-09-19 18:10:46,052 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ApplicationEnvironmentPreparedEvent
+2020-09-19 18:10:46,201 INFO org.springframework.boot.SpringApplication [restartedMain] The following profiles are active: cloudev
+2020-09-19 18:10:46,227 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ApplicationPreparedEvent
+2020-09-19 18:10:55,224 WARN org.springframework.context.annotation.ConfigurationClassPostProcessor [restartedMain] Cannot enhance @Configuration bean definition 'refreshScope' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+2020-09-19 18:10:56,070 INFO com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Post-processing PropertySource instances
+2020-09-19 18:10:56,164 INFO com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2020-09-19 18:10:56,165 INFO com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2020-09-19 18:10:56,166 INFO com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Converting PropertySource systemProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2020-09-19 18:10:56,168 INFO com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Converting PropertySource systemEnvironment [org.springframework.core.env.SystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2020-09-19 18:10:56,169 INFO com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Converting PropertySource random [org.springframework.boot.context.config.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2020-09-19 18:10:56,170 INFO com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Converting PropertySource applicationConfig: [classpath:/config/application-cloudev.properties] [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2020-09-19 18:10:56,171 INFO com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Converting PropertySource applicationConfig: [classpath:/config/application-cloudev.yml] [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2020-09-19 18:10:56,172 INFO com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Converting PropertySource applicationConfig: [classpath:/config/application.yml] [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2020-09-19 18:10:56,173 INFO com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Converting PropertySource springCloudClientHostInfo [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2020-09-19 18:10:56,173 INFO com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Converting PropertySource refresh [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2020-09-19 18:10:56,174 INFO com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Converting PropertySource defaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2020-09-19 18:10:56,539 INFO com.ulisesbocchio.jasyptspringboot.resolver.DefaultLazyPropertyResolver [restartedMain] Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2020-09-19 18:10:56,544 INFO com.ulisesbocchio.jasyptspringboot.detector.DefaultLazyPropertyDetector [restartedMain] Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2020-09-19 18:10:56,642 DEBUG com.m2i.omnicanal.presentation.config.AsyncConfiguration [restartedMain] Creating Async Task Executor
+2020-09-19 18:10:58,620 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,647 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,661 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,672 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,679 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,685 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,697 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,711 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,721 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,724 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,729 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,734 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,738 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,742 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,748 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,753 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,759 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,763 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,766 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,770 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,776 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:58,780 DEBUG org.ehcache.core.StatusTransitioner$Transition [restartedMain] Initialize successful.
+2020-09-19 18:10:59,593 DEBUG com.m2i.omnicanal.presentation.config.MetricsConfiguration [restartedMain] Registering JVM gauges
+2020-09-19 18:10:59,653 DEBUG com.m2i.omnicanal.presentation.config.MetricsConfiguration [restartedMain] Monitoring the datasource
+2020-09-19 18:10:59,655 DEBUG com.m2i.omnicanal.presentation.config.MetricsConfiguration [restartedMain] Initializing Metrics JMX reporting
+2020-09-19 18:11:02,571 DEBUG com.m2i.omnicanal.presentation.config.WebConfigurer [restartedMain] Registering CORS filter
+2020-09-19 18:11:02,844 INFO com.m2i.omnicanal.presentation.config.WebConfigurer [restartedMain] Web application configuration, using profiles: cloudev
+2020-09-19 18:11:02,920 DEBUG com.m2i.omnicanal.presentation.config.WebConfigurer [restartedMain] Initializing Metrics registries
+2020-09-19 18:11:02,963 DEBUG com.m2i.omnicanal.presentation.config.WebConfigurer [restartedMain] Registering Metrics Filter
+2020-09-19 18:11:02,980 DEBUG com.m2i.omnicanal.presentation.config.WebConfigurer [restartedMain] Registering Metrics Servlet
+2020-09-19 18:11:02,989 INFO com.m2i.omnicanal.presentation.config.WebConfigurer [restartedMain] Web application fully configured
+2020-09-19 18:11:03,944 DEBUG com.m2i.omnicanal.presentation.config.DatabaseConfiguration [restartedMain] Configuring Liquibase
+2020-09-19 18:11:03,958 DEBUG io.github.jhipster.config.liquibase.AsyncSpringLiquibase [restartedMain] Starting Liquibase synchronously
+2020-09-19 18:11:03,959 DEBUG io.github.jhipster.config.liquibase.AsyncSpringLiquibase [restartedMain] Liquibase has updated your database in 0 ms
+2020-09-19 18:11:29,728 WARN com.netflix.config.sources.URLConfigurationSource [restartedMain] No URLs will be polled as dynamic configuration sources.
+2020-09-19 18:11:29,730 INFO com.netflix.config.sources.URLConfigurationSource [restartedMain] To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2020-09-19 18:11:29,744 WARN com.netflix.config.sources.URLConfigurationSource [restartedMain] No URLs will be polled as dynamic configuration sources.
+2020-09-19 18:11:29,745 INFO com.netflix.config.sources.URLConfigurationSource [restartedMain] To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2020-09-19 18:11:30,183 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: EnvironmentChangeEvent
+2020-09-19 18:11:30,186 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: EnvironmentChangeEvent
+2020-09-19 18:11:30,686 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: EnvironmentChangeEvent
+2020-09-19 18:11:30,817 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ParentContextAvailableEvent
+2020-09-19 18:11:30,818 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ParentContextAvailableEvent
+2020-09-19 18:11:30,818 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ParentContextAvailableEvent
+2020-09-19 18:11:30,819 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ApplicationPreparedEvent
+2020-09-19 18:11:30,820 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ApplicationPreparedEvent
+2020-09-19 18:11:30,821 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ApplicationPreparedEvent
+2020-09-19 18:11:30,837 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ContextRefreshedEvent
+2020-09-19 18:11:30,838 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ContextRefreshedEvent
+2020-09-19 18:11:30,857 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ContextRefreshedEvent
+2020-09-19 18:11:31,053 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: EmbeddedServletContainerInitializedEvent
+2020-09-19 18:11:31,053 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: EmbeddedServletContainerInitializedEvent
+2020-09-19 18:11:31,054 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: EmbeddedServletContainerInitializedEvent
+2020-09-19 18:11:31,062 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ApplicationReadyEvent
+2020-09-19 18:11:31,063 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ApplicationReadyEvent
+2020-09-19 18:11:31,063 DEBUG com.ulisesbocchio.jasyptspringboot.configuration.EnableEncryptablePropertiesBeanFactoryPostProcessor [restartedMain] Application Event Raised: ApplicationReadyEvent
+2020-09-19 18:11:31,065 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started OmnicanalPresentationApp in 53.582 seconds (JVM running for 55.572)
+2020-09-19 18:11:31,067 INFO com.m2i.omnicanal.presentation.OmnicanalPresentationApp [restartedMain] 
+----------------------------------------------------------
+	Application 'OmnicanalPresentation' is running! Access URLs:
+	Local: 		https://localhost:5983
+	External: 	https://192.168.43.72:5983
+	Profile(s): 	[cloudev]
+----------------------------------------------------------

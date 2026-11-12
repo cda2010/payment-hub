@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity HistExecutionJob.
+    -->
+    <changeSet id="20200721113446-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="pti_job_detail_id"
+                                 baseTableName="hist_execution_job"
+                                 constraintName="fk_hist_execution_job_pti_job_detail_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pti_job_details"/>
+
+    </changeSet>
+</databaseChangeLog>

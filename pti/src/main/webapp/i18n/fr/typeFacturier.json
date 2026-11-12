@@ -1,0 +1,10 @@
+{
+    "ptiApp": {
+        "TypeFacturier" : {
+            "null": "",
+            "FSE": "FSE",
+            "MARCHAND": "MARCHAND",
+            "AUTRES": "AUTRES"
+        }
+    }
+}

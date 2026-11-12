@@ -1,0 +1,30 @@
+{
+    "ptiApp": {
+        "facturier" : {
+            "home": {
+                "title": "Facturiers",
+                "createLabel": "Créer un nouveau Facturier",
+                "createOrEditLabel": "Créer ou éditer un Facturier"
+            },
+            "created": "Un nouveau Facturier a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Facturier avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Facturier avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Facturier {{ id }} ?"
+            },
+            "detail": {
+                "title": "Facturier"
+            },
+            "nomFacturier": "Nom Facturier",
+            "codeFacturier": "Code Facturier",
+            "typeFacturier": "Type Facturier",
+              "typeFacturier.AUTRES": "AUTRES",
+                  "typeFacturier.WALLET": "WALLET",
+             "typeFacturier.WALLET": "MARCHAND",
+              "typeFacturier.WALLET": "FSE",
+            "possesseur": "Possesseur",
+            "uniteOrganisation": "Unite Organisation",
+            "facture": "Facture"
+        }
+    }
+}

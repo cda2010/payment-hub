@@ -1,0 +1,31 @@
+
+<div>
+    <h2><span data-translate="ptiApp.parametreApp.detail.title">Parametre App</span> {{vm.parametreApp.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.parametreApp.nom">Nom</span></dt>
+        <dd>
+            <span>{{vm.parametreApp.nom}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.parametreApp.valeur">Valeur</span></dt>
+        <dd>
+            <span>{{vm.parametreApp.valeur}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.parametreApp.type">Type</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.TypeParametre.' + vm.parametreApp.type}}">{{vm.parametreApp.type}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="parametre-app-detail.edit({id:vm.parametreApp.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

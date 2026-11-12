@@ -1,0 +1,93 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myPrametreExportLabel">Creer ou modifier un Parametre</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.prametreExport.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.prametreExport.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_nomParametre">Nom Parametre</label>
+            <input type="text" class="form-control" name="nomPrametre" id="field_nomPrametre"
+                    ng-model="vm.prametreExport.nomParametre"
+                    />
+        </div>
+        
+        <div class="form-group">
+            <label for="field_type">Type</label>
+           <select required class="form-control" name="etat" id="filed_type_champs"
+                ng-model="vm.prametreExport.typeChamps"
+                ng-options="typeC for typeC in vm.typecode">
+            </select>
+            
+            
+        </div>
+        <div class="form-group">
+            <label>
+                <input autocomplete="off"class="colored-success" type="checkbox" name="IsList" id="field_IsList" ng-model="vm.IsList" ng-change=" vm.clearIfNotList()"/>
+                <b class="text"> Est une Liste ? </b>
+            </label>
+        </div>
+
+        <div class="form-group" ng-if="vm.IsList">
+            <label for="field_type">Liste</label>
+           <select required class="form-control" name="etat" id="filed_type_liste"
+                ng-model="vm.prametreExport.typeListe"
+                ng-options="typeListe for typeListe in vm.typeListe" ng-required="false" ng-change="vm.clearIfNotList()">
+            </select>
+
+        </div>
+
+        <div class="form-group" ng-if="vm.IsList && vm.prametreExport.typeListe=='LISTE_DYNAMIQUE'">
+            <label class="control-label" for="field_nomParametre">Table de référence</label>
+            <input type="text" class="form-control" name="nomPrametre" id="field_nomPrametre"
+                    ng-model="vm.prametreExport.tableRef" ng-required="true"
+                    />
+        </div>
+
+        <div class="form-group" ng-if="vm.IsList && vm.prametreExport.typeListe=='LISTE_DYNAMIQUE'">
+            <label class="control-label" for="field_nomChamps">Colonne(Noms des attributs dans la table de référence séparés par des points virgules)</label>
+            <input type="text" class="form-control" name="nomChamps" id="field_nomChamps"
+                    ng-model="vm.prametreExport.nomChamps" ng-required="true"
+                    />
+        </div>
+
+
+        <div class="form-group" ng-if="vm.IsList && vm.prametreExport.typeListe=='LISTE_STATIQUE'" >
+            <label class="control-label" for="field_valeur">Valeur(Format "label:valeur" séparés par des points virgules)</label>
+            <input type="text" class="form-control" name="valeur" id="field_valeur" ng-model="vm.prametreExport.valeur" ng-required="true" placeholder="label1:valeur1;label2:valeur2"/>
+           
+        </div>   
+
+        <!-- <div class="form-group" ng-if="vm.IsList && vm.prametreExport.typeListe=='LISTE_STATIQUE'" ng-repeat="input in vm.inputs" style="justify-content: center; align-items: center; margin-top: 15px; display: flex; flex-direction: row;  flex: 0 1 1; justify-content: space-between; "> -->
+            <!-- <input type="text" class="form-control" name="" id="{{input.idCol}}" style="width: 45%;" placeholder="Label" ng-model="input.valueCol" ng-required="true"/>
+            <input type="text" class="form-control" name="" id="{{input.idVal}}" style="width: 45%;" placeholder="Valeur" ng-model="input.valueVal" ng-required="true"/>
+            <button type="button" ng-click="vm.deleteCol(input)" style="height: 3rem;" class="btn btn-danger btn-xs">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+            </button> -->
+            <!-- <label class="control-label" for="field_valeur">Valeur(Format "label:valeur" séparés par des points virgules)</label>
+            <input type="text" class="form-control" name="valeur" id="field_valeur" ng-model="vm.prametreExport.valeur" ng-required="true"/> -->
+            <!-- <input class="form-control" id="field_valeur" type="hidden" ng-model="vm.prametreExport.valeur" /> -->
+        <!-- </div> -->
+        <!-- <div class="form-group">
+            <button type="button" style="height: 3rem;" class="btn btn-primary" ng-click="vm.addInput()" ng-if="vm.prametreExport.typeListe=='LISTE_STATIQUE'">
+                Ajouter colonne
+            </button>
+        </div> -->
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

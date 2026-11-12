@@ -1,0 +1,36 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "intro",
+        "tag": "p",
+        "content": "Saisissez le numéro de téléphone du wallet. Nous rechercherons le titulaire chez l'opérateur."
+      },
+      {
+        "type": "phoneNumber",
+        "key": "phoneNumber",
+        "label": "Numéro de téléphone",
+        "input": true,
+        "placeholder": "22670000000",
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Rechercher",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Numéro de téléphone": "Numéro de téléphone"
+    },
+    "en": {
+      "Numéro de téléphone": "Phone number"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "hidden",
+        "key": "providerCode",
+        "defaultValue": "WESTERN_UNION",
+        "input": true
+      },
+      {
+        "type": "htmlelement",
+        "key": "intro",
+        "tag": "p",
+        "content": "Bénéficiaire Western Union — identité et contact."
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryFirstName",
+        "label": "Prénom (Western Union)",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryLastName",
+        "label": "Nom (Western Union)",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryName",
+        "label": "Nom complet",
+        "input": true,
+        "calculateValue": "value = (data.beneficiaryFirstName || '') + ' ' + (data.beneficiaryLastName || '')"
+      },
+      {
+        "type": "phoneNumber",
+        "key": "beneficiaryPhone",
+        "label": "Téléphone bénéficiaire",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryCity",
+        "label": "Ville",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryAddress",
+        "label": "Adresse (optionnel)",
+        "input": true
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Prénom (Western Union)": "Prénom (Western Union)",
+      "Nom (Western Union)": "Nom (Western Union)",
+      "Téléphone bénéficiaire": "Téléphone bénéficiaire",
+      "Ville": "Ville",
+      "Adresse (optionnel)": "Adresse (optionnel)"
+    },
+    "en": {
+      "Prénom (Western Union)": "First name (Western Union)",
+      "Nom (Western Union)": "Last name (Western Union)",
+      "Téléphone bénéficiaire": "Beneficiary phone",
+      "Ville": "City",
+      "Adresse (optionnel)": "Address (optional)"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "formio": {
+    "display": "form",
+    "title": "Code",
+    "components": [
+      {
+        "type": "textfield",
+        "key": "code",
+        "label": "Code reçu",
+        "input": true,
+        "validate": {
+          "required": true
+        }
+      }
+    ]
+  }
+}

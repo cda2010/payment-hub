@@ -1,0 +1,246 @@
+// JDL definition for application 'pti' generated with command 'jhipster export-jdl'
+
+entity UniteOrganisation (unite_organisation) {
+  libelleUniteOrganisation String required,
+  estSiege Boolean,
+  codeUO String,
+  numeroOrdre Integer,
+  feuille Boolean,
+  codeFse String,
+  estFiliale Boolean
+}
+entity TypeUniteOrganisation (type_unite_organisation) {
+  libelleTypeUO String,
+  codeTypeUO String,
+  niveau Integer
+}
+entity Personne (personne) {
+  typePersonne TypePersonne,
+  telephone String
+}
+entity Piece (piece) {
+  referencePiece String required,
+  dateDelivrance LocalDate,
+  dateExpiration LocalDate,
+  copie AnyBlob,
+  lieuDelivrance String
+}
+entity TypePiece (type_piece) {
+  codeTypePiece String required,
+  libelleTypePiece String required
+}
+entity PersonnePhysique (personne_physique) {
+  nomClient String required,
+  prenomClient String required,
+  dateNaissance LocalDate,
+  personnePrevenir String,
+  lieuNaissance String,
+  sexe Sexe
+}
+entity Nationalite (nationalite) {
+  code String,
+  libelle String
+}
+entity PersonneMorale (personne_morale) {
+  raisonSociale String required,
+  registreCommerce String,
+  numreoIfu String
+}
+entity Emetteur (emetteur) {
+  code String
+}
+entity Beneficiaire (beneficiaire) {
+  code String
+}
+entity Client (client) {
+  codeClient String
+}
+entity Compte (compte) {
+  etiquette String required,
+  valeurCompte String,
+  categorieCompte CategorieCompte
+}
+entity TypeCompte (type_compte) {
+  codeTypeCompte Integer required,
+  libelleTypeCompte String required
+}
+entity CompteBanque (compte_banque) {
+  codeAgence String required,
+  codeBanque String required,
+  codeFse String
+}
+entity Devise (devise) {
+  code String required,
+  libelle String required,
+  symbole String
+}
+entity CompteAutre (compte_autre) {
+  solde BigDecimal
+}
+entity EtiquetteCompte (etiquette_compte) {
+  code String,
+  obligatoire Boolean
+}
+entity TableauFrais (tableau_frais) {
+  poidsNum Integer
+}
+entity LigneFrais (ligne_frais) {
+  typeFrais TypeTarif,
+  maximun Integer,
+  minimun Integer,
+  valeur Integer
+}
+entity Canal (canal) {
+  codeCanal String required,
+  libelleCanal String required
+}
+entity Operation (operation) {
+  montantOp BigDecimal,
+  montantFrais BigDecimal,
+  dateOperation ZonedDateTime,
+  statut StatutOperation,
+  codeRetrait String,
+  secret String,
+  codeOperation String,
+  dateExpiration LocalDate,
+  motif String,
+  codeExterne String
+}
+entity TypeService (type_service) {
+  libelle String required,
+  cmpteClientSournce Boolean,
+  cmpteClientDest Boolean,
+  operationClient Boolean,
+  fraisApplicable Boolean
+}
+entity PointVente (point_vente) {
+  codePointVente String required,
+  libellePointVente String required
+}
+entity FournisseurService (fournisseur_service) {
+  codeFse String required,
+  libelleFse String required
+}
+entity TableauRepartitionCommission (tableau_repartition_commission) {
+  niveaoOperation Integer,
+  dateDebut LocalDate,
+  dateFin LocalDate
+}
+entity LigneRepartitionCommission (ligne_repartition_commission) {
+  niveau Integer,
+  valeur Integer
+}
+entity Autorisation (autorisation) {
+  code String
+}
+entity Pays (pays) {
+  codePays String required,
+  libellePays String
+}
+entity EtiquetteComptable (etiquette_comptable) {
+  code String
+}
+entity RepartionFraisEmAcq (repartion_frais_em_acq) {
+  partEm Integer,
+  partAcq Integer
+}
+entity Commission (commission) {
+  montant BigDecimal,
+  estPaye Boolean,
+  datePaiement ZonedDateTime,
+  dateEnregistrement ZonedDateTime
+}
+entity OperationAudit (operation_audit) {
+  date ZonedDateTime,
+  statutPrecedent StatutOperation,
+  statutApres StatutOperation
+}
+entity Profil (profil) {
+  nom String required,
+  description String
+}
+
+enum TypePersonne {
+  PHYSIQUE,
+  MORALE
+}
+
+enum Sexe {
+  MASCULIN,
+  FEMININ
+}
+
+enum CategorieCompte {
+  BANQUE,
+  AUTRE
+}
+
+enum TypeTarif {
+  FIXE,
+  POURCENTAGE
+}
+
+enum StatutOperation {
+  ENCOURS,
+  ENATTENTE,
+  ANNULLE,
+  PAYE
+}
+
+relationship OneToOne {
+  Personne{personnePhysique} to PersonnePhysique,
+  Personne{personneMorale} to PersonneMorale,
+  Client{personne} to Personne,
+  Compte{compteBanque} to CompteBanque,
+  Compte{compteAutre} to CompteAutre
+}
+relationship OneToMany {
+  UniteOrganisation{filsUO} to UniteOrganisation{pereUO(libelleUniteOrganisation)},
+  TypeUniteOrganisation{organisation} to UniteOrganisation{typeUO(libelleTypeUO)},
+  Personne{uniteOrganisation} to UniteOrganisation{representant},
+  FournisseurService{organisation} to UniteOrganisation{fournisseur(libelleFse)},
+  Personne{piece} to Piece{titulaire},
+  TypePiece{piece} to Piece{typePiece(libelleTypePiece)},
+  Nationalite{personnePhysique} to PersonnePhysique{nationalite(libelle)},
+  Personne{emetteur} to Emetteur{personne},
+  Personne{beneficiaire} to Beneficiaire{personne},
+  Client{compte} to Compte{client(codeClient)},
+  TypeCompte{compte} to Compte{typeCompte(libelleTypeCompte)},
+  UniteOrganisation{compte} to Compte{uniteOrganisation(libelleUniteOrganisation)},
+  Devise{compteBanque} to CompteBanque{devise(code)},
+  TypeService{tableauFrais} to TableauFrais{typeService(libelle)},
+  Canal{tableauFrais} to TableauFrais{canal(libelleCanal)},
+  TypeUniteOrganisation{tableauFraisEm} to TableauFrais{typeUoEmetteur(libelleTypeUO)},
+  TypeUniteOrganisation{tableauFraisAcq} to TableauFrais{typeUoAcquereur(libelleTypeUO)},
+  Client{tableauFraisBen} to TableauFrais{beneficiaire(codeClient)},
+  Client{tableauFraisEm} to TableauFrais{emetteur(codeClient)},
+  UniteOrganisation{tableauFraisEm} to TableauFrais{organisationEm(libelleUniteOrganisation)},
+  UniteOrganisation{tableauFraisAcq} to TableauFrais{organisationAcq(libelleUniteOrganisation)},
+  TableauFrais{ligneFrais} to LigneFrais{tableauFrais},
+  TypeService{operation} to Operation{typeService(libelle)},
+  Beneficiaire{operation} to Operation{beneficaire},
+  Emetteur{operation} to Operation{emetteur},
+  PointVente{operation} to Operation{pointVente},
+  Pays{operation} to Operation{pays(libellePays)},
+  Canal{operation} to Operation{canal(libelleCanal)},
+  UniteOrganisation{operation} to Operation{uoAcquereur(libelleUniteOrganisation)},
+  UniteOrganisation{pointVente} to PointVente{uniteOrganisation(libelleUniteOrganisation)},
+  Pays{fournisseurService} to FournisseurService{pays(libellePays)},
+  TypeService{tableauRepartitionCommission} to TableauRepartitionCommission{typeService(libelle)},
+  TableauRepartitionCommission{ligneRepartitionCommission} to LigneRepartitionCommission{tableauRepartitionCommission},
+  UniteOrganisation{autorisation} to Autorisation{uniteOrganisation(libelleUniteOrganisation)},
+  TypeService{autorisation} to Autorisation{typeService(libelle)},
+  Devise{pays} to Pays{devise(code)},
+  TypeService{repartition} to RepartionFraisEmAcq{typeService(libelle)},
+  Operation{commission} to Commission{operation(codeOperation)},
+  UniteOrganisation{commission} to Commission{organisation(libelleUniteOrganisation)},
+  Operation{audit} to OperationAudit{operation(codeOperation)}
+}
+relationship ManyToMany {
+  Canal{typeService} to TypeService{canal}
+}
+
+dto UniteOrganisation, TypeUniteOrganisation, Personne, Piece, TypePiece, PersonnePhysique, Nationalite, PersonneMorale, Emetteur, Beneficiaire, Client, Compte, TypeCompte, CompteBanque, Devise, CompteAutre, EtiquetteCompte, TableauFrais, LigneFrais, Canal, Operation, TypeService, PointVente, FournisseurService, TableauRepartitionCommission, LigneRepartitionCommission, Autorisation, Pays, EtiquetteComptable, RepartionFraisEmAcq, Commission, OperationAudit, Profil with mapstruct
+paginate UniteOrganisation, TypeUniteOrganisation, Personne, Piece, TypePiece, PersonnePhysique, Nationalite, PersonneMorale, Emetteur, Beneficiaire, Client, Compte, TypeCompte, CompteBanque, Devise, CompteAutre, EtiquetteCompte, TableauFrais, LigneFrais, Canal, Operation, TypeService, PointVente, FournisseurService, TableauRepartitionCommission, LigneRepartitionCommission, Autorisation, Pays, EtiquetteComptable, RepartionFraisEmAcq, Commission, OperationAudit with pagination
+service UniteOrganisation, TypeUniteOrganisation, Personne, Piece, TypePiece, PersonnePhysique, Nationalite, PersonneMorale, Emetteur, Beneficiaire, Client, Compte, TypeCompte, CompteBanque, Devise, CompteAutre, EtiquetteCompte, TableauFrais, LigneFrais, Canal, Operation, TypeService, PointVente, FournisseurService, TableauRepartitionCommission, LigneRepartitionCommission, Autorisation, Pays, EtiquetteComptable, RepartionFraisEmAcq, Commission, OperationAudit, Profil with serviceClass
+paginate Profil with pager

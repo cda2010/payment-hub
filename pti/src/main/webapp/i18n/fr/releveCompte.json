@@ -1,0 +1,25 @@
+{
+    "ptiApp": {
+        "releveCompte" : {
+            "home": {
+                "title": "ReleveComptes",
+                "createLabel": "Créer un nouveau Releve Compte",
+                "createOrEditLabel": "Créer ou éditer un Releve Compte"
+            },
+            "created": "Un nouveau Releve Compte a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Releve Compte avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Releve Compte avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Releve Compte {{ id }} ?"
+            },
+            "detail": {
+                "title": "Releve Compte"
+            },
+            "soldeInitial": "Solde Initial",
+            "dateDebut": "Date Debut",
+            "soldeFinal": "Solde Final",
+            "dateFin": "Date Fin",
+            "detailReleveCompte": "Detail Releve Compte"
+        }
+    }
+}

@@ -1,0 +1,245 @@
+<div ng-cloak>
+    <div class="row">
+        <div ng-switch="vm.isAuthenticated()">
+            <div class="col-md-12">
+                <div class="panel panel-filled" style="background-color: #f8f9fa; border: 1px solid #e3e5ec; border-radius: 1px; margin-bottom: 20px;">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3 form-group">
+                                <label for="field_code" class="text-primary">FSE</label>
+                                <select class="form-control" id="field_fse" name="fse" ng-model="vm.codeFse" style="border: 1px solid #e3e5ec;">
+                                    <option ng-repeat="code in vm.uniqueFseCodes" value="{{code}}">{{code}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="datetimepicker" class="text-primary">Date Début:</label>
+                                <p class="input-group">
+                                    <input type="text" id="datetimepicker" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.selectedDateTime" is-open="vm.datepickerOpened" datepicker-options="vm.dateOptions" ng-required="true" close-text="Fermer" alt-input-formats="['M!/d!/yyyy H:mm']" ng-change="vm.dateTimeSelectionChanged()" style="border: 1px solid #e3e5ec;"/>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary" ng-click="vm.openDatepicker()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </p>                
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="datetimepicker" class="text-primary">Date Fin:</label>
+                                <p class="input-group">
+                                    <input type="text" id="datetimepicker" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.selectedDateTimeEnd" is-open="vm.datepickerOpenedEnd" datepicker-options="vm.dateOptions" ng-required="true" close-text="Fermer" alt-input-formats="['M!/d!/yyyy H:mm']" ng-change="vm.dateTimeSelectionChangedEnd()" style="border: 1px solid #e3e5ec;"/>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary" ng-click="vm.openDatepickerEnd()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="col-md-1">
+                                <label class="text-primary">&nbsp;</label>
+                                <p class="input-group">
+                                    <button class="btn btn-success btn-block" ng-click="vm.updateCharts()">
+                                        <i class="glyphicon glyphicon-ok"></i> Valider
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="card-box" style="border: 1px solid #e3e5ec; border-radius: 5px;">
+                        <h4 class="header-title m-t-0 m-b-30 text-primary">Evolution Nombre d'Appels et de Circuit Breaker Par API</h4>
+                        <div class="widget-box-2">
+                            <div id="vm.containerNombreAppelCodeReponse" style="height: 400px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6">
+                    <div class="card-box" style="border: 1px solid #e3e5ec; border-radius: 5px;">
+                        <h4 class="header-title m-t-0 m-b-30 text-primary">Evolution des durée d'Appels par API</h4>
+                        <div class="widget-box-2">
+                            <div id="vm.containerBoxPlot" style="height: 400px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card-box" style="border: 1px solid #e3e5ec; border-radius: 5px;">
+                        <h4 class="header-title m-t-0 text-primary">Variation du nombre d'appels dans le temps en fonction de l'API</h4>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="text-primary">Fonction</label>
+                                <select class="form-control" ng-model="vm.selectedFunction" style="border: 1px solid #e3e5ec;">
+                                    <option value="">Toutes les fonctions</option>
+                                    <option ng-repeat="func in vm.availableFunctions" value="{{func}}">{{func}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="widget-box-2">
+                            <div id="vm.containerVariationDureeAppels" style="height: 400px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card-box" style="border: 1px solid #e3e5ec; border-radius: 5px;">
+                        <h4 class="header-title m-t-0 text-primary">Répartition des codes de réponse</h4>
+                        <div class="widget-box-2">
+                            <div id="vm.containerCircuitBreaker" style="height: 400px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card-box" style="border: 1px solid #e3e5ec; border-radius: 1px;">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div>
+                                    <h4 class="header-title m-t-0 m-b-30 text-primary">Api Calls</h4>
+                                    <div class="form-group">
+                                        <label for="itemsPerPage" class="text-primary">Nombre d'éléments par page :</label>
+                                        <select id="itemsPerPage" class="form-control" ng-model="vm.itemsPerPage" ng-change="vm.applyFilters()" style="border: 1px solid #e3e5ec;">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="text-primary">Intervalle de temps</label>
+                                        <div class="row align-items-center">
+                                            <div class="col-md-6">
+                                                <label class="text-primary">De :</label>
+                                                <input type="date" class="form-control" ng-model="vm.filters.dateStart" ng-change="vm.applyFilters()" style="border: 1px solid #e3e5ec;">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="text-primary">À :</label>
+                                                <input type="date" class="form-control" ng-model="vm.filters.dateEnd" ng-change="vm.applyFilters()" style="border: 1px solid #e3e5ec;">
+                                            </div>
+                                        </div>
+                                        <div class="text-danger" ng-if="vm.dateError">
+                                            {{ vm.dateError }}
+                                        </div>
+                                    </div>
+                            
+                                    <div class="inbox-widget nicescroll">
+                                        <div class="table-responsive fixTableHead">
+                                            <table class="table table-hover table-striped" id="logsTable" style="border: 2px solid #e3e5ec;">
+                                                <thead>
+                                                    <tr class="bg-primary text-white">
+                                                        <th>
+                                                            <a href="#" ng-click="vm.sortBy('dateRequest')" class="text-white">Date Request</a>
+                                                        </th>
+                                                        <th>
+                                                            <a href="#" ng-click="vm.sortBy('nomFonction')" class="text-white">Nom Fonction</a>
+                                                            <input type="text" class="form-control" placeholder="Filtrer..." ng-model="vm.filters.nomFonction" ng-change="vm.applyFilters()">
+                                                        </th>
+                                                        <th>
+                                                            <a href="#" ng-click="vm.sortBy('nomApi')" class="text-white">Api</a>
+                                                            <input type="text" class="form-control" placeholder="Filtrer par API..." ng-model="vm.filters.nomApi" ng-change="vm.applyFilters()">
+                                                        </th>
+                                                        <th>
+                                                            <a href="#" ng-click="vm.sortBy('codeFse')" class="text-white">Fse Code</a>
+                                                        </th>
+                                                        <th>
+                                                            <a href="#" ng-click="vm.sortBy('codeReponse')" class="text-white">Code Réponse</a>
+                                                        </th>
+                                                        <th>
+                                                            <a href="#" ng-click="vm.sortBy('msg')" class="text-white">Desc</a>
+                                                        </th>
+                                                        <th>
+                                                            <a href="#" ng-click="vm.sortBy('duree')" class="text-white">Durée</a>
+                                                        </th>
+                                                        <th>
+                                                            <a href="#" class="text-white">Circuit Breaker?</a>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                
+                                                <tbody>
+                                                    <tr ng-repeat="histAppel in vm.getPaginatedData() track by histAppel.id">
+                                                        <td>{{histAppel.dateRequest | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                                                        <td>{{histAppel.nomFonction}}</td>
+                                                        <td>{{histAppel.nomApi}}</td>
+                                                        <td><span class="badge badge-info">{{histAppel.codeFse}}</span></td>
+                                                        <td>{{histAppel.codeReponse}}</td>
+                                                        <td>{{histAppel.msg}}</td>
+                                                        <td>{{histAppel.duree}}</td>
+                                                        <td>
+                                                            <span class="badge badge-danger" ng-if="histAppel.circuitBreaker === true">{{histAppel.circuitBreaker}}</span>
+                                                            <span class="badge badge-success" ng-if="histAppel.circuitBreaker === false">{{histAppel.circuitBreaker}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="text-center">
+                                                <uib-pagination 
+                                                    total-items="vm.filteredHistAppels.length" 
+                                                    ng-model="vm.currentPage" 
+                                                    items-per-page="vm.itemsPerPage" 
+                                                    max-size="vm.maxSize" 
+                                                    class="pagination-sm" 
+                                                    boundary-links="true">
+                                                </uib-pagination>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card-box" style="border: 1px solid #e3e5ec; border-radius: 5px;">
+                        <h4 class="header-title m-t-0 m-b-30 text-primary">Latest operations</h4>
+
+                        <div class="table-responsive">
+                            <div class="table-responsive fixTableHead">
+                                <table class="table table-hover table-striped" id="logsTable" style="border: 2px solid #e3e5ec;">
+                                    <thead>
+                                        <tr class="bg-primary">
+                                            <th class="text-center text-white"><span>ID</span></th>
+                                            <th class="text-center text-white"><span>Date Operation</span></th>
+                                            <th class="text-center text-white"><span>Fse Code Src</span></th>
+                                            <th class="text-center text-white"><span>Fse Code Dst</span></th>
+                                            <th class="text-center text-white"><span>Type Service</span></th>
+                                            <th class="text-center text-white"><span>Terminal</span></th>
+                                            <th class="text-center text-white"><span>Confirmé?</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="operation in vm.operations track by operation.id">
+                                            <td class="text-center">{{operation.reference}}</td>
+                                            <td class="text-center">{{operation.dateOperation| date:'dd/MM/yyyy HH:MM:s'}}</td>
+                                            <td class="text-center"><span class="badge badge-info">{{operation.fseCodeSource}}</span></td>
+                                            <td class="text-center"><span class="badge badge-warning">{{operation.fseCodeDest}}</span></td>
+                                            <td class="text-center"><span class="badge badge-success">{{operation.libelleTypeService}}</span></td>
+                                            <td class="text-center">{{operation.terminal}}</td>
+                                            <td class="text-center">
+                                                <span class="badge" ng-class="{'badge-success': operation.ack, 'badge-danger': !operation.ack}">{{operation.ack}}</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="text-center">
+                                    <uib-pagination 
+                                        total-items="vm.operations.length" 
+                                        ng-model="vm.currentPage" 
+                                        items-per-page="vm.itemsPerPage" 
+                                        max-size="vm.maxSize" 
+                                        class="pagination-sm" 
+                                        boundary-links="true">
+                                    </uib-pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

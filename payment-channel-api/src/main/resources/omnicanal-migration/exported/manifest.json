@@ -1,0 +1,301 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "count": 42,
+  "fixtures": [
+    {
+      "file": "fse-0004-CORIS_BANQUE_INTERNATIONALE_BF.json",
+      "codeFse": "0004",
+      "providerCodeHint": "CORIS_BANK",
+      "methods": 15,
+      "libelle": "Coris Banque Internationale BF"
+    },
+    {
+      "file": "fse-0005-SONABEL.json",
+      "codeFse": "0005",
+      "providerCodeHint": "FSE_0005",
+      "methods": 9,
+      "libelle": "Sonabel"
+    },
+    {
+      "file": "fse-0006-DIRECTION_G_N_RALE_DES_IMP_TS_DGI.json",
+      "codeFse": "0006",
+      "providerCodeHint": "FSE_0006",
+      "methods": 4,
+      "libelle": "Direction Générale des Impôts (DGI)"
+    },
+    {
+      "file": "fse-0007-OFFICE_NATIONALE_DE_L_EAU_ET_DE_L_ASSAIN.json",
+      "codeFse": "0007",
+      "providerCodeHint": "FSE_0007",
+      "methods": 4,
+      "libelle": "Office Nationale de l'Eau et de l'Assainissement"
+    },
+    {
+      "file": "fse-0008-M2I.json",
+      "codeFse": "0008",
+      "providerCodeHint": "FSE_0008",
+      "methods": 36,
+      "libelle": "M2i"
+    },
+    {
+      "file": "fse-0010-CORIS_BANQUE_INTERNATIONALE_TG.json",
+      "codeFse": "0010",
+      "providerCodeHint": "FSE_0010",
+      "methods": 6,
+      "libelle": "Coris Banque Internationale TG"
+    },
+    {
+      "file": "fse-0011-CORIS_MONEY_CBI_BURKINA.json",
+      "codeFse": "0011",
+      "providerCodeHint": "CORIS_MONEY",
+      "methods": 6,
+      "libelle": "CORIS MONEY CBI BURKINA"
+    },
+    {
+      "file": "fse-0012-CORIS_BANK_B_NIN.json",
+      "codeFse": "0012",
+      "providerCodeHint": "FSE_0012",
+      "methods": 6,
+      "libelle": "Coris Bank Bénin"
+    },
+    {
+      "file": "fse-0013-FOURNISSEUR_DE_SERVICE.json",
+      "codeFse": "0013",
+      "providerCodeHint": "FSE_0013",
+      "methods": 4,
+      "libelle": "Fournisseur de service"
+    },
+    {
+      "file": "fse-0014-INTECH_PAIEMENT_DE_AIRTIME.json",
+      "codeFse": "0014",
+      "providerCodeHint": "FSE_0014",
+      "methods": 1,
+      "libelle": "INTECH (Paiement de airtime)"
+    },
+    {
+      "file": "fse-0015-CORIS_MONEY_SENEGAL.json",
+      "codeFse": "0015",
+      "providerCodeHint": "FSE_0015",
+      "methods": 4,
+      "libelle": "Coris Money Senegal"
+    },
+    {
+      "file": "fse-0016-YOLCE.json",
+      "codeFse": "0016",
+      "providerCodeHint": "FSE_0016",
+      "methods": 2,
+      "libelle": "Yolce"
+    },
+    {
+      "file": "fse-0018-CANAL.json",
+      "codeFse": "0018",
+      "providerCodeHint": "FSE_0018",
+      "methods": 3,
+      "libelle": "CANAL +"
+    },
+    {
+      "file": "fse-0019-ORANGE_BURKINA.json",
+      "codeFse": "0019",
+      "providerCodeHint": "FSE_0019",
+      "methods": 1,
+      "libelle": "Orange Burkina"
+    },
+    {
+      "file": "fse-0021-CORIS_MONEY_TOGO.json",
+      "codeFse": "0021",
+      "providerCodeHint": "FSE_0021",
+      "methods": 4,
+      "libelle": "Coris Money TOGO"
+    },
+    {
+      "file": "fse-0022-RAPIDO.json",
+      "codeFse": "0022",
+      "providerCodeHint": "FSE_0022",
+      "methods": 3,
+      "libelle": "Rapido"
+    },
+    {
+      "file": "fse-0023-WOYOFAL.json",
+      "codeFse": "0023",
+      "providerCodeHint": "FSE_0023",
+      "methods": 4,
+      "libelle": "Woyofal"
+    },
+    {
+      "file": "fse-0024-SENELEC.json",
+      "codeFse": "0024",
+      "providerCodeHint": "FSE_0024",
+      "methods": 4,
+      "libelle": "Senelec"
+    },
+    {
+      "file": "fse-0025-SEN_EAU.json",
+      "codeFse": "0025",
+      "providerCodeHint": "FSE_0025",
+      "methods": 4,
+      "libelle": "Sen'eau"
+    },
+    {
+      "file": "fse-0026-MOOV_TOGO.json",
+      "codeFse": "0026",
+      "providerCodeHint": "FSE_0026",
+      "methods": 1,
+      "libelle": "MOOV TOGO"
+    },
+    {
+      "file": "fse-0027-MOOV_AFRICA_BURKINA.json",
+      "codeFse": "0027",
+      "providerCodeHint": "FSE_0027",
+      "methods": 1,
+      "libelle": "MOOV AFRICA BURKINA"
+    },
+    {
+      "file": "fse-0028-CORIS_BANQUE_INTERNATIONALE_SN.json",
+      "codeFse": "0028",
+      "providerCodeHint": "FSE_0028",
+      "methods": 7,
+      "libelle": "Coris Banque Internationale SN"
+    },
+    {
+      "file": "fse-0029-SONABEL_PREPAYEE.json",
+      "codeFse": "0029",
+      "providerCodeHint": "FSE_0029",
+      "methods": 4,
+      "libelle": "SONABEL PREPAYEE"
+    },
+    {
+      "file": "fse-0030-CORIS_MONEY_MALI.json",
+      "codeFse": "0030",
+      "providerCodeHint": "FSE_0030",
+      "methods": 4,
+      "libelle": "Coris Money MALI"
+    },
+    {
+      "file": "fse-0031-CORIS_MONEY_BENIN.json",
+      "codeFse": "0031",
+      "providerCodeHint": "FSE_0031",
+      "methods": 4,
+      "libelle": "Coris Money BENIN"
+    },
+    {
+      "file": "fse-0032-CORIS_MONEY_NIGER.json",
+      "codeFse": "0032",
+      "providerCodeHint": "FSE_0032",
+      "methods": 4,
+      "libelle": "Coris Money NIGER"
+    },
+    {
+      "file": "fse-0033-CORIS_MONEY_CI.json",
+      "codeFse": "0033",
+      "providerCodeHint": "FSE_0033",
+      "methods": 4,
+      "libelle": "Coris Money CI"
+    },
+    {
+      "file": "fse-0034-CORIS_MONEY_GUIN_E_CONAKRY.json",
+      "codeFse": "0034",
+      "providerCodeHint": "FSE_0034",
+      "methods": 4,
+      "libelle": "Coris Money Guinée-Conakry"
+    },
+    {
+      "file": "fse-0035-MOOV_BENIN.json",
+      "codeFse": "0035",
+      "providerCodeHint": "FSE_0035",
+      "methods": 4,
+      "libelle": "MOOV BENIN"
+    },
+    {
+      "file": "fse-0037-UNIVERSIT_LIBRE.json",
+      "codeFse": "0037",
+      "providerCodeHint": "FSE_0037",
+      "methods": 4,
+      "libelle": "Université Libre"
+    },
+    {
+      "file": "fse-0038-CORIS_MONEY_CBI_BURKINA_2.json",
+      "codeFse": "0038",
+      "providerCodeHint": "FSE_0038",
+      "methods": 4,
+      "libelle": "CORIS MONEY CBI BURKINA 2"
+    },
+    {
+      "file": "fse-0039-TDE.json",
+      "codeFse": "0039",
+      "providerCodeHint": "FSE_0039",
+      "methods": 4,
+      "libelle": "TDE"
+    },
+    {
+      "file": "fse-0040-DGI_BENIN.json",
+      "codeFse": "0040",
+      "providerCodeHint": "FSE_0040",
+      "methods": 2,
+      "libelle": "DGI BENIN"
+    },
+    {
+      "file": "fse-0042-RIA_TRANSFERT_D_ARGENT.json",
+      "codeFse": "0042",
+      "providerCodeHint": "FSE_0042",
+      "methods": 2,
+      "libelle": "RIA TRANSFERT D'ARGENT"
+    },
+    {
+      "file": "fse-0043-NIGELEC.json",
+      "codeFse": "0043",
+      "providerCodeHint": "FSE_0043",
+      "methods": 4,
+      "libelle": "NIGELEC"
+    },
+    {
+      "file": "fse-0044-TDE1.json",
+      "codeFse": "0044",
+      "providerCodeHint": "FSE_0044",
+      "methods": 4,
+      "libelle": "TDE1"
+    },
+    {
+      "file": "fse-0045-CORIS_BANK_GUINEE.json",
+      "codeFse": "0045",
+      "providerCodeHint": "FSE_0045",
+      "methods": 6,
+      "libelle": "CORIS BANK GUINEE"
+    },
+    {
+      "file": "fse-0046-ORANGE_GUINEE.json",
+      "codeFse": "0046",
+      "providerCodeHint": "FSE_0046",
+      "methods": 4,
+      "libelle": "ORANGE GUINEE"
+    },
+    {
+      "file": "fse-0047-DGI_GUINEE.json",
+      "codeFse": "0047",
+      "providerCodeHint": "FSE_0047",
+      "methods": 2,
+      "libelle": "DGI GUINEE"
+    },
+    {
+      "file": "fse-0048-CEET.json",
+      "codeFse": "0048",
+      "providerCodeHint": "FSE_0048",
+      "methods": 5,
+      "libelle": "CEET"
+    },
+    {
+      "file": "fse-0049-ABIDJAN_TERMINAL.json",
+      "codeFse": "0049",
+      "providerCodeHint": "FSE_0049",
+      "methods": 4,
+      "libelle": "ABIDJAN TERMINAL"
+    },
+    {
+      "file": "fse-0050-EVENT_TICKET.json",
+      "codeFse": "0050",
+      "providerCodeHint": "FSE_0050",
+      "methods": 5,
+      "libelle": "EVENT & TICKET"
+    }
+  ]
+}

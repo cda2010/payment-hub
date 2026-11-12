@@ -1,0 +1,21 @@
+{
+    "ptiApp": {
+        "blackList" : {
+            "home": {
+                "title": "BlackLists",
+                "createLabel": "Créer un nouveau Black List",
+                "createOrEditLabel": "Créer ou éditer un Black List"
+            },
+            "created": "Un nouveau Black List a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Black List avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Black List avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Black List {{ id }} ?"
+            },
+            "detail": {
+                "title": "Black List"
+            },
+            "client": "Client"
+        }
+    }
+}

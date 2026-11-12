@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity ParametreUtiliateur.
+    -->
+    <changeSet id="20170404133237-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="interface_utilisateur_id"
+                                 baseTableName="parametre_utiliateur"
+                                 constraintName="fk_parametre_utiliateur_interface_utilisateur_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="interface_utilisateur"/>
+
+    </changeSet>
+</databaseChangeLog>

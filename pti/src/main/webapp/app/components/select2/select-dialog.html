@@ -1,0 +1,55 @@
+<div class="container-fluid">
+    <div class="row">
+        <!--<div class="col-sm-12 pt10 mb10">
+            <div class="col-sm-6 mt10">
+                <input type="text" placeholder="Rechercher..."
+                       class="form-control ng-pristine ng-untouched ng-valid ng-empty" name="filter_field"
+                       ng-model="ctrl.query" aria-invalid="false">
+            </div>
+            <div class="col-sm-3 mt10">
+                <button title="Chercher au niveau du serveur" type="button" class="btn btn-primary btn-xs "
+                        ng-click="ctrl.search()">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </div>
+        </div>-->
+        <div class="col-sm-12 mf-select-table-container">
+            <table class="table-responsive table table-hover mf-select-table">
+                <caption>
+                    <input type="text" placeholder="Rechercher..." class="form-control form-control-static" name="filter_field" ng-model="ctrl.query" />
+                </caption>
+                <thead>
+                <tr class="mf-table-header">
+                    <th style="width:3%;">
+                            <span ng-if="ctrl.multiple">
+                                <input ng-change="ctrl.toggleAll()"   type="checkbox" style="color: red" class="colored-success"
+                                       ng-model="ctrl.allSelected"/>
+                            </span>
+                        <button ng-if="ctrl.multiple" ng-click="ctrl.checkAll()" type="button">All</button>
+                    </th>
+                    <th ng-repeat="(key, value) in ctrl.columns">
+                        <span>{{value.title|uppercase}} </span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody><!-- |filter:ctrl.query|orderBy:ctrl.columns[0] -->
+                <tr ng-repeat="item in ctrl.datas|filter:ctrl.query|orderBy:ctrl.columns[0]" ng-click="ctrl.toggle(item)">
+                    <td style="width:7%;">
+                        <input ng-checked="ctrl.isChecked(item)" class="colored-success" type="checkbox" />
+                        <b class="text"></b>
+                    </td>
+                    <td ng-repeat="(key, value) in ctrl.columns">
+                        <span>{{item[value.name]}} </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row mb5">
+        <div class="btn-group btn-group-xs pull-right">
+            <button ng-click="ctrl.cancel()" class="btn btn-danger">Annuler</button>
+            <button ng-if="ctrl.datas.length!=0" ng-click="ctrl.confirm()" class="btn btn-success">Valider</button>
+        </div>
+    </div>
+</div>

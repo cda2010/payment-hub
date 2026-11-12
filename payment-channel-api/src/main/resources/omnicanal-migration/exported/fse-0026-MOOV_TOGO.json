@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0026",
+  "providerCodeHint": "FSE_0026",
+  "providerLibelle": "MOOV TOGO",
+  "participantKindHint": "WALLET",
+  "fseStatut": "NONBANQUE",
+  "groupCode": "ENF",
+  "codeExterne": "0",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "Moov TOGO",
+    "codeApi": "0023",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7911",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7911",
+    "authType": "NONE"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "GETAIRTIME",
+      "codeMethode": "002301",
+      "operationCode": "GETAIRTIME",
+      "nom": "api/services/moovtg/moov-recharge",
+      "httpMethod": "GET",
+      "path": "api/services/moovtg/moov-recharge",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"numero\": \"${numero}\", \"montant\": \"${montant}\", \"transExt\": \"${transExt}\"}",
+      "parameters": [
+        {
+          "code": "numero",
+          "nomExterne": "numero",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "transExt",
+          "nomExterne": "transExt",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

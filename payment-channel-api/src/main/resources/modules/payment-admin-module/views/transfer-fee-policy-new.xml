@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-view name="transfer-fee-policy-new" title="Nouvelle politique de frais"
+             model="com.gateway.payment.transfer.domain.TransferFeePolicy" icon="pi pi-plus">
+  <view type="form" name="transfer-fee-policy-form"/>
+</action-view>

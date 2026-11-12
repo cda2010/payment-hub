@@ -1,0 +1,49 @@
+<div class="col-sm-12 col-lg-12 col-xs-12">
+
+    <div class="row" >
+        <div class="col-sm-6">
+            <div class="form-group" >
+                <label  class="control-label col-sm-4"
+                        for="field_libelleOrganisation">Libelle Organisation</label>
+                <div class="col-sm-8">
+                    <input autocomplete="off"  class="form-control" id="field_libelleOrganisation" name="libelleOrganisation"
+                           ng-disabled="vm.isViewing" ng-model="vm.compteDTOBeneficiaire.uniteOrganisationLibelleUniteOrganisation" required type="text" />
+                </div>
+            </div>
+
+            <div class="form-group" >
+                <label class="control-label col-sm-4"
+                       for="field_libelleTypeUO">Etiquette Compte</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input autocomplete="off" class="form-control" id="field_libelleTypeUO" name="libelleTypeUO"
+                               ng-disabled="vm.isViewing" ng-model="vm.compteDTOBeneficiaire.etiquette" popup-placement="top" show-button-bar="false"
+                               type="text"
+                        />
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="form-group" >
+                <label class="control-label col-sm-4"
+                       for="field_email">Valeur Compte</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input autocomplete="off" class="form-control" id="field_email" name="email"
+                               ng-disabled="vm.isViewing" ng-model="vm.compteDTOBeneficiaire.valeurCompte" popup-placement="top" show-button-bar="false"
+                               type="text"
+                        />
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+</div>

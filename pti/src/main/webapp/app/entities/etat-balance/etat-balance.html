@@ -1,0 +1,46 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="col-sm-8 col-xs-offset-3">
+        <form class="form-group" name="editForm" role="form" ng-submit="vm.generer()" >
+            <div class="col-sm-8">
+                <div class="modal-body">
+                    <div class="modal-header text-center"><B style="color: white">BALANCE DES COMPTES</B></div>
+                    <br>
+                    <select ng-change="vm.getEtat(vm.etatIdent)" required class="form-control" name="etat" id="etat"
+                            ng-model="vm.etatIdent"
+                            ng-options="etat.ident as etat.libelle for etat in vm.etats">
+                    </select>
+                    <br>
+                    <div ng-if="vm.etat.params.fse">
+                        <select name="type" id="field_fse"  class="form-control"
+                                ng-model="vm.etatFSE"
+                                ng-options="FSE.id as FSE.libelleUniteOrganisation for FSE in vm.FSEs"
+                        > </select>
+                    </div>
+                    <div class="form-group" >
+                        <select  id="filed_format" name="format" ng-model="vm.format" >
+                            <option value="">Format</option>
+                            <option value="PDF">PDF</option>
+                            <option value="XLSX">XLSX</option>
+                            <option value="CSV">CSV</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <div ng-if="vm.etat.params.fse===false">
+                            <button type="submit"  class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Générer</span>
+                            </button>
+                        </div>
+                        <div ng-if="vm.etat.params.fse===true">
+                            <button type="submit" ng-disabled="editForm.$invalid || vm.etatFSE===null " class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Générer</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+</div>

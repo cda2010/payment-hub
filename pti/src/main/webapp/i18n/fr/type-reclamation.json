@@ -1,0 +1,22 @@
+
+{
+    "ptiApp": {
+        "typeService" : {
+            "home": {
+                "title": "TypeReclamation",
+                "createLabel": "Créer un nouveau Type de reclamation",
+                "createOrEditLabel": "Créer ou éditer un Type de reclamation"
+            },
+            "created": "Un nouveau Type de reclamation a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Type de reclamatione avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Type de reclamation avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Type de reclamation {{ id }} ?"
+            },
+            "detail": {
+                "title": "Type de reclamation"
+            },
+            "libelleTypeReclamation": "Libelle"
+        }
+    }
+}

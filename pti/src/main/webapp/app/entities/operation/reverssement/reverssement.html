@@ -1,0 +1,104 @@
+<div class="row">
+
+    <div class="row" ng-if="vm.doFiltre">
+        <div class="form-group col-sm-3">
+            <label for="field_adresse">Adresse</label>
+            <input autocomplete="off" title="Adresse"
+                   type="text" class="form-control" name="adresse" id="field_adresse"
+                   ng-model="vm.itemSearch.adresse" />
+        </div>
+    </div>
+    <div class="row" ng-if="vm.doFiltre">
+        <div class="form-group col-sm-4">
+            <div class="col-sm-4">
+                <button class="btn btn-warnig btn-md" ng-click="vm.initFiltre()">
+                    <span class="glyphicon glyphicon-search">Annuler</span>
+                </button>
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-info btn-md " ng-click="vm.filtre()">
+                    <span class="glyphicon glyphicon-search">Filtrer</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" ng-if="vm.filtrer">
+        <div class="col-sm-3">
+            <button class="btn btn-info btn-md" ng-click="vm.filtreMachine()">
+                <span class="glyphicon glyphicon-search">Filtrer</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div>
+            <div class="well with-header" style="margin-top:10px ">
+                <div class="header bg-blue " >
+                    <div class="col-xs-8">
+                        Monitoring des transactions
+                    </div>
+                    <div class="no-padding-left col-xs-4" >
+
+                        <div class="btn-group mr15" uib-dropdown>
+                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                                éléments par page <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-hover">
+                    <thead class="bordered-blue">
+                    <tr>
+                        <th>Pass</th>
+                        <th ng-click="vm.sortBy('enabled')">
+                            <span>Activé ?</span>
+                            <span ng-if="vm.isCurrentColumn('enabled')"
+                                  ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr >
+                        <td></td>
+
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+
+                                <button   title="Cliquez pour autoriser la machine à se connecter"
+                                        type="submit"
+                                        ng-click="vm.activateItem($event)"
+                                        class="btn btn-success btn-xs btn-round">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                    <span>Autoriser</span>
+                                </button>
+
+
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="center-block text-center" ng-show="vm.canShowPagination()">
+                <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+                </uib-pagination>
+            </div>
+        </div>
+    </div>

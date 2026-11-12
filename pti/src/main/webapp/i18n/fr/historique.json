@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "historique" : {
+            "home": {
+                "title": "Historiques",
+                "createLabel": "Créer un nouveau Historique",
+                "createOrEditLabel": "Créer ou éditer un Historique"
+            },
+            "created": "Un nouveau Historique a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Historique avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Historique avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Historique {{ id }} ?"
+            },
+            "detail": {
+                "title": "Historique"
+            },
+            "fournisseurService": "Fournisseur Service",
+            "dateHistorique": "Date Historique",
+            "etiquette": "Etiquette"
+        }
+    }
+}

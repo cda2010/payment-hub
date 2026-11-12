@@ -1,0 +1,10 @@
+{
+    "ptiApp": {
+        "TypeOperateur" : {
+            "null": "",
+            "AGENCE": "AGENCE",
+            "MASTER": "MASTER",
+            "SOUS_DISTRIBUTEUR": "SOUS_DISTRIBUTEUR"
+        }
+    }
+}

@@ -1,0 +1,100 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myLotLabel">Create or edit a Lot</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.lot.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.lot.id" readonly />
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label" for="field_uniteOrganisation">Unité Organisation </label>
+
+            <select class="form-control" id="field_uniteOrganisation" name="fse" ng-model="vm.lot.organisation.id"
+                    ng-options="uo.id as uo.libelleUniteOrganisation for uo in vm.FSEs " required>
+            </select>
+        </div>
+        <br>
+        <hr>
+
+        <!-- <div class="form-group" ng-show="vm.lot.id">
+            <label class="control-label" for="field_clients">Clients</label>
+
+            <select class="form-control" multiple id="field_clients" name="clients" ng-model="vm.lot.clients"
+                ng-options="client as client.codeClient for client in vm.clients">
+            </select>
+        </div> -->
+
+        <div  class="contaner-fluid mt5" ng-show="vm.lot.id">
+
+            <div class="col-md-6" >
+                <div class="form-group label-floating" >
+                    <input class="form-control" type="text"  id="telephone"   placeholder="Saisir le numero de telephone" ng-model="vm.telephone" >
+                </div>
+            </div>
+
+            <div class="col-md-1" >
+                <div class="form-group label-floating">
+                   <button type="button" class="btn btn-raised btn-info" ng-click="vm.init()">Chercher</button>
+               </div>
+            </div>
+        </div>
+        <br>
+        <!--/filtes -->
+        <table class="table table-striped" ng-show="vm.lot.id">
+            <thead>
+            <tr>
+                <th >
+                    <label>
+                        <input type="checkbox" ng-model="IsAllChecked" ng-click="vm.selectAll()" ng-checked="vm.coche">
+                        <span class="text">Cocher Tout</span>
+                    </label>
+                </th>
+
+                <th><span>Code client</span></th>
+                <th><span>Téléphone</span></th>
+                <th><span>Nom</span></th>
+                <th><span>Prenom</span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  ng-repeat="client in vm.datas track by client.id">
+                <td>
+                    <label>
+                            <input type="checkbox" ng-checked="vm.exist(client.id)" ng-click="vm.check(client.id)" ng-model="client.Selected" class="colored-blue" ng-change="vm.cocherLaCase()">
+
+                        <span class="text"></span>
+                    </label>
+                </td>
+                <td>{{client.codeClient}}</td>
+                <td>{{client.personne.telephone}}</td>
+                <td>{{client.personne.personnePhysique.nomClient}}</td>
+                <td>{{client.personne.personnePhysique.prenomClient}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- </div> -->
+        <div class="center-block text-center" ng-show="vm.lot.id">
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage" ></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-click="callback()"></uib-pagination>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clearr()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

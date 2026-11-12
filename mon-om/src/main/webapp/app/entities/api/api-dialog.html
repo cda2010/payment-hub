@@ -1,0 +1,193 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title text-white" id="myApiLabel" ng-show="vm.api.id">
+            <i class="fa fa-edit"></i>&nbsp;&nbsp;Editer un API
+        </h4>
+        <h4 class="modal-title text-white" id="myApiLabel" ng-show="vm.api.id == undefined">
+            <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Ajouter un API
+        </h4>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group row" ng-show="vm.api.id">
+            <label class="col-sm-3 col-form-label" for="id">ID</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.api.id" readonly />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_codeApi">Code API</label>
+            <div class="col-sm-9">
+                <input ng-disabled="true" type="text" class="form-control" name="codeApi" id="field_codeApi"
+                    ng-model="vm.api.codeApi"
+                    placeholder="Code API"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_nomApi">Nom API</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="nomApi" id="field_nomApi"
+                    ng-model="vm.api.nomApi"
+                    placeholder="Entrez le nom de l'API"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_type">Type</label>
+            <div class="col-sm-9">
+                <select class="form-control" name="type" ng-model="vm.api.type" id="field_type">
+                    <option value="">Sélectionnez un type</option>
+                    <option value="WEBSERVICE">WEBSERVICE</option>
+                    <option value="REST">REST</option>
+                    <option value="RMI">RMI</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_host">Host</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="host" id="field_host"
+                    ng-model="vm.api.host"
+                    placeholder="Entrez l'hôte"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_port">Port</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="port" id="field_port"
+                    ng-model="vm.api.port"
+                    placeholder="Entrez le port"/>
+            </div>
+        </div>
+
+        <div class="form-group row" ng-show="vm.api.type==='WEBSERVICE'">
+            <label class="col-sm-3 col-form-label" for="field_endPoint">EndPoint (URL)</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="endPoint" id="field_endPoint"
+                    ng-model="vm.api.endPoint"
+                    placeholder="Entrez l'URL du endpoint"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_useSsl">Utiliser SSL</label>
+            <div class="col-sm-9">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="useSsl" id="field_useSsl"
+                        ng-model="vm.api.useSsl"/>
+                    <label class="custom-control-label" for="field_useSsl"></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_useproxy">Utiliser Proxy</label>
+            <div class="col-sm-9">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="useProxy" id="field_useproxy"
+                        ng-model="vm.api.useProxy"/>
+                    <label class="custom-control-label" for="field_useproxy"></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row" ng-show="vm.api.type==='REST'">
+            <label class="col-sm-3 col-form-label" for="field_typeAutorization">Type Autorisation</label>
+            <div class="col-sm-9">
+                <select class="form-control" name="typeAutorization" ng-model="vm.api.typeAutorization" id="field_typeAutorization">
+                    <option value="">Sélectionnez un type</option>
+                    <option value="NOAUTH">NOAUTH</option>
+                    <option value="BASIC">BASIC</option>
+                    <option value="OAUTH2">OAUTH2</option>
+                    <option value="OAUTH">OAUTH</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_fournisseurService">Fournisseur Service</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="field_fournisseurService" name="fournisseurService" 
+                    ng-model="vm.api.fournisseurService" 
+                    ng-options="fournisseurService as fournisseurService.nom for fournisseurService in vm.fournisseurservices track by fournisseurService.id">
+                    <option value="">Sélectionnez un fournisseur</option>
+                </select>
+            </div>
+        </div>
+
+        <div ng-show="vm.api.typeAutorization!=='NOAUTH' && vm.api.type==='REST'">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="field_login">Login</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="login" id="field_login"
+                        ng-model="vm.api.login"
+                        placeholder="Entrez le login"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label" for="field_password">Mot de passe</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" name="password" id="field_password"
+                        ng-model="vm.api.passWord"
+                        placeholder="Entrez le mot de passe"/>
+                </div>
+            </div>
+
+            <div ng-show="vm.api.typeAutorization==='OAUTH2'">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="field_authentificationUrl">URL Authentification</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="authentificationUrl" id="field_authentificationUrl"
+                            ng-model="vm.api.authentificationUrl"
+                            placeholder="Entrez l'URL d'authentification"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="field_clientId">Client ID</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="clientId" id="field_clientId"
+                            ng-model="vm.api.clientId"
+                            placeholder="Entrez le Client ID"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="field_clientSercret">Client Secret</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" name="clientSercret" id="field_clientSercret"
+                            ng-model="vm.api.clientSercret"
+                            placeholder="Entrez le Client Secret"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="field_grantType">Grant Type</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="grantType" id="field_grantType"
+                            ng-model="vm.api.grantType"
+                            placeholder="Entrez le Grant Type"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal" ng-click="vm.clear()">
+            <i class="fa fa-times"></i>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <i class="fa fa-save"></i>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,43 @@
+
+<div>
+    <h2><span data-translate="ptiApp.entityAuditEvent.detail.title">Entity Audit Event</span> {{vm.entityAuditEvent.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.entityAuditEvent.action">Action</span></dt>
+        <dd>
+            <span>{{vm.entityAuditEvent.action}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.entityAuditEvent.commitVersion">Commit Version</span></dt>
+        <dd>
+            <span>{{vm.entityAuditEvent.commitVersion}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.entityAuditEvent.entityId">Entity Id</span></dt>
+        <dd>
+            <span>{{vm.entityAuditEvent.entityId}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.entityAuditEvent.entityType">Entity Type</span></dt>
+        <dd>
+            <span>{{vm.entityAuditEvent.entityType}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.entityAuditEvent.entityValue">Entity Value</span></dt>
+        <dd>
+            <span>{{vm.entityAuditEvent.entityValue}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.entityAuditEvent.adresse">Adresse</span></dt>
+        <dd>
+            <span>{{vm.entityAuditEvent.adresse}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="entity-audit-event-detail.edit({id:vm.entityAuditEvent.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

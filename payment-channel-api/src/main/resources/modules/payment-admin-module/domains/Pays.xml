@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://rapidframe.com/schema/domain"
+               name="Pays"
+               class="com.gateway.payment.configuration.domain.Pays"
+               table="pays"
+               repository="none">
+
+  <string name="code" title="Code" required="true" unique="true"/>
+  <string name="nom" title="Nom" required="true" unique="true" namecolumn="true"/>
+  <string name="indicatif" title="Indicatif" required="true"/>
+  <string name="devise" title="Devise" required="true" default="XOF"/>
+  <boolean name="actif" title="Actif" default="true"/>
+  <integer name="ordre" title="Ordre" default="0"/>
+  <datetime name="createdAt" title="Créé le" readonly="true"/>
+  <datetime name="updatedAt" title="Modifié le" readonly="true"/>
+
+  <finder name="findByCode" using="code"/>
+  <finder name="findActive" using="actif" all="true" orderBy="ordre ASC"/>
+
+</domain-models>

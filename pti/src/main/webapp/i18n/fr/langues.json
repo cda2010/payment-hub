@@ -1,0 +1,11 @@
+{
+    "ptiApp": {
+        "Langues" : {
+            "null": "",
+            "FRANCAIS": "FRANCAIS",
+            "ENGLAIS": "ENGLAIS",
+            "ALLEMAND": "ALLEMAND",
+            "ESPAGNOLE": "ESPAGNOLE"
+        }
+    }
+}

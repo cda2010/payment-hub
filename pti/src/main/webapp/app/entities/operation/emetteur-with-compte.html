@@ -1,0 +1,326 @@
+<div class="col-sm-12 col-lg-12 col-xs-12">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group ">
+                <label mf-required class="control-label col-sm-4" for="field_telephone">Telephone de
+                    souscription</label>
+                <div class="col-sm-2">
+                    <select ng-disabled="vm.isViewing || !vm.search" class="form-control input-xs"
+                        id="field_nationalite" name="nationalite" ng-model="vm.personneE.codePaysTelephone"
+                        ng-options="nationalite.code as nationalite.libelle for nationalite in vm.nationalites">
+                        <option value="">Code</option>
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <span class="input-icon icon-right">
+                        <input autocomplete="off" required ng-disabled="vm.isViewing || !vm.search" type="text"
+                            class="form-control" name="telephone" id="field_telephone"
+                            ng-model="vm.personneE.telephone" />
+                        <!-- <span class="fa fa-eye validity"></span> -->
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" ng-if="!vm.isViewing">
+                <label class="col-sm-4 control-label" mf-required for="field_fournisseur">Teneur compte à
+                    débiter</label>
+                <div class="col-sm-6">
+                    <select disabled class="form-control input-xs" required id="field_fournisseur" name="fournisseur"
+                        ng-model="vm.fseSrc"
+                        ng-options="fse.id as fse.libelleUniteOrganisation for fse in vm.organisationFSE">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="vm.isViewing">
+                <label class="col-sm-4 control-label" for="field_fournisseur">Teneur compte à débiter</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" disabled type="text" class="form-control input-xs" name="fournisseur"
+                        id="field_fournisseur" ng-model="vm.operation.fseSrc.libelleUniteOrganisation" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_type">Type compte</label>
+                <div class="col-xs-6 col-sm-6 col-lg-6">
+                    <select ng-disabled="vm.isViewing || !vm.search" class="form-control input-xs" id="field_type"
+                        name="fse" ng-model="vm.estCompteBanque">
+                        <option value="OUI">Compte Banque</option>
+                        <option value="NON">Compte Virtuel</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="vm.estCompteBanque=='OUI'">
+                <label class="control-label col-sm-4" mf-required data-translate="ptiApp.compteBanque.codeAgence"
+                    for="field_codeAgence">Code Agence</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" type="text" class="form-control" ng-disabled="vm.isViewing || !vm.search"
+                        name="codeAgence" id="field_codeAgence" ng-model="vm.compteBanqueE.codeAgence" required />
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="vm.estCompteBanque=='OUI'">
+                <label class="control-label col-sm-4" mf-required for="field_numeroCmpt">N compte</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off" type="text" class="form-control" ng-disabled="vm.isViewing || !vm.search"
+                        name="numeroCmpt" id="field_numeroCmpt" ng-model="vm.compteE" required />
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="vm.estCompteBanque=='OUI'">
+                <label ng-if="!vm.isViewing" mf-required class="control-label col-sm-4"
+                    for="field_codeClient">Rib</label>
+                <div class="col-sm-6">
+                    <div class="col-sm-9" ng-if="!vm.isViewing">
+                        <input autocomplete="off" required ng-disabled="vm.isViewing || !vm.search" type="text"
+                            class="form-control" name="rib" id="field_rib" ng-model="vm.compteBanqueE.rib" />
+                    </div>
+                    <div ng-if="!vm.isViewing" class="col-sm-2">
+                        <button
+                            ng-disabled="vm.compteBanqueE.rib==null || vm.personneE.telephone==null || vm.compteE==null || vm.compteBanqueE.codeAgence==null"
+                            ng-if="vm.search" type="button" class="btn btn-info btn-xs "
+                            ng-click="vm.getInfosClientSouscrit('E',vm.personneE.telephone,vm.compteE,vm.typeService,vm.compteBanqueE.codeAgence,vm.compteBanqueE.rib,vm.fseSrc,vm.personneE.codePaysTelephone)">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+
+                        <button ng-if="!vm.search" type="button" class="btn btn-info btn-xs " ng-click="vm.search=true">
+                            <span class="glyphicon glyphicon-ban-circle"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="vm.estCompteBanque=='NON'">
+                <div class="form-group">
+                    <label mf-required class="control-label col-sm-4" for="field_valeurCompte">Refererence</label>
+                    <div class="col-sm-6">
+                        <div class="col-sm-9">
+                            <input autocomplete="off" required ng-disabled="vm.isViewing" type="text"
+                                class="form-control" name="valeurCompte" id="field_valeurCompte"
+                                ng-model="vm.refCompte" />
+                        </div>
+                        <div ng-if="!vm.isViewing" class="col-sm-2">
+                            <button ng-if="vm.search" ng-disabled=" vm.personneE.telephone==null || vm.refCompte==null "
+                                type="button" class="btn btn-info btn-xs "
+                                ng-click="vm.getInfosClientSouscrit('E',vm.personneE.telephone,vm.refCompte,vm.typeService,null,null,vm.fseSrc,vm.personneE.codePaysTelephone)">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                            <button ng-if="!vm.search" type="button" class="btn btn-info btn-xs "
+                                ng-click="vm.search=true">
+                                <span class="glyphicon glyphicon-ban-circle"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-6">
+            <div class="form-group ">
+                <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4"
+                    data-translate="ptiApp.personne.typePersonne" for="field_typePersonne">Type Personne</label>
+                <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                    <select ng-disabled="vm.isViewing" class="form-control" name="typePersonne"
+                        ng-model="vm.personneE.typePersonne" id="field_typePersonne">
+                        <option value="PHYSIQUE" data-translate="ptiApp.TypePersonne.PHYSIQUE">PHYSIQUE</option>
+                        <option value="MORALE" data-translate="ptiApp.TypePersonne.MORALE">MORALE</option>
+                    </select>
+                </div>
+            </div>
+
+            <div ng-if="vm.personneE.typePersonne=='PHYSIQUE' ">
+                <div class="form-group ">
+                    <label mf-required class="col-sm-4 control-label" for="field_nomClient">Nom</label>
+                    <div class="col-xs-6 col-sm-6 col-lg-6">
+                        <input autocomplete="off" required ng-disabled="true" type="text" class="form-control input-xs"
+                            name="nomClient" id="field_nomClient" ng-model="vm.personnePhysiqueE.nomClient" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label mf-required class="col-sm-4 control-label" for="field_nomClient">Prénom</label>
+                    <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                        <input autocomplete="off" required ng-disabled="true" type="text" class="form-control input-xs"
+                            name="nomClient" id="field_prenomClient" ng-model="vm.personnePhysiqueE.prenomClient" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class=" col-sm-4 control-label" data-translate="ptiApp.personnePhysique.dateNaissance"
+                        for="field_dateNaissance">Date Naissance</label>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input autocomplete="off" ng-disabled="true" show-button-bar="false" popup-placement="top"
+                                id="field_dateNaissance" show-button-bar="false" type="text"
+                                class="form-control input-xs" name="dateNaissance" uib-datepicker-popup="dd/MM/yyyy"
+                                ng-model="vm.personnePhysiqueE.dateNaissance"
+                                is-open="vm.datePickerOpenStatus.dateNaissance" uib-datepicker-popup="dd/MM/yyyy" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default btn-xs"
+                                    ng-click="vm.openCalendar('dateNaissance')"><i
+                                        class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" data-translate="ptiApp.personnePhysique.lieuNaissance"
+                        for="field_lieuNaissance">Lieu Naissance</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off" ng-disabled="true" type="text" class="form-control input-xs"
+                            name="lieuNaissance" id="field_lieuNaissance"
+                            ng-model="vm.personnePhysiqueE.lieuNaissance" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class=" col-sm-4 control-label" data-translate="ptiApp.personnePhysique.sexe"
+                        for="field_sexe">Sexe</label>
+                    <div class="col-xs-6 col-sm-6 col-lg-6">
+                        <select ng-disabled="true" class="form-control input-xs" name="sexe"
+                            ng-model="vm.personnePhysiqueE.sexe" id="field_sexe">
+                            <option value="MASCULIN" data-translate="ptiApp.Sexe.MASCULIN">MASCULIN</option>
+                            <option value="FEMININ" data-translate="ptiApp.Sexe.FEMININ">FEMININ</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="vm.personneE.typePersonne=='MORALE' ">
+
+                <div class="form-group ">
+                    <label class="control-label col-sm-4 col-xs-4 col-lg-4 "
+                        data-translate="ptiApp.personneMorale.raisonSociale " for="field_raisonSociale ">Raison
+                        Sociale</label>
+                    <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                        <input autocomplete="off" ng-disabled="true" type="text " class="form-control "
+                            name="raisonSociale " id="field_raisonSociale " ng-model="vm.personneMoraleB.raisonSociale "
+                            required />
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <label class="control-label col-sm-4 col-xs-4 col-lg-4 "
+                        data-translate="ptiApp.personneMorale.registreCommerce " for="field_registreCommerce ">Registre
+                        Commerce</label>
+                    <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                        <input autocomplete="off" ng-disabled="true" type="text " class="form-control "
+                            name="registreCommerce " id="field_registreCommerce "
+                            ng-model="vm.personneMoraleB.registreCommerce " />
+                    </div>
+
+                </div>
+
+                <div class="form-group ">
+                    <label class="control-label col-sm-4 col-xs-4 col-lg-4 "
+                        data-translate="ptiApp.personneMorale.numreoIfu " for="field_numreoIfu ">Numreo Ifu</label>
+                    <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                        <input autocomplete="off" ng-disabled="vm.estCompteBanque=='OUI' " type="text "
+                            class="form-control " name="numreoIfu " id="field_numreoIfu "
+                            ng-model="vm.personneMoraleB.numreoIfu " />
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <fieldset class="mf-fieldset" ng-disabled="vm.search && vm.verifDate(vm.pieceE.dateExpiration)">
+            <legend>Document d'identification</legend>
+            <div class="form-group col-sm-6">
+                <label mf-required class="control-label col-sm-4" data-translate="ptiApp.piece.typePiece"
+                    for="field_typePiece">Type Piece</label>
+                <div class="col-sm-8">
+                    <select required ng-disabled="vm.isViewing" class="form-control" id="field_typePiece"
+                        name="typePiece" ng-model="vm.pieceE.typePieceId"
+                        ng-options="typePiece.id as typePiece.libelleTypePiece for typePiece in vm.typepieces">
+                        <option value="">Choisir</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-6">
+                <label mf-required class="control-label col-sm-4" data-translate="ptiApp.piece.referencePiece"
+                    for="field_referencePiece">Reference Piece</label>
+                <div class="col-sm-8">
+                    <input autocomplete="off" ng-disabled="vm.isViewing" type="text" class="form-control"
+                        name="referencePiece" id="field_referencePiece" ng-model="vm.pieceE.referencePiece" required />
+                </div>
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="control-label col-sm-4" data-translate="ptiApp.piece.dateDelivrance"
+                    for="field_dateDelivrance">Date Delivrance</label>
+                <div class="col-sm-8">
+
+                    <div class="input-group">
+                        <input autocomplete="off" ng-disabled="vm.isViewing" show-button-bar="false"
+                            popup-placement="top" id="field_dateDelivrance" type="text" class="form-control"
+                            name="dateDelivranceE" uib-datepicker-popup="dd/MM/yyyy" ng-model="vm.pieceE.dateDelivrance"
+                            is-open="vm.datePickerOpenStatus.dateDelivranceE" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default btn-xs"
+                                ng-click="vm.openCalendar('dateDelivranceE')"><i
+                                    class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-sm-6">
+                <label mf-required class="control-label col-sm-4" data-translate="ptiApp.piece.dateExpiration"
+                    for="field_dateExpiration">Date Expiration</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input autocomplete="off" required ng-disabled="vm.isViewing" id="field_dateExpiration"
+                            show-button-bar="false" popup-placement="top" 
+                            type="text" class="form-control" name="dateExpirationE" uib-datepicker-popup="dd/MM/yyyy"
+                            ng-model="vm.pieceE.dateExpiration" is-open="vm.datePickerOpenStatus.dateExpirationE" />
+                            <span ng-if="vm.verifDate(vm.pieceE.dateExpiration)" class="label label-danger">Le document
+                                    d'identification a expiré!</span>
+                            <span class="input-group-btn">
+                            <button type="button" class="btn btn-default btn-xs"
+                                ng-click="vm.openCalendar('dateExpirationE')"><i
+                                    class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-sm-6">
+                <label mf-required class="control-label col-sm-4" data-translate="ptiApp.piece.lieuDelivrance"
+                    for="field_lieuDelivrance">Lieu Delivrance</label>
+                <div class="col-sm-8">
+                    <input autocomplete="off" required ng-disabled="vm.isViewing" type="text" class="form-control"
+                        name="lieuDelivrance" id="field_lieuDelivrance" ng-model="vm.pieceE.lieuDelivrance" />
+                </div>
+            </div>
+        </fieldset>
+
+    </div>
+
+    <!-- <div class="row" ng-if="vm.personneB.typePersonne=='PHYSIQUE' ">
+        <fieldset class="mf-fieldset">
+            <legend>Photo</legend>
+            <div class="form-group mb5" ngf-drop ngf-change="vm.setAutotification($file, vm.personnePhysiqueE)"
+                ngf-pattern="'image/*'">
+                <div class="col-sm-6 col-sm-offset-2">
+                    <img class="col-sm-10"
+                        data-ng-src="{{'data:' + vm.personnePhysiqueE.photoContentType + ';base64,' + vm.personnePhysiqueE.photo}}"
+                        style="max-height: 200px; max-width: 200px;" ng-if="vm.personnePhysiqueE.photo"
+                        alt="Photo du client..." />
+                    <div ng-if="vm.personnePhysiqueE.photo" class="help-block clearfix text-center" class="col-sm-2">
+
+                    </div>
+
+                </div>
+                <input autocomplete="off" type="hidden" class="form-control" name="photo" id="field_photo"
+                    ng-model="vm.personnePhysiqueE.photo" />
+                <input autocomplete="off" type="hidden" class="form-control" name="photoContentType"
+                    id="field_photoContentType" ng-model="vm.personnePhysiqueE.photoContentType" />
+            </div>
+        </fieldset>
+    </div> -->
+</div>

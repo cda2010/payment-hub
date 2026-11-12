@@ -1,0 +1,28 @@
+
+{
+    "ptiApp": {
+        "compte" : {
+            "home": {
+                "title": "Comptes",
+                "createLabel": "Créer un nouveau Compte",
+                "createOrEditLabel": "Créer ou éditer un Compte"
+            },
+            "created": "Un nouveau Compte a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Compte avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Compte avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Compte {{ id }} ?"
+            },
+            "detail": {
+                "title": "Compte"
+            },
+            "etiquette": "Etiquette",
+            "valeurCompte": "Valeur Compte",
+              "libelleCompte": "Libellé Compte",
+            "categorieCompte": "Categorie Compte",
+            "transactionComptePti": "Transaction Compte Pti",
+            "operationSrc": "Operation Src",
+            "operationDest": "Operation Dest"
+        }
+    }
+}

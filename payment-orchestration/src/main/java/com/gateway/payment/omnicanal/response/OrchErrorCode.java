@@ -1,0 +1,15 @@
+package com.gateway.payment.omnicanal.response;
+
+public enum OrchErrorCode {
+    ORCH_OK,
+    ORCH_VALIDATION,
+    ORCH_NO_SCHEMA,
+    ORCH_STEP_FAILED,
+    ORCH_TIMEOUT,
+    ORCH_COMPENSATED,
+    ORCH_COMPENSATION_FAILED,
+    ORCH_ENGINE_UNAVAILABLE,
+    ORCH_IDEMPOTENT_REPLAY,
+    ORCH_IN_FLIGHT,
+    ORCH_INTERNAL
+}

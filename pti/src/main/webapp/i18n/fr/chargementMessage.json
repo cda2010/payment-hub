@@ -1,0 +1,22 @@
+{
+    "ptiApp": {
+        "chargementMessage" : {
+            "home": {
+                "title": "ChargementMessages",
+                "createLabel": "Créer un nouveau Chargement Message",
+                "createOrEditLabel": "Créer ou éditer un Chargement Message"
+            },
+            "created": "Un nouveau Chargement Message a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Chargement Message avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Chargement Message avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Chargement Message {{ id }} ?"
+            },
+            "detail": {
+                "title": "Chargement Message"
+            },
+            "nom_fichier": "Nom Fichier",
+            "date_chargement": "Date Chargement"
+        }
+    }
+}

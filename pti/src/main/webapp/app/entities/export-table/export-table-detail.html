@@ -1,0 +1,118 @@
+<div class="container-fluid">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <span class="widget-caption">
+                <h4 class="modal-title text-center" id="myExportTableLabel"></strong>
+                    Détails
+                </h4>
+            </span>
+    </div>
+    <div class="modal-body">
+        <form class="bg-white">
+
+            <div class="col-sm-4 form-group">
+                <label class="control-label" for="field_titre">Titre</label>
+                <input class="form-control" name="titre" ng-model="vm.exportTable.libelle" id="field_libelle" disabled/>
+            </div>
+
+            <div  class="col-sm-4 form-group">
+                <label class="control-label" for="field_description">Description</label>
+                <input type="text" class="form-control" name="description" id="field_description"
+                       ng-model="vm.exportTable.description" disabled
+                />
+            </div>
+            <div class="col-sm-4 form-group">
+                <label class="control-label" for="field_nomFichier">Nom fichier</label>
+                <input type="text" class="form-control" name="nomFichier" id="field_nomFichier"
+                       ng-model="vm.exportTable.nomFichier" disabled
+                />
+            </div>
+            <div class="col-sm-4 form-group">
+                <label class="control-label" for="field_outputFilename">Fichier de sortie</label>
+                <input type="text" class="form-control" name="outputFilename" id="field_outputFilename"
+                       ng-model="vm.exportTable.outputFilename" disabled
+                />
+            </div>
+                       
+        </form>
+
+<div class="col-sm-12 row">
+    <div class="widget">
+        <div class="widget-body row">
+
+            <div class="widget-main ">
+
+                <div class="tabbable">
+
+                        <ul class="nav nav-tabs nav-justified" id="myTab9">
+                            <li class="tab-blue active" >
+                                <a data-toggle="tab" href="#" target="_self" aria-expanded="true">
+                                    <h4>Parametres</h4>
+                                </a>
+                            </li>
+                        </ul>
+
+                    <div class="tab-content">
+                        <div id="param" class="tab-pane active row">
+                            <div class="col-sm-12" style="overflow: scroll; max-height: 500px">
+                                <div class="well with-header" style="margin-top:10px">
+                                    <div class="header bg-blue ">
+                                        <div class="col-xs-11">
+                                            <h4 >Liste des paramètres</h4>
+                                        </div>
+                                        <div class="no-padding-left col-xs-1">
+                                            <button ng-click="vm.addParam()" class="btn btn-default  btn-circle btn-xs">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <table class="jh-table table table-striped mt10">
+                                        <thead>
+                                        <tr>
+                                            <th><span>Clé</span></th>
+                                            <th><span>Type</span></th>
+                                            <th><span>Table de référence</span></th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="d in vm.prametreExport track by d.id">
+                                            <td>{{d.nomParametre}}</td>
+                                            <td>{{d.typeChamps}}</td>
+                                            <td>{{d.tableRef}}</td>
+                                            <td>
+                                            <td class="text-right">
+                                                <button
+                                                        ng-click="vm.editParam(d.id)"
+                                                        class="btn btn-warning btn-xs">
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </button>
+                                                <button 
+                                                        ng-click="vm.deleteParam(d.id)"
+                                                        class="btn btn-danger btn-xs">
+                                                    <span class="glyphicon glyphicon-remove-circle"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>   
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="modal-footer">
+    <div class="col-sm-12">
+        <button type="button" class="btn btn-default"  ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Fermer</span>
+        </button>
+    </div>
+</div>
+</div>

@@ -1,0 +1,74 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title text-white" id="myServiceTraitementLabel" ng-show="vm.serviceTraitement.id">
+            <i class="fa fa-edit"></i> Editer un service de traitement
+        </h4>
+        <h4 class="modal-title text-white" id="myServiceTraitementLabel" ng-show="vm.serviceTraitement.id == undefined">
+            <i class="fa fa-plus-circle"></i> Ajouter un service de traitement
+        </h4>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group row" ng-show="vm.serviceTraitement.id">
+            <label class="col-sm-3 col-form-label" for="id">ID</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.serviceTraitement.id" readonly />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_codeService">Code Service</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="codeService" id="field_codeService"
+                    ng-model="vm.serviceTraitement.codeService"
+                    placeholder="Entrez le code service"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_nomService">Nom Service</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="nomService" id="field_nomService"
+                    ng-model="vm.serviceTraitement.nomService"
+                    placeholder="Entrez le nom service"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_fournisseurService">Fournisseur Service</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="field_fournisseurService" name="fournisseurService" 
+                    ng-model="vm.serviceTraitement.fournisseurService" 
+                    ng-options="fournisseurService as fournisseurService.nom for fournisseurService in vm.fournisseurservices track by fournisseurService.id">
+                    <option value="">Sélectionnez un fournisseur</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_typeService">Type Service</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="field_typeService" name="typeService" 
+                    ng-model="vm.serviceTraitement.typeService" 
+                    ng-options="typeService as typeService.libelleTypeService for typeService in vm.typeServices track by typeService.id">
+                    <option value="">Sélectionnez un type</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal" ng-click="vm.clear()">
+            <i class="fa fa-times"></i>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <i class="fa fa-save"></i>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+
+</form>

@@ -1,0 +1,21 @@
+# Profil local : base dédiée du docker-compose (service identity-postgres, port 5436).
+# Démarrer l'infra : docker compose up -d identity-postgres
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5436/payment_identity
+    username: identity
+    password: identity
+
+enrollment:
+  expose-code: true
+
+inbox:
+  kafka:
+    enabled: true
+    consumer-enabled: true
+    bootstrap-servers: localhost:9092
+    topic: party.actions
+
+logging:
+  level:
+    com.gateway.payment.identity: DEBUG

@@ -1,0 +1,11 @@
+{
+    "ptiApp": {
+        "StatutLigneChargement" : {
+            "null": "",
+            "NC": "NC",
+            "IC": "IC",
+            "OC": "OC",
+            "IV": "IV"
+        }
+    }
+}

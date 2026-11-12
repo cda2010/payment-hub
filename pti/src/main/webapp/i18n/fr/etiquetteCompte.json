@@ -1,0 +1,25 @@
+
+{
+    "ptiApp": {
+        "etiquetteCompte" : {
+            "home": {
+                "title": "EtiquetteComptes",
+                "createLabel": "Créer un nouveau Etiquette Compte",
+                "createOrEditLabel": "Créer ou éditer un Etiquette Compte"
+            },
+            "created": "Un nouveau Etiquette Compte a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Etiquette Compte avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Etiquette Compte avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Etiquette Compte {{ id }} ?"
+            },
+            "detail": {
+                "title": "Etiquette Compte"
+            },
+            "code": "Code",
+             "libelle": "Libellé",
+              "niveau": "Niveau",
+            "obligatoire": "Obligatoire"
+        }
+    }
+}

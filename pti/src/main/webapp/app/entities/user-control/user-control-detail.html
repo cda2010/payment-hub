@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span data-translate="ptiApp.userControl.detail.title">User Control</span> {{vm.userControl.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.userControl.action">Action</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.TypeControl.' + vm.userControl.action}}">{{vm.userControl.action}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.userControl.codePays">Code Pays</span></dt>
+        <dd>
+            <span>{{vm.userControl.codePays}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.userControl.login">Login</span></dt>
+        <dd>
+            <span>{{vm.userControl.login}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.userControl.password">Password</span></dt>
+        <dd>
+            <span>{{vm.userControl.password}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.userControl.typeActeur">Type Acteur</span></dt>
+        <dd>
+            <span>{{vm.userControl.typeActeur}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="user-control-detail.edit({id:vm.userControl.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

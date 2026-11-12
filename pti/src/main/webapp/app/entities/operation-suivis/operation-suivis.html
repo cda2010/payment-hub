@@ -1,0 +1,183 @@
+<div class="well with-header" style="margin-top:10px ">
+<!--    <h2 data-translate="ptiApp.operationSuivis.home.title">Operation Suivis</h2>-->
+<!--    <jhi-alert></jhi-alert>-->
+<!--    <div class="container-fluid">-->
+<!--        <div class="row">-->
+<!--            <div class="col-xs-4 no-padding-left">-->
+<!--                <button class="btn btn-primary" ui-sref="operation-suivis.new" >-->
+<!--                    <span class="glyphicon glyphicon-plus"></span>-->
+<!--                    <span  data-translate="ptiApp.operationSuivis.home.createLabel">-->
+<!--                        Create new Operation Suivis-->
+<!--                    </span>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="header bg-blue">
+        <div class="col-xs-12">
+        <h4 class="text-center">Rechercher les opérations du client</h4>
+        </div>
+    </div>
+    <button ng-if="!vm.afficheFiltreO" class="btn btn-primary mt5" ng-click="vm.afficherFiltreO()">
+        <span class="glyphicon glyphicon-search" > Filtrer</span>
+    </button>
+        <div class="row mt5" ng-if="vm.afficheFiltreO">
+            <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="control-label" for="national_id">Code indicatif </label>
+                    <select class="form-control" name="national_id" id="national_id" ng-model="vm.itemSearch.national_id"
+                            ng-options="nationalite.code as nationalite.libelle for nationalite in vm.nationalites"  >
+                        <option value=""> </option>
+                    </select>
+                </div>
+            </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="tel">Téléphone</label>
+                        <input class="form-control" name="tel" id="tel" ng-model="vm.itemSearch.tel">
+                    </div>
+                </div>
+            </div>
+<!--            <div class="col-sm-4">-->
+<!--                <div class="form-group">-->
+<!--                    <label class="control-label" for="prenomCli">Prenom</label>-->
+<!--                    <input class="form-control" name="prenomCli" id="prenomCli" ng-model="vm.itemSearch.prenomCli">-->
+<!--                </div>-->
+<!--            </div>-->
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="nomCli">Nom</label>
+                            <input class="form-control" name="nomCli" id="nomCli" ng-model="vm.itemSearch.nomCli">
+                        </div>
+                    </div>
+                    <br>
+<!--                    <div class="col-sm-4" ng-if="vm.ctrlData1">
+                        <div class="form-group">
+                            <label class="control-label" for="field_client">Client</label>
+                            <select class="form-control" name="field_client" id="field_client" ng-model="vm.operationSuivis.clientId">
+                                <option ng-repeat="client in vm.clients" value="{{client.id}}">{{client.personne.personnePhysique.nomClient }}  {{client.personne.personnePhysique.prenomClient }} </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" ng-if="vm.ctrlData2">
+                        <div class="form-group">
+                            <label class="control-label" for="field_client" >Client</label>
+                            <input class="form-control" name="field_client" id="field_client" ng-model="vm.operationSuivis.clientIdent" readonly/>
+                        </div>
+                    </div>-->
+                    <div class="form-group" >
+                        <div class="col-sm-3">
+                            <select disabled  required class="form-control" id="field_cli"  name="clientB" ng-model="vm.clientIds"
+                                    ng-options="client.id as client.title  for client in vm.clientP">
+                            </select>
+                        </div>
+                        <i  title="Sélectionnez les organisations" class="btn btn-primary btn-xs"
+                            j-select-dialog
+                            j-multiple="false"
+                            j-model="vm.clientIds"
+                            j-list="vm.clientPList"
+                            j-columns='vm.clientColums'
+                            j-event-name="onLoadRoles"
+                        >Choisir...</i>
+                    </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-12" >
+                    <div class="col-sm-2" >
+                    <button ng-if="vm.afficheFiltreO" class="btn btn-danger mt5" ng-click="vm.afficherFiltreO()">
+                        <span class="glyphicon glyphicon-remove"> Annuler</span>
+                    </button>
+                    </div>
+                    <div class="col-sm-2" >
+                    <button class="btn btn-primary mt5" ng-if="vm.ctrlData3"  ng-click="vm.chercherO()">
+                        <span class="glyphicon glyphicon-search" > Chercher</span>
+                    </button>
+                    </div>
+                    <div class="col-sm-2" >
+                    <button class="btn btn-success mt5" ng-if="vm.ctrlData1==true || vm.ctrlData2==true" ng-click="vm.afficher()">
+                        <span class="glyphicon glyphicon-refresh" > Afficher</span>
+                    </button>
+                    </div>
+                    <div class="col-sm-3" >
+                        <select class=" col-sm-5" id="filed_format" name="format" ng-model="vm.format" >
+                            <option value="">Format</option>
+                            <option value="PDF">PDF</option>
+                            <option value="XLSX">XLSX</option>
+                            <option value="CSV">CSV</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2" >
+                    <button class="btn btn-primary mt5" ng-if="vm.ctrlData1==true || vm.ctrlData2==true" ng-click="vm.generateListe()">
+                        <span class="glyphicon glyphicon-refresh" > Exporter</span>
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <br/>
+    <hr  style="border: 1px solid mediumblue;">
+    <div class="table-responsive" ng-if="vm.tableau" >
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+<!--                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+<!--                    <th jh-sort-by="clientId"><span data-translate="ptiApp.operationSuivis.client">Client</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <th><span>Nom Client</span></th>
+                    <th><span>Prenom Client</span></th>
+                    <th><span>Type de service</span></th>
+                    <th><span>Statut</span></th>
+                     <th><span>Montant de l'opération</span></th>
+                    <th><span>Montant Frais</span></th>
+                    <th><span>Montant Taxe</span></th>
+                    <th><span>Date de l'opération</span></th>
+                    <th><span>Motif</span></th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="operationSuivis in vm.newOperationSuivis track by operationSuivis.id">
+<!--                    <td>{{operationSuivis.id}}</td>-->
+<!--                    <td>-->
+<!--                        {{operationSuivis.client.id}}-->
+<!--                    </td>-->
+                    <td>{{operationSuivis.client.personne.personnePhysique.nomClient}}</td>
+                    <td>{{operationSuivis.client.personne.personnePhysique.prenomClient}}</td>
+                    <td>{{operationSuivis.operation.typeService.code}}</td>
+                    <td>{{operationSuivis.operation.statut}}</td>
+                    <td>{{operationSuivis.operation.pieceBeneficiaire.referencePiece}} Date deliv.:{{operationSuivis.operation.pieceBeneficiaire.dateDelivrance}} Expire le. {{operationSuivis.operation.pieceBeneficiaire.dateExpiration}}</td>
+                    <td>{{operationSuivis.operation.montantOp | currency:""}}</td>
+                    <td ng-if="operationSuivis.operation.montantFrais!=null">{{operationSuivis.operation.montantFrais | currency :"" }}</td>
+                    <td ng-if="operationSuivis.operation.montantFrais==null">{{0 | currency :"" }}</td>
+                    <td ng-if="operationSuivis.operation.montantTaxe==null">{{0 | currency :"" }}</td>
+                    <td ng-if="operationSuivis.operation.montantTaxe!=null">{{operationSuivis.operation.montantTaxe | currency :"" }}</td>
+                    <td>{{operationSuivis.operation.dateOperation | date:'medium'}}</td>
+                    <td>{{operationSuivis.operation.motif}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+<!--                            <button type="submit"-->
+<!--                                    ui-sref="operation-suivis-detail({id:operationSuivis.id})"-->
+<!--                                    class="btn btn-info btn-sm">-->
+<!--                                <span class="glyphicon glyphicon-eye-open"></span>-->
+<!--                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>-->
+<!--                            </button>-->
+<!--                            <button type="submit"-->
+<!--                                    ui-sref="operation-suivis.edit({id:operationSuivis.id})"-->
+<!--                                    class="btn btn-primary btn-sm">-->
+<!--                                <span class="glyphicon glyphicon-pencil"></span>-->
+<!--                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>-->
+<!--                            </button>-->
+                           
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center" ng-show="vm.totalItems>vm.queryCount"  >
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ></uib-pagination>
+    </div>
+</div>

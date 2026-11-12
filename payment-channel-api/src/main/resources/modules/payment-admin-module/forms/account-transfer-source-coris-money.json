@@ -1,0 +1,54 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "hidden",
+        "key": "sourceRail",
+        "defaultValue": "CORIS_MONEY",
+        "input": true
+      },
+      {
+        "type": "textfield",
+        "key": "sourceAccount",
+        "label": "N° compte wallet Coris Money (émetteur)",
+        "placeholder": "0011000003090",
+        "input": true,
+        "validate": {
+          "required": true,
+          "pattern": "^[0-9]{10,14}$",
+          "customMessage": "Compte wallet Coris Money (ex. 0011000003090)"
+        }
+      },
+      {
+        "type": "phoneNumber",
+        "key": "msisdn",
+        "label": "Mobile émetteur",
+        "placeholder": "22670582844",
+        "input": true,
+        "validate": {
+          "required": true,
+          "pattern": "^226\\d{8}$",
+          "customMessage": "Format 226 + 8 chiffres"
+        }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "N° compte wallet Coris Money (émetteur)": "N° compte wallet Coris Money (émetteur)",
+      "Mobile émetteur": "Mobile émetteur"
+    },
+    "en": {
+      "N° compte wallet Coris Money (émetteur)": "Coris Money wallet account (sender)",
+      "Mobile émetteur": "Sender mobile"
+    }
+  }
+}

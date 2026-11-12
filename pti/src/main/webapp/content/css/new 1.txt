@@ -1,0 +1,17 @@
+--Au niveau des utilisateurs de supernet le probleme se pose sur les profiles.
+  --creer un profile et lui ratacher des roles.
+  --creer des  sous roles pour avoir mois de possibilite d'acces.
+  --creer un profile qui est ratacher a plusieurs roles.Ainsi si on veut modifier un role au lieu de parcourir chak utilisateur,on modifie le profile en mm temps.
+  --utilisateurs--->profile---->Roles
+  --Un administrateur general pour creer les profiles peres dans les organisation et choisi la liste des roles de chak profile peres.
+  --les profiles regroupe les roles pour definir les taches d'une organisation.
+  --Creer un administrateur et lui deleguer les roles.
+  --Ajouter un role grant,qui correspond a la transmission de tous ces roles.
+  --transmission de role.
+  --controle de l'unicite du code du fournisseur.
+  --l'ecran de frontiere ajouter Mail,telephone.La nature du contact????
+  --changer le menu motif par motif rebus
+  --tt ce qui est contact il faut reorganiser comme sur microfin.
+  --definir les agences d'un concessionnaire;cela va intervenir dans l'ecran de creation des utilisateurs;
+  --selectonnenr les roles si le concessionnaire 
+  

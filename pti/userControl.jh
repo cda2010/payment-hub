@@ -1,0 +1,16 @@
+enum TypeControl{
+DESABLE,RESET_PASSWORD
+}
+entity UserControl{
+    action TypeControl,
+	codePays String,
+    login String,
+    password String,
+    typeActeur String,
+}
+
+paginate all with pagination
+
+dto * with mapstruct
+
+service all with serviceClass

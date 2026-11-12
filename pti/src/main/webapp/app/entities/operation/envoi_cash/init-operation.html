@@ -1,0 +1,435 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation class="form-horizontal well">
+    <div class="modal-header">
+        <h4 class="modal-title" id="labelEnvoiCash" ng-if="vm.operation.code=='ENVOI_CASH' && vm.isViewing">Envoi de
+            cash</h4>
+        <h4 class="modal-title" id="labelRetrait" ng-if="vm.operation.code=='RETRAIT'&& vm.isViewing">Retrait d'argent
+        </h4>
+        <h4 class="modal-title" id="labelEnvoiCashE" ng-if="vm.operation.id==null">Envoi de cash</h4>
+        <h4 class="modal-title" id="labelOpExpire" ng-if="vm.isExpired">Traitement operation expirée</h4>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div id="simplewizard" class="wizard" data-target="#simplewizard-steps">
+                    <ul class="steps">
+                        <li data-target="#simplewizardstep1" ng-repeat="step in vm.steps"
+                            ng-class="{active: $index==vm.getCurrentStepIndex()}">
+                            <span class="step">{{$index+1}}</span>{{step}}<span class="chevron"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="step-content" id="simplewizard-steps">
+                    <div ng-if="vm.showOnglet('Information')" class="step-pane active"
+                        ng-class="{active: $index==vm.getCurrentStepIndex()}" id="simplewizardstep1">
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                    for="field_paysDest">Pays destination</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <select required ng-disabled="vm.isViewing || vm.isFraisDispo"
+                                        class="form-control input-xs" id="field_paysDest" name="pays"
+                                        ng-model="vm.operation.uoAcquereurId"
+                                        ng-options="pays.id as pays.libelleUniteOrganisation for pays in vm.pays">
+                                        <option value="">Choisir</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-if="vm.typeService=='ENVOI_CASH'">
+                                <label ng-if="vm.isViewing" mf-required class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                    for="field_paysDest">Lieu paiement</label>
+                                <div class="input-group col-sm-offset-4 col-xs-5 col-sm-5 col-lg-5">
+                                    <input autocomplete="off" ng-model="vm.organisation.libelleUniteOrganisation"
+                                        class="form-control input-xs" type="text" placeholder="Lieu de paiement"
+                                        disabled />
+                                    <div ng-if="!vm.isViewing && !vm.isFraisDispo" class="input-group-btn">
+                                        <button ng-disabled="vm.operation.uoAcquereurId==null" type="button"
+                                            class="btn btn-xs btn-primary" ng-click="vm.choisirUo()">
+                                            <span class="glyphicon glyphicon-pencil">Choisir</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                    data-translate="ptiApp.operation.montantOp" for="field_montantOp">Montant</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input type="text" autocomplete="off" required ng-disabled="vm.isViewing || vm.isFraisDispo"
+                                        class="form-control input-xs" name="montantOp"
+                                           numeric   decimals="0"    id="field_montantOp" ng-model="vm.operation.montantOp" min="0"
+                                        oninput="validity.valid||(value='');" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                    for="field_devise">Devise paiement</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <select ng-disabled="vm.isViewing" required class="form-control" id="field_devise"
+                                        name="devise" ng-model="vm.operation.devisePaiementId"
+                                        ng-options="devise.deviseId as devise.deviseLibelle for devise in vm.devises">
+                                        <option value="">Choisir</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_tauxChange">Taux
+                                    change</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" disabled type="number" class="form-control input-xs"
+                                        name="tauxChange" id="field_tauxChange" ng-model="vm.tauxChange.taux" min="0"
+                                        oninput="validity.valid||(value='');" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                    data-translate="ptiApp.operation.motif" for="field_motif">Motif</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <select ng-disabled="vm.isViewing" required class="form-control input-xs"
+                                        id="field_motif" name="pays" ng-model="vm.operation.motifOperationId"
+                                        ng-options="motif.id as motif.libelle for motif in vm.motifs">
+                                        <option value="">Choisir</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-12 col-xs-12">
+                                <fieldset class="mf-fieldset">
+                                    <legend>Calcul frais <span class="label label-danger">{{vm.message}}</span></legend>
+                                    <div class="row">
+                                        <div class="form-group col-sm-3"
+                                            ng-class="{'has-info has-feedback': vm.isFraisDispo}">
+                                            <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                                for="field_montantFrais">Frais</label>
+                                            <div class="col-xs-8 col-sm-8 col-lg-8">
+                                                <input autocomplete="off" required disabled type="number"
+                                                    class="form-control input-xs ft20" name="montantFrais"
+                                                    id="field_montantFrais" ng-value="vm.operation.montantFrais" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-5 "
+                                            ng-class="{'has-info has-feedback': vm.isFraisDispo}">
+                                            <label mf-required class="control-label col-sm-5 col-xs-5 col-lg-5"
+                                                for="field_montantTaxe">Taxe </label>
+                                            <div class="col-xs-6 col-sm-6 col-lg-6">
+                                                <input autocomplete="off" required disabled type="number"
+                                                    class="form-control input-xs ft20" name="montantTaxe"
+                                                    id="field_montantTaxe" ng-model="vm.operation.montantTaxe" />
+                                            </div>
+                                            <button ng-if="vm.operation.montantTaxe!=null&&vm.operation.montantTaxe!=0"
+                                                type="button" ng-click="vm.detailTaxes()" class="btn-info col-sm-1">
+                                                <span class="glyphicon glyphicon-eye-open"></span>
+                                            </button>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <button ng-click="vm.annulerCalculFrais()"
+                                                ng-if="vm.isFraisDispo && !vm.isViewing" type="button"
+                                                class="btn btn-default btn-xs" data-dismiss="modal">
+                                                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                                                    data-translate="entity.action.cancel">Cancel</span>
+                                            </button>
+                                            <button ng-disabled="!vm.canCalculFrais(vm.operation.uoAcquereurId)"
+                                                ng-if="!vm.isFraisDispo && !vm.isViewing"
+                                                ng-click="vm.calculFrais(vm.operation.uoAcquereurId)" type="button"
+                                                class="btn btn-warning btn-xs">
+                                                <span class="fa fa-calculator"></span>&nbsp;<span></span>Calculer</span>
+                                            </button>
+                                            <button ng-if="!vm.isFraisDispo && !vm.isViewing" ng-click="vm.simulateur()"
+                                                type="button" class="btn btn-info btn-xs">
+                                                <span
+                                                    class="fa fa-calculator"></span>&nbsp;<span></span>Simulateur</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-3"
+                                            ng-class="{'has-info has-feedback': vm.isFraisDispo}">
+                                            <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                                for="field_montant_Frais">TTC</label>
+                                            <div class="col-xs-8 col-sm-8 col-lg-8">
+
+                                                <input type="text" autocomplete="off" required disabled
+                                                       class="form-control input-xs" name="montantFrais"
+                                                       numeric   decimals="0"    id="field_montant_Frais"  ng-model="(vm.operation.montantOp)+ (vm.operation.montantTaxe)+(vm.operation.montantFrais)"  min="0"
+                                                />
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group  col-sm-5"
+                                            ng-class="{'has-info has-feedback': vm.isFraisDispo}">
+                                            <label mf-required class="control-label col-sm-5 col-xs-5 col-lg-5"
+                                                for="field_montantTtc">Montant envoyé <span
+                                                    ng-if="vm.defaultDevise!=null&& vm.defaultDevise.deviseLibelle!=null && vm.defaultDevise.deviseLibelle!=''">({{vm.defaultDevise.deviseLibelle}})</span>
+                                            </label>
+                                            <div class="col-xs-6 col-sm-6 col-lg-6">
+
+                                                <input type="text" autocomplete="off" required disabled
+                                                       class="form-control input-xs" name="montantTtc"
+                                                       numeric   decimals="0"    id="field_montantTtc" ng-model="vm.operation.montantOp" min="0"
+                                                />
+
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="row">
+                                    <div class="form-group  col-sm-7"
+                                         ng-class="{'has-info has-feedback': vm.isFraisDispo}">
+                                        <label mf-required class="control-label col-sm-6 col-xs-6 col-lg-6"
+                                               for="field_montantTtc">Montant reçu <span
+                                                ng-if="vm.deviseP.deviseLibelle!=null && vm.deviseP.deviseLibelle!='' ">({{vm.deviseP.deviseLibelle}})</span>
+                                        </label>
+                                        <div class="col-xs-6 col-sm-6 col-lg-6">
+
+                                            <input type="number" autocomplete="off" required disabled
+                                                   class="form-control input-xs" name="montantTtc"
+                                                     id="field_montantTtce" ng-model="vm.operation.montantOpEnDevise" min="0"
+                                                   />
+
+
+
+                                        </div>
+                                    </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-pane active" ng-class="{active: $index==vm.getCurrentStepIndex()}"
+                        id="simplewizardstep3" ng-if="vm.showOnglet('Expéditeur')">
+                        <div class="row">
+                            <div ng-include="'app/entities/operation/envoi_cash/personne.html'"> </div>
+                        </div>
+                    </div>
+
+                    <div class="step-pane active" ng-class="{active: $index==vm.getCurrentStepIndex()}"
+                        id="simplewizardstep4" ng-if="vm.showOnglet('Bénéficiaire')">
+                        <div class="row">
+                            <div ng-include="'app/entities/operation/envoi_cash/personne-beneficiaire.html'"> </div>
+                        </div>
+                    </div>
+                    <div class="step-pane active" ng-class="{active: $index==vm.getCurrentStepIndex()}"
+                        id="simplewizardstep2" ng-if="vm.showOnglet('Confirmation')">
+                        <div class="row">
+                            <div class="form-group" ng-if="!vm.isMaster() && !vm.isViewing">
+                                <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                    for="field_pays">Numéro de versement</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <select  class="form-control input-xs" id="field_numVersement" name="numVersement"
+                                        ng-model="vm.operation.codeExterne"
+                                        ng-options="evenement.eve as evenement.eve for evenement in vm.evenements">
+                                        <option value="">Choisir</option>
+                                    </select>
+                                </div>
+                                <button type="button"
+                                    ng-click="vm.getListEvenement(vm.operation.montantOp+ vm.operation.montantTaxe+vm.operation.montantFrais)"
+                                    class="btn-info">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                           
+                            <div class="form-group" ng-if="!vm.isViewing">
+                                <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                    for="field_codeOperation">Code validation</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input  autocomplete="off" required  type="text" class="form-control input-xs"
+                                        name="codeOperation" id="field_codeOperation" ng-model="vm.token" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_pays">Pays
+                                    destination</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <select disabled class="form-control input-xs" id="field_pays" name="pays"
+                                        ng-model="vm.operation.uoAcquereurId"
+                                        ng-options="pays.id as pays.libelleUniteOrganisation for pays in vm.pays">
+                                        <option value="">Choisir</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-if="vm.personneE.typePersonne=='PHYSIQUE'">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                    for="field_emetteur">Expéditeur</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" disabled class="form-control input-xs" id="field_emetteur"
+                                        name="emetteur" ng-model="vm.emetteur"
+                                        ng-init="vm.emetteur=vm.personnePhysiqueE.nomClient+' '+vm.personnePhysiqueE.prenomClient" />
+                                </div>
+                                <button ng-if="!vm.isViewing" type="button" ng-click="vm.goToStepNotVerif(1)"
+                                    class=" btn-warning">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </div>
+
+                            <div class="form-group" ng-if="vm.personneB.typePersonne=='PHYSIQUE'">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                    for="field_beneficiaire">Béneficiare</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" disabled class="form-control input-xs"
+                                        id="field_beneficiaire" name="beneficiaire" ng-model="vm.beneficiaire"
+                                        ng-init="vm.beneficiaire=vm.personnePhysiqueB.nomClient+' '+vm.personnePhysiqueB.prenomClient" />
+                                </div>
+                                <button ng-if="!vm.isViewing" type="button" ng-click="vm.goToStepNotVerif(2)"
+                                    class="btn-warning">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </div>
+
+
+
+                            <div class="form-group" ng-if="vm.personneB.typePersonne=='MORALE'">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                    for="field_beneficiaireM">Béneficiare</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" disabled class="form-control input-xs"
+                                        id="field_beneficiaireM" name="beneficiaire" ng-model="vm.beneficiaire"
+                                        ng-init="vm.beneficiaire=vm.personneMoraleB.raisonSociale" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_pays">Montant envoyé
+                                    <span
+                                        ng-if="vm.defaultDevise!=null&& vm.defaultDevise.deviseLibelle!=null && vm.defaultDevise.deviseLibelle!=''">({{vm.defaultDevise.deviseLibelle}})</span></label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" disabled  class="form-control input-xs" type="text" numeric   decimals="0"
+                                           id="field_montant" name="montant" ng-model="vm.operation.montantOp"   />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_tauxChange">Taux
+                                    change</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" disabled type="text" class="form-control input-xs"
+                                        name="tauxChange" id="field_tauxChange" ng-model="vm.tauxChange.taux" min="0"
+                                        oninput="validity.valid||(value='');" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_pays">Montant à
+                                    recevoir <span
+                                        ng-if=" vm.deviseP.deviseLibelle!=null && vm.deviseP.deviseLibelle!=''">({{vm.deviseP.deviseLibelle}})</span></label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" disabled  class="form-control input-xs" type="text"  numeric   decimals="0"
+                                           id="field_montant_rece" name="montant_rece" ng-model="vm.operation.montantOpEnDevise"  />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_montantFraisB">Frais
+                                    de transfert</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" disabled type="text" class="form-control input-xs ft20"  numeric   decimals="0"
+                                           name="montantOp" id="field_montantFraisB"
+                                        ng-model="vm.operation.montantFrais" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_taxe">Taxe </label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" disabled type="number" class="form-control input-xs ft20"
+                                        name="taxe" id="field_taxe" ng-model=" vm.operation.montantTaxe" />
+                                </div>
+                                <button type="button" ng-click="vm.detailTaxes()" class="btn-info">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_montantTtcB">Montant
+                                    total</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" disabled type="text" class="form-control input-xs"
+                                        name="montantOptto" id="field_montantTtcB" ng-model="vm.montantOp"  numeric   decimals="0" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="footer actions actions-footer" id="simplewizard-actions">
+        <div class="pull-left mt5" ng-if="vm.isMaj || vm.validation">
+            <button ng-if="vm.operation.statut=='SUSPENDU'" ng-click="vm.majOperation(vm.operation)" type="button"
+                class="btn btn-success btn-sm pull-left">
+                Reactivation
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+
+            <div ng-if="vm.operation.statut!='ENATTENTE_VALIDATION'" class="btn-group" uib-dropdown is-open="status.isopen">
+                <button id="single-button" type="button" class="btn btn-danger btn-sm" uib-dropdown-toggle
+                    ng-disabled="disabled">
+                    Rembourser <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                    <li role="menuitem"><a href="#" ng-click="vm.annulationOperationAvecFrais()"> Avec frais</a></li>
+                    <li role="menuitem"><a ng-click="vm.annulationOperationSansFrais()" href="#">Sans frais</a></li>
+                </ul>
+            </div>
+
+            <button ng-if="vm.operation.statut=='ENATTENTE'" ng-click="vm.majOperation(vm.operation)" type="button"
+                class="btn btn-warning btn-sm pull-left">
+                Suspension
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+
+            <button ng-click="vm.traitementOperation()" type="button" class="btn btn-warning btn-sm"
+                ng-if="!vm.hasNextStep()&&vm.isViewing&& vm.operation.statut=='ENATTENTE_VALIDATION'">
+                Traiter
+            </button>
+        </div>
+
+        <div class="btn-group">
+
+                <div ng-if="vm.isExpired" class="btn-group" uib-dropdown is-open="status.isopen">
+                    <button id="single-button" type="button" class="btn btn-danger btn-sm" uib-dropdown-toggle
+                        ng-disabled="disabled">
+                        Rembourser <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                        <li role="menuitem"><a href="#" ng-click="vm.annulationOperationAvecFrais()"> Avec frais</a></li>
+                        <li role="menuitem"><a ng-click="vm.annulationOperationSansFrais()" href="#">Sans frais</a></li>
+                    </ul>
+                </div>
+            <button ng-click="vm.changeStatutOp()" type="button" class="btn btn-success" ng-if="vm.isChange">
+                Changer Statut
+            </button>
+            <button ng-click="vm.sendCodeRetrait()" type="button" class="btn btn-success btn-sm " ng-if="vm.isExpired">
+                Renvoyer code</button>
+
+            <button ng-click="vm.clear()" type="button" class="btn btn-warning btn-sm " ng-if="!vm.isViewing">
+                Annuler</button>
+
+            <button ng-click="vm.clear()" type="button" class="btn btn-default btn-sm" ng-if="vm.isViewing">
+                Fermer</button>
+
+            <button ng-click="vm.decrementStep()" type="button" ng-if="vm.hasPreviousStep()"
+                class="btn btn-default btn-sm btn-prev"> <i class="fa fa-angle-left"></i>Precedent</button>
+
+            <button ng-disabled="!vm.isViewing && (editForm.$invalid || vm.isSaving || !vm.isFraisDispo)"
+                ng-click=" vm.incrementStep()" type="button" class="btn btn-primary btn-sm btn-next"
+                ng-click="vm.suivant()" ng-if="vm.hasNextStep()" data-last="Finish">Suivant</button>
+
+            <button ng-disabled="editForm.$invalid || vm.isSaving " ng-if="!vm.hasNextStep() && !vm.isViewing"
+                type="submit" class="btn btn-success btn-sm" data-last="Finish"
+                ng-disabled="editForm.$invalid || vm.isSaving">Valider</button>
+        </div>
+    </div>
+</form>

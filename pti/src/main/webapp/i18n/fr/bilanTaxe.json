@@ -1,0 +1,24 @@
+
+{
+    "ptiApp": {
+        "bilanTaxe" : {
+            "home": {
+                "title": "BilanTaxes",
+                "createLabel": "Créer un nouveau Bilan Taxe",
+                "createOrEditLabel": "Créer ou éditer un Bilan Taxe"
+            },
+            "created": "Un nouveau Bilan Taxe a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Bilan Taxe avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Bilan Taxe avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Bilan Taxe {{ id }} ?"
+            },
+            "detail": {
+                "title": "Bilan Taxe"
+            },
+            "montant": "Montant",
+            "operation": "Operation",
+            "taxeOperation": "Taxe Operation"
+        }
+    }
+}

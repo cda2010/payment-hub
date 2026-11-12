@@ -1,0 +1,31 @@
+
+<div>
+    <h2><span data-translate="ptiApp.autorisation.detail.title">Autorisation</span> {{vm.autorisation.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.autorisation.code">Code</span></dt>
+        <dd>
+            <span>{{vm.autorisation.code}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.autorisation.uniteOrganisation">Unite Organisation</span></dt>
+        <dd>
+            <a ui-sref="unite-organisation-detail({id:vm.autorisation.uniteOrganisationId})">{{vm.autorisation.uniteOrganisationLibelleUniteOrganisation}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.autorisation.typeService">Type Service</span></dt>
+        <dd>
+            <a ui-sref="type-service-detail({id:vm.autorisation.typeServiceId})">{{vm.autorisation.typeServiceLibelle}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="autorisation-detail.edit({id:vm.autorisation.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

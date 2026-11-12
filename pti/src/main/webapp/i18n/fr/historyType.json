@@ -1,0 +1,9 @@
+{
+    "ptiApp": {
+        "HistoryType" : {
+            "null": "",
+            "TABLEAUSOLDE": "TABLEAUSOLDE",
+            "SOLDECLIENT": "SOLDECLIENT"
+        }
+    }
+}

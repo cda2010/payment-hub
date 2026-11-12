@@ -1,0 +1,98 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="row">
+<div class="col-sm-8 col-xs-offset-3">
+<form class="form-group" name="editForm" role="form" ng-submit="vm.genererO()" >
+    <div class="col-sm-8">
+        <div class="modal-body">
+            <div class="modal-header text-center"><B style="color: white">ETATS DES OPERATIONS</B></div>
+            <br>
+            <div>
+            <select ng-change="vm.getEtatO(vm.etatIdent)" required class="form-control" name="etat" id="etat"
+                    ng-model="vm.etatIdent"
+                    ng-options="etat.ident as etat.libelle for etat in vm.etats">
+            </select>
+            </div>
+            <br>
+            <div ng-if="vm.etatIdent!==null">
+            <select class=" col-sm-4" id="filed_format" name="format" ng-model="vm.format" >
+                <option value="">Format</option>
+                <option value="PDF">PDF</option>
+                <option value="XLSX">XLSX</option>
+                <option value="CSV">CSV</option>
+            </select>
+            </div>
+        </div>
+        <br>
+        <div class="modal-footer">
+            <button type="submit" ng-disabled="vm.etatIdent===null" class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Générer</span>
+            </button>
+        </div>
+    </div>
+</form>
+</div>
+    <div ng-if="vm.ctrlOp==true" class="container-fluid">
+        <div class="row mt5">
+    <div class="row">
+    <table class="table table-hover">
+        <thead class="bordered-blue">
+        <tr>
+            <th >
+                <span>Date</span>
+                </th>
+            <th >
+                <span>Compte d'envoi</span>
+            </th>
+            <th >
+                <span>Numéro du bénéficiaire</span>
+            </th>
+            <th>
+                <span>Code opération</span>
+                </th>
+            <th >
+                <span>Type de service</span>
+                </th>
+            <th >
+                <span>Statut</span>
+                </th>
+            <th >
+                <span>Montant</span>
+                 </th>
+
+            <th >
+                <span>Montant frais</span>
+                 </th>
+            <th >
+                <span>Montant taxe</span>
+                </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="operation in vm.datas ">
+            <td>{{operation.dateOperation | date:'medium'}}</td>
+            <th>{{operation.compteSrcValeurCompte}}</th>
+            <th>{{operation.beneficiaireNum}}</th>
+            <td>{{operation.codeOperation}}</td>
+            <td>{{operation.code}}</td>
+            <td>{{operation.statut}}</td>
+            <td>{{operation.montantOp | currency:"" }}</td>
+            <td ng-if="operation.montantFrais!=null">{{operation.montantFrais | currency :"" }}</td>
+            <td ng-if="operation.montantFrais==null">{{0 | currency :"" }}</td>
+            <td ng-if="operation.montantTaxe==null">{{0 | currency :"" }}</td>
+            <td ng-if="operation.montantTaxe!=null">{{operation.montantTaxe | currency :"" }}</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="center-block text-center" ng-show="vm.canShowPagination()">
+        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+        </uib-pagination>
+    </div>
+    </div>
+</div>
+</div>

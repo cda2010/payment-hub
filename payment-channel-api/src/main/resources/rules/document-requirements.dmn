@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
+             id="definitions_document_requirements"
+             name="document-requirements"
+             namespace="https://payment-gateway/dmn/document-requirements"
+             exporter="payment-gateway"
+             exporterVersion="1.0">
+
+  <description>
+    Montant + providerCode (+ currency) → documentProfileCode
+    (NONE | BASIC_ID | STANDARD | ENHANCED | PROVIDER_STRICT).
+    Les pièces exactes sont dans document_profile.definition_json.
+  </description>
+
+  <inputData id="input_amount" name="amount">
+    <variable name="amount" typeRef="number"/>
+  </inputData>
+  <inputData id="input_currency" name="currency">
+    <variable name="currency" typeRef="string"/>
+  </inputData>
+  <inputData id="input_providerCode" name="providerCode">
+    <variable name="providerCode" typeRef="string"/>
+  </inputData>
+  <inputData id="input_catalogServiceCode" name="catalogServiceCode">
+    <variable name="catalogServiceCode" typeRef="string"/>
+  </inputData>
+
+  <decision id="decision_DocumentRequirements" name="DocumentRequirements">
+    <variable name="DocumentRequirements" typeRef="string"/>
+    <informationRequirement>
+      <requiredInput href="#input_amount"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_currency"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_providerCode"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_catalogServiceCode"/>
+    </informationRequirement>
+
+    <decisionTable id="dt_DocumentRequirements" hitPolicy="FIRST">
+      <input id="in_amount" label="amount">
+        <inputExpression typeRef="number"><text>amount</text></inputExpression>
+      </input>
+      <input id="in_currency" label="currency">
+        <inputExpression typeRef="string"><text>currency</text></inputExpression>
+      </input>
+      <input id="in_providerCode" label="providerCode">
+        <inputExpression typeRef="string"><text>providerCode</text></inputExpression>
+      </input>
+      <input id="in_catalogServiceCode" label="catalogServiceCode">
+        <inputExpression typeRef="string"><text>catalogServiceCode</text></inputExpression>
+      </input>
+
+      <output id="out_profile" label="documentProfileCode" name="documentProfileCode" typeRef="string"/>
+
+      <!-- Provider remittance strict (tous montants) -->
+      <rule id="r_ria">
+        <inputEntry id="r_ria_a"><text>-</text></inputEntry>
+        <inputEntry id="r_ria_c"><text>-</text></inputEntry>
+        <inputEntry id="r_ria_p"><text>"RIA"</text></inputEntry>
+        <inputEntry id="r_ria_s"><text>-</text></inputEntry>
+        <outputEntry id="r_ria_o"><text>"PROVIDER_STRICT"</text></outputEntry>
+      </rule>
+      <rule id="r_western_union">
+        <inputEntry id="r_wu_a"><text>-</text></inputEntry>
+        <inputEntry id="r_wu_c"><text>-</text></inputEntry>
+        <inputEntry id="r_wu_p"><text>"WESTERN_UNION"</text></inputEntry>
+        <inputEntry id="r_wu_s"><text>-</text></inputEntry>
+        <outputEntry id="r_wu_o"><text>"PROVIDER_STRICT"</text></outputEntry>
+      </rule>
+
+      <!-- XOF bands -->
+      <rule id="r_none">
+        <inputEntry id="r0_a"><text>&lt;= 200000</text></inputEntry>
+        <inputEntry id="r0_c"><text>"XOF"</text></inputEntry>
+        <inputEntry id="r0_p"><text>-</text></inputEntry>
+        <inputEntry id="r0_s"><text>-</text></inputEntry>
+        <outputEntry id="r0_o"><text>"NONE"</text></outputEntry>
+      </rule>
+      <rule id="r_basic">
+        <inputEntry id="r1_a"><text>&lt;= 500000</text></inputEntry>
+        <inputEntry id="r1_c"><text>"XOF"</text></inputEntry>
+        <inputEntry id="r1_p"><text>-</text></inputEntry>
+        <inputEntry id="r1_s"><text>-</text></inputEntry>
+        <outputEntry id="r1_o"><text>"BASIC_ID"</text></outputEntry>
+      </rule>
+      <rule id="r_standard">
+        <inputEntry id="r2_a"><text>&lt;= 2000000</text></inputEntry>
+        <inputEntry id="r2_c"><text>"XOF"</text></inputEntry>
+        <inputEntry id="r2_p"><text>-</text></inputEntry>
+        <inputEntry id="r2_s"><text>-</text></inputEntry>
+        <outputEntry id="r2_o"><text>"STANDARD"</text></outputEntry>
+      </rule>
+      <rule id="r_enhanced">
+        <inputEntry id="r3_a"><text>-</text></inputEntry>
+        <inputEntry id="r3_c"><text>"XOF"</text></inputEntry>
+        <inputEntry id="r3_p"><text>-</text></inputEntry>
+        <inputEntry id="r3_s"><text>-</text></inputEntry>
+        <outputEntry id="r3_o"><text>"ENHANCED"</text></outputEntry>
+      </rule>
+
+      <!-- Autres devises : dès le 1er montant non nul → BASIC_ID -->
+      <rule id="r_fx_none">
+        <inputEntry id="r4_a"><text>&lt;= 0</text></inputEntry>
+        <inputEntry id="r4_c"><text>-</text></inputEntry>
+        <inputEntry id="r4_p"><text>-</text></inputEntry>
+        <inputEntry id="r4_s"><text>-</text></inputEntry>
+        <outputEntry id="r4_o"><text>"NONE"</text></outputEntry>
+      </rule>
+      <rule id="r_fx_default">
+        <inputEntry id="r5_a"><text>-</text></inputEntry>
+        <inputEntry id="r5_c"><text>-</text></inputEntry>
+        <inputEntry id="r5_p"><text>-</text></inputEntry>
+        <inputEntry id="r5_s"><text>-</text></inputEntry>
+        <outputEntry id="r5_o"><text>"BASIC_ID"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

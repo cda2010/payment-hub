@@ -1,0 +1,24 @@
+ {
+    "ptiApp": {
+        "evenementOperation" : {
+            "home": {
+                "title": "Evenement Opération",
+                "createLabel": "Créer un nouveau Evènement",
+                "createOrEditLabel": "Créer ou éditer un Ecran"
+            },
+            "created": "Un nouveau Evènement a été créé avec l'identifiant {{ param }}",
+            "updated": "L'evènement avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "L'evènement avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer l'evènement {{ id }} ?"
+            },
+            "detail": {
+                "title": "Evenement"
+            },
+            "montant": "Montant",
+            "createdDate": "Date",
+            "estLevee": "estLevee"
+
+        }
+    }
+}

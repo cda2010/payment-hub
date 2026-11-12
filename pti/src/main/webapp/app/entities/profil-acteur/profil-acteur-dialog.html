@@ -1,0 +1,376 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+    <div>
+        <div class="widget">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                    ng-click="vm.clear()">&times;</button>
+                <span class="widget-caption">
+                    <h4 class="modal-title text-center" id="myOperationLabel"></strong>
+                        Enregistrer un profil acteur
+                    </h4>
+                </span>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    
+                    <div class="form-group col-sm-6">
+                        <label mf-required class="control-label col-sm-4" for="field_nom">Nom</label>
+                        <div class="col-sm-6">
+                            <input autocomplete="off"ng-disabled="vm.isViewing" type="text" class="form-control" name="nom" id="field_nom"
+                                ng-model="vm.profilActeur.nom" required />
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label class="control-label col-sm-4" for="field_description">Description</label>
+                        <div class="col-sm-6">
+                            <textarea ng-disabled="vm.isViewing" type="text" class="form-control" name="description"
+                                id="field_description" ng-model="vm.profilActeur.description"  />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="checkbox col-sm-offset-3 col-sm-3">
+                        <label>
+                            <input autocomplete="off"type="checkbox" class="checkbox-slider colored-blue checkbox-lg"
+                                ng-model="vm.profilActeur.active" />
+                            <span class="text">Profil par defaut?</span>
+                        </label>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label mf-required class="control-label col-sm-4" for="field_type">Type</label>
+                        <div class="col-sm-6">
+                            <select ng-disabled="vm.profilActeur.id!=null&&vm.profilActeur.type!=null" type="text" class="form-control" name="type"
+                                id="field_type" ng-model="vm.profilActeur.type" required>
+                                <option value="ORGANISATION">Organisation</option>
+                                <option value="CLIENT"> Client</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                     <label class="col-sm-4" for="field_fournisseur">
+                         Fournisseur
+                     </label>
+                        <div class="col-sm-6">
+                            <select class="form-control input-xs"  id="field_fournisseur"
+                                name="fournisseur" ng-model="vm.profilActeur.codeFse"
+                                ng-options="fournisseurService.codeFse as fournisseurService.libelleFse for fournisseurService in vm.fournisseurservices">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                </div>
+                    <div class="col-md-6 form-group">
+                        <label for="field_destineA" class="col-sm-4">Destiné à</label>
+                        <div class="col-md-6">
+                            <select ng-disabled="vm.isViewing||vm.profilActeur.type=='ORGANISATION'" type="text" class="form-control" name="destineA" id="field_destineA"
+                                    ng-model="vm.profilActeur.destineA" required>
+                                <option value="CLIENT_IDENTIFIE">CLIENT_IDENTIFIE</option>
+                                <option value="CLIENT_NON_IDENTIFIE">CLIENT_NON_IDENTIFIE</option>
+                                <option ng-if="vm.profilActeur.type=='ORGANISATION'" value="UNITE_ORGANISATION">UNITE_ORGANISATION</option>
+                            </select>
+                        </div>
+                    </div>
+                 </div>      
+                 
+                <div class="widget-body row">
+
+                    <div class="widget-main ">
+
+                        <div class="tabbable">
+
+                            <ul class="nav nav-tabs nav-justified" id="myTab9">
+
+                                <li class="tab-blue active" >
+                                    <a data-toggle="tab" href="#frais" target="_self" aria-expanded="true">
+                                        <h4>Tableau Frais</h4>
+                                    </a>
+                                </li>
+
+                                <li class="tab-red">
+                                    <a data-toggle="tab" href="#cumul" target="_self">
+                                        <h4>Tableau cumul</h4>
+                                    </a>
+                                </li>
+                                <li class="tab-green" ng-if="vm.profilActeur.type=='ORGANISATION'">
+                                    <a data-toggle="tab" href="#groupRepartition"  target="_self">
+                                        <h4>Groupes de repartion</h4>
+                                    </a>
+                                </li>
+                                <li class="tab-green" ng-if="vm.profilActeur.type=='ORGANISATION'">
+                                    <a data-toggle="tab" href="#commission"  target="_self">
+                                        <h4>Tableau repartition Comm</h4>
+                                    </a>
+                                </li>
+
+                                <li class="tab-green" ng-if="vm.profilActeur.type=='ORGANISATION'">
+                                    <a data-toggle="tab" href="#horaire"  target="_self">
+                                        <h4>Horaire authtentification</h4>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div id="frais" class="tab-pane active ">
+
+                                    <div class="form-group">
+                                        <label for="field_tableauFrais">Choisir</label>
+                                    </div>
+
+                                    <table class="table-responsive table table-hover">
+                                        <thead>
+                                            <tr class="mf-table-header">
+                                                <th></th>
+                                                <th ng-click="vm.sortBy('poidsNum') ">
+                                                    <span>Poids num</span>
+                                                    <span ng-if="vm.isCurrentColumn('poidsNum')"
+                                                        ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                </th>
+                                                <th ng-click="vm.sortBy('libelle') ">
+                                                    <span>Poids num</span>
+                                                    <span ng-if="vm.isCurrentColumn('libelle')"
+                                                          ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                </th>
+                                                <th ng-click="vm.sortBy('typeService') ">
+                                                    <span>Type de service</span>
+                                                    <span ng-if="vm.isCurrentColumn('typeService')"
+                                                        ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                </th>
+                                                <th ng-click="vm.sortBy('canal') ">
+                                                    <span>Canal</span>
+                                                    <span ng-if="vm.isCurrentColumn('typeService')"
+                                                        ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                </th>
+                                                <!-- <th ng-click="vm.sortBy('beneficiaire') ">
+                                                    <span>Client B</span>
+                                                    <span ng-if="vm.isCurrentColumn('beneficiaire')"
+                                                        ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                </th>
+                                                <th ng-click="vm.sortBy('emetteur') ">
+                                                    <span>Client E</span>
+                                                    <span ng-if="vm.isCurrentColumn('emetteur')"
+                                                        ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                </th> -->
+                                                <th ng-click="vm.sortBy('organisationEm') ">
+                                                    <span>Organisation E</span>
+                                                    <span ng-if="vm.isCurrentColumn('organisationEm')"
+                                                        ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                </th>
+                                                <th ng-click="vm.sortBy('organisationAcq') ">
+                                                    <span>Organisation Acq</span>
+                                                    <span ng-if="vm.isCurrentColumn('organisationAcq')"
+                                                        ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                </th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="tableauFrais in  vm.tableaufrais track by tableauFrais.id">
+                                                <td>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input autocomplete="off" ng-disabled="vm.isViewing"
+                                                                type="checkbox"
+                                                                ng-checked="tableauFrais.selected"
+                                                                ng-click="tableauFrais.selected=!tableauFrais.selected">
+                                                            <b class="text"></b>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>{{tableauFrais.poidsNum}} </td>
+                                                <td>{{tableauFrais.libelle}} </td>
+                                                <td>{{tableauFrais.typeServiceLibelle}}</td>
+                                                <td>{{tableauFrais.canalLibelleCanal}}</td>
+                                                <!-- <td>{{tableauFrais.beneficiaireCodeClient}}</td>
+                                                <td>{{tableauFrais.emetteurCodeClient}}</td> -->
+                                                <td>{{tableauFrais.organisationEmLibelleUniteOrganisation}}</td>
+                                                <td>{{tableauFrais.organisationAcqLibelleUniteOrganisation}}</td>
+                                                <td><button type="button" ng-click="vm.details(tableauFrais)"
+                                                        class="btn btn-primary btn-xs btn-round">
+                                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                                    </button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div id="cumul" class="tab-pane">
+                                    <div class="form-group">
+                                        <label 
+                                            for="field_tableauCumul">Choisir</label>
+                                    </div>
+                                    <table class="table-responsive table table-hover">
+                                        <thead>
+                                            <tr class="mf-table-header">
+                                                <th></th>
+                                                <th>Canal</th>
+                                                <th>Type Service</th>
+                                                <th>Temps</th>
+                                                <th>Organisation Em</th>
+                                                <th>Organisation Acq</th>
+                                                <th>Nombre</th>
+                                                <th>Montant</th>
+                                                <th>Date debut</th>
+                                                <th>Date fin</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="tableauCumul in vm.tableaucumuls">
+                                                <td style="width:7%;">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input autocomplete="off"ng-disabled="vm.isViewing"
+                                                                ng-checked="tableauCumul.selected"
+                                                                type="checkbox"
+                                                                ng-click="tableauCumul.selected=!tableauCumul.selected">
+                                                            <b class="text"></b>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>{{tableauCumul.canalLibelleCanal}}</td>
+                                                <td>{{tableauCumul.typeServiceLibelle}}</td>
+                                                <td>{{tableauCumul.temps}}</td>
+                                                <td>{{tableauCumul.organisationEmLibelleUniteOrganisation}}</td>
+                                                <td>{{tableauCumul.organisationAcqLibelleUniteOrganisation}}</td>
+                                                <td>{{tableauCumul.nombre}}</td>
+                                                <td>{{tableauCumul.montant}}</td>
+                                                <td>{{tableauCumul.dateDebut | date:'mediumDate'}}</td>
+                                                <td>{{tableauCumul.dateFin | date:'mediumDate'}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div id="commission" class="tab-pane">
+                                    <div class="form-group">
+                                        <label for="field_tableauRepartitionCommission">Choisir</label>
+                                    </div>
+                                    <table class="table-responsive table table-hover">
+                                        <thead>
+                                            <tr class="mf-table-header">
+                                                <th></th>
+                                                <th>Niveau</th>
+                                                <th>Type Service</th>
+                                                <th>Date Debut</th>
+                                                <th>Date Fin</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="tableauRepartitionCommission in vm.tableaurepartitioncommissions ">
+                                                <td style="width:7%;">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input autocomplete="off"ng-checked="tableauRepartitionCommission.selected" ng-disabled="true"
+                                                                type="checkbox"
+                                                                ng-click="tableauRepartitionCommission.selected=!tableauRepartitionCommission.selected"/>
+                                                            <b class="text"></b>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>{{tableauRepartitionCommission.niveaoOperation}}</td>
+                                                <td>{{tableauRepartitionCommission.typeServiceLibelle}}</td>
+                                                <td>{{tableauRepartitionCommission.dateDebut | date:'mediumDate'}}</td>
+                                                <td>{{tableauRepartitionCommission.dateFin | date:'mediumDate'}}</td>
+                                                <td><button type="button"
+                                                        ng-click="vm.detailsRepartition(tableauRepartitionCommission)"
+                                                        class="btn btn-primary btn-xs btn-round">
+                                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                                    </button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="horaire" class="tab-pane">
+                                    <div class="form-group">
+                                        <label for="field_tableauRepartitionCommission">Choisir</label>
+                                    </div>
+                                    <table class="table-responsive table table-hover">
+                                        <thead>
+                                            <tr class="mf-table-header">
+                                                <th></th>
+                                                <th>Jour</th>
+                                                <th>Heure debut</th>
+                                                <th>Heure fin</th>
+                                                <th>Date debut</th>
+                                                <th>Date fin</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="horaire in vm.horaires ">
+                                                <td style="width:7%;">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input autocomplete="off"ng-checked="horaire.selected" ng-disabled="vm.isViewing"
+                                                                type="checkbox"
+                                                                ng-click="horaire.selected=!horaire.selected"/>
+                                                            <b class="text"></b>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>{{horaire.jour}}</td>
+                                                <td>{{horaire.heureDebut  | date:'mediumDate'}}</td>
+                                                <td>{{horaire.heureFin  | date:'mediumDate'}}</td>
+                                                <td>{{horaire.dateDebut | date:'mediumDate'}}</td>
+                                                <td>{{horaire.dateFin | date:'mediumDate'}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="groupRepartition" class="tab-pane">
+                                    <div class="form-group">
+                                        <label for="field_groupRepartition">Choisir</label>
+                                    </div>
+                                    <table class="table-responsive table table-hover">
+                                        <thead>
+                                        <tr class="mf-table-header">
+                                            <th></th>
+                                            <th>Nom Groupe</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="groupe in vm.groupRepartitions ">
+                                            <td style="width:7%;">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input autocomplete="off"ng-checked="groupe.selected" ng-disabled="vm.isViewing"
+                                                               type="checkbox"
+                                                               ng-click="groupe.selected=!groupe.selected"/>
+                                                        <b class="text"></b>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>{{groupe.libelleGroup}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer actions actions-footer" id="simplewizard-actions">
+        <div class="btn-group">
+            <button ng-if="vm.isViewing" ng-click="vm.clear()" type="button" class="btn btn-default btn-sm">
+                Fermer</button>
+
+            <button ng-if="!vm.isViewing" type="button" class="btn btn-default" data-dismiss="modal"
+                ng-click="vm.clear()">
+                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                    data-translate="entity.action.cancel">Cancel</span>
+            </button>
+            <button ng-if="!vm.isViewing" type="submit" ng-disabled="editForm.$invalid || vm.isSaving"
+                class="btn btn-primary">
+                <span class="glyphicon glyphicon-save"></span>&nbsp;<span
+                    data-translate="entity.action.save">Save</span>
+            </button>
+        </div>
+    </div>
+</form>

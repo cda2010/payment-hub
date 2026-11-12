@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://rapidframe.com/schema/domain"
+               name="GatewayUser"
+               class="com.gateway.payment.security.domain.GatewayUser"
+               table="gateway_user"
+               repository="none">
+
+  <string name="username" title="Identifiant" required="true" unique="true" namecolumn="true"/>
+  <string name="email" title="Email" required="true" unique="true"/>
+  <string name="fullName" title="Nom complet"/>
+  <boolean name="enabled" title="Actif" default="true"/>
+  <boolean name="locked" title="Verrouillé" default="false"/>
+  <datetime name="lastLoginAt" title="Dernière connexion" readonly="true"/>
+  <datetime name="createdAt" title="Créé le" readonly="true"/>
+  <datetime name="updatedAt" title="Modifié le" readonly="true"/>
+
+  <finder name="findByUsername" using="username"/>
+  <finder name="findByEmail" using="email"/>
+
+</domain-models>

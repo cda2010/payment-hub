@@ -1,0 +1,83 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.ajouter()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myPaysLabel">Create or edit a Pays</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+       
+        <div class="form-group">
+            <label class="control-label" for="field_nomPays">Compte Source</label>
+            <input type="text" class="form-control" name="debit" id="field_nomPays"
+                    ng-model="vm.debit"
+                    />
+        </div>
+         <div class="form-group">
+            <label class="control-label" for="field_nomPays">Donneur d'ordre</label>
+            <input type="text" class="form-control" name="debit" id="field_nomPays"
+                    ng-model="vm.donneurOrdre"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_nomPays">Agence Debit</label>
+            <input type="text" class="form-control" name="nomPays" id="field_nomPays"
+                    ng-model="vm.codeagenceD"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_nomPays">Code Banque Debit</label>
+            <input type="text" class="form-control" name="nomPays" id="field_codebanque"
+                    ng-model="vm.codebanqueD"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_nomPays">Compte Credit</label>
+            <input type="text" class="form-control" name="nomPays" id="field_nomPays"
+                    ng-model="vm.credit"
+                    />
+        </div>
+<div class="form-group">
+            <label class="control-label" for="field_nomPays">Agence</label>
+            <input type="text" class="form-control" name="nomPays" id="field_nomPays"
+                    ng-model="vm.codeagence"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_nomPays">Code Banque</label>
+            <input type="text" class="form-control" name="nomPays" id="field_codebanque"
+                    ng-model="vm.codebanque"
+                    />
+        </div>
+         <div class="form-group">
+            <label class="control-label" for="field_nomPays">Motif</label>
+            <input type="text" class="form-control" name="nomPays" id="field_motif"
+                    ng-model="vm.motif"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_nomPays">Montant</label>
+            <input type="text" class="form-control" name="nomPays" id="field_nomPays"
+                    ng-model="vm.montant"
+                    />
+        </div>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Ajouter</span>
+        </button>
+       {{vm.listeCOmpte}}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        
+        
+          <button type="button" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary" ng-click="vm.appel()">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Envoyer</span>
+        </button>
+        
+        
+    </div>
+</form>

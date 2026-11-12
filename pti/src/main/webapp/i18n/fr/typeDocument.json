@@ -1,0 +1,22 @@
+{
+    "ptiApp": {
+        "typeDocument" : {
+            "home": {
+                "title": "TypeDocuments",
+                "createLabel": "Créer un nouveau Type Document",
+                "createOrEditLabel": "Créer ou éditer un Type Document"
+            },
+            "created": "Un nouveau Type Document a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Type Document avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Type Document avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Type Document {{ id }} ?"
+            },
+            "detail": {
+                "title": "Type Document"
+            },
+            "code": "Code",
+            "libelle": "Libelle"
+        }
+    }
+}

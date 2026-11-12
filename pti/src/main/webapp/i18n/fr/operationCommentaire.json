@@ -1,0 +1,22 @@
+{
+    "ptiApp": {
+        "operationCommentaire" : {
+            "home": {
+                "title": "OperationCommentaires",
+                "createLabel": "Créer un nouveau Operation Commentaire",
+                "createOrEditLabel": "Créer ou éditer un Operation Commentaire"
+            },
+            "created": "Un nouveau Operation Commentaire a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Operation Commentaire avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Operation Commentaire avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Operation Commentaire {{ id }} ?"
+            },
+            "detail": {
+                "title": "Operation Commentaire"
+            },
+            "commentaire": "Commentaire",
+            "operation": "Operation"
+        }
+    }
+}

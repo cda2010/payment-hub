@@ -1,0 +1,30 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "checkbox",
+        "key": "confirmTransfer",
+        "label": "Je confirme le transfert RTGS (banques, montant, frais, motif)",
+        "input": true,
+        "defaultValue": false,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Je confirme le transfert RTGS (banques, montant, frais, motif)": "Je confirme le transfert RTGS (banques, montant, frais, motif)"
+    },
+    "en": {
+      "Je confirme le transfert RTGS (banques, montant, frais, motif)": "I confirm the RTGS transfer (banks, amount, fees, purpose)"
+    }
+  }
+}

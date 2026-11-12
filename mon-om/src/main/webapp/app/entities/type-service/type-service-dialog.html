@@ -1,0 +1,64 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title text-white" id="myTypeServiceLabel" ng-show="vm.typeService.id">
+            <i class="fa fa-edit"></i> Editer un type de service
+        </h4>
+        <h4 class="modal-title text-white" id="myTypeServiceLabel" ng-show="vm.typeService.id == undefined">
+            <i class="fa fa-plus-circle"></i> Ajouter un type de service
+        </h4>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group row" ng-show="vm.typeService.id">
+            <label class="col-sm-3 col-form-label" for="id">ID</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.typeService.id" readonly />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_libelleTypeService">Libellé type service</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="libelleTypeService" id="field_libelleTypeService"
+                    ng-model="vm.typeService.libelleTypeService"
+                    placeholder="Entrez le libellé du type de service"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_codeTypeService">Code service</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="codeTypeService" id="field_codeTypeService"
+                    ng-model="vm.typeService.codeTypeService"
+                    placeholder="Entrez le code du service"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_typeMethode">Type méthode</label>
+            <div class="col-sm-9">
+                <select class="form-control" name="typeMethode" ng-model="vm.typeService.typeMethode" id="field_typeMethode">
+                    <option value="">Sélectionnez un type de méthode</option>
+                    <option value="TRANSFERT">TRANSFERT</option>
+                    <option value="DEBIT">DEBIT</option>
+                    <option value="CREDIT">CREDIT</option>
+                    <option value="CONSULTATION">CONSULTATION</option>
+                    <option value="NOP">NOP</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="vm.clear()">
+            <i class="fa fa-ban"></i>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <i class="fa fa-save"></i>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://rapidframe.com/schema/domain"
+               name="PaymentTransaction"
+               class="com.gateway.payment.payment.domain.PaymentTransaction"
+               table="payment_transaction"
+               repository="none">
+
+  <string name="paymentId" title="Payment ID" required="true" unique="true" namecolumn="true"/>
+  <string name="providerCode" title="Fournisseur" required="true"/>
+  <string name="operationType" title="Opération" required="true" default="CHECKOUT"/>
+  <string name="merchantReference" title="Réf. marchand"/>
+  <string name="customerReference" title="Réf. client"/>
+  <string name="phoneNumber" title="Téléphone"/>
+  <decimal name="amount" title="Montant" required="true" precision="19" scale="4"/>
+  <string name="currency" title="Devise" required="true" default="XOF"/>
+  <string name="status" title="Statut" required="true"/>
+  <string name="currentStep" title="Étape"/>
+  <string name="providerReference" title="Réf. fournisseur"/>
+  <string name="errorCode" title="Code erreur"/>
+  <string name="errorMessage" title="Message erreur"/>
+  <datetime name="createdAt" title="Créé le" readonly="true"/>
+  <datetime name="updatedAt" title="Modifié le" readonly="true"/>
+  <datetime name="completedAt" title="Terminé le" readonly="true"/>
+
+  <finder name="findByPaymentId" using="paymentId"/>
+  <finder name="findByStatus" using="status" all="true" orderBy="createdAt DESC"/>
+
+</domain-models>

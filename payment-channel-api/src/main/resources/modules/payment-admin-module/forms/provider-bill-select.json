@@ -1,0 +1,49 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "select",
+        "key": "billReference",
+        "label": "Facture",
+        "input": true,
+        "dataSrc": "values",
+        "data": { "values": [] },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "number",
+        "key": "amount",
+        "label": "Montant",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "billLabel",
+        "label": "Libellé",
+        "input": true
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Continuer",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Facture": "Facture",
+      "Montant": "Montant",
+      "Libellé": "Libellé"
+    },
+    "en": {
+      "Facture": "Bill",
+      "Montant": "Amount",
+      "Libellé": "Label"
+    }
+  }
+}

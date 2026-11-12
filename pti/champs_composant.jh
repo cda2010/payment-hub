@@ -1,0 +1,37 @@
+enum TypeComposant{TEXTBOX,COMBOBOX,BOUTON}
+entity Champs{
+	aSaisir Integer,
+    min Integer,
+    max Integer,
+    minLength Integer,
+    maxLength Integer,
+    isVisible Integer,
+    pattern String,
+	ecranId Integer,
+}
+
+entity Composant{
+  type String,
+  label String,
+  code String,
+  typeComposant TypeComposant,
+}
+entity Combobox{
+}
+entity Bouton{
+}
+entity TexBox{
+}
+
+relationship OneToOne {
+	Composant to Combobox{composant}
+}
+relationship OneToOne {
+	Composant to Bouton{composant}
+}
+relationship OneToOne {
+	Composant to TexBox{composant}
+}
+relationship OneToMany {
+	Composant to Champs{composant}
+}

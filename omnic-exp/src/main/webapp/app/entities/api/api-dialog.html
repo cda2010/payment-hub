@@ -1,0 +1,64 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myApiLabel">Create or edit a Api</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.api.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.api.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_nomApi">Nom Api</label>
+            <input type="text" class="form-control" name="nomApi" id="field_nomApi"
+                    ng-model="vm.api.nomApi"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_type">Type</label>
+            <select class="form-control" name="type" ng-model="vm.api.type" id="field_type">
+                <option value="WEBSERVICE">WEBSERVICE</option>
+                <option value="REST">REST</option>
+                <option value="RMI">RMI</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_host">Host</label>
+            <input type="text" class="form-control" name="host" id="field_host"
+                    ng-model="vm.api.host"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_port">Port</label>
+            <input type="text" class="form-control" name="port" id="field_port"
+                    ng-model="vm.api.port"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_codeApi">Code Api</label>
+            <input type="text" class="form-control" name="codeApi" id="field_codeApi"
+                    ng-model="vm.api.codeApi"
+                    />
+        </div>
+
+        <div class="form-group">
+            <label for="field_fournisseurService">Fournisseur Service</label>
+            <select class="form-control" id="field_fournisseurService" name="fournisseurService" ng-model="vm.api.fournisseurService" ng-options="fournisseurService as fournisseurService.nom for fournisseurService in vm.fournisseurservices track by fournisseurService.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

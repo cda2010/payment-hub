@@ -1,0 +1,51 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title text-white" id="myPaysLabel" ng-show="vm.pays.id">
+            <i class="fa fa-edit"></i> Editer un pays
+        </h4>
+        <h4 class="modal-title text-white" id="myPaysLabel" ng-show="vm.pays.id == undefined">
+            <i class="fa fa-plus-circle"></i> Ajouter un pays
+        </h4>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group row" ng-show="vm.pays.id">
+            <label class="col-sm-3 col-form-label" for="id">ID</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="id" name="id"
+                        ng-model="vm.pays.id" readonly />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_nomPays">Nom du pays</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="nomPays" id="field_nomPays"
+                        ng-model="vm.pays.nomPays" placeholder="Entrez le nom du pays"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_devisePays">Devise du pays</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="devise" id="field_devisePays"
+                       ng-model="vm.pays.devise" placeholder="Entrez la devise du pays"/>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal" ng-click="vm.clear()">
+            <i class="fa fa-times"></i>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <i class="fa fa-save"></i>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+
+</form>

@@ -1,0 +1,114 @@
+<form name="editForm" ng-submit="vm.save()" role="form" novalidate show-validation class="container-fluid form-horizontal">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.close()">&times;</button>
+        <h4 class="modal-title" id="myPointVenteLabel" data-translate="ptiApp.pointVente.home.createOrEditLabel">Create or edit a Point Vente</h4>
+    </div>
+    <div class="modal-body">
+        <fieldset class="mf-fieldset p10">
+            <legend>Creation d'un point de vente</legend>
+            <div class="form-group">
+                <label class="control-label col-sm-4" mf-required data-translate="ptiApp.pointVente.codePointVente" for="field_codePointVente">Code Point Vente</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"type="text" class="form-control input-xs" ng-disabled="vm.isViewing" name="codePointVente" id="field_codePointVente"
+                           ng-model="vm.pointVente.codePointVente"
+                           required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" data-translate="ptiApp.pointVente.libellePointVente" mf-required for="field_libellePointVente">Libelle Point Vente</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"type="text" class="form-control input-xs" ng-disabled="vm.isViewing" name="libellePointVente" id="field_libellePointVente"
+                           ng-model="vm.pointVente.libellePointVente"
+                           required/>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="!vm.isSaveInUO">
+                <label class="col-sm-4" data-translate="ptiApp.pointVente.uniteOrganisation" for="field_uniteOrganisation">Unite Organisation</label>
+                <div class="col-sm-6">
+                    <select class="input-xs" id="field_uniteOrganisation" ng-disabled="vm.isViewing" name="uniteOrganisation" ng-model="vm.pointVente.uniteOrganisationId" ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.uniteorganisations"            >
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <button ng-if="vm.isSaveInUO" type="button" ng-click="vm.save()" ng-if="!vm.isViewing" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary btn-sm pull-right">
+                <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+            </button>
+        </fieldset>
+        <div ng-if="vm.isSaveInUO && vm.datas.length>0" class="col-sm-10 col-sm-offset-1">
+            <fieldset class="mf-fieldset p10" >
+                <legend>Liste des points de vente</legend>
+                <div class="row" ng-if="vm.isSaveInUO">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <table class="table-responsive table">
+                            <thead>
+                            <tr class="mf-table-header">
+                                <th ng-click="vm.sortBy('codePointVente')">
+                                    <span >Code</span>
+                                    <span ng-if="vm.isCurrentColumn('codePointVente')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                </th>
+                                <th ng-click="vm.sortBy('libellePointVente')">
+                                    <span>Libelle</span>
+                                    <span ng-if="vm.isCurrentColumn('libellePointVente')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                </th>
+                                <th ng-click="vm.sortBy('uniteOrganisationLibelleUniteOrganisation')">
+                                    <span>Unite d'Organisation</span>
+                                    <span ng-if="vm.isCurrentColumn('uniteOrganisationLibelleUniteOrganisation')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                </th>
+                                <th class="text-right"><span>Actions</span> </th>
+                            </tr>
+                            </thead>
+                            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                            <tr class="mf-table-body" ng-repeat="pointVente in vm.datas track by pointVente.id">
+
+                                <td>{{pointVente.codePointVente}}</td>
+                                <td>{{pointVente.libellePointVente}} </td>
+                                <td >{{pointVente.uniteOrganisationLibelleUniteOrganisation}} </td>
+
+                                <td class="text-right">
+                                    <div class="btn-group flex-btn-group-container">
+                                        <button type="button"
+                                                data-toggle="tooltip" data-original-title="Supprimer"
+                                                ng-click="vm.deleteItem($event, pointVente)"
+                                                class="btn btn-danger shiny btn-xs btn-circle ">
+                                            <span class="glyphicon glyphicon-remove-circle"></span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="center-block text-center" ng-show="vm.canShowPagination()">
+                <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage" >
+                </uib-pagination>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+    <div class="modal-footer" ng-if="vm.isSaveInUO">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.close()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+            <span>Fermer</span>
+        </button>
+    </div>
+    </div>
+    <div class="modal-footer" ng-if="!vm.isSaveInUO">
+        <button type="button" ng-if="!vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.close()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-if="!vm.isViewing" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+        <button type="button" ng-if="vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.close()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+            <span>Fermer</span>
+        </button>
+    </div>
+</form>

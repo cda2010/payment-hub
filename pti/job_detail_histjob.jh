@@ -1,0 +1,54 @@
+entity PtiJobDetails{
+	 jobName String,
+     displayName String,
+
+     expressionCron String,
+     priorite Integer,
+
+     schedulerGroupe Integer,
+
+  
+     nomGroupe String,
+
+     dateDerniereExecution ZonedDateTime,
+
+     dateProchaineExecution ZonedDateTime,
+
+
+     jobKey String,
+
+    
+     erreurExecution String,
+
+  
+     estActif Boolean,
+
+   
+      estEnExecution Boolean,
+      fournisseurService Long
+}
+
+entity HistExecutionJob{
+
+    typeTrigger String,
+
+    debutExecution ZonedDateTime,
+
+    finExecution ZonedDateTime,
+
+    statut  String,
+
+    messageErreur String,
+
+    erreurLog  String
+}
+
+relationship OneToMany {
+	PtiJobDetails to HistExecutionJob{ptiJobDetail}
+}
+
+paginate all with pagination
+
+dto * with mapstruct
+
+service all with serviceClass

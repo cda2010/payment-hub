@@ -1,0 +1,11 @@
+{
+    "ptiApp": {
+        "SecteurActivite" : {
+            "null": "",
+            "TELEPHONIE": "TELEPHONIE",
+            "SERVICEPUBLIC": "SERVICEPUBLIC",
+            "TELEVISION": "TELEVISION",
+            "AUTRE": "AUTRE"
+        }
+    }
+}

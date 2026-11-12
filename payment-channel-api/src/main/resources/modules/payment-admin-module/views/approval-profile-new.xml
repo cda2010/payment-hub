@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-view name="approval-profile-new" title="Nouveau profil d'approbation"
+             model="com.gateway.payment.approval.domain.ApprovalProfileEntity" icon="pi pi-plus">
+  <view type="form" name="approval-profile-form"/>
+</action-view>

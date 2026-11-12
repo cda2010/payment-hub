@@ -1,0 +1,30 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "operation",
+            "otherEntityName": "operation",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "textLigneTransaction",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "reponse",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "codereponse",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20181113162552",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "ligne_operation",
+    "pagination": "no"
+}

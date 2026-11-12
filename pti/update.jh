@@ -1,0 +1,186 @@
+
+entity Compte{
+	etiquette String required,
+	valeurCompte String,
+	categorieCompte CategorieCompte
+}
+
+
+enum CategorieCompte{
+	BANQUE,AUTRE
+}
+
+entity TransactionComptePti{
+     type TypeTransactionCompte required,
+     etat EtatValidite required,
+     date ZonedDateTime required,
+     montant BigDecimal required,
+     soldeCourant BigDecimal,
+     soldeApres BigDecimal
+}
+
+enum EtatValidite{
+    PROVISOIRE,VALIDE,ANNULEE
+}
+
+enum TypeTransactionCompte{
+    DEBIT,CREDIT
+}
+
+entity Operation{
+  montantOp BigDecimal,
+  montantFrais BigDecimal,
+  montantFraisEm BigDecimal,
+  montantFraisAcq BigDecimal,
+  dateOperation ZonedDateTime,
+  statut StatutOperation,
+  codeRetrait String,
+  secret String,
+  codeOperation String,
+  dateExpiration LocalDate,
+  motif String,
+  codeExterne String,
+  bordereau Blob,
+  dateTraitement ZonedDateTime,
+  commentaire String
+}
+
+enum StatutOperation {
+  ENCOURS,
+  ENATTENTE,
+  ANNULLE,
+  PAYE,
+  SUSPENDU,
+  REJETE,
+  VALIDE
+}
+
+
+relationship OneToMany{
+    Compte to TransactionComptePti{compte(valeurCompte)}
+}
+
+relationship OneToOne{
+    TransactionComptePti{operation} to Operation
+}
+
+
+
+    dto * with mapstruct
+	paginate * with pagination
+	service * with serviceClass
+entity Compte{
+	etiquette String required,
+	valeurCompte String,
+	categorieCompte CategorieCompte
+}
+
+
+enum CategorieCompte{
+	BANQUE,AUTRE
+}
+
+entity TransactionComptePti{
+     type TypeTransactionCompte required,
+     etat EtatValidite required,
+     date ZonedDateTime required,
+     montant BigDecimal required,
+     soldeCourant BigDecimal,
+     soldeApres BigDecimal
+}
+
+enum EtatValidite{
+    PROVISOIRE,VALIDE,ANNULEE
+}
+
+enum TypeTransactionCompte{
+    DEBIT,CREDIT
+}
+
+entity Operation{
+  montantOp BigDecimal,
+  montantFrais BigDecimal,
+  montantFraisEm BigDecimal,
+  montantFraisAcq BigDecimal,
+  dateOperation ZonedDateTime,
+  statut StatutOperation,
+  codeRetrait String,
+  secret String,
+  codeOperation String,
+  dateExpiration LocalDate,
+  motif String,
+  codeExterne String
+}
+
+enum StatutOperation {
+  ENCOURS,
+  ENATTENTE,
+  ANNULLE,
+  PAYE
+}
+
+
+relationship OneToMany{
+    Compte{operationSrc} to Operation{compteSrc(valeurCompte)},
+    Compte{operationDest} to Operation{compteDest(valeurCompte)}
+}
+
+relationship OneToOne{
+    TransactionComptePti{operation} to Operation
+}
+
+
+
+    dto * with mapstruct
+	paginate * with pagination
+	service * with serviceClass
+
+entity Operation{
+  montantOp BigDecimal,
+  montantFrais BigDecimal,
+  montantFraisEm BigDecimal,
+  montantFraisAcq BigDecimal,
+  dateOperation ZonedDateTime,
+  statut StatutOperation,
+  codeRetrait String,
+  secret String,
+  codeOperation String,
+  dateExpiration LocalDate,
+  motif String,
+  codeExterne String,
+  bordereau Blob,
+  dateTraitement ZonedDateTime,
+  commentaire String
+}
+
+enum StatutOperation {
+  ENCOURS,
+  ENATTENTE,
+  ANNULLE,
+  PAYE,
+  SUSPENDU,
+  REJETE,
+  VALIDE
+}
+
+entity Operation{
+  montantOp BigDecimal,
+  montantFrais BigDecimal,
+  montantFraisEm BigDecimal,
+  montantFraisAcq BigDecimal,
+  dateOperation ZonedDateTime,
+  statut StatutOperation,
+  codeRetrait String,
+  secret String,
+  codeOperation String,
+  dateExpiration LocalDate,
+  motif String,
+  codeExterne String,
+  commentaire String,
+  dateTraitement ZonedDateTime
+}
+
+
+relationship OneToOne{
+    Operation{operationTraite} to Operation
+}

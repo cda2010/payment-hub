@@ -1,0 +1,25 @@
+{
+    "ptiApp": {
+        "canal" : {
+            "home": {
+                "title": "Canals",
+                "createLabel": "Créer un nouveau Canal",
+                "createOrEditLabel": "Créer ou éditer un Canal"
+            },
+            "created": "Un nouveau Canal a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Canal avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Canal avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Canal {{ id }} ?"
+            },
+            "detail": {
+                "title": "Canal"
+            },
+            "codeCanal": "Code Canal",
+            "libelleCanal": "Libelle Canal",
+            "operation": "Operation",
+            "tableauFrais": "Tableau Frais",
+            "typeService": "Type Service"
+        }
+    }
+}

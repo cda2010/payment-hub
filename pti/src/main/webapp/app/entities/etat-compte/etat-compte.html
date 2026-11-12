@@ -1,0 +1,112 @@
+<br>
+<br>
+<br>
+<br>
+<div class="col-sm-8 col-xs-offset-2">
+    <form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+        <div class="modal-body ">
+            <fieldset class=" mf-fieldset p10 ">
+                <legend class="text-center">Choisir l'etat</legend>
+                <br>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="etat" mf-required>Etat</label>
+                    <div class="col-sm-7">
+                        <select ng-change="vm.getEtatChoisi(vm.etatId)" required class="form-control" name="etat" id="etat"
+                                ng-model="vm.etatId"
+                                ng-options="etat.id as etat.libelle for etat in vm.etats">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="vm.etat.params.typeClient">
+                    <label class="control-label col-sm-4" for="etat" mf-required >Type</label>
+                    <div class="col-sm-7">
+                        <select  class="form-control input-xs" id="field_typeService" name="typeClient" ng-model="vm.item.typeClient" required >
+                            <option value="">Choisir</option>
+                            <option value="PHYSIQUE">Client Particulier</option>
+                            <option value="MORALE">Client Entreprise</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="vm.etat.params.statutCompte">
+                    <label class="control-label col-sm-4" for="statutCompte"  >Statut</label>
+                    <div class="col-sm-7">
+                        <select  class="form-control input-xs" id="statutCompte" name="statutCompte" ng-model="vm.item.statutCompte"  >
+                            <option value="">Choisir</option>
+                            <option value="ACTIVE">Activer</option>
+                            <option value="DESACTIVE">Desactiver</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="vm.etat.params.typeAgent">
+                    <label class="control-label col-sm-4" for="typeAgent" mf-required >Type Agent</label>
+                    <div class="col-sm-7">
+                        <select  class="form-control input-xs" id="typeAgent" required name="typeAgent" ng-model="vm.item.typeAgent"  >
+                            <option value="MASTER">Comptes Distributeurs</option>
+                            <option value="SOUS_DISTRIBUTEUR">Comptes Agents</option>
+                            <option value="MARCHAND">Comptes Accepteurs</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="vm.etat.params.typeEvaluation">
+                    <label class="control-label col-sm-4" for="typeEvaluation" mf-required >Type Evaluation</label>
+                    <div class="col-sm-7">
+                        <select  class="form-control input-xs" id="typeEvaluation" required name="typeEvaluation" ng-model="vm.item.typeEvaluation"  >
+                            <option value="DISABLE">Nombre de clients débloqués</option>
+                            <option value="RESET_PASSWORD">Nombre de clients réinitialisés</option>
+                            <option value="VALIDE">Nombre de clients validés </option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group" ng-if="vm.etat.params.dateCtrl">
+                    <label class="control-label col-sm-4" for="etat">Date Debut</label>
+                    <div class=" col-sm-7">
+                        <input autocomplete="off" id="dateOperation" show-button-bar="false"  popup-placement="top"
+                               placeholder=" Date debut" is-open="vm.datePickerOpenStatus.dateOperation"
+                               uib-datepicker-popup="dd/MM/yyyy" ng-focus="vm.openCalendar('dateOperation')"
+                               class="form-control"  ng-model="vm.item.dateDebut" name="dateOperation"/>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="vm.etat.params.dateCtrl">
+                    <label class="control-label col-sm-4" for="etat">Date Fin</label>
+                    <div class=" col-sm-7">
+                        <input autocomplete="off" id="dateFin" show-button-bar="false"  popup-placement="top"
+                               placeholder=" Date fin" is-open="vm.datePickerOpenStatus.dateFin"
+                               uib-datepicker-popup="dd/MM/yyyy" ng-focus="vm.openCalendar('dateFin')"
+                               class="form-control"  ng-model="vm.item.dateFin" name="dateFin"/>
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="control-label col-sm-4" for="filed_format">Format</label>
+                    <div class=" col-sm-7">
+                        <select  id="filed_format" name="format" ng-model="vm.format" >
+                            <option value="">Format</option>
+                            <option value="PDF">PDF</option>
+                            <option value="XLSX">XLSX</option>
+                            <option value="CSV">CSV</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" ng-click="vm.clear()">
+                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Annuler</span>
+            </button>
+            <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Générer</span>
+            </button>
+
+            <!-- <button type="button"  ng-click="vm.printTest()" class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Générer</span>
+            </button> -->
+        </div>
+    </form>
+</div>
+

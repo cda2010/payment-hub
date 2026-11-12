@@ -1,0 +1,32 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "password",
+        "key": "otp",
+        "label": "Code OTP",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "gateway": {
+    "nextAction": "ENTER_OTP"
+  },
+  "i18n": {
+    "fr": {
+      "Code OTP": "Code OTP"
+    },
+    "en": {
+      "Code OTP": "OTP code"
+    }
+  }
+}

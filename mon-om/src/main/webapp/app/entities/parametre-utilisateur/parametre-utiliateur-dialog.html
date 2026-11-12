@@ -1,0 +1,89 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+    <div class="modal-header" style="background-color: #2610ee; color: white; border-radius: 5px 5px 0 0;">
+        <h4 class="modal-title text-center text-white" id="myParametreUtiliateurLabel">
+            <i class="pe pe-7s-config text-warning m-r-xs"></i>
+            Création/Modification Paramètre Utilisateur
+        </h4>
+    </div>
+    <div class="modal-body" style="background-color: #f8f9fa; padding: 20px;">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.parametreUtiliateur.id">
+            <label for="id" class="text-primary">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.parametreUtiliateur.id" readonly 
+                    style="border: 1px solid #7485e6;"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_nomParametreUtil">Code</label>
+            <input type="text" class="form-control" name="code_parametre" id="code_parametre"
+                    ng-model="vm.parametreUtiliateur.codeParametre"
+                    style="border: 1px solid #7485e6;"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_nomParametreUtil">Nom Paramètre</label>
+            <input type="text" class="form-control" name="nomParametreUtil" id="field_nomParametreUtil"
+                    ng-model="vm.parametreUtiliateur.nomParametre"
+                    style="border: 1px solid #7485e6;"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_valeur">Valeur</label>
+            <input type="text" class="form-control" name="valeur" id="field_valeur"
+                    ng-model="vm.parametreUtiliateur.valeur"
+                    style="border: 1px solid #7485e6;"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_valeur">Type</label>
+            <select class="form-control" id="field_interfaceUtilisateur" name="interfaceUtilisateur" 
+                    ng-model="vm.parametreUtiliateur.typeParametre"
+                    style="border: 1px solid #7485e6;">
+                <option value="STRING">STRING</option>
+                <option value="DOUBLE">DOUBLE</option>
+                <option value="INTEGER">INTEGER</option>
+                <option value="FLOAT">FLOAT</option>
+                <option value="LONG">LONG</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_nomParametreUtil">Paramètre Méthode</label>
+            <input type="text" class="form-control" name="valeur" id="field_valeur"
+                    ng-model="vm.parametreUtiliateur.codeParametreMethode"
+                    style="border: 1px solid #7485e6;"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_attribut">Attribut</label>
+            <input type="text" class="form-control" name="attribut" id="code_parametre_attribut"
+                    ng-model="vm.parametreUtiliateur.attribut"
+                    style="border: 1px solid #7485e6;"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_valeur">Paramètre de :</label>
+            <select class="form-control" id="field_parametreApi" name="parametreApi" 
+                    ng-model="vm.parametreUtiliateur.parametreApi"
+                    style="border: 1px solid #7485e6;">
+                <option value="EMPTY">EMPTY</option>
+                <option value="FSESOURCE">API FSE SOURCE</option>
+                <option value="FSEDESTINATAIRE">API FSE DESTINATAIRE</option>
+                <option value="FSEPARTENAIRE">API FSE PARTENAIRE</option>
+            </select>
+        </div>
+        <div class="form-group" ng-show="false">
+            <label for="field_interfaceUtilisateur">Interface Utilisateur</label>
+            <select class="form-control" id="field_interfaceUtilisateur" name="interfaceUtilisateur" 
+                    ng-model="vm.parametreUtiliateur.interfaceUtilisateur" 
+                    ng-options="interfaceUtilisateur as interfaceUtilisateur.id for interfaceUtilisateur in vm.interfaceutilisateurs track by interfaceUtilisateur.id"
+                    style="border: 1px solid #7485e6;">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer" style="background-color: #f8f9fa; border-top: 1px solid #dee2e6; border-radius: 0 0 5px 5px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()"
+                style="background-color: white; border: 1px solid #7485e6; color: #7485e6;">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary"
+                style="background-color: #7485e6; border: none;">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+</form>

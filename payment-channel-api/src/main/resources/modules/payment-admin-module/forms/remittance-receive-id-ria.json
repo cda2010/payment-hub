@@ -1,0 +1,77 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "hidden",
+        "key": "providerCode",
+        "defaultValue": "RIA",
+        "input": true
+      },
+      {
+        "type": "htmlelement",
+        "key": "intro",
+        "tag": "p",
+        "content": "Contrôle d'identité RIA pour retrait cash."
+      },
+      {
+        "type": "select",
+        "key": "beneficiaryIdType",
+        "label": "Type de pièce (RIA)",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "CNI", "value": "CNI" },
+            { "label": "Passeport", "value": "PASSPORT" },
+            { "label": "Permis de conduire", "value": "DRIVER_LICENSE" }
+          ]
+        },
+        "defaultValue": "CNI",
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryIdNumber",
+        "label": "N° pièce d'identité",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryNameConfirm",
+        "label": "Nom présenté",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "riaOrderNo",
+        "label": "N° ordre RIA (si demandé)",
+        "input": true
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Type de pièce (RIA)": "Type de pièce (RIA)",
+      "N° pièce d'identité": "N° pièce d'identité",
+      "Nom présenté": "Nom présenté",
+      "N° ordre RIA (si demandé)": "N° ordre RIA (si demandé)"
+    },
+    "en": {
+      "Type de pièce (RIA)": "ID type (RIA)",
+      "N° pièce d'identité": "ID number",
+      "Nom présenté": "Presented name",
+      "N° ordre RIA (si demandé)": "RIA order no (if required)"
+    }
+  }
+}

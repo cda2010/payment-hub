@@ -1,0 +1,24 @@
+{
+    "ptiApp": {
+        "operationAudit" : {
+            "home": {
+                "title": "OperationAudits",
+                "createLabel": "Créer un nouveau Operation Audit",
+                "createOrEditLabel": "Créer ou éditer un Operation Audit"
+            },
+            "created": "Un nouveau Operation Audit a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Operation Audit avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Operation Audit avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Operation Audit {{ id }} ?"
+            },
+            "detail": {
+                "title": "Operation Audit"
+            },
+            "date": "Date",
+            "statutPrecedent": "Statut Precedent",
+            "statutApres": "Statut Apres",
+            "operation": "Operation"
+        }
+    }
+}

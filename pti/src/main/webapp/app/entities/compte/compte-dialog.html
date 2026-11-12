@@ -1,0 +1,212 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation class="form-horizontal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myCompteLabel" data-translate="ptiApp.compte.home.createOrEditLabel">Create or edit a Compte</h4>
+    </div>
+    <div class="modal-body">
+        <fieldset class="mf-fieldset p10">
+            <legend>Creation de Compte</legend>
+            <div class="form-group">
+                <label class="control-label col-sm-4" mf-required for="field_categorieCompte">Categorie Compte</label>
+                <div class="col-sm-6">
+                    <select class="form-control" ng-disabled="vm.isViewing || vm.isEdit" name="categorieCompte" ng-change=" vm.categorieCompteChange()" ng-model="vm.compte.firstCategorieCompte" id="field_categorieCompte">
+                        <option value="COMPTE_INTERNE" >COMPTE_INTERNE</option>
+                        <option value="COMPTE_EXTERNE">COMPTE_EXTERNE</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" mf-required for="field_typeCompte">Type Compte</label>
+                <div class="col-sm-6">
+                    <select class="form-control" ng-disabled="vm.isViewing" id="field_typeCompte" name="typeCompte" ng-model="vm.compte.typeCompteId" ng-options="typeCompte.id as typeCompte.libelleTypeCompte for typeCompte in vm.typecomptes" required >
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" mf-required data-translate="ptiApp.compte.etiquette" for="field_etiquette">Etiquette</label>
+                <div class="col-sm-6">
+                    <select class="form-control" ng-disabled="vm.isViewing" id="field_etiquette" name="etiquette" ng-model="vm.compte.etiquette" ng-options="etiquette.code as etiquette.code for etiquette in vm.etiquetteComptes" required>
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group " >
+                <label class="control-label col-sm-4" data-translate="ptiApp.compte.libelleCompte" for="field_valeurCompte">libellé Compte</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"type="text" class="form-control" ng-disabled="vm.isViewing" name="libelleCompte" id="field_libelleCompte"
+                           ng-model="vm.compte.libelleCompte"
+                    />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" mf-required for="field_etatcompte">Etat</label>
+                <div class="col-sm-6">
+                    <select class="form-control" ng-disabled="vm.isViewing" id="field_etatcompte" name="etatcompte"
+                            ng-model="vm.compte.etatCompte"required   >
+                        <option value="OUVERT">OUVERT</option>
+                        <option value="FERME">FERME</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" mf-required for="field_statutcompte">Statut</label>
+                <div class="col-sm-6">
+                    <select class="form-control" ng-disabled="vm.isViewing" id="field_statutcompte" name="statutcompte"
+                            ng-model="vm.compte.statutCompte"required   >
+                        <option value="ACTIVE">ACTIVE</option>
+                        <option value="DESACTIVE">DESACTIVE</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group " ng-if="vm.compte.firstCategorieCompte=='COMPTE_EXTERNE'">
+                <label class="control-label col-sm-4" data-translate="ptiApp.compte.valeurCompte" for="field_valeurCompte">Valeur Compte</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"type="text" class="form-control" ng-disabled="vm.isViewing" name="valeurCompte" id="field_valeurCompte"
+                           ng-model="vm.compte.valeurCompte"
+                    />
+                </div>
+            </div>
+            <div ng-if="vm.compte.firstCategorieCompte=='COMPTE_INTERNE'">
+                <div class="form-group ">
+                    <label class="control-label col-sm-4" data-translate="ptiApp.compte.valeurCompte" for="field_valeurCompte1">Valeur Compte</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off"type="text" class="form-control" ng-disabled="true" name="valeurCompte" id="field_valeurCompte1"
+                               ng-model="vm.compte.valeurCompte"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkbox text-center" ng-if="vm.compte.firstCategorieCompte=='COMPTE_EXTERNE'">
+                <label >
+                    <input autocomplete="off"type="checkbox" class="checkbox-slider colored-blue checkbox-lg" ng-disabled="vm.isViewing || vm.isEdit"
+                           ng-model="vm.compte.estCompteBanque"/>
+                    <span class="text">Compte Banque</span>
+                </label>
+            </div>
+
+            <div ng-if="vm.compte.estCompteBanque">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="field_fournisseur">Fournisseur</label>
+                    <div class="col-sm-6">
+                        <select class="form-control input-xs" ng-disabled="vm.isViewing" id="field_fournisseur" name="fournisseur" ng-model="vm.compteBanque.codeFse" ng-options="fournisseurService.codeFse as fournisseurService.libelleFse for fournisseurService in vm.fournisseurservices"            >
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" mf-required for="field_codeAgence">Code Agence</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off"type="text" class="form-control" ng-disabled="vm.isViewing" name="codeAgence" id="field_codeAgence"
+                               ng-model="vm.compteBanque.codeAgence"
+                               required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" mf-required for="field_codeBanque">Code Banque</label>
+                    <div class="col-sm-6">
+                        <input autocomplete="off"type="text" class="form-control" ng-disabled="vm.isViewing" name="codeBanque" id="field_codeBanque"
+                               ng-model="vm.compteBanque.codeBanque"
+                               required/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" mf-required for="field_devise">Devise</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" ng-disabled="vm.isViewing" id="field_devise" name="devise" ng-model="vm.compteBanque.deviseId" ng-options="devise.id as devise.libelle for devise in vm.devises" required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- <div ng-if="vm.compte.categorieCompte=='AUTRE'">
+                <div class="form-group">
+                <label class="control-label col-sm-4" mf-required for="field_solde">Solde</label>
+                <div class="col-sm-6">
+                <input autocomplete="off"type="number" ng-disabled="vm.isViewing" class="form-control" name="solde" id="field_solde"
+                        ng-model="vm.compteAutre.solde"
+                        required />
+                </div>
+            </div>
+            </div> -->
+            <div class="row">
+                <!--<div class="checkbox text-center" ng-if="!vm.compte.estUO">
+                    <label >
+                        <input autocomplete="off"type="checkbox" class="checkbox-slider colored-blue checkbox-lg" ng-disabled="vm.isViewing"
+                               ng-model="vm.compte.estClient"/>
+                        <span class="text">Client</span>
+                    </label>
+                </div>-->
+                <div class="checkbox text-center" ng-if="!vm.compte.estClient">
+                    <label >
+                        <input autocomplete="off"type="checkbox" class="checkbox-slider colored-blue checkbox-lg" ng-disabled="vm.isViewing"
+                               ng-model="vm.compte.estUO"/>
+                        <span class="text">Unite Organisation</span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group" ng-if="vm.compte.estClient">
+                <label class="control-label col-sm-4" mf-required for="field_client">Client</label>
+                <div class="col-sm-6">
+                    <select  class="form-control" ng-disabled="vm.isViewing" id="field_type_client" ng-disabled="vm.isViewing" name="client" ng-model="vm.typeClient"
+                            required >
+                        <option value="Particulier">Particulier</option>
+                        <option value="Entreprise">Entreprise</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" ng-if="vm.compte.estClient">
+                <label class="control-label col-sm-4" mf-required for="field_client" ng-if="vm.typeClient=='Particulier'">Particulier</label>
+                <div class="col-sm-6  " ng-if="vm.typeClient=='Particulier'">
+                    <select  class="form-control" ng-disabled="vm.isViewing"  id="field_client" ng-disabled="vm.isViewing" name="client"  ng-model="vm.compte.clientId"
+                            ng-options="client.id as client.nom for client in vm.clientsParti"           required >
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" ng-if="vm.compte.estClient">
+                <label class="control-label col-sm-4" mf-required for="field_client" ng-if="vm.typeClient=='Entreprise'">Entreprise</label>
+                <div class="col-sm-6 " ng-if="vm.typeClient=='Entreprise'">
+                    <select class="form-control" ng-disabled="vm.isViewing" id="field_client" ng-disabled="vm.isViewing" name="client" ng-model="vm.compte.clientId"
+                            ng-options="client.id as client.nom for client in vm.clientsEntrp"           required >
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div ng-if="vm.compte.estUO">
+                <div class="form-group" >
+                    <label class="control-label col-sm-4" mf-required for="field_typeUniteOrganisation">Type Unite Organisation</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" ng-disabled="vm.isViewing" id="field_typeUniteOrganisation" ng-change="vm.typeUOChange()" name="typeUniteOrganisation" ng-model="vm.typeUniteOrganisationId" ng-options="TypeUniteOrganisation.id as TypeUniteOrganisation.libelleTypeUO for TypeUniteOrganisation in vm.typeuniteorganisations" required   >
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="vm.typeUniteOrganisationId!=null" >
+                    <label class="control-label col-sm-4" mf-required for="field_uniteOrganisation">Unite Organisation</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" ng-disabled="vm.isViewing" id="field_uniteOrganisation" name="uniteOrganisation" ng-model="vm.compte.uniteOrganisationId" ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.uniteorganisations"         required   >
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <button type="button" ng-if="!vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-if="!vm.isViewing" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+        <button type="button" ng-if="vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+            <span>Fermer</span>
+        </button>
+    </div>
+</form>

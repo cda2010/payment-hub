@@ -1,0 +1,36 @@
+{
+  "formio": {
+    "display": "form",
+    "title": "Mobile Money",
+    "components": [
+      {
+        "type": "radio",
+        "key": "reponse",
+        "label": "Avez-vous un compte Mobile Money ?",
+        "input": true,
+        "validate": {
+          "required": true
+        },
+        "values": [
+          {
+            "label": "Oui",
+            "value": "OUI"
+          },
+          {
+            "label": "Non",
+            "value": "NON"
+          }
+        ]
+      },
+      {
+        "type": "textfield",
+        "key": "numero",
+        "label": "Numéro Coris Money",
+        "input": true,
+        "validate": {
+          "required": false
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+
+enum EtatReclamation{ EN_INSTANCE, ATTRIBUE, RESOLU , CLOS }
+enum QualiteReclamation{ AGENT, MARCHAND, CLIENT, ENTREPRISE}
+
+entity TypeReclamation{
+	libelleTypeReclamation String
+}
+
+entity Reclamation{
+dateHeureCreation ZonedDateTime,
+contenu String,
+etat EtatReclamation,
+telephone Integer,
+dateModification ZonedDateTime,
+solution Integer,
+tache Integer,
+document String,
+codeActeur String,
+attribueA String,
+qualiteAuteur QualiteReclamation,
+}
+relationship OneToMany {
+	TypeReclamation to Reclamation{typeReclamation}
+}
+service all with serviceImpl

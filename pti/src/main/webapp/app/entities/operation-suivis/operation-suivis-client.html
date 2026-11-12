@@ -1,0 +1,84 @@
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="vm.fermerFenetre()">&times;</button>
+    <h4 class="modal-title" >Liste des opérations suspectes</h4>
+</div>
+<div class="modal-body">
+    <div class="container">
+        <div class="col-sm-12 col-lg-12 col-xs-12">
+    <div class="row">
+        <div  class="panel-default" >
+            <div class="row">
+                <div class="well with-header" >
+                    <div class="row primary" ng-if="vm.canShowResultCount">
+                        <i ng-if="vm.totalItems>1">{{vm.totalItems}} éléments trouvés</i>
+                        <i ng-if="vm.totalItems==1" >{{vm.totalItems}} élément trouvé</i>
+                        <i ng-if="vm.totalItems<1">Aucun résultat</i>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <select class=" col-sm-5" id="filed_format" name="format" ng-model="vm.format" >
+                                <option value="">Format</option>
+                                <option value="PDF">PDF</option>
+                                <option value="XLSX">XLSX</option>
+                                <option value="CSV">CSV</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <button   class="btn btn-primary mt5" ng-click="vm.exportOperationSuivie()" >
+                                <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Exporter</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr class="mf-table-header">
+                            <th><span>Nom Client</span></th>
+                            <th><span>Prenom Client</span></th>
+                            <th><span>Type de service</span></th>
+                            <th><span>Statut</span></th>
+                            <th><span>Piece du bénéficiaire</span></th>
+                            <th><span>Montant de l'opération</span></th>
+                            <th><span>Montant Frais</span></th>
+                            <th><span>Montant Taxe</span></th>
+                            <th><span>Date de l'opération</span></th>
+                            <th><span>Motif</span></th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="mf-table-body" ng-repeat="operationSuivis in vm.datas ">
+                            <td>{{operationSuivis.client.personne.personnePhysique.nomClient}}</td>
+                            <td>{{operationSuivis.client.personne.personnePhysique.prenomClient}}</td>
+                            <td>{{operationSuivis.operation.typeService.code}}</td>
+                            <td>{{operationSuivis.operation.statut}}</td>
+                            <td>{{operationSuivis.operation.pieceBeneficiaire.referencePiece}} Date deliv.:{{operationSuivis.operation.pieceBeneficiaire.dateDelivrance}} Expire le. {{operationSuivis.operation.pieceBeneficiaire.dateExpiration}}</td>
+                            <td>{{operationSuivis.operation.montantOp | currency:""}}</td>
+                            <td ng-if="operationSuivis.operation.montantFrais!=null">{{operationSuivis.operation.montantFrais | currency :"" }}</td>
+                            <td ng-if="operationSuivis.operation.montantFrais==null">{{0 | currency :"" }}</td>
+                            <td ng-if="operationSuivis.operation.montantTaxe==null">{{0 | currency :"" }}</td>
+                            <td ng-if="operationSuivis.operation.montantTaxe!=null">{{operationSuivis.operation.montantTaxe | currency :"" }}</td>
+                            <td>{{operationSuivis.operation.dateOperation | date:'medium'}}</td>
+                            <td>{{operationSuivis.operation.motif}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    </div>
+        </div>
+    </div>
+    <div class="center-block text-center" ng-show="vm.canShowPagination()">
+        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+        </uib-pagination>
+    </div>
+
+    </div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.fermerFenetre()">
+        <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+    </button>
+
+</div>

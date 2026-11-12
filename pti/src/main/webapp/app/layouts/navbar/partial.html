@@ -1,0 +1,49 @@
+<div id="wrapper" >
+    <!-- Angular views -->
+
+
+    <div ui-view="navbar" ng-cloak>
+    </div>
+
+    <!-- /Navbar -->
+    <!-- Main Container -->
+
+    <!-- Page Container -->
+    <!-- Page Sidebar -->
+    <div onload="vs.init()" ng-controller="SidebarController as vs"
+         ng-include="'app/layouts/navbar/sidebar.html'">
+    </div>
+
+    <!--<div ui-view="login" class="page-body-login">
+        &lt;!&ndash; Angular views &ndash;&gt;
+    </div>-->
+    <!-- /Page Sidebar -->
+
+    <!-- Page Content -->
+
+    <div  class="content-p">
+        <div  class="content">
+            <div  class="container">
+                <div ui-view="content" class="page-body">
+                    <!-- Angular views -->
+                </div>
+                <!-- Angular views -->
+            </div>
+        </div>
+
+
+        <div class="footerpage text-align-center" >
+            <!-- Angular views -->
+            2019-2020 @ Monétique informatique identification M2i
+        </div>
+    </div>
+
+    <!-- /Page Content -->
+
+    <!-- /Page Container -->
+    <!-- Main Container -->
+
+
+</div>
+
+

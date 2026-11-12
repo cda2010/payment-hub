@@ -1,0 +1,55 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "select",
+        "key": "destinationRail",
+        "label": "Compte / wallet à créditer",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "WAVE", "value": "WAVE" },
+            { "label": "ORANGE_MONEY", "value": "ORANGE_MONEY" },
+            { "label": "CORIS_MONEY", "value": "CORIS_MONEY" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "phoneNumber",
+        "key": "phoneNumber",
+        "label": "Téléphone du compte",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "destinationAccount",
+        "label": "Identifiant compte (optionnel)",
+        "input": true
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Compte / wallet à créditer": "Compte / wallet à créditer",
+      "Téléphone du compte": "Téléphone du compte",
+      "Identifiant compte (optionnel)": "Identifiant compte (optionnel)"
+    },
+    "en": {
+      "Compte / wallet à créditer": "Account / wallet to credit",
+      "Téléphone du compte": "Account phone number",
+      "Identifiant compte (optionnel)": "Account id (optional)"
+    }
+  }
+}

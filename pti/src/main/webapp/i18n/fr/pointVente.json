@@ -1,0 +1,24 @@
+{
+    "ptiApp": {
+        "pointVente" : {
+            "home": {
+                "title": "PointVentes",
+                "createLabel": "Créer un nouveau Point Vente",
+                "createOrEditLabel": "Créer ou éditer un Point Vente"
+            },
+            "created": "Un nouveau Point Vente a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Point Vente avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Point Vente avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Point Vente {{ id }} ?"
+            },
+            "detail": {
+                "title": "Point Vente"
+            },
+            "codePointVente": "Code Point Vente",
+            "libellePointVente": "Libelle Point Vente",
+            "operation": "Operation",
+            "uniteOrganisation": "Unite Organisation"
+        }
+    }
+}

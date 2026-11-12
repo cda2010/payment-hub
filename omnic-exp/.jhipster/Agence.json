@@ -1,0 +1,10 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [],
+    "changelogDate": "20180713145636",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "agence",
+    "pagination": "pagination"
+}

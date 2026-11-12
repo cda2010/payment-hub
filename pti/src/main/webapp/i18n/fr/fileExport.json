@@ -1,0 +1,24 @@
+
+{
+    "ptiApp": {
+        "fileExport" : {
+            "home": {
+                "title": "FileExport",
+                "createLabel": "Créer un nouveau fichier export",
+                "createOrEditLabel": "Créer ou éditer un fichier export"
+            },
+            "created": "Un nouveau fichier export a été créé avec l'identifiant {{ param }}",
+            "updated": "Le fichier export avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le fichier export avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le fichier export {{ id }} ?"
+            },
+            "detail": {
+                "title": "fichier export"
+            },
+            "nomExport": "Nom Export",
+            "description": "Description",
+            "dateGeneration": "Date Generation"
+        }
+    }
+}

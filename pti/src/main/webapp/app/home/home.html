@@ -1,0 +1,166 @@
+<div ng-cloak>
+    <div class="row">
+        <div class="col-md-4">
+            <span class="hipster img-responsive img-rounded"></span>
+        </div>
+        <div class="container-fluid">
+            <div ng-switch="vm.isAuthenticated()">
+                <div>
+                    <h5 class="row-title before-blue"><strong><u>INFORMATIONS GENERALES </u> </strong></h5>
+                </div>
+                <div has-any-authority="ROLE_ADMIN,ROLE_VIEW_DASHBOARD">
+                <button  class="btn btn-primary mt5"   ng-if="vm.dashB==true" >
+                    <span class="glyphicon glyphicon-dashboard"></span>
+                    <span>AFFICHER TABLEAU DE BORD</span>
+                </button>
+                </div>
+
+
+
+
+                <div class="row" >
+                    <div class="col-xs-12" has-any-authority="ROLE_ADMIN,ROLE_VIEW_DASHBOARD">
+                        <div class="widget">
+                            <div class="widget-header bordered-bottom bordered-themeprimary">
+                                <i class="widget-icon fa fa-bar-chart-o themeprimary"></i>
+                                <span class="widget-caption themeprimary">BILAN OPERATIONS DU JOUR</span>
+                            </div>
+                            <!--Widget Header-->
+                            <div class="widget-body no-padding">
+                                <div class="container-fluid">
+                                    <canvas id="pie" class="chart chart-pie" chart-data="vm.dataOp"
+                                            chart-labels="vm.labelsOp" chart-options="vm.options">
+                                    </canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-6" has-any-authority="ROLE_ADMIN,ROLE_VIEW_DASHBOARD">
+                        <div class="widget">
+                            <div class="widget-header bordered-bottom bordered-themeprimary">
+                                <i class="widget-icon fa fa-bar-chart-o themeprimary"></i>
+                                <span class="widget-caption themeprimary col-sm-7">
+                                    Nombre d'opérations par période
+                                </span>
+                                <span class="databox-text white col-sm-4" style="margin:0px">
+                                    <select class="form-control input-xs" id="field_pays" name="pays"
+                                            ng-model="vm.periode"
+                                            ng-change="vm.initCanvasData()"
+                                            ng-options="periode as periode.displayName group by periode.group for periode in vm.periodes">
+                                        <option value="">Période</option>
+                                    </select>
+                                </span>
+                            </div>
+                            <!--Widget Header-->
+                            <div class="widget-body  no-padding">
+                                <div class="container-fluid">
+                                    <canvas id="chart-bar" class="chart chart-bar" chart-data="vm.dataPeriode" chart-labels="vm.labelsPeriode">
+                                    </canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6" has-any-authority="ROLE_CRE_COMPTE">
+                        <div class="widget">
+                            <div class="widget-body">
+                                <div class="databox databox-lg radius-bordered databox-shadowed databox-graded">
+                                    <div class="databox-left bg-palegreen">
+                                        <div class="databox-piechart">
+                                            <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="100" data-animate="500" data-linewidth="3" data-size="60" data-trackcolor="#aadc95"><span class="white font-90">Solde</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="databox-right bordered-thick bordered-gree bg-white">
+                                        <span class="databox-number green"><i class="fa fa-money"></i>{{vm.compteOperationActeurSolde  | currency:"" }}F</span>
+                                        <div class="databox-text darkgray">Solde du Compte Operation acteur PTI </div>
+
+                                    </div>
+                                </div>
+                                <div class="databox databox-lg radius-bordered databox-shadowed databox-graded">
+                                    <div class="databox-left bg-palegreen">
+                                        <div class="databox-piechart">
+                                            <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff"
+                                                 data-linecap="butt" data-percent="100" data-animate="500" data-linewidth="3"
+                                                 data-size="60" data-trackcolor="#aadc95"><span
+                                                    class="white font-90">Solde</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="databox-right">
+                                            <span class="databox-number green">
+                                                <i class="fa fa-money"></i>
+                                                {{vm.compteComActeurSolde  | currency:"" }}F
+                                            </span>
+                                        <div class="databox-text darkgray">
+                                            Solde du Compte Commission Acteur
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row" has-any-authority="ROLE_ADMIN,ROLE_VIEW_DASHBOARD">
+                    <div class="col-sm-12">
+                        <div class="widget">
+                            <div class="widget-header bordered-bottom bordered-themesecondary">
+                                <i class="widget-icon fa fa-tags themesecondary"></i>
+                                <span class="widget-caption themesecondary">OPERATIONS RECENTES </span>
+                            </div>
+                            <!--Widget Header-->
+                            <div class="widget-body  no-padding" >
+                                <div class="tickets-container">
+                                    <div>
+                                        <select class="form-control input-xs" id="field_statut" name="statut"
+                                                ng-model="vm.statutOperation" ng-options="statut for statut in vm.statuts">
+                                            <option value="">Choisir statut</option>
+                                        </select>
+                                    </div>
+                                    <ul class="tickets-list" style="overflow: scroll; max-height: 400px" >
+                                        <li class="ticket-item" ng-repeat="op in vm.operations">
+                                            <div class="row">
+                                                <div class="ticket-user col-lg-5 col-sm-5">
+                                                    <span class="badge">{{op.codeOperation}}</span>
+                                                    <span class="user-name">{{op.codeService}}</span>
+                                                    <span class="user-at"></span>
+                                                    <span class="user-company">{{op.montantOp}}
+                                                        {{op.devisePaiementLibelle}}</span>
+                                                </div>
+                                                <div class="ticket-time  col-lg-3 col-sm-3 col-xs-3">
+                                                    <div class="divider hidden-md hidden-sm hidden-xs"></div>
+                                                    <i class="fa fa-clock-o"></i>
+                                                    <span class="time">{{op.dateOperation |date:'medium'}} </span>
+                                                </div>
+                                                <div class="ticket-type  col-lg-4 col-sm-4 col-xs-4">
+                                                    <span class="divider hidden-xs"></span>
+                                                    <span ng-if="op.statut=='ENATTENTE_VALIDATION'"
+                                                          class=" label label-yellow">{{op.statut}}</span>
+                                                    <span ng-if="op.statut!='ENATTENTE_VALIDATION' && op.statut!='PAYE'"
+                                                          class=" label label-blue">{{op.statut}}</span>
+                                                    <span ng-if="op.statut=='PAYE'"
+                                                          class=" label label-palegreen">{{op.statut}}</span>
+
+                                                </div>
+                                                <div ng-if="op.statut=='ENATTENTE_VALIDATION'"
+                                                     class="ticket-state bg-palegreen">
+                                                    <a href="" ng-click="vm.traitementOperation(op)"><i
+                                                            class="fa fa-check"></i></a>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

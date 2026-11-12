@@ -1,0 +1,27 @@
+<form name="deleteForm" ng-submit="vm.confirmDelete(vm.interfaceUtilisateur.id)">
+    <div class="modal-header" style="background-color: #7485e6; color: white; border-radius: 5px 5px 0 0;">
+        <h4 class="modal-title text-center">
+            <i class="pe pe-7s-trash text-warning m-r-xs"></i>
+            Confirmation de suppression
+        </h4>
+    </div>
+    <div class="modal-body" style="background-color: #f8f9fa; padding: 20px;">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="alert alert-warning" style="border-radius: 5px; border: 1px solid #ffeeba;">
+            <i class="pe pe-7s-attention text-warning m-r-xs"></i>
+            <p class="text-center" style="font-size: 16px; color: #856404;">
+                Êtes-vous sûr de vouloir supprimer cette Interface Utilisateur ?
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer" style="background-color: #f8f9fa; border-top: 1px solid #dee2e6; border-radius: 0 0 5px 5px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()" 
+                style="background-color: white; border: 1px solid #7485e6; color: #7485e6;">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger" 
+                style="background-color: #dc3545; border: none;">
+            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span>Supprimer</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,1154 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0008",
+  "providerCodeHint": "FSE_0008",
+  "providerLibelle": "M2i",
+  "participantKindHint": "FACTURIER",
+  "fseStatut": "AUTRE",
+  "groupCode": "ENF",
+  "codeExterne": "0008",
+  "typeEtc": "AUT",
+  "api": {
+    "nomApi": "apiM2i",
+    "codeApi": "0002",
+    "type": "REST",
+    "host": "172.27.4.29",
+    "port": "7982",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.29:7982",
+    "authType": "OAUTH2_CLIENT_CREDENTIALS",
+    "clientId": "apiM2iapp",
+    "clientSecret": "api-m2i",
+    "tokenUrl": "http://172.27.4.186:7981/oauth/token",
+    "grantType": "password",
+    "username": "admin",
+    "password": "admin"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "DEBIT",
+      "codeMethode": "000201",
+      "operationCode": "DEBIT",
+      "nom": "api/debit",
+      "httpMethod": "POST",
+      "path": "api/debit",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"amount\": \"${amount}\", \"cardNumber\": \"${cardNumber}\", \"userId\": \"${userId}\", \"orgId\": \"${orgId}\", \"currency\": \"${currency}\", \"fees\": \"${fees}\", \"currencyFees\": \"${currencyFees}\", \"valid\": \"${valid}\", \"rrn\": \"${rrn}\"}",
+      "parameters": [
+        {
+          "code": "amount",
+          "nomExterne": "amount",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "cardNumber",
+          "nomExterne": "cardNumber",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "userId",
+          "nomExterne": "userId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "orgId",
+          "nomExterne": "orgId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "currency",
+          "nomExterne": "currency",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "fees",
+          "nomExterne": "fees",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "currencyFees",
+          "nomExterne": "currencyFees",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "valid",
+          "nomExterne": "valid",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "rrn",
+          "nomExterne": "rrn",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "CREDIT",
+      "codeMethode": "000202",
+      "operationCode": "CREDIT",
+      "nom": "api/credit",
+      "httpMethod": "POST",
+      "path": "api/credit",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"amount\": \"${amount}\", \"cardNumber\": \"${cardNumber}\", \"userId\": \"${userId}\", \"orgId\": \"${orgId}\", \"currency\": \"${currency}\", \"fees\": \"${fees}\", \"currencyFees\": \"${currencyFees}\", \"valid\": \"${valid}\", \"rrn\": \"${rrn}\"}",
+      "parameters": [
+        {
+          "code": "amount",
+          "nomExterne": "amount",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "cardNumber",
+          "nomExterne": "cardNumber",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "userId",
+          "nomExterne": "userId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "orgId",
+          "nomExterne": "orgId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "currency",
+          "nomExterne": "currency",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "fees",
+          "nomExterne": "fees",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "currencyFees",
+          "nomExterne": "currencyFees",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "valid",
+          "nomExterne": "valid",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "rrn",
+          "nomExterne": "rrn",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000203",
+      "operationCode": "NOP",
+      "nom": "api/enrolement",
+      "httpMethod": "POST",
+      "path": "api/enrolement",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"cardNumber\": \"${cardNumber}\", \"firstName\": \"${firstName}\", \"lastName\": \"${lastName}\", \"identity\": \"${identity}\", \"documentIdentite\": \"${documentIdentite}\", \"nationality\": \"${nationality}\", \"gender\": \"${gender}\"}",
+      "parameters": [
+        {
+          "code": "cardNumber",
+          "nomExterne": "cardNumber",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "firstName",
+          "nomExterne": "firstName",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "lastName",
+          "nomExterne": "lastName",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "identity",
+          "nomExterne": "identity",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "documentIdentite",
+          "nomExterne": "documentIdentite",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nationality",
+          "nomExterne": "nationality",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "gender",
+          "nomExterne": "gender",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "CONSULTATIONSOLDE",
+      "codeMethode": "000204",
+      "operationCode": "CONSULTATIONSOLDE",
+      "nom": "api/solde",
+      "httpMethod": "POST",
+      "path": "api/solde",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"cardNumber\": \"${cardNumber}\"}",
+      "parameters": [
+        {
+          "code": "cardNumber",
+          "nomExterne": "cardNumber",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "CONSULTATION",
+      "codeMethode": "000205",
+      "operationCode": "CONSULTATION",
+      "nom": "api/transactionhistprepaid",
+      "httpMethod": "POST",
+      "path": "api/transactionhistprepaid",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"userId\": \"${userId}\", \"orgId\": \"${orgId}\", \"cardNumber\": \"${cardNumber}\", \"pPorgId\": \"${pPorgId}\", \"pPuserId\": \"${pPuserId}\", \"dateDebut\": \"${dateDebut}\", \"dateFin\": \"${dateFin}\"}",
+      "parameters": [
+        {
+          "code": "userId",
+          "nomExterne": "userId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "orgId",
+          "nomExterne": "orgId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "cardNumber",
+          "nomExterne": "cardNumber",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "pPorgId",
+          "nomExterne": "pPorgId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "pPuserId",
+          "nomExterne": "pPuserId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "dateDebut",
+          "nomExterne": "dateDebut",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "dateFin",
+          "nomExterne": "dateFin",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "CONSULTATION",
+      "codeMethode": "000206",
+      "operationCode": "CONSULTATION_000206",
+      "nom": "api/operationhistprepaid",
+      "httpMethod": "POST",
+      "path": "api/operationhistprepaid",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"userId\": \"${userId}\", \"orgId\": \"${orgId}\", \"cardNumber\": \"${cardNumber}\", \"pPorgId\": \"${pPorgId}\", \"pPuserId\": \"${pPuserId}\", \"dateDebut\": \"${dateDebut}\", \"dateFin\": \"${dateFin}\"}",
+      "parameters": [
+        {
+          "code": "userId",
+          "nomExterne": "userId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "orgId",
+          "nomExterne": "orgId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "cardNumber",
+          "nomExterne": "cardNumber",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "pPorgId",
+          "nomExterne": "pPorgId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "pPuserId",
+          "nomExterne": "pPuserId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "dateDebut",
+          "nomExterne": "dateDebut",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "dateFin",
+          "nomExterne": "dateFin",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "CONSULTATION",
+      "codeMethode": "000207",
+      "operationCode": "CONSULTATION_000207",
+      "nom": "api/cardinfo",
+      "httpMethod": "POST",
+      "path": "api/cardinfo",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"cardNumber\": \"${cardNumber}\"}",
+      "parameters": [
+        {
+          "code": "cardNumber",
+          "nomExterne": "cardNumber",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "CONSULTATION",
+      "codeMethode": "000208",
+      "operationCode": "CONSULTATION_000208",
+      "nom": "api/accountinfo",
+      "httpMethod": "POST",
+      "path": "api/accountinfo",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"cardNumber\": \"${cardNumber}\"}",
+      "parameters": [
+        {
+          "code": "cardNumber",
+          "nomExterne": "cardNumber",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "CONSULTATION",
+      "codeMethode": "000209",
+      "operationCode": "CONSULTATION_000209",
+      "nom": "api/validerOperation",
+      "httpMethod": "POST",
+      "path": "api/validerOperation",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"rrn\": \"${rrn}\"}",
+      "parameters": [
+        {
+          "code": "rrn",
+          "nomExterne": "rrn",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000210",
+      "operationCode": "NOP_000210",
+      "nom": "api/activercard",
+      "httpMethod": "POST",
+      "path": "api/activercard",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"cardNumber\": \"${cardNumber}\"}",
+      "parameters": [
+        {
+          "code": "cardNumber",
+          "nomExterne": "cardNumber",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000211",
+      "operationCode": "NOP_000211",
+      "nom": "api/desactviercard",
+      "httpMethod": "POST",
+      "path": "api/desactviercard",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"cardNumber\": \"${cardNumber}\"}",
+      "parameters": [
+        {
+          "code": "cardNumber",
+          "nomExterne": "cardNumber",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "CONSULTATION",
+      "codeMethode": "000212",
+      "operationCode": "CONSULTATION_000212",
+      "nom": "api/annulercard",
+      "httpMethod": "POST",
+      "path": "api/annulercard",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"cardNumber\": \"${cardNumber}\"}",
+      "parameters": [
+        {
+          "code": "cardNumber",
+          "nomExterne": "cardNumber",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000213",
+      "operationCode": "NOP_000213",
+      "nom": "api/token",
+      "httpMethod": "POST",
+      "path": "api/token",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"cardNumber\": \"${cardNumber}\"}",
+      "parameters": [
+        {
+          "code": "cardNumber",
+          "nomExterne": "cardNumber",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000214",
+      "operationCode": "NOP_000214",
+      "nom": "api/sendsms",
+      "httpMethod": "POST",
+      "path": "api/sendsms",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"numero\": \"${numero}\", \"message\": \"${message}\"}",
+      "parameters": [
+        {
+          "code": "numero",
+          "nomExterne": "numero",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "message",
+          "nomExterne": "message",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000215",
+      "operationCode": "NOP_000215",
+      "nom": "api/livraison-pins/save",
+      "httpMethod": "POST",
+      "path": "api/livraison-pins/save",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"token\": \"${token}\", \"nomCarte\": \"${nomCarte}\", \"telephone\": \"${telephone}\", \"agence\": \"${agence}\", \"user\": \"${user}\", \"action\": \"${action}\", \"codeClient\": \"${codeClient}\", \"codeSouscription\": \"${codeSouscription}\"}",
+      "parameters": [
+        {
+          "code": "token",
+          "nomExterne": "token",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nomCarte",
+          "nomExterne": "nomCarte",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "telephone",
+          "nomExterne": "telephone",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "agence",
+          "nomExterne": "agence",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "user",
+          "nomExterne": "user",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "action",
+          "nomExterne": "action",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeClient",
+          "nomExterne": "codeClient",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeSouscription",
+          "nomExterne": "codeSouscription",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000216",
+      "operationCode": "NOP_000216",
+      "nom": "api/livraison-pins/list",
+      "httpMethod": "POST",
+      "path": "api/livraison-pins/list",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"nomCarte\": \"${nomCarte}\"}",
+      "parameters": [
+        {
+          "code": "nomCarte",
+          "nomExterne": "nomCarte",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000217",
+      "operationCode": "NOP_000217",
+      "nom": "api/livraison-pins/delete",
+      "httpMethod": "POST",
+      "path": "api/livraison-pins/delete",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"identifiant\": \"${identifiant}\"}",
+      "parameters": [
+        {
+          "code": "identifiant",
+          "nomExterne": "identifiant",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000218",
+      "operationCode": "NOP_000218",
+      "nom": "api/demande-pins/list",
+      "httpMethod": "GET",
+      "path": "api/demande-pins/list",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"agence\": \"${agence}\", \"etat\": \"${etat}\"}",
+      "parameters": [
+        {
+          "code": "agence",
+          "nomExterne": "agence",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "etat",
+          "nomExterne": "etat",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000219",
+      "operationCode": "NOP_000219",
+      "nom": "api/demande-pins/valide",
+      "httpMethod": "GET",
+      "path": "api/demande-pins/valide",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"code\": \"${code}\"}",
+      "parameters": [
+        {
+          "code": "code",
+          "nomExterne": "code",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000220",
+      "operationCode": "NOP_000220",
+      "nom": "api/listCard/client",
+      "httpMethod": "POST",
+      "path": "api/listCard/client",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"codeClient\": \"${codeClient}\"}",
+      "parameters": [
+        {
+          "code": "codeClient",
+          "nomExterne": "codeClient",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000221",
+      "operationCode": "NOP_000221",
+      "nom": "api/card",
+      "httpMethod": "POST",
+      "path": "api/card",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"token\": \"${token}\"}",
+      "parameters": [
+        {
+          "code": "token",
+          "nomExterne": "token",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000222",
+      "operationCode": "NOP_000222",
+      "nom": "api/cardIsDisponible",
+      "httpMethod": "POST",
+      "path": "api/cardIsDisponible",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"codeClient\": \"${codeClient}\"}",
+      "parameters": [
+        {
+          "code": "codeClient",
+          "nomExterne": "codeClient",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "TRANSFERT",
+      "codeMethode": "000223",
+      "operationCode": "TRANSFERT",
+      "nom": "api/transfert",
+      "httpMethod": "POST",
+      "path": "api/transfert",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"rrn\": \"${rrn}\", \"valid\": \"${valid}\", \"currencyFees\": \"${currencyFees}\", \"fees\": \"${fees}\", \"currency\": \"${currency}\", \"orgId\": \"${orgId}\", \"userId\": \"${userId}\", \"cardNumberDebit\": \"${cardNumberDebit}\", \"cardNumberCredit\": \"${cardNumberCredit}\", \"amount\": \"${amount}\"}",
+      "parameters": [
+        {
+          "code": "rrn",
+          "nomExterne": "rrn",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "valid",
+          "nomExterne": "valid",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "currencyFees",
+          "nomExterne": "currencyFees",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "fees",
+          "nomExterne": "fees",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "currency",
+          "nomExterne": "currency",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "orgId",
+          "nomExterne": "orgId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "userId",
+          "nomExterne": "userId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "cardNumberDebit",
+          "nomExterne": "cardNumberDebit",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "cardNumberCredit",
+          "nomExterne": "cardNumberCredit",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "amount",
+          "nomExterne": "amount",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000224",
+      "operationCode": "NOP_000224",
+      "nom": "api/isValideCard",
+      "httpMethod": "POST",
+      "path": "api/isValideCard",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"cardNumber\": \"${cardNumber}\"}",
+      "parameters": [
+        {
+          "code": "cardNumber",
+          "nomExterne": "cardNumber",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000225",
+      "operationCode": "NOP_000225",
+      "nom": "api/traitementLotCarte",
+      "httpMethod": "POST",
+      "path": "api/traitementLotCarte",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"codeLot\": \"${codeLot}\"}",
+      "parameters": [
+        {
+          "code": "codeLot",
+          "nomExterne": "codeLot",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000226",
+      "operationCode": "NOP_000226",
+      "nom": "api/cardFromCodeClient",
+      "httpMethod": "POST",
+      "path": "api/cardFromCodeClient",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"codeClient\": \"${codeClient}\"}",
+      "parameters": [
+        {
+          "code": "codeClient",
+          "nomExterne": "codeClient",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000227",
+      "operationCode": "NOP_000227",
+      "nom": "api/livraison-pins/edit",
+      "httpMethod": "POST",
+      "path": "api/livraison-pins/edit",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"codeLivraison\": \"${codeLivraison}\", \"numeroTelephone\": \"${numeroTelephone}\"}",
+      "parameters": [
+        {
+          "code": "codeLivraison",
+          "nomExterne": "codeLivraison",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "numeroTelephone",
+          "nomExterne": "numeroTelephone",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000228",
+      "operationCode": "NOP_000228",
+      "nom": "api/sendFcmMessage",
+      "httpMethod": "POST",
+      "path": "api/sendFcmMessage",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"contenu\": \"${contenu}\", \"objet\": \"${objet}\"}",
+      "parameters": [
+        {
+          "code": "contenu",
+          "nomExterne": "contenu",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "objet",
+          "nomExterne": "objet",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000229",
+      "operationCode": "NOP_000229",
+      "nom": "api/getCardDistributionStat",
+      "httpMethod": "POST",
+      "path": "api/getCardDistributionStat",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"nomOrg\": \"${nomOrg}\", \"statut\": \"${statut}\", \"debutPeriode\": \"${debutPeriode}\", \"finPeriode\": \"${finPeriode}\"}",
+      "parameters": [
+        {
+          "code": "nomOrg",
+          "nomExterne": "nomOrg",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "statut",
+          "nomExterne": "statut",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "debutPeriode",
+          "nomExterne": "debutPeriode",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "finPeriode",
+          "nomExterne": "finPeriode",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "TRANSFERT",
+      "codeMethode": "000230",
+      "operationCode": "TRANSFERT_000230",
+      "nom": "api/getListeCardDistribution",
+      "httpMethod": "POST",
+      "path": "api/getListeCardDistribution",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"nomOrg\": \"${nomOrg}\", \"statut\": \"${statut}\", \"debutPeriode\": \"${debutPeriode}\", \"finPeriode\": \"${finPeriode}\"}",
+      "parameters": [
+        {
+          "code": "nomOrg",
+          "nomExterne": "nomOrg",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "statut",
+          "nomExterne": "statut",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "debutPeriode",
+          "nomExterne": "debutPeriode",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "finPeriode",
+          "nomExterne": "finPeriode",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000231",
+      "operationCode": "NOP_000231",
+      "nom": "api/setCompensation",
+      "httpMethod": "POST",
+      "path": "api/setCompensation",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"codeTraitement\": \"${codeTraitement}\", \"pays\": \"${pays}\", \"fichierSw\": \"${fichierSw}\", \"fichierPr\": \"${fichierPr}\", \"dateComp\": \"${dateComp}\", \"dateVal\": \"${dateVal}\", \"organisation\": \"${organisation}\", \"nomFichier\": \"${nomFichier}\"}",
+      "parameters": [
+        {
+          "code": "codeTraitement",
+          "nomExterne": "codeTraitement",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "pays",
+          "nomExterne": "pays",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "fichierSw",
+          "nomExterne": "fichierSw",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "fichierPr",
+          "nomExterne": "fichierPr",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "dateComp",
+          "nomExterne": "dateComp",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "dateVal",
+          "nomExterne": "dateVal",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "organisation",
+          "nomExterne": "organisation",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nomFichier",
+          "nomExterne": "nomFichier",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000232",
+      "operationCode": "NOP_000232",
+      "nom": "api/getAtm",
+      "httpMethod": "POST",
+      "path": "api/getAtm",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"nomOrg\": \"${nomOrg}\"}",
+      "parameters": [
+        {
+          "code": "nomOrg",
+          "nomExterne": "nomOrg",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000233",
+      "operationCode": "NOP_000233",
+      "nom": "api/getTransactionGab",
+      "httpMethod": "POST",
+      "path": "api/getTransactionGab",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"nomTerminal\": \"${nomTerminal}\", \"dateDebut\": \"${dateDebut}\", \"dateFin\": \"${dateFin}\"}",
+      "parameters": [
+        {
+          "code": "nomTerminal",
+          "nomExterne": "nomTerminal",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "dateDebut",
+          "nomExterne": "dateDebut",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "dateFin",
+          "nomExterne": "dateFin",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000234",
+      "operationCode": "NOP_000234",
+      "nom": "api/getListPayementCardLess",
+      "httpMethod": "POST",
+      "path": "api/getListPayementCardLess",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"terminal\": \"${terminal}\", \"codeAgence\": \"${codeAgence}\", \"statut\": \"${statut}\", \"mobile\": \"${mobile}\", \"dateDebut\": \"${dateDebut}\", \"dateFin\": \"${dateFin}\"}",
+      "parameters": [
+        {
+          "code": "terminal",
+          "nomExterne": "terminal",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeAgence",
+          "nomExterne": "codeAgence",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "statut",
+          "nomExterne": "statut",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "mobile",
+          "nomExterne": "mobile",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "dateDebut",
+          "nomExterne": "dateDebut",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "dateFin",
+          "nomExterne": "dateFin",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000235",
+      "operationCode": "NOP_000235",
+      "nom": "api/sendCardless",
+      "httpMethod": "POST",
+      "path": "api/sendCardless",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"telephone\": \"${telephone}\", \"montant\": \"${montant}\", \"reference\": \"${reference}\", \"entityCode\": \"${entityCode}\"}",
+      "parameters": [
+        {
+          "code": "telephone",
+          "nomExterne": "telephone",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "entityCode",
+          "nomExterne": "entityCode",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000236",
+      "operationCode": "NOP_000236",
+      "nom": "api/sendmail",
+      "httpMethod": "POST",
+      "path": "api/sendmail",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"subject\": \"${subject}\", \"mail\": \"${mail}\", \"message\": \"${message}\"}",
+      "parameters": [
+        {
+          "code": "subject",
+          "nomExterne": "subject",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "mail",
+          "nomExterne": "mail",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "message",
+          "nomExterne": "message",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

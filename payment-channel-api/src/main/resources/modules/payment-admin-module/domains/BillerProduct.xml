@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://rapidframe.com/schema/domain"
+               name="BillerProduct"
+               class="com.gateway.payment.billing.domain.BillerProduct"
+               table="biller_product"
+               repository="none">
+
+  <many-to-one name="biller" ref="com.gateway.payment.billing.domain.Biller" title="Facturier" required="true"/>
+  <string name="code" title="Code" required="true"/>
+  <string name="name" title="Nom" required="true" namecolumn="true"/>
+  <string name="description" title="Description" large="true"/>
+  <boolean name="actif" title="Actif" default="true"/>
+  <string name="lookupMode" title="Mode lookup" required="true" default="BOTH"/>
+  <string name="amountPolicy" title="Politique montant" required="true" default="FULL_ONLY"/>
+  <decimal name="minAmount" title="Montant min" precision="18" scale="2"/>
+  <decimal name="maxAmount" title="Montant max" precision="18" scale="2"/>
+  <boolean name="allowOverpay" title="Surpaiement" default="false"/>
+  <string name="journeyCode" title="Parcours" required="true" default="OPEN_BILLS"/>
+  <string name="paymentFlowId" title="Flow paiement (UUID)"/>
+  <many-to-one name="provider" ref="com.gateway.payment.configuration.domain.PaymentProvider"
+               title="Fournisseur FACTURIER (override)"/>
+  <integer name="ordreAffichage" title="Ordre"/>
+  <string name="lookupFieldsJson" title="Champs lookup (JSON)" large="true"/>
+  <string name="confirmFieldsJson" title="Champs confirm (JSON)" large="true"/>
+  <string name="amountFieldsJson" title="Champs montant (JSON)" large="true"/>
+  <datetime name="createdAt" title="Créé le" readonly="true"/>
+  <datetime name="updatedAt" title="Modifié le" readonly="true"/>
+
+  <finder name="findByBiller" using="biller" all="true" orderBy="ordreAffichage ASC"/>
+
+</domain-models>

@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5446/payment_fidelite
+    username: fidelite
+    password: fidelite
+
+spend:
+  kafka:
+    consumer-enabled: true
+    bootstrap-servers: localhost:9092
+    topic: payment.spend
+    consumer-group: payment-fidelite
+
+logging:
+  level:
+    com.gateway.payment.fidelite: DEBUG

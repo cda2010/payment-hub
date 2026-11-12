@@ -1,0 +1,71 @@
+<div>
+    <h2>Ligne Schema Ecritures</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                   <button class="btn btn-primary" ui-sref="schema-ecriture" >
+                    <span class="glyphicon glyphicon-arrow-left"></span>
+                    <span >
+                      Retour
+                    </span>
+                </button>
+                <button class="btn btn-primary" ui-sref="ligne-schema-ecriture.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                       Création Ligne Schéma
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Type Methode</span></th>
+                     <th><span>Source Api</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="ligneSchemaEcriture in vm.ligneSchemaEcritures track by ligneSchemaEcriture.id">
+                    <td>{{ligneSchemaEcriture.id}}</td>
+                     <td>{{ligneSchemaEcriture.typeMethode}}</td>
+                      <td>{{ligneSchemaEcriture.apiUtil}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="ligne-schema-ecriture-detail({id:ligneSchemaEcriture.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="ligne-schema-ecriture.edit({id:ligneSchemaEcriture.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="ligne-schema-ecriture.delete({id:ligneSchemaEcriture.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            
+                              <button type="submit"
+                                    ui-sref="parametre-schema({idligne:ligneSchemaEcriture.id,idSchema:ligneSchemaEcriture.schemaEcriture.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-cog"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

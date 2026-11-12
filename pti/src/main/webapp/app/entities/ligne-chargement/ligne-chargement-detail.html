@@ -1,0 +1,47 @@
+
+<div>
+    <h2><span data-translate="ptiApp.ligneChargement.detail.title">Ligne Chargement</span> {{vm.ligneChargement.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.ligneChargement.nom">Nom</span></dt>
+        <dd>
+            <span>{{vm.ligneChargement.nom}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneChargement.prenom">Prenom</span></dt>
+        <dd>
+            <span>{{vm.ligneChargement.prenom}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneChargement.numeroCompte">Numero Compte</span></dt>
+        <dd>
+            <span>{{vm.ligneChargement.numeroCompte}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneChargement.numeroTelephone">Numero Telephone</span></dt>
+        <dd>
+            <span>{{vm.ligneChargement.numeroTelephone}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneChargement.montant">Montant</span></dt>
+        <dd>
+            <span>{{vm.ligneChargement.montant}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneChargement.error">Error</span></dt>
+        <dd>
+            <span>{{vm.ligneChargement.error}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneChargement.statutLigne">Statut Ligne</span></dt>
+        <dd>
+            <span>{{vm.ligneChargement.statutLigne}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="ligne-chargement-detail.edit({id:vm.ligneChargement.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

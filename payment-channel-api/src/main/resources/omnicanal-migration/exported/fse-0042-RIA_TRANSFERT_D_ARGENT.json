@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0042",
+  "providerCodeHint": "FSE_0042",
+  "providerLibelle": "RIA TRANSFERT D'ARGENT",
+  "participantKindHint": "REMITTANCE",
+  "fseStatut": "AUTRE",
+  "groupCode": "ENF",
+  "codeExterne": "0",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "API RIA",
+    "codeApi": "0039",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "NONE"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "CONSULTATIONFACTURE",
+      "codeMethode": "003901",
+      "operationCode": "CONSULTATIONFACTURE",
+      "nom": "api/service/ria/getfacture",
+      "httpMethod": "POST",
+      "path": "api/service/ria/getfacture",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{}",
+      "parameters": []
+    },
+    {
+      "typeMethode": "SETTLEMENT",
+      "codeMethode": "003902",
+      "operationCode": "SETTLEMENT",
+      "nom": "api/service/ria/settlement",
+      "httpMethod": "POST",
+      "path": "api/service/ria/settlement",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"orderNo\": \"${orderNo}\", \"statut\": \"${statut}\"}",
+      "parameters": [
+        {
+          "code": "orderNo",
+          "nomExterne": "orderNo",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "statut",
+          "nomExterne": "statut",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

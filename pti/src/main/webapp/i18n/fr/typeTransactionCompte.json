@@ -1,0 +1,9 @@
+{
+    "ptiApp": {
+        "TypeTransactionCompte" : {
+            "null": "",
+            "DEBIT": "DEBIT",
+            "CREDIT": "CREDIT"
+        }
+    }
+}

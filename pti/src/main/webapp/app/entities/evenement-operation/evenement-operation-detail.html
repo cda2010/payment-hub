@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span data-translate="ptiApp.operation.evenementOp">Evenement Operation</span> {{vm.evenementOperation.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.operation.montant">montant</span></dt>
+        <dd>
+            <span>{{vm.evenementOperation.montant}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.operation.estLevee">Est levé</span></dt>
+        <dd>
+            <span>{{vm.evenementOperation.estLevee}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.operation.operation">Operation</span></dt>
+        <dd>
+            <span>{{vm.evenementOperation.montant}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.operation.compte">Compte</span></dt>
+        <dd>
+            <span>{{vm.evenementOperation.montant}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="evenement-operation-detail.edit({id:vm.evenementOperation.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

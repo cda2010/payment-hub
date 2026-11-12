@@ -1,0 +1,30 @@
+{
+    "ptiApp": {
+        "bilanOperation" : {
+            "home": {
+                "title": "BilanOperations",
+                "createLabel": "Créer un nouveau Bilan Operation",
+                "createOrEditLabel": "Créer ou éditer un Bilan Operation"
+            },
+            "created": "Un nouveau Bilan Operation a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Bilan Operation avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Bilan Operation avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Bilan Operation {{ id }} ?"
+            },
+            "detail": {
+                "title": "Bilan Operation"
+            },
+            "nombre": "Nombre",
+            "montant": "Montant",
+            "dateDerniereOperation": "Date Derniere Operation",
+            "typeService": "Type Service",
+            "canal": "Canal",
+            "beneficiaire": "Beneficiaire",
+            "emetteur": "Emetteur",
+            "organisationEm": "Organisation Em",
+            "organisationAcq": "Organisation Acq",
+            "acteur": "Acteur"
+        }
+    }
+}

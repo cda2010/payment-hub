@@ -1,0 +1,93 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="well with-header" style="margin-top:10px">
+            <div class="header bg-blue">
+                <div class="col-xs-8">
+                    <span>Liste des Type Services Fse</span>
+                </div>
+                <div class="row">
+                    <div class="no-padding-left col-xs-4">
+                        <button class="btn btn-default btn-circle btn-xs" ng-click="vm.addItem()">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <div class="btn-group mr15" uib-dropdown>
+                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                                    aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}} éléments par page <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                <li><a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a></li>
+                                <li><a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a></li>
+                                <li><a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a></li>
+                                <li><a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row primary" ng-if="vm.canShowResultCount">
+            <i ng-if="vm.totalItems>1">{{vm.totalItems}} éléments trouvés</i>
+            <i ng-if="vm.totalItems==1">{{vm.totalItems}} élément trouvé</i>
+            <i ng-if="vm.totalItems<1">Aucun résultat</i>
+        </div>
+        
+        <!-- Tableau principal -->
+        <table class="table table-hover">
+            <thead class="bordered-blue">
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="typeService"><span>Unité Organisation</span></th>
+                    <th><span>Services</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+           
+            <tbody>
+                <tr ng-repeat="uniteOrganisation in vm.datas" ng-click="vm.selectRow(uniteOrganisation.uniteOrganisationDTO.id)">
+                    <td>{{ uniteOrganisation.uniteOrganisationDTO.libelleUniteOrganisation }}</td>
+                    <td>
+                        <span ng-repeat="typeServices in uniteOrganisation.uniteOrganisationDTO.typeServices track by $index"
+                              class="badge badge-info">{{ typeServices.description }}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="text-center">
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+        </div>
+
+        <!-- Tableau secondaire affiché sous la ligne sélectionnée -->
+        <div ng-if="vm.selectedRow">
+            <h4>Tableau des Services associés à l'Unité Organisation</h4>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th hidden>ID</th>
+                        <th>Libellé de l'Unité Organisation</th>
+                        <th>Service</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Utilisation de ng-repeat pour afficher chaque service -->
+                    <tr ng-repeat="service in vm.selectedRow">
+                        <td hidden>{{service.id}}</td>
+                        <td>{{service.libelle_unite_organisation}}</td>
+                        <td>{{service.code}}</td>
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+                                <button type="submit" ng-click="vm.deleteItem($event,service)" class="btn btn-danger btn-xs btn-round">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+
+    </div>
+</div>

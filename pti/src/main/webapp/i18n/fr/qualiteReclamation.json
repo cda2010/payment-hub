@@ -1,0 +1,11 @@
+{
+  "ptiApp": {
+    "QualiteReclamation": {
+      "null": "",
+      "AGENT": "AGENT",
+      "MARCHAND": "MARCHAND",
+      "CLIENT": "CLIENT",
+      "ENTREPRISE": "ENTREPRISE"
+    }
+  }
+}

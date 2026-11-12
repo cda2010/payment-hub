@@ -1,0 +1,22 @@
+{
+    "ptiApp": {
+        "commerciale" : {
+            "home": {
+                "title": "Commerciales",
+                "createLabel": "Créer un nouveau Commerciale",
+                "createOrEditLabel": "Créer ou éditer un Commerciale"
+            },
+            "created": "Un nouveau Commerciale a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Commerciale avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Commerciale avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Commerciale {{ id }} ?"
+            },
+            "detail": {
+                "title": "Commerciale"
+            },
+            "nom": "Nom",
+            "prenom": "Prenom"
+        }
+    }
+}

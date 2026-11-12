@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span data-translate="ptiApp.facture.detail.title">Facture</span> {{vm.facture.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.facture.referenceFacature">Reference Facature</span></dt>
+        <dd>
+            <span>{{vm.facture.referenceFacature}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.facture.montantFacture">Montant Facture</span></dt>
+        <dd>
+            <span>{{vm.facture.montantFacture}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.facture.referencePaiement">Reference Paiement</span></dt>
+        <dd>
+            <span>{{vm.facture.referencePaiement}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.facture.datePaiement">Date Paiement</span></dt>
+        <dd>
+            <span>{{vm.facture.datePaiement}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.facture.facturier">Facturier</span></dt>
+        <dd>
+            <a ui-sref="facturier-detail({id:vm.facture.facturier.id})">{{vm.facture.facturier.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="facture-detail.edit({id:vm.facture.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

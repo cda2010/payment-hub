@@ -1,0 +1,162 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+
+        <h4 class="modal-title" id="myUserLabel">
+            Create or edit a User</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+          <div class="alert alert-success" ng-show="vm.success">
+                <strong>Registration saved!</strong> Please check your email for confirmation.
+            </div>
+
+            <div class="alert alert-danger" ng-show="vm.error">
+                <strong>Registration failed!</strong> Please try again later.
+            </div>
+
+            <div class="alert alert-danger" ng-show="vm.errorUserExists">
+                <strong>Login name already registered!</strong> Please choose another one.
+            </div>
+
+
+
+            <div class="alert alert-danger" ng-show="vm.doNotMatch">
+                The password and its confirmation do not match!
+            </div>
+        <div class="form-group" ng-show="vm.user.id">
+            <label>ID</label>
+            <input type="text" class="form-control" name="id"
+                   ng-model="vm.user.id" readonly placeholder="ID utilisateur" title="ID utilisateur">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Login</label>
+            <input type="text" class="form-control" name="login"
+                   ng-model="vm.user.login" ng-required="vm.user.id == null" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[_'.@A-Za-z0-9-]*$/" placeholder="Login" title="Login">
+
+            <div ng-show="editForm.login.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.login.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.login.$error.maxlength"
+                  >
+                    This field cannot be longer than 50 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">First Name</label>
+            <input type="text" class="form-control" name="firstName"
+                   ng-model="vm.user.firstName" ng-maxlength="50" placeholder="Prénom" title="Prénom">
+
+            <div ng-show="editForm.firstName.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.firstName.$error.maxlength"
+                  >
+                    This field cannot be longer than 50 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" class="form-control" name="lastName"
+                   ng-model="vm.user.lastName" ng-maxlength="50" placeholder="Nom" title="Nom">
+
+            <div ng-show="editForm.lastName.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.lastName.$error.maxlength"
+                  >
+                    This field cannot be longer than 50 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group" ng-show="false">
+            <label class="control-label">Email</label>
+            <input type="email" class="form-control" name="email"
+                   ng-model="vm.user.email"  ng-maxlength="100" placeholder="Email" title="Email">
+
+            <div ng-show="editForm.email.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.email.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.email.$error.maxlength"
+                  >
+                    This field cannot be longer than 100 characters.
+                </p>
+				<p class="help-block"
+                   ng-show="editForm.email.$error.email">
+                    Your e-mail is invalid.
+                 </p>
+            </div>
+        </div>
+                        <div class="form-group" ng-show="!vm.user.id">
+                    <label class="control-label" for="password">New password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="New password"
+                           ng-model="vm.user.password" ng-minlength=4 ng-maxlength=50 ng-required="!vm.user.id">
+                    <div ng-show="editForm.password.$dirty && editForm.password.$invalid">
+                        <p class="help-block"
+                               ng-show="editForm.password.$error.required">
+                            Your password is required.
+                        </p>
+                        <p class="help-block"
+                               ng-show="editForm.password.$error.minlength">
+                            Your password is required to be at least 4 characters.
+                        </p>
+                        <p class="help-block"
+                               ng-show="editForm.password.$error.maxlength">
+                            Your password cannot be longer than 50 characters.
+                        </p>
+                    </div>
+                    <password-strength-bar password-to-check="vm.user.password"></password-strength-bar>
+                </div>
+        <div class="form-group" ng-show="!vm.user.id">
+                    <label class="control-label" for="confirmPassword">New password confirmation</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm the new password"
+                           ng-model="vm.confirmPassword" ng-minlength=4 ng-maxlength=50 ng-required="!vm.user.id">
+                    <div ng-show="editForm.confirmPassword.$dirty && editForm.confirmPassword.$invalid">
+                        <p class="help-block"
+                               ng-show="editForm.confirmPassword.$error.required">
+                            Your confirmation password is required.
+                        </p>
+                        <p class="help-block"
+                               ng-show="editForm.confirmPassword.$error.minlength">
+                            Your confirmation password is required to be at least 4 characters.
+                        </p>
+                        <p class="help-block"
+                               ng-show="editForm.confirmPassword.$error.maxlength">
+                            Your confirmation password cannot be longer than 50 characters.
+                        </p>
+                    </div>
+                </div>
+        <div class="form-group">
+            <label for="activated">
+                <input ng-disabled="vm.user.id === null" type="checkbox" id="activated" name="activated" ng-model="vm.user.activated">
+                <span>Activated</span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>Profiles</label>
+            <select class="form-control" multiple name="authority" ng-model="vm.user.authorities"
+                    ng-options="authority for authority in vm.authorities" title="Profils">
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+           >Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+</form>

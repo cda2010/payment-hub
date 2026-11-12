@@ -1,0 +1,43 @@
+
+<div>
+    <h2><span data-translate="ptiApp.ligneMessage.detail.title">Ligne Message</span> {{vm.ligneMessage.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.ligneMessage.codeIndicatif">Code Indicatif</span></dt>
+        <dd>
+            <span>{{vm.ligneMessage.codeIndicatif}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneMessage.numeroTelephone">Numero Telephone</span></dt>
+        <dd>
+            <span>{{vm.ligneMessage.numeroTelephone}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneMessage.email">Email</span></dt>
+        <dd>
+            <span>{{vm.ligneMessage.email}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneMessage.message">Message</span></dt>
+        <dd>
+            <span>{{vm.ligneMessage.message}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneMessage.error">Error</span></dt>
+        <dd>
+            <span>{{vm.ligneMessage.error}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.ligneMessage.chargementMessage">Chargement Message</span></dt>
+        <dd>
+            <a ui-sref="chargement-message-detail({id:vm.ligneMessage.chargementMessage.id})">{{vm.ligneMessage.chargementMessage.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="ligne-message-detail.edit({id:vm.ligneMessage.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity Traitement.
+    -->
+    <changeSet id="20170404133237-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="fournisseur_service_id"
+                                 baseTableName="traitement"
+                                 constraintName="fk_traitement_fournisseur_service_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="fournisseur_service"/>
+
+        <addForeignKeyConstraint baseColumnNames="traitements_id"
+                                 baseTableName="traitement_compose"
+                                 constraintName="fk_traitement_compose_traitements_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="traitement"/>
+        <addForeignKeyConstraint baseColumnNames="composes_id"
+                                 baseTableName="traitement_compose"
+                                 constraintName="fk_traitement_compose_composes_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="service_api"/>
+        
+        <addForeignKeyConstraint baseColumnNames="type_traitement_id"
+                                 baseTableName="traitement"
+                                 constraintName="fk_traitement_type_traitement_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="type_traitement"/>
+
+    </changeSet>
+</databaseChangeLog>

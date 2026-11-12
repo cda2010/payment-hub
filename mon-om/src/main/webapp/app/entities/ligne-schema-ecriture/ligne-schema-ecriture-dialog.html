@@ -1,0 +1,86 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+    <div class="modal-header" style="background-color: #7485e6; color: white; border-radius: 5px 5px 0 0;">
+        <h4 class="modal-title" id="myLigneSchemaEcritureLabel">Create or edit a Ligne Schema Ecriture</h4>
+    </div>
+    <div class="modal-body" style="background-color: #f8f9fa; padding: 20px;">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.ligneSchemaEcriture.id">
+            <label for="id" style="color: #2610ee; font-weight: bold;">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.ligneSchemaEcriture.id" readonly style="border: 1px solid #7485e6;"/>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="field_typeMethode" style="color: #2610ee; font-weight: bold;">Type méthode</label>
+            <select class="form-control" name="typeMethode" ng-model="vm.ligneSchemaEcriture.typeMethode" id="field_typeMethode" style="border: 1px solid #7485e6;">
+                <option value="TRANSFERT">TRANSFERT</option>
+                <option value="CONSULTATIONSOLDE">CONSULTATIONSOLDE</option>
+                <option value="ENVOISMS">ENVOISMS</option>
+                <option value="CONSULTATIONHIST">CONSULTATIONHIST</option>
+                <option value="DEBIT">DEBIT</option>
+                <option value="CREDIT">CREDIT</option>
+                <option value="CONSULTATION">CONSULTATION</option>
+                <option value="SETTLEMENT">SETTLEMENT</option>
+                <option value="NOP">NOP</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_valeur" style="color: #2610ee; font-weight: bold;">Api à utiliser</label>
+            <select class="form-control" id="field_categorieParam" name="categorieParam" ng-model="vm.ligneSchemaEcriture.apiUtil" style="border: 1px solid #7485e6;">
+                <option value="FSESOURCE">FSE SOURCE</option>
+                <option value="FSEDESTINATAIRE">FSE DESTINATAIRE</option>
+                <option value="FSEPARTENAIRE">FSE PARTENAIRE</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_valeur" style="color: #2610ee; font-weight: bold;">Priorité</label>
+            <select class="form-control" id="field_categorieParam" name="categorieParam" ng-model="vm.ligneSchemaEcriture.priorite" style="border: 1px solid #7485e6;">
+                <option value="IMMEDIAT">IMMEDIAT</option>
+                <option value="DIFFEREUN">DIFERER NIVEAU 1</option>
+                <option value="DIFFEREDEUX">FDIFERER NIVEAU 2</option>
+                <option value="DIFFERETROIS">FDIFERER NIVEAU 3</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_ordre" style="color: #2610ee; font-weight: bold;">Ordre</label>
+            <input type="text" class="form-control" name="ordre" id="field_ordre"
+                    ng-model="vm.ligneSchemaEcriture.ordre" style="border: 1px solid #7485e6;"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_valeur" style="color: #2610ee; font-weight: bold;">Agence à Imputer</label>
+            <select class="form-control" id="field_agenceimpute" name="agenceimpute" ng-model="vm.ligneSchemaEcriture.agenceImput" style="border: 1px solid #7485e6;">
+                <option value=""></option>
+                <option value="AGENCESOURCE">AGENCESOURCE</option>
+                <option value="AGENCEDEST">AGENCEDEST</option>
+                <option value="AGENCESIEGESOURCE">AGENCESIEGESOURCE</option>
+                <option value="AGENCESIEGEDEST">AGENCESIEGEDEST</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_canDuplicate" style="color: #2610ee; font-weight: bold;">Doit être dupliqué(Ecrit.Auto)?</label>
+            <input type="checkbox" name="canDuplicate" id="field_canDuplicate"
+                    ng-model="vm.ligneSchemaEcriture.canDuplicate" style="transform: scale(1.5); margin-left: 10px;"/>
+        </div>
+
+        <div class="form-group" ng-show="false">
+            <label for="field_relligneschema">Relligneschema</label>
+            <select class="form-control" id="field_relligneschema" name="relligneschema" ng-model="vm.ligneSchemaEcriture.schemaEcriture" ng-options="schemaEcriture as schemaEcriture.id for schemaEcriture in vm.schemaecritures track by schemaEcriture.id" required>
+                <option value=""></option>
+            </select>
+        </div>
+        <div ng-show="editForm.relligneschema.$invalid">
+            <p class="help-block"
+                ng-show="editForm.relligneschema.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer" style="background-color: #f8f9fa; border-top: 2px solid #7485e6; border-radius: 0 0 5px 5px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()" style="border: 1px solid #7485e6; color: #7485e6;">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary" style="background-color: #2610ee; border: none;">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+</form>

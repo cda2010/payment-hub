@@ -1,0 +1,9 @@
+{
+    "ptiApp": {
+        "Action" : {
+            "null": "",
+            "BLOQUE": "BLOQUE",
+            "EN_ATTENTE": "EN_ATTENTE"
+        }
+    }
+}

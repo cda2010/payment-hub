@@ -1,0 +1,23 @@
+
+{
+    "ptiApp": {
+        "taxeOperation" : {
+            "home": {
+                "title": "TaxeOperations",
+                "createLabel": "Créer un nouveau Taxe Operation",
+                "createOrEditLabel": "Créer ou éditer un Taxe Operation"
+            },
+            "created": "Un nouveau Taxe Operation a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Taxe Operation avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Taxe Operation avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Taxe Operation {{ id }} ?"
+            },
+            "detail": {
+                "title": "Taxe Operation"
+            },
+            "code": "Code",
+            "nom": "Nom"
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "repartitionOp" : {
+            "home": {
+                "title": "RepartitionOps",
+                "createLabel": "Créer un nouveau Repartition Op",
+                "createOrEditLabel": "Créer ou éditer un Repartition Op"
+            },
+            "created": "Un nouveau Repartition Op a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Repartition Op avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Repartition Op avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Repartition Op {{ id }} ?"
+            },
+            "detail": {
+                "title": "Repartition Op"
+            },
+            "montant": "Montant",
+            "acteur": "Acteur",
+            "operation": "Operation"
+        }
+    }
+}

@@ -1,0 +1,130 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title text-white" id="myInterfaceUtilisateurLabel" ng-show="vm.interfaceUtilisateur.id">
+            <i class="fa fa-edit"></i> Editer un interface utilisateur
+        </h4>
+        <h4 class="modal-title text-white" id="myInterfaceUtilisateurLabel" ng-show="vm.interfaceUtilisateur.id == undefined">
+            <i class="fa fa-plus-circle"></i> Ajouter un interface utilisateur
+        </h4>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group row" ng-show="vm.interfaceUtilisateur.id">
+            <label class="col-sm-3 col-form-label" for="id">ID</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.interfaceUtilisateur.id" readonly />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_codeInterface">Code Interface</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="codeInterface" id="field_codeInterface"
+                    ng-model="vm.interfaceUtilisateur.codeInterface" placeholder="Entrez le code interface"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_nomInterface">Nom Interface</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="nomInterface" id="field_nomInterface"
+                    ng-model="vm.interfaceUtilisateur.nomInterface" placeholder="Entrez le nom interface"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_typeMethode">Type méthode</label>
+            <div class="col-sm-9">
+                <select class="form-control" name="typeMethode" ng-model="vm.interfaceUtilisateur.typeMethode" id="field_typeMethode">
+                    <option value="TRANSFERT">TRANSFERT</option>
+                    <option value="DEBIT">DEBIT</option>
+                    <option value="CREDIT">CREDIT</option>
+                    <option value="CONSULTATION">CONSULTATION</option>
+                    <option value="CONSULTATIONSOLDE">CONSULTATIONSOLDE</option>
+                    <option value="CONSULTATIONHIST">CONSULTATIONHIST</option>
+                    <option value="ENVOISMS">ENVOISMS</option>
+                    <option value="ENVOIMAIL">ENVOIMAIL</option>
+                    <option value="INFOCLIENT">INFOCLIENT</option>
+                    <option value="CARTEMOUVEMENT">CARTEMOUVEMENT</option>
+                    <option value="GETMONTANT">GETMONTANT</option>
+                    <option value="CONSULTATIONFACTURE">CONSULTATIONFACTURE</option>
+                    <option value="VERIFREGLEFACTURIER">VERIFREGLEFACTURIER</option>
+                    <option value="GETAIRTIME">GETAIRTIME</option>
+                    <option value="GETINFOS">GETINFOS</option>
+                    <option value="SETTLEMENT">SETTLEMENT</option>
+                    <option value="SENDFILEMAIL">SENDFILEMAIL</option>
+                    <option value="SENDFILEFTP">SENDFILEFTP</option>
+                    <option value="GETDATA">GETDATA</option>
+                    <option value="GETCARDLESSTOKEN">CARDLESS TOKEN</option>
+                    <option value="TRANSACTIONSTATUS">TRANSACTIONSTATUS</option>
+                    <option value="PING">PING SYSTEME</option>
+                    <option value="LISTEFACTURIER">LISTEFACTURIER</option>
+                    <option value="TRAITEOTP">TRAITEOTP</option>
+                      <option value="GETDATATRANSACTION">GETDATATRANSACTION</option>
+                        <option value="STOPPAGE">GET OPPOSITION</option>
+                    <option value="NOP">NOP</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_fournisseurService">Fournisseur Service</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="field_fournisseurService" name="fournisseurService" 
+                    ng-model="vm.interfaceUtilisateur.fournisseurService" 
+                    ng-options="fournisseurService as fournisseurService.nom for fournisseurService in vm.fournisseurservices track by fournisseurService.id" 
+                    ng-change="vm.getMethode(vm.interfaceUtilisateur.fournisseurService)">
+                    <option value="">Sélectionnez un fournisseur</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row" ng-show="false">
+            <label class="col-sm-3 col-form-label" for="field_Service">Service</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="field_Service" name="Service" 
+                    ng-model="vm.interfaceUtilisateur.service" 
+                    ng-options="serviceTraitement as serviceTraitement.nomService for serviceTraitement in vm.servicetraitements track by serviceTraitement.id">
+                    <option value="">Sélectionnez un service</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_methode">Méthode ou fonction</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="field_fournisseurService" name="methode" 
+                    ng-model="vm.interfaceUtilisateur.methode" 
+                    ng-options="methode as methode.nomMethode for methode in vm.methodes track by methode.id">
+                    <option value="">Sélectionnez une méthode</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_typeInterface">Type Interface</label>
+            <div class="col-sm-9">
+                <select class="form-control" name="typeInterface" ng-model="vm.interfaceUtilisateur.typeInterface" id="field_typeInterface">
+                    <option value="REQUEST">REQUEST</option>
+                    <option value="RESPONSE">RESPONSE</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal" ng-click="vm.clear()">
+            <i class="fa fa-times"></i>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <i class="fa fa-save"></i>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+
+</form>

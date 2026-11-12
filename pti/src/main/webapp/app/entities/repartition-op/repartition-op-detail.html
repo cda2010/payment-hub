@@ -1,0 +1,31 @@
+
+<div>
+    <h2><span data-translate="ptiApp.repartitionOp.detail.title">Repartition Op</span> {{vm.repartitionOp.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.repartitionOp.montant">Montant</span></dt>
+        <dd>
+            <span>{{vm.repartitionOp.montant}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.repartitionOp.acteur">Acteur</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.Acteur.' + vm.repartitionOp.acteur}}">{{vm.repartitionOp.acteur}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.repartitionOp.operation">Operation</span></dt>
+        <dd>
+            <a ui-sref="operation-detail({id:vm.repartitionOp.operationId})">{{vm.repartitionOp.operationId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="repartition-op-detail.edit({id:vm.repartitionOp.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

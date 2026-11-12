@@ -1,0 +1,21 @@
+{
+    "ptiApp": {
+        "chargementCompte" : {
+            "home": {
+                "title": "Chargement comptes",
+                "createLabel": "Créer un nouveau Chargement Compte",
+                "createOrEditLabel": "Créer ou éditer un Chargement Compte"
+            },
+            "created": "Un nouveau Chargement Compte a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Chargement Compte avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Chargement Compte avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Chargement Compte {{ id }} ?"
+            },
+            "detail": {
+                "title": "Chargement Compte"
+            },
+            "nom_fichier": "Nom Fichier"
+        }
+    }
+}

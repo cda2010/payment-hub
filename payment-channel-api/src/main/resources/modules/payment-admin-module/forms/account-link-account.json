@@ -1,0 +1,46 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "phoneNumber",
+        "key": "phoneNumber",
+        "label": "Numéro / MSISDN à rattacher",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "accountAlias",
+        "label": "Alias (optionnel)",
+        "input": true,
+        "placeholder": "Ex. Mon Wave"
+      },
+      {
+        "type": "textfield",
+        "key": "customerReference",
+        "label": "Référence client (optionnel)",
+        "input": true
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Numéro / MSISDN à rattacher": "Numéro / MSISDN à rattacher",
+      "Alias (optionnel)": "Alias (optionnel)",
+      "Référence client (optionnel)": "Référence client (optionnel)"
+    },
+    "en": {
+      "Numéro / MSISDN à rattacher": "Phone / MSISDN to link",
+      "Alias (optionnel)": "Alias (optional)",
+      "Référence client (optionnel)": "Customer reference (optional)"
+    }
+  }
+}

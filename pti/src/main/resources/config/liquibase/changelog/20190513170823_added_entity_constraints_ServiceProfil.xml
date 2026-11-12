@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity ServiceProfil.
+    -->
+    <changeSet id="20190513170823-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="service_profils_id"
+                                 baseTableName="service_profil_type_service"
+                                 constraintName="fk_service_profil_type_service_service_profils_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="service_profil"/>
+        <addForeignKeyConstraint baseColumnNames="type_services_id"
+                                 baseTableName="service_profil_type_service"
+                                 constraintName="fk_service_profil_type_service_type_services_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="type_service"/>
+        
+    </changeSet>
+</databaseChangeLog>

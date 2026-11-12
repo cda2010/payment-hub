@@ -1,0 +1,80 @@
+<div class="data-table-container">
+    <jhi-alert></jhi-alert>
+    
+    <!-- En-tête avec titre personnalisé -->
+    <div class="table-header-panel">
+        <div class="panel-body">
+            <h3 class="text-center">
+                <i class="pe pe-7s-network text-warning m-r-xs"></i>
+                {{vm.fournisseur.nom}} :: Agences
+            </h3>
+            <hr/>
+        </div>
+    </div>
+
+    <!-- Boutons d'action avec retour -->
+    <div class="table-actions">
+        <button class="btn btn-primary" ui-sref="fournisseur-service">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+            <span>Retour</span>
+        </button>
+        <button class="btn btn-primary" ui-sref="agence.new">
+            <span class="glyphicon glyphicon-plus"></span>
+            <span>Nouveau</span>
+        </button>
+    </div>
+
+    <!-- Tableau standardisé -->
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                     <th jh-sort-by="codeAgence"><span>code Agence</span> <span class="glyphicon glyphicon-sort"></span></th>
+                      <th jh-sort-by="nomAgence"><span>nom Agence</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="agence in vm.agences track by agence.id">
+                    <td><a ui-sref="agence-detail({id:agence.id})">{{agence.id}}</a></td>
+                      <td>{{agence.nomAgence}}</td>
+                      <td>{{agence.codeAgence}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="agence-detail({id:agence.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="agence.edit({id:agence.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="agence.delete({id:agence.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="text-center pagination-container">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" 
+                       total-items="vm.totalItems" 
+                       items-per-page="vm.itemsPerPage" 
+                       ng-model="vm.page" 
+                       ng-change="vm.transition()">
+        </uib-pagination>
+    </div>
+</div>

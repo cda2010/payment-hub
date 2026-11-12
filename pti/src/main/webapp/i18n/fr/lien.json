@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "lien" : {
+            "home": {
+                "title": "Liens",
+                "createLabel": "Créer un nouveau Lien",
+                "createOrEditLabel": "Créer ou éditer un Lien"
+            },
+            "created": "Un nouveau Lien a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Lien avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Lien avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Lien {{ id }} ?"
+            },
+            "detail": {
+                "title": "Lien"
+            },
+            "lienPotentiel": "Lien Potentiel",
+            "valider": "Valider",
+            "personne": "Personne"
+        }
+    }
+}

@@ -1,0 +1,253 @@
+<div class="container-fluid">
+    <div class="row">
+        <div>
+            <div class="well with-header" style="margin-top:10px ">
+                <div class="header bg-blue ">
+                    <div class="col-xs-8">
+                        <h4>Liste des organisations</h4>
+                    </div>
+                    <div class="no-padding-left col-xs-4">
+                        <button  class="btn btn-default  btn-circle btn-xs"
+                                       ng-click="vm.addChild()">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <div class="btn-group mr15" uib-dropdown>
+                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                                    aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                                éléments par page <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!--                filtes-->
+                    <div class="form-group">
+                        <label class="control-label" for="field_pereUOId">FSE propriétaire</label>
+                        <select name="type" id="field_pereUOId"  class="form-control"
+                                ng-model="vm.itemSearch.pereUoId"
+                                ng-options="FSE.id as FSE.libelleUniteOrganisation for FSE in vm.FSEs"
+                                ng-change="vm.init()"
+                        >
+                            <option></option>
+                        </select>
+                    </div>
+                    <button ng-if="! vm.afficheFiltre" class="btn btn-primary mt5" ng-click="vm.afficherFiltre()">
+                        <span class="glyphicon glyphicon-search" >Filtrer</span>
+                    </button>
+
+                    <div ng-if="vm.afficheFiltre" class="contaner-fluid mt5">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label" for="field_typeUo">TypeUo</label>
+                                    <select name="type" id="field_typeUo"  class="form-control"
+                                            ng-model="vm.itemSearch.typeUO"
+                                            ng-options="typeUniteOrganisation.libelleTypeUO as typeUniteOrganisation.libelleTypeUO for typeUniteOrganisation in vm.typeuniteorganisations"
+                                    >
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label" for="field_codeUO">CodeUo</label>
+                                    <input type="text"  class="form-control" name="codeUO" id="field_codeUO"
+                                           ng-model="vm.itemSearch.codeUO">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label" for="field_libelleUniteOrganisation">Nom</label>
+                                    <input type="text"  class="form-control" name="libelleUniteOrganisation" id="field_libelleUniteOrganisation"
+                                           ng-model="vm.itemSearch.libelleUniteOrganisation">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label" for="field_numeroOrdre">Ordre</label>
+                                    <input type="number"  class="form-control" name="numeroOrdre" id="field_numeroOrdre"
+                                           ng-model="vm.itemSearch.numeroOrdre">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label" for="field_groupe">Groupe</label>
+                                    <select name="groupe" id="field_groupe"  class="form-control"
+                                            ng-model="vm.itemSearch.groupeId"
+                                            ng-options="groupe.id as groupe.nom for groupe in vm.groupes"
+                                    >
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label" for="field_ville">Ville</label>
+                                    <select name="ville" id="field_ville"  class="form-control"
+                                            ng-model="vm.itemSearch.villeId"
+                                            ng-options="ville.id as ville.nom for ville in vm.villes"
+                                    >
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label" for="field_adresse">Adresse</label>
+                                    <input type="text"  class="form-control" name="numeroOrdre" id="field_adresse"
+                                           ng-model="vm.itemSearch.adresse">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div class="col-sm-12">
+                                <div class="col-sm-3">
+                                    <button ng-if="vm.afficheFiltre" class="btn btn-danger mt5" ng-click="vm.afficherFiltre()">
+                                        <span class="glyphicon glyphicon-remove"> Annuler</span>
+                                    </button>
+                                </div>
+                                <div class="col-sm-3" ng-if=" (vm.itemSearch.pereUoId && vm.itemSearch.typeUO) && vm.acti===true ">
+                                    <select class=" col-sm-5" id="filed_format" name="format" ng-model="vm.format" >
+                                        <option value="">Format</option>
+                                        <option value="PDF">PDF</option>
+                                        <option value="XLSX">XLSX</option>
+                                        <option value="CSV">CSV</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button  ng-if=" (vm.itemSearch.pereUoId && vm.itemSearch.typeUO) && vm.acti===true " ng-click="vm.genererUO()" class="btn btn-primary mt5">
+                                        <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Générer</span>
+                                    </button>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button class="btn btn-primary mt5" ng-click="vm.cherch()">
+                                        <span class="glyphicon glyphicon-search" > Chercher</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    <!--                /filtes-->
+
+                </div>
+                <div class="row primary" ng-if="vm.canShowResultCount">
+                    <i ng-if="vm.totalItems>1">{{vm.totalItems}} éléments trouvés</i>
+                    <i ng-if="vm.totalItems==1" >{{vm.totalItems}} élément trouvé</i>
+                    <i ng-if="vm.totalItems<1">Aucun résultat</i>
+                </div>
+                <table class="table table-hover">
+                    <thead class="bordered-blue">
+                    <tr>
+                        <th ng-click="vm.sortBy('libelleUniteOrganisation') ">
+                            <span>Nom</span>
+                            <span ng-if="vm.isCurrentColumn('libelleUniteOrganisation')"
+                                  ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('codeUO') ">
+                            <span>CodeUO</span>
+                            <span ng-if="vm.isCurrentColumn('codeUO')"
+                                  ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th >
+                            <span>Profil acteur</span>
+                        </th>
+                        <th ng-click="vm.sortBy('numeroOrdre') ">
+                            <span>Ordre</span>
+                            <span ng-if="vm.isCurrentColumn('numeroOrdre')"
+                                  ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th ng-click="vm.sortBy('typeUO') ">
+                            <span>TypeUO</span>
+                            <span ng-if="vm.isCurrentColumn('typeUO')"
+                                  ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th>
+                            <span>Père UO</span>
+                        </th>
+                        <th ng-click="vm.sortBy('estActif') ">
+                            <span>Est Actif ?</span>
+                            <span ng-if="vm.isCurrentColumn('estActif')"
+                                  ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                        </th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr  ng-repeat="organisation in vm.datas">
+                        <td>{{organisation.libelleUniteOrganisation}} </td>
+                        <td>{{organisation.codeUO}}</td>
+                        <td>{{organisation.profilActeurNom}}</td>
+                        <td>{{organisation.numeroOrdre}}</td>
+                        <td>{{organisation.typeUOLibelleTypeUO}}</td>
+                        <td><span>{{organisation.pereUOLibelleUniteOrganisation}}</span> </td>
+                        <td><span ng-class="{'bg-danger white':!organisation.estActif,
+                                          'bg-success white':organisation.estActif}">
+                                <span ng-if="organisation.estActif">&nbsp; Oui &nbsp;</span>
+                                <span ng-if="!organisation.estActif">&nbsp; Non &nbsp;</span>
+                            </span>
+                        </td>
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+                                <button type="button" ng-if="
+                                    organisation.typeUOLibelleTypeUO =='MARCHAND'||organisation.typeUOLibelleTypeUO =='MASTER'
+                                    ||organisation.typeUOLibelleTypeUO =='SOUS_DISTRIBUTEUR'" title="Envoyer information" ng-click="vm.sendInfoUO(organisation.id)"
+                                        class="btn btn-success btn-xs btn-round"> <span class="glyphicon glyphicon-send"></span> </button>
+                                <button type="button" title="Ajouter" ng-if="organisation.niveau>=2" ng-click="vm.addChild(organisation.id,organisation.niveau)" class="btn btn-primary shiny btn-xs btn-round">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                                <button type="button" ng-if="organisation.typeUOLibelleTypeUO =='AGENCE'||
+                                    organisation.typeUOLibelleTypeUO =='MARCHAND'||organisation.typeUOLibelleTypeUO =='MASTER'
+                                    ||organisation.typeUOLibelleTypeUO =='SOUS_DISTRIBUTEUR'" title="Ajouter des informations
+                                Complementaires" ng-click="vm.editUO(organisation.id)"
+                                        class="btn btn-success btn-xs btn-round"> <span class="fa fa fa-cog"></span> </button>
+                                <button type="submit" ng-click="vm.detail($event,organisation)"
+                                        class="btn btn-info btn-xs btn-round">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+
+                                <button has-any-authority="ROLE_ADMIN,ROLE_CRE_ORG" type="submit"
+                                        ng-click="vm.edit($event,organisation)" class="btn btn-warning btn-xs btn-round">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+
+                                <button has-any-authority="ROLE_ADMIN,ROLE_CRE_ORG" type="submit"
+                                        ng-click="vm.delete($event,organisation)" class="btn btn-danger btn-xs btn-round">
+                                    <span class="glyphicon glyphicon-remove-circle"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="center-block text-center" ng-show="vm.canShowPagination">
+                <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+                </uib-pagination>
+<!--                <ul class="pagination ng-isolate-scope ng-not-empty ng-valid">-->
+<!--                </ul>-->
+<!--                <button ng-click="vm.goBack()" ng-disabled="vm.page==1" class="btn">-->
+<!--                    <<-->
+<!--                </button>-->
+<!--                <button class="btn " ng-class="{blue:vm.page==page}" ng-click="vm.changePage(page)"-->
+<!--                        ng-repeat="page in vm.pages">{{page}}-->
+<!--                </button>-->
+<!--                <button ng ng-click="vm.go()" ng-disabled="vm.page>=vm.totalPages" class="btn">-->
+<!--                    >>-->
+<!--                </button>-->
+
+            </div>
+        </div>
+    </div>
+</div>

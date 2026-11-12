@@ -1,0 +1,187 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration will be overriden by the Spring profile you use,
+# for example application-dev.yml if you use the "dev" profile.
+#
+# More information on profiles: https://jhipster.github.io/profiles/
+# More information on configuration properties: https://jhipster.github.io/common-application-properties/
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+logging:
+  level:
+    ROOT: INFO
+    
+    com.m2i.pti: DEBUG
+management:
+    endpoints:
+        web:
+            exposure:
+                include: health,info,prometheus,metrics
+    endpoint:
+        health:
+            show-details: when_authorized
+            probes:
+                enabled: true
+    health:
+        mail:
+            enabled: false
+    tracing:
+        sampling:
+            probability: 1.0
+spring:
+    application:
+        name: OmnicanalPresentation
+    main:
+        lazy-initialization: true
+        allow-bean-definition-overriding: true
+        allow-circular-references: true
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: http://localhost:8180/realms/payment
+    cache:
+        jcache:
+            provider: org.ehcache.jsr107.EhcacheCachingProvider
+    profiles:
+        # The commented value for `active` can be replaced with valid Spring profiles to load.
+        # Otherwise, it will be filled in by maven when building the WAR file
+        # Either way, it can be overridden by `--spring.profiles.active` value passed in the commandline or `-Dspring.profiles.active` set in `JAVA_OPTS`
+        active: dev
+    jackson:
+        serialization.write_dates_as_timestamps: false
+    jpa:
+        open-in-view: false
+        hibernate:
+            ddl-auto: none
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    messages:
+        basename: i18n/messages
+    mvc:
+        favicon:
+            enabled: false
+    thymeleaf:
+        mode: XHTML
+    kafka:
+        consumer:
+            bootstrapAddress: localhost:9092
+        producer:
+            bootstrapAddress: localhost:9092  
+omnicanal:
+    security:
+        jwt-secret: omnicanal-local-jwt-hs256-signing-key-v1
+    resilience:
+        enabled: true
+        failure-threshold: 20
+        failure-rate-threshold: 50
+        open-duration-ms: 10000
+        half-open-permitted-calls: 3
+    execution:
+        public-base-url: http://localhost:5981
+
+security:
+    basic:
+        enabled: false
+    oauth2:
+        resource:
+            filter-order: 3
+
+server:
+    error:
+        include-message: never
+        include-stacktrace: never
+    session:
+        cookie:
+            http-only: true
+info:
+    project:
+        version: #project.version#
+connexion:
+    login: admin
+    password: omnic@n@l19
+   # url:  http://172.27.4.60:5980
+   # url:  http://172.27.4.60:5980
+    url:  http://localhost:5981
+    #url:  http://172.27.4.186:5981
+    #url:  http://192.99.145.232:5982
+    port: 5981
+    clientId: Omnicanalapp
+   # secretWord: my-secret-token-to-change-in-production
+    secretWord: $2a$10$bXAyslP4KRJzwraJCLccpOCWd583.f/U2TGPV6a9WP50FcNNrbaF.
+# ===================================================================
+# JHipster specific properties
+#
+# Full reference is available at: https://jhipster.github.io/common-application-properties/
+# ===================================================================
+jasypt:
+  encryptor:
+    bean: encryptorBean
+    password: ${JASYPT_ENCRYPTOR_PASSWORD:}
+    property:
+      prefix: "ENC@["
+      suffix: "]"
+jhipster:
+    async:
+        core-pool-size: 2
+        max-pool-size: 50
+        queue-capacity: 10000
+    # By default CORS is disabled. Uncomment to enable.
+    cors:
+        allowed-origins:
+            - http://localhost:4200
+            - http://127.0.0.1:4200
+            - http://localhost:4205
+            - http://127.0.0.1:4205
+            - http://localhost:4210
+            - http://127.0.0.1:4210
+            - http://localhost:4213
+            - http://127.0.0.1:4213
+            - http://localhost:8100
+            - http://127.0.0.1:8100
+            - http://localhost:9000
+            - http://127.0.0.1:9000
+        allowed-methods: GET, PUT, POST, DELETE, PATCH, OPTIONS
+        allowed-headers: "*"
+        exposed-headers: "Authorization,Link,X-Total-Count"
+        allow-credentials: true
+        max-age: 1800
+    mail:
+        from: OmnicanalPresentation@localhost
+    swagger:
+        default-include-pattern: /api/.*
+        title: OmnicanalPresentation API
+        description: OmnicanalPresentation API documentation
+        version: 0.0.1
+        terms-of-service-url:
+        contact-name:
+        contact-url:
+        contact-email:
+        license:
+        license-url:
+    ribbon:
+        display-on-active-profiles: dev
+
+springdoc:
+    api-docs:
+        path: /v3/api-docs
+    swagger-ui:
+        path: /swagger-ui.html
+        operations-sorter: method
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the JHipsterProperties above
+#
+# More documentation is available at:
+# https://jhipster.github.io/common-application-properties/
+# ===================================================================
+
+application:

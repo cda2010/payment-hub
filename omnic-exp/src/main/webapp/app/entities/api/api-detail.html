@@ -1,0 +1,43 @@
+
+<div>
+    <h2><span>Api</span> {{vm.api.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Nom Api</span></dt>
+        <dd>
+            <span>{{vm.api.nomApi}}</span>
+        </dd>
+        <dt><span>Type</span></dt>
+        <dd>
+            <span>{{vm.api.type}}</span>
+        </dd>
+        <dt><span>Host</span></dt>
+        <dd>
+            <span>{{vm.api.host}}</span>
+        </dd>
+        <dt><span>Port</span></dt>
+        <dd>
+            <span>{{vm.api.port}}</span>
+        </dd>
+        <dt><span>Code Api</span></dt>
+        <dd>
+            <span>{{vm.api.codeApi}}</span>
+        </dd>
+        <dt><span>Fournisseur Service</span></dt>
+        <dd>
+            <a ui-sref="fournisseur-service-detail({id:vm.api.fournisseurService.id})">{{vm.api.fournisseurService.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="api-detail.edit({id:vm.api.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>
+</div>

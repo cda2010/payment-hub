@@ -1,0 +1,29 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "phoneNumber",
+        "key": "phoneNumber",
+        "label": "Numéro de téléphone",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Numéro de téléphone": "Numéro de téléphone"
+    },
+    "en": {
+      "Numéro de téléphone": "Phone number"
+    }
+  }
+}

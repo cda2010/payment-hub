@@ -1,0 +1,64 @@
+<div>
+    <h2>Schema Ecritures</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="schema-ecriture.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Schema Ecriture
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Nom Schema</span></th>
+                    <th><span>Code Groovy</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="schemaEcriture in vm.schemaEcritures track by schemaEcriture.id">
+                    <td><a ui-sref="schema-ecriture-detail({id:schemaEcriture.id})">{{schemaEcriture.id}}</a></td>
+                    <td>{{schemaEcriture.nomSchema}}</td>
+                    <td>{{schemaEcriture.codeGroovy}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="schema-ecriture-detail({id:schemaEcriture.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="schema-ecriture.edit({id:schemaEcriture.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="schema-ecriture.delete({id:schemaEcriture.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                               <button type="submit"
+                                    ui-sref="ligne-schema-ecriture({idSchema:schemaEcriture.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-cog"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

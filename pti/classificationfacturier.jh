@@ -1,0 +1,6 @@
+
+entity ClassificationFacturier{
+  libelleClassification String,
+  uniteOrganisationId Long,
+  niveauSuperieurID Long,
+}

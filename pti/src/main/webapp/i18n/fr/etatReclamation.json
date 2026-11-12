@@ -1,0 +1,11 @@
+{
+  "ptiApp": {
+    "EtatReclamation": {
+      "null": "",
+      "EN_INSTANCE": "EN_INSTANCE",
+      "ATTRIBUE": "ATTRIBUE",
+      "RESOLU": "RESOLU",
+      "CLOS": "CLOS"
+    }
+  }
+}

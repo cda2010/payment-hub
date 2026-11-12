@@ -1,0 +1,180 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel m-b-none">
+                <div class="panel-body">
+                   <h3 class="m-b-xs text-center m-t-n"><i class="pe pe-7s-graph1 text-warning m-r-xs"></i> Opération Visualisation</h3>
+
+                    <p class="small">
+                        <span class="text-primary">Visualisation des transactions en temps réel</span>
+                        .
+                    </p>
+			  <hr style="border-top: 1px solid #7485e6;"/>
+                    <hr/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-filled" style="background-color: #f8f9fa; margin-top: 20px;">
+        <div class="panel-body" >
+            <div class="row">
+                <div class="col-xs-2 no-padding-left">
+                    <div class="form-group">
+                        <label for="field_numero" class="text-primary">Numéro Opération</label>
+                        <input type="text" class="form-control" name="numero" id="field_numero"
+                               ng-model="vm.numero"/>
+                    </div>
+                </div>
+                <div class="col-xs-2 no-padding-left">
+                    <div class="form-group">
+                        <label for="field_typeService" class="text-primary">Type Service</label>
+                        <select class="form-control" id="field_typeService" name="typeservice" ng-model="vm.typeService" ng-options="typeService as typeService.libelleTypeService for typeService in vm.typeServices track by typeService.id">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-2 no-padding-left">
+                    <div class="form-group">
+                        <label for="fseSrc" class="text-primary">Code Fse Source</label>
+                        <select class="form-control" id="fseSrc" name="fseSrc" ng-model="vm.fseSrc" ng-options="fournisseurService.codeFse as fournisseurService.nom for fournisseurService in vm.fournisseurServices track by fournisseurService.id">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-2 no-padding-left">
+                    <div class="form-group">
+                        <label for="fseDest" class="text-primary">Code Fse Dest</label>
+                        <select class="form-control" id="fseDest" name="fseDest" ng-model="vm.fseDest" ng-options="fournisseurService.codeFse as fournisseurService.nom for fournisseurService in vm.fournisseurServices track by fournisseurService.id">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-xs-2 no-padding-left">
+                    <div class="form-group">
+                        <label for="field_Ddebut" class="text-primary">Date Début</label>
+                        <input type="text" class="form-control" name="copdebut" id="field_Ddebut"
+                               ng-model="vm.copdebut"
+                               uib-datepicker-popup="{{dateformat}}"
+                               is-open="vm.datePickerOpenStatus.copdebut"
+                               show-button-bar="false"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default btn-xs" ng-click="vm.openCalendar('copdebut')">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xs-2 no-padding-left">
+                    <div class="form-group">
+                        <label for="field_fin" class="text-primary">Date Fin</label>
+                        <input type="text" class="form-control" name="copfin" id="field_fin"
+                               ng-model="vm.copfin"
+                               uib-datepicker-popup="{{dateformat}}"
+                               is-open="vm.datePickerOpenStatus.copfin"
+                               show-button-bar="false"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default btn-xs" ng-click="vm.openCalendar('copfin')">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-3 no-padding-left">
+                    <button class="btn btn-primary" ng-click="vm.affiche()" style="background-color: #7485e6;">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span>
+                            Chercher
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="numbertimer" id="field_timer"
+                               ng-model="vm.numbertimer"/>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-default" ng-click="vm.stopClickTimer()">
+                        <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>{{vm.label}}</span>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel panel-filled" style="background-color: #ffffff;">
+                    <div class="panel-body" style="min-height: 500px; overflow-y: auto;">
+                        <div class="table-responsive fixTableHead">
+                            <div class="form-group">
+                                <label for="itemsPerPage" class="text-primary">Éléments par page:</label>
+                                <select id="itemsPerPage" 
+                                        class="form-control" 
+                                        ng-model="vm.itemsPerPage" 
+                                        ng-options="option for option in vm.itemsPerPageOptions"
+                                        ng-change="vm.updateItemsPerPage()">
+                                </select>
+                            </div>
+                            <table class="table table-hover" id="logsTable">
+                                <thead>
+                                    <tr class="bg-primary text-white" style="background-color: #7485e6;">
+                                        <th class="text-center text-white"><span>ID</span></th>
+                                        <th class="text-center text-white"><span>Date Operation</span></th>
+                                        <th class="text-center text-white"><span>Fse Code Src</span></th>
+                                        <th class="text-center text-white"><span>Fse Source nom</span></th>
+                                        <th class="text-center text-white"><span>Fse Code Dst</span></th>
+                                        <th class="text-center text-white"><span>Fse Dest Nom</span></th>
+                                        <th class="text-center text-white"><span>Type Service</span></th>
+                                        <th class="text-center text-white"><span>Terminal</span></th>
+                                        <th class="text-center text-white"><span>Confirmé?</span></th>
+                                        <th class="text-center text-white"><span></span></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-hover">
+                                    <tr ng-repeat="operation in vm.operations.slice(((vm.currentPage-1)*vm.itemsPerPage), ((vm.currentPage)*vm.itemsPerPage)) track by operation.id">
+                                        <td class="text-center"><a ui-sref="ligne-operation({id:operation.id})" class="text-primary">{{operation.reference}}</a></td>
+                                        <td class="text-center">{{operation.dateOperation| date:'dd/MM/yyyy HH:MM:s'}}</td>
+                                        <td class="text-center"><span class="badge badge-info">{{operation.fseCodeSource}}</span></td>
+                                        <td class="text-center">{{operation.fseSourceNom}}</td>
+                                        <td class="text-center"><span class="badge badge-warning">{{operation.fseCodeDest}}</span></td>
+                                        <td class="text-center">{{operation.fseDestNom}}</td>
+                                        <td class="text-center"><span class="badge badge-success">{{operation.libelleTypeService}}</span></td>
+                                        <td class="text-center">{{operation.terminal}}</td>
+                                        <td class="text-center"><span class="badge" ng-class="{'badge-success': operation.ack, 'badge-danger': !operation.ack}">{{operation.ack}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-center">
+                                <ul uib-pagination
+                                    total-items="vm.totalItems"
+                                    ng-model="vm.currentPage"
+                                    items-per-page="vm.itemsPerPage"
+                                    max-size="vm.maxSize"
+                                    class="pagination-sm"
+                                    boundary-links="true"
+                                    force-ellipses="true"
+                                    first-text="&laquo;"
+                                    previous-text="&lsaquo;"
+                                    next-text="&rsaquo;"
+                                    last-text="&raquo;">
+                                </ul>
+                                <div class="pagination-info text-primary">
+                                    Affichage {{((vm.currentPage-1)*vm.itemsPerPage) + 1}} à {{Math.min(vm.currentPage*vm.itemsPerPage, vm.totalItems)}} sur {{vm.totalItems}} éléments
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

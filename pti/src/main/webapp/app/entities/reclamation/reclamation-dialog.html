@@ -1,0 +1,132 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation class="form-horizontal ">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="mytypeReclamtionLabel" >Informations sur la reclamation</h4>
+    </div>
+    <div class="modal-body ">
+       <div class="container-fluid">
+           <div class="col-sm-6">
+               <fieldset  class="p10 mf-fieldset">
+                       <legend>Informations générales</legend>
+                   <div class="form-group">
+                       <label class="control-label col-sm-4" mf-required  for="field_type">Titre</label>
+                       <div class="col-sm-7">
+                           <select name="type" id="field_type" ng-disabled="vm.isViewing" class="form-control"
+                                   ng-model="vm.reclamation.typeReclamation.id"
+                                   ng-options="type.id as type.libelleTypeReclamation for type in vm.typeReclamations" required
+                           >
+                           </select>
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <label class="control-label col-sm-4" mf-required  for="field_contenu">Contenu</label>
+                       <div class="col-sm-7">
+                        <textarea ng-disabled="vm.isViewing" class="form-control" name="libelle" id="field_contenu" cols="30" rows="6"
+                                  ng-model="vm.reclamation.contenu" required
+                        >
+                        </textarea>
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <label class="control-label col-sm-4" mf-required  for="field_date_creation">Créée le</label>
+                       <div class="col-sm-7">
+                           <input type="text" ng-disabled="true" class="form-control" name="date_creation" id="field_date_creation"
+                                  value="{{vm.reclamation.dateHeureCreation|date:'medium'}}">
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <label class="control-label col-sm-4" mf-required  for="field_date_modification">Modifiée le</label>
+                       <div class="col-sm-7">
+                           <input type="text" ng-disabled="true" class="form-control" name="date_modification" id="field_date_modification"
+                                  value="{{vm.reclamation.dateModification|date:'medium'}}">
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <label class="control-label col-sm-4" mf-required  for="field_etat">Etat</label>
+                       <div class="col-sm-7">
+                           <select ng-disabled="vm.isViewing" class="form-control" name="etat" id="field_etat"
+                                   ng-model="vm.reclamation.etat" ng-options="etat for etat in vm.etats ">
+
+                           </select>
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <label class="control-label col-sm-4" mf-required  for="field_document">Document</label>
+                       <div class="col-sm-7">
+                           <input type="text" ng-disabled="vm.isViewing" class="form-control" name="document" id="field_document"
+                                  ng-model="vm.reclamation.document">
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <label class="control-label col-sm-4" mf-required  for="field_solution">Solution</label>
+                       <div class="col-sm-7">
+                       <textarea ng-disabled="vm.isViewing" class="form-control" name="solution" id="field_solution" cols="30" rows="6"
+                                 ng-model="vm.reclamation.solution"
+                       >
+                        </textarea>
+                       </div>
+                   </div>
+               </fieldset>
+           </div>
+           <div class="col-sm-6">
+               <fieldset  class="p10 mf-fieldset">
+                       <legend>Autres</legend>
+                   <div class="form-group">
+                       <label class="control-label col-sm-4" mf-required  for="field_qualite">Qualité Auteur</label>
+                       <div class="col-sm-7">
+                           <select ng-disabled="vm.isViewing" class="form-control" name="qualite" id="field_qualite"
+                                   ng-model="vm.reclamation.qualiteAuteur" ng-options="qualite for qualite in vm.qualiteAuteurs">
+
+                           </select>
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <label class="control-label col-sm-4" mf-required  for="field_code_auteur">Code Auteur</label>
+                       <div class="col-sm-7">
+                           <input type="text" ng-disabled="vm.isViewing" class="form-control" name="telephone" id="field_code_auteur"
+                                  ng-model="vm.reclamation.codeAuteur">
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <label class="control-label col-sm-4" mf-required  for="field_telephone">Télephone Auteur</label>
+                       <div class="col-sm-7">
+                           <input type="text" ng-disabled="vm.isViewing" class="form-control" name="telephone" id="field_telephone"
+                                  ng-model="vm.reclamation.telephone">
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <label class="control-label col-sm-4" mf-required  for="field_tache">Tache</label>
+                       <div class="col-sm-7">
+                           <input type="text" ng-disabled="vm.isViewing" class="form-control" name="tache" id="field_tache"
+                                  ng-model="vm.reclamation.tache">
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <label class="control-label col-sm-4" mf-required  for="field_attribueA">Attribuée à</label>
+                       <div class="col-sm-7">
+                           <input type="text" ng-disabled="vm.isViewing" class="form-control" name="attribueA" id="field_attribueA"
+                                  ng-model="vm.reclamation.attribueA">
+                       </div>
+                   </div>
+               </fieldset>
+           </div>
+       </div>
+    </div>
+   <div class="modal-footer col">
+       <div class="col-sm-12">
+           <button type="button" ng-if="!vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+               <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+           </button>
+           <button type="submit" ng-if="!vm.isViewing" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+               <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+           </button>
+           <button type="button" ng-if="vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+               <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+               <span>Fermer</span>
+           </button>
+       </div>
+    </div>
+</form>

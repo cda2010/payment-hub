@@ -1,0 +1,780 @@
+<form ng-disabled="vm.isViewing" name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation
+      class="form-horizontal well">
+    <div class="modal-header">
+        <h4 class="modal-title" ng-if="!vm.isViewing" id="labelInfos">
+            <span ng-if="vm.personneB.typePersonne=='PHYSIQUE'">Enregistrement d'un client</span>
+            <span ng-if="vm.personneB.typePersonne=='MORALE'">Enregistrement d'une entreprise</span>
+        </h4>
+        <h4 class="modal-title" ng-if="vm.isViewing" id="labelInfos">Informations du client</h4>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div id="simplewizard" class="wizard" data-target="#simplewizard-steps">
+                    <ul class="steps">
+                        <li ng-if="step!='Comptes'||vm.clientSaved" data-target="#simplewizardstep1"
+                            ng-repeat="step in vm.steps"
+                            ng-class="{active: $index==vm.getCurrentStepIndex()}">
+                            <span class="step">{{$index+1}}</span>{{step}}<span class="chevron"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="step-content" id="simplewizard-steps">
+                    <div ng-if="vm.showOnglet('Informations')" class="step-pane active"
+                         ng-class="{active: $index==vm.getCurrentStepIndex()}" id="simplewizardstep1">
+<!--                                                <div class="row" ng-if="!vm.isViewing">
+                                                    <button type="button" ng-click="vm.searchPersonne()" class="btn-info">
+                                                        <span class="glyphicon glyphicon-search"></span>
+                                                        <span>Rechercher le client</span>
+                                                    </button>
+                                                      <button type="button" ng-click="vm.detailsPersonne()" class="btn-info">
+                                                        <span class="glyphicon glyphicon-search"></span>
+                                                        <span>Rechercher le client</span>
+                                                    </button>
+                                                </div>-->
+                        <div class="row">
+
+                            <div class="col-sm-6">
+                                <div class="form-group ">
+                                    <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                           data-translate="ptiApp.personne.typePersonne" for="field_typePersonne">Type
+                                        Personne</label>
+                                    <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                                        <select ng-disabled="vm.isViewing||vm.typeDesabled" class="form-control"
+                                                name="typePersonne"
+                                                ng-model="vm.personneB.typePersonne" id="field_typePersonne">
+                                            <option value="PHYSIQUE" data-translate="ptiApp.TypePersonne.PHYSIQUE">
+                                                PHYSIQUE
+                                            </option>
+                                            <option value="MORALE" data-translate="ptiApp.TypePersonne.MORALE">MORALE
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group" ng-class="{'has-error': editForm.telephone.$invalid}">
+                                    <label mf-required class="control-label col-sm-4"
+                                           data-translate="ptiApp.personne.telephone"
+                                           for="field_telephone">Telephone</label>
+                                    <div class="col-sm-2">
+                                        <select ng-disabled="vm.isViewing" class="form-control input-xs" required
+                                                id="field_nationalite" name="nationalite"
+                                                ng-model="vm.personneB.codePaysTelephone"
+                                                ng-options="nationalite.code as nationalite.libelle for nationalite in vm.nationalites">
+                                            <option value="">Code</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <span class="input-icon icon-right">
+                                            <input required autocomplete="off" ng-disabled="vm.isViewing || vm.personneB.id "  type="text"
+                                                   class="form-control input-xs" name="telephone" id="field_telephone"
+                                                   ng-pattern="/^[0-9]*$/"
+                                                    ng-model="vm.personneB.telephone"
+                                                    />
+                                            <!-- <span class="fa fa-eye validity"></span> -->
+                                            <!-- min="0" oninput="validity.valid||(value=''); ng-pattern="/^[0-9]*$/""-->
+                                        </span>
+                                    </div>
+                                </div>
+                                <div ng-if="vm.personneB.typePersonne=='PHYSIQUE' ">
+                                    <div class="form-group"  >
+                                        <label mf-required class="col-sm-4 control-label"
+                                               for="field_nomClient">Nom</label>
+                                        <div class="col-xs-6 col-sm-6 col-lg-6">
+                                            <input autocomplete="off" required
+                                                   ng-disabled="vm.estCompteBanqueB=='OUI' || vm.isViewing " type="text"
+                                                   class="form-control input-xs" name="nomClient" id="field_nomClient"
+                                                   style="text-transform: uppercase;" ng-model="vm.personnePhysiqueB.nomClient"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label mf-required class="col-sm-4 control-label"
+                                               for="field_nomClient">Prénom</label>
+                                        <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                                            <input autocomplete="off" required
+                                                   ng-disabled="vm.estCompteBanqueB=='OUI'|| vm.isViewing " type="text"
+                                                   class="form-control input-xs" name="nomClient"
+                                                   id="field_prenomClient" style="text-transform: uppercase;"
+                                                   ng-model="vm.personnePhysiqueB.prenomClient"  />
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error': editForm.dateNaissance.$invalid}" >
+                                        <label class=" col-sm-4 control-label" mf-required
+                                               data-translate="ptiApp.personnePhysique.dateNaissance"
+                                               for="field_dateNaissance">Date Naissance</label>
+                                        <div class="col-sm-6">
+                                            <div class="input-group">
+                                                <input autocomplete="off" required
+                                                       ng-disabled="vm.estCompteBanqueB=='OUI' || vm.isViewing"
+                                                       popup-placement="top" id="field_dateNaissance"
+                                                       show-button-bar="false" type="text" class="form-control input-xs"
+                                                       name="dateNaissance" uib-datepicker-popup="dd/MM/yyyy"
+                                                       ng-model="vm.personnePhysiqueB.dateNaissance"
+                                                       is-open="vm.datePickerOpenStatus.dateNaissance"
+                                                       uib-datepicker-popup="dd/MM/yyyy"/>
+                                                <span ng-if="!vm.isViewing" class="input-group-btn">
+                                                    <button type="button" class="btn btn-default btn-xs"
+                                                            ng-click="vm.openCalendar('dateNaissance')"><i
+                                                            class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label  class=" col-sm-4 control-label"
+                                               for="field_nom_mere_cl">Nom Mère</label>
+                                        <div class="col-sm-6">
+                                            <input
+                                                    ng-disabled="vm.isViewing"
+                                                    id="field_nom_mere_cl"
+                                                    type="text" class="form-control input-xs"
+                                                    name="nomMereClient"
+                                                    ng-model="vm.personnePhysiqueB.nomMereClient"
+                                                    />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label"
+                                               data-translate="ptiApp.personnePhysique.lieuNaissance"
+                                               for="field_lieuNaissance">Lieu Naissance</label>
+                                        <div class="col-sm-6">
+                                            <input autocomplete="off"
+                                                   ng-disabled="vm.estCompteBanqueB=='OUI' || vm.isViewing" type="text"
+                                                   class="form-control input-xs" name="lieuNaissance"
+                                                   id="field_lieuNaissance"
+                                                   ng-model="vm.personnePhysiqueB.lieuNaissance"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label mf-required class="control-label col-sm-4"
+                                               for="field_personnePrevenir">Personne à prévenir</label>
+                                        <div class="col-sm-6">
+                                            <input autocomplete="off" required type="text" class="form-control"
+                                                   name="personnePrevenir" id="field_personnePrevenir"
+                                                   ng-model="vm.personnePhysiqueB.personnePrevenir"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class=" col-sm-4 control-label" for="field_nationalite">Pays de
+                                            naissance</label>
+                                        <div class="col-sm-6">
+                                            <select ng-disabled="vm.isViewing" class="form-control input-xs"
+                                                    id="field_nationalite" name="nationalite"
+                                                    ng-model="vm.personnePhysiqueB.nationaliteId"
+                                                    ng-options="nationalite.id as nationalite.libelle for nationalite in vm.nationalites">
+                                                <option value="">Choisir</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class=" col-sm-4 control-label" mf-required
+                                               data-translate="ptiApp.personnePhysique.sexe"
+                                               for="field_sexe">Sexe</label>
+                                        <div class="col-xs-6 col-sm-6 col-lg-6">
+                                            <select required ng-disabled="vm.estCompteBanqueB=='OUI' || vm.isViewing"
+                                                    class="form-control input-xs" name="sexe"
+                                                    ng-model="vm.personnePhysiqueB.sexe" id="field_sexe">
+                                                <option value="MASCULIN" data-translate="ptiApp.Sexe.MASCULIN">MASCULIN
+                                                </option>
+                                                <option value="FEMININ" data-translate="ptiApp.Sexe.FEMININ">FEMININ
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div ng-if="vm.personneB.typePersonne=='MORALE' ">
+                                    <div class="form-group ">
+                                        <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4 "
+                                               data-translate="ptiApp.personneMorale.raisonSociale "
+                                               for="field_raisonSociale ">Raison Sociale</label>
+                                        <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                                            <input autocomplete="off"
+                                                   ng-disabled="vm.estCompteBanqueB=='OUI' || vm.isViewing" type="text "
+                                                   class="form-control " name="raisonSociale " id="field_raisonSociale "
+                                                   ng-model="vm.personneMoraleB.raisonSociale " required/>
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="vm.personneB.typePersonne=='MORALE' ">
+                                        <div class="form-group">
+                                            <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4 "
+                                                   for="field_raisonSociale ">Siège Sociale</label>
+                                            <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                                                <input autocomplete="off"
+                                                       ng-disabled="vm.isViewing" type="text "
+                                                       class="form-control " name="siegeSocial " id="field_siegeSocial "
+                                                       ng-model="vm.personneMoraleB.siegeSocial " required/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="vm.personneB.typePersonne=='MORALE' " class="form-group ">
+                                        <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4 "
+                                               for="field_registreCommerce ">RCCM</label>
+                                        <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                                            <input autocomplete="off" required
+                                                   ng-disabled="vm.estCompteBanqueB=='OUI' || vm.isViewing" type="text "
+                                                   class="form-control " name="registreCommerce "
+                                                   id="field_registreCommerce "
+                                                   ng-model="vm.personneMoraleB.registreCommerce "/>
+                                        </div>
+
+                                    </div>
+
+                                    <div ng-if="vm.personneB.typePersonne=='MORALE' " class="form-group" ng-class="{'has-error': editForm.dateDelivranceB.$invalid}" >
+                                        <label class="control-label col-sm-4">Date Delivrance RCCM</label>
+                                        <div class="col-sm-6">
+                                            <div class="input-group">
+                                                <input autocomplete="off" show-button-bar="false" popup-placement="top"
+                                                       id="field_dateRCCM" type="text" class="form-control"
+                                                       name="dateDelivranceB" uib-datepicker-popup="dd/MM/yyyy"
+                                                       ng-model="vm.personneMoraleB.dateRCCM"
+                                                       is-open="vm.datePickerOpenStatus.dateRCCM"/>
+                                                <span ng-if="!vm.isViewing" class="input-group-btn">
+                                                    <button type="button" class="btn btn-default btn-xs"
+                                                            ng-click="vm.openCalendar('dateRCCM')"><i
+                                                            class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group ">
+                                        <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4 "
+                                               for="field_numreoIfu ">Identité fiscale</label>
+                                        <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                                            <input autocomplete="off" required
+                                                   ng-disabled="vm.estCompteBanqueB=='OUI' || vm.isViewing" type="text "
+                                                   class="form-control " name="numreoIfu " id="field_numreoIfu "
+                                                   ng-model="vm.personneMoraleB.numreoIfu "/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label col-sm-4 col-xs-4 col-lg-4 "
+                                               for="field_dirigeant ">Nom du dirigeant</label>
+                                        <div class="col-xs-6 col-sm-6 col-lg-6 ">
+                                            <input autocomplete="off"
+                                                   ng-disabled="vm.isViewing" type="text "
+                                                   class="form-control " name="dirigeant " id="field_dirigeant "
+                                                   ng-model="vm.personneMoraleB.dirigeant "/>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group " ng-class="{'has-error': editForm.emailP.$invalid}">
+                                    <label  class="col-sm-4 control-label"
+                                           for="field_email">Email</label>
+                                    <div class="col-sm-6 " >
+                                        <input autocomplete="off" ng-disabled="vm.isViewing" type="email"
+                                               class="form-control input-xs" name="emailP" id="field_email"
+                                               ng-model="vm.personneB.email"
+                                               ng-required="vm.personneB.typePersonne!='PHYSIQUE'"/>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label  class="col-sm-4 control-label"
+                                           for="field_adresse">Adresse</label>
+                                    <div class="col-sm-6 ">
+                                        <input autocomplete="off"  ng-disabled="vm.isViewing" type="text"
+                                               class="form-control input-xs" name="adresse" id="field_adresse"
+                                               ng-model="vm.personneB.adresse"/>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="col-sm-4 control-label"
+                                           for="field_salaire">Salaire</label>
+                                    <div class="col-sm-6 ">
+                                        <input autocomplete="off"  ng-disabled="vm.isViewing" type="text"
+                                               class="form-control input-xs" name="salaire" id="field_salaire"
+                                               ng-model="vm.personneB.clientSalaire"/>
+                                    </div>
+                                </div>
+
+
+                                <div ng-if="vm.personneB.typePersonne=='PHYSIQUE'" class="form-group">
+                                    <label class=" col-sm-4 control-label" for="field_nationalite">Pays de
+                                        résidence</label>
+                                    <div class="col-sm-6">
+                                        <select ng-disabled="vm.isViewing" class="form-control input-xs"
+                                                id="field_nationalite" name="nationalite"
+                                                ng-model="vm.personnePhysiqueB.paysResidenceId"
+                                                ng-options="nationalite.id as nationalite.libelle for nationalite in vm.nationalites">
+                                            <option value="">Choisir</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            <!--    ng-change="vm.getFournisseurMonnaie(vm.personneB.paysCompteId)"
+                                ng-options="pays.id as pays.libelleUniteOrganisation for pays in vm.pays"-->
+                                <div class="form-group">
+                                    <label mf-required class="control-label col-sm-4"
+                                           for="field_paysEm">Pays compte</label>
+                                    <div class="col-sm-6">
+                                        <select required ng-disabled="vm.isViewing || vm.isFraisDispo"
+                                                class="form-control input-xs" id="field_paysEm" name="pays"
+                                                ng-change="vm.getFournisseurMonnaie(vm.personneB.paysCompteId)"
+                                                ng-model="vm.personneB.paysCompteId"
+                                                ng-options="pays.id as pays.libelleUniteOrganisation for pays in vm.pays">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                    <label class="control-label col-sm-4"
+                                           for="infosupp">Info supplementaire</label>
+                                    <div class="col-sm-6">
+                                        <select
+                                                class="form-control input-xs" id="infosupp" name="infosupp"
+                                                ng-model="vm.client.infosuppId"
+                                                ng-options="infosupp.id as infosupp.libelle for infosupp in vm.infosupp">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="control-label col-sm-4" for="memo">Memo</label>
+                                    <div class="col-sm-6">
+                                        <textarea
+                                                class="form-control input-xs"
+                                                id="memo"
+                                                name="memo"
+                                                ng-model="vm.personneB.memo"
+                                                rows="4">
+                                        </textarea>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <fieldset class="mf-fieldset">
+                                    <legend>Localite</legend>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-4"
+                                               for="field_referencePiece">Region</label>
+                                        <div class="col-sm-6">
+                                            <input autocomplete="off" type="text" class="form-control"
+                                                   name="nomRegion" id="field_nomRegion"
+                                                   ng-model="vm.localite.nomRegion" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-4"
+                                               for="field_referencePiece">Province</label>
+                                        <div class="col-sm-6">
+                                            <input autocomplete="off" type="text" class="form-control"
+                                                   name="nomProvince" id="field_province"
+                                                   ng-model="vm.localite.nomProvince" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-4"
+                                               for="field_referencePiece">Commune</label>
+                                        <div class="col-sm-6">
+                                            <input autocomplete="off" type="text" class="form-control"
+                                                   name="nomCommune" id="field_commune"
+                                                   ng-model="vm.localite.nomCommune" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-4"
+                                               for="field_referencePiece">Ville</label>
+                                        <div class="col-sm-6">
+                                            <input autocomplete="off" type="text" class="form-control"
+                                                   name="nomVille" id="field_ville"
+                                                   ng-model="vm.localite.nomVille" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="mf-fieldset" ng-disabled="vm.isViewing">
+                                    <legend ng-if="vm.personneB.typePersonne=='PHYSIQUE'">Document d'identification</legend>
+                                    <legend ng-if="vm.personneB.typePersonne=='MORALE'">Document d'identification du gérant</legend>
+                                    <div class="form-group">
+
+                                        <label mf-required class="control-label col-sm-4"
+                                               data-translate="ptiApp.piece.typePiece" for="field_typePiece">Type
+                                            Piece</label>
+                                        <div class="col-sm-6">
+                                            <select required class="form-control" id="field_typePiece" name="typePiece"
+                                                    ng-model="vm.pieceB.typePieceId"
+                                                    ng-options="typePiece.id as typePiece.libelleTypePiece for typePiece in vm.typepieces">
+                                                <option value="">Choisir</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <label mf-required class="control-label col-sm-4"
+                                               data-translate="ptiApp.piece.referencePiece"
+                                               for="field_referencePiece">Reference Piece</label>
+                                        <div class="col-sm-6">
+                                            <input autocomplete="off" type="text" class="form-control"
+                                                   name="referencePiece" id="field_referencePiece"
+                                                   ng-model="vm.pieceB.referencePiece" required/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error': editForm.dateDelivranceB.$invalid}">
+                                        <label class="control-label col-sm-4" mf-required
+                                               data-translate="ptiApp.piece.dateDelivrance" for="field_dateDelivrance">Date
+                                            Delivrance</label>
+                                        <div class="col-sm-6">
+                                            <div class="input-group">
+                                                <input required autocomplete="off" show-button-bar="false" popup-placement="top"
+                                                       id="field_dateDelivrance" type="text" class="form-control input-xs"
+                                                       name="dateDelivranceB" uib-datepicker-popup="dd/MM/yyyy"
+                                                       ng-model="vm.pieceB.dateDelivrance"
+                                                       is-open="vm.datePickerOpenStatus.dateDelivranceB"/>
+                                                <span ng-if="!vm.isViewing" class="input-group-btn">
+                                                    <button type="button" class="btn btn-default btn-xs"
+                                                            ng-click="vm.openCalendar('dateDelivranceB')"><i
+                                                            class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error': editForm.dateExpirationE.$invalid}">
+                                        <label mf-required class="control-label col-sm-4"
+                                               data-translate="ptiApp.piece.dateExpiration" for="field_dateExpiration">Date
+                                            Expiration</label>
+                                        <div class="col-sm-6">
+                                            <div class="input-group">
+                                                <input autocomplete="off" required id="field_dateExpiration"
+                                                       show-button-bar="false" popup-placement="top" type="text"
+                                                       class="form-control" name="dateExpirationE"
+                                                       uib-datepicker-popup="dd/MM/yyyy"
+                                                       ng-model="vm.pieceB.dateExpiration"
+                                                       is-open="vm.datePickerOpenStatus.dateExpirationE"/>
+
+                                                <span ng-if="vm.verifDate(vm.pieceB.dateExpiration) && !vm.isViewing"
+                                                      class="label label-danger">Le document d'identification a
+                                                    expiré!</span>
+                                                <span ng-if="!vm.isViewing" class="input-group-btn">
+                                                    <button type="button" class="btn btn-default btn-xs"
+                                                            ng-click="vm.openCalendar('dateExpirationE')"><i
+                                                            class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label mf-required class="control-label col-sm-4"
+                                               data-translate="ptiApp.piece.lieuDelivrance" for="field_lieuDelivrance">Lieu
+                                            Delivrance</label>
+                                        <div class="col-sm-6">
+                                            <input autocomplete="off" required type="text" class="form-control"
+                                                   name="lieuDelivrance" id="field_lieuDelivrance"
+                                                   ng-model="vm.pieceB.lieuDelivrance"/>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+
+                                <fieldset class="mf-fieldset">
+                                    <legend>Profil client pour les services</legend>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-4" for="profil" mf-required>Choisir</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-control" id="profil" name="profil"
+                                                    ng-disabled="vm.isViewing" ng-model="vm.client.profilId"
+                                                    ng-options="profil.id as profil.nom for profil in vm.profils"
+                                                    required>
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="mf-fieldset">
+                                    <legend>Groupe Profil</legend>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-4" for="group" mf-required>Choisir</label>
+                                        <div class="col-sm-6">
+                                            <select required class="form-control" id="group" name="profil"
+                                                    ng-disabled="vm.isViewing" ng-model="vm.client.groupeProfilActeurId"
+                                                    ng-options="group.id as group.nom for group in vm.groupeProfils">
+                                                <!--                                            ng-change="vm.findProfils(vm.client.groupeProfilActeurId)"-->
+
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <!--                                <fieldset class="mf-fieldset">-->
+                                <!--                                    <legend>Profil client pour les plafonds</legend>-->
+                                <!--                                    -->
+                                <!--                                 -->
+                                <!--                                    <div class="form-group">-->
+                                <!--                                        <label class="control-label col-sm-4" for="profil" mf-required>Choisir</label>-->
+                                <!--                                        <div class="col-sm-6">-->
+                                <!--                                            <select class="form-control" id="profil" name="profil"-->
+                                <!--                                                ng-disabled="vm.isViewing" ng-model="vm.client.profilActeurId"-->
+                                <!--                                                ng-options="profilActeur.id as profilActeur.nom for profilActeur in vm.profilActeurs" required>-->
+                                <!--                                                <option value=""></option>-->
+                                <!--                                            </select>-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                </fieldset>-->
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="step-pane active" ng-class="{active: $index==vm.getCurrentStepIndex()}"
+                         id="simplewizardstep3" ng-if="vm.showOnglet('Documents')">
+                        <div class="row">
+                            <div class="col-sm-11 col-sm-offset-1">
+                                <div class="container">
+                                    <div>
+                                        <div class="form-group" ng-if="!vm.isViewing">
+                                            <label class="col-sm-4 control-label"
+                                                   data-translate="ptiApp.document.typeDocument"
+                                                   for="field_typeDocument">Type Document</label>
+                                            <div class="col-sm-6">
+                                                <select class="form-control" id="field_typeDocument" name="typeDocument"
+                                                        ng-model="vm.document.typeDocumentId"
+                                                        ng-options="typeDocument.id as typeDocument.libelle for typeDocument in vm.typedocuments">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div ng-if="!vm.isViewing" class="form-group mb5" ngf-drop
+                                             ngf-change="vm.setAutotification($file, vm.document)"
+                                             ngf-pattern="'image/*'">
+                                            <label class="control-label col-sm-4" for="field_photo">Contenu</label>
+                                            <div class="col-sm-6">
+                                                <img class="col-sm-10"
+                                                     data-ng-src="{{'data:' + vm.document.valeurContentType + ';base64,' + vm.document.valeur}}"
+                                                     style="max-height: 100px; max-width: 100px;"
+                                                     ng-if="vm.document.valeur" alt="Photo du client..."/>
+                                                <div ng-if="vm.document.valeur" class="help-block clearfix text-center"
+                                                     class="col-sm-2">
+                                                    <button ng-if="!vm.isViewing" type="button"
+                                                            ng-click="vm.document.valeur=null;vm.document.valeurContentType=null;"
+                                                            class="btn btn-default btn-xs pull-right text-danger">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </button>
+                                                </div>
+                                                <button ng-if="!vm.isViewing" type="button" ngf-select
+                                                        class="btn btn-default col-sm-12"
+                                                        ngf-change="vm.setAutotification($file, vm.document,'IDENTITE')"
+                                                        accept="image/*">
+                                                    Charger le document...
+                                                </button>
+                                            </div>
+                                            <input autocomplete="off" type="hidden" class="form-control" name="photo"
+                                                   id="field_photo" ng-model="vm.document.valeur"/>
+                                            <input autocomplete="off" type="hidden" class="form-control"
+                                                   name="photoContentType" id="field_photoContentType"
+                                                   ng-model="vm.document.valeurContentType"/>
+                                        </div>
+                                        <div ng-if="!vm.isViewing" class="row">
+                                            <div class="col-sm-offset-5">
+                                                <button type="button" ng-click="vm.reset()" class="btn btn-sm">
+                                                    <span>&times;</span>&nbsp;<span>Annuler</span>
+                                                </button>
+                                                <button type="button" ng-click="vm.addDocument()"
+                                                        ng-disabled="editForm.$invalid || vm.isSaving"
+                                                        class="btn btn-primary btn-sm">
+                                                    <span
+                                                            class="glyphicon glyphicon-save"></span>&nbsp;<span>Ajouter</span>
+                                                </button>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div ng-if="!vm.isViewing" class="row ">
+                                        <div class="mb5"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-8 col-sm-offset-2">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading text-center">
+                                                            <h4>
+                                                                Liste des documents
+                                                            </h4>
+                                                        </div>
+                                                        <table class=" table ">
+                                                            <thead>
+                                                            <tr class="mf-table-header">
+                                                                <th class="col-xs-2">
+                                                                    Type
+                                                                </th>
+                                                                <th>
+                                                                    Document
+                                                                </th>
+                                                                <th ng-if="!vm.isViewing"
+                                                                    class="text-right col-xs-2">Actions
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody style="min-height: 100px;">
+                                                            <tr ng-repeat="document in vm.documents">
+                                                                <td class="col-xs-2">
+                                                                    {{document.typeDocumentLibelle}}
+                                                                </td>
+                                                                <td class="" ng-if="document.imageFolder===null">
+                                                                    <a style="color: black;" ng-if="document.valeur"
+                                                                       ng-click="vm.openFile(document)"
+                                                                       data-translate="entity.action.open">open</a>
+                                                                    <span ng-if="document.valeur">{{document.valeurContentType}},
+                                                                                {{vm.byteSize(document.valeur)}}</span>
+                                                                </td>
+                                                                <td class="" ng-if="document.imageFolder!==null">
+                                                                    <a style="color: black;"
+                                                                       ng-click="vm.openFile(document)"
+                                                                       data-translate="entity.action.open">open</a>
+                                                                </td>
+                                                                <td ng-if="!vm.isViewing" class="text-right col-xs-2" >
+                                                                    <div class="btn-group flex-btn-group-container">
+                                                                        <button type="button"
+                                                                                ng-click="vm.editDocument($index,document)"
+                                                                                class="btn btn-success shiny btn-xs btn-circle">
+                                                                                <span
+                                                                                        class="glyphicon glyphicon-pencil"></span>
+                                                                        </button>
+                                                                        <button type="button" data-toggle="tooltip"
+                                                                                data-original-title="Supprimer"
+                                                                                ng-click="vm.removeDocument($index)"
+                                                                                class="btn btn-danger shiny btn-xs btn-circle ">
+                                                                                <span
+                                                                                        class="glyphicon glyphicon-remove-circle"></span>
+                                                                        </button>
+                                                                    </div>
+                                                                </td>
+
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="step-pane active" ng-class="{active: $index==vm.getCurrentStepIndex()}"
+                         id="simplewizardstep2" ng-if="vm.showOnglet('Comptes')">
+
+                        <div ng-if="!vm.isViewing" class="row">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                <div class="form-group">
+                                    <label mf-required class="control-label col-sm-4"
+                                           for="field_paysEmt">Pays compte</label>
+                                    <div class="col-sm-6">
+                                        <select required ng-disabled="vm.isViewing || vm.isFraisDispo"
+                                                class="form-control input-xs" id="field_paysEmt" name="pays"
+                                                ng-change="vm.getFournisseurMonnaie(vm.personneB.paysCompteId)"
+                                                ng-model="vm.personneB.paysCompteId"
+                                                ng-options="pays.id as pays.libelleUniteOrganisation for pays in vm.pays">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div ng-if="!vm.isViewing" class="row">
+                            <div class="col-sm-offset-5">
+                                <button type="button" ng-click="vm.reset()" class="btn btn-sm">
+                                    <span>&times;</span>&nbsp;<span>Annuler</span>
+                                </button>
+                                <button type="button" ng-click="vm.addCompte()"
+                                        ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Ajouter</span>
+                                </button>
+
+                            </div>
+                        </div>
+                        <div ng-if="!vm.isViewing" class="row ">
+                            <div class="mb5"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading text-center">
+                                                <h4>
+                                                    Liste des comptes
+                                                </h4>
+                                            </div>
+                                            <table class="table ">
+                                                <thead>
+                                                <tr class="mf-table-header">
+                                                    <th class="col-xs-2" ng-click="vm.sortBy('categorieCompte') ">
+                                                        <span>Catégorie Compte</span>
+                                                        <span ng-if="vm.isCurrentColumn('categorieCompte')"
+                                                              ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                    </th>
+                                                    <th class="col-xs-2" ng-click="vm.sortBy('valeurCompte') ">
+                                                        <span>Valeur Compte</span>
+                                                        <span ng-if="vm.isCurrentColumn('valeurCompte')"
+                                                              ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                                    </th>
+                                                    <th ng-if="!vm.isViewing" class="text-right col-xs-2">Actions
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="compte in vm.comptes">
+                                                    <td class="col-xs-2">{{compte.categorieCompte}}</td>
+                                                    <td class="col-xs-2">{{compte.valeurCompte}}</td>
+                                                    <td class="text-right col-xs-2" ng-if="!vm.isViewing">
+                                                        <div class="btn-group flex-btn-group-container">
+                                                            <button type="button" ng-if="compte.categorieCompte!=='AUTRE'  "
+                                                                    ng-click="vm.editCompte($index,compte)"
+                                                                    class="btn btn-success shiny btn-xs btn-circle">
+                                                                <span class="glyphicon glyphicon-pencil"></span>
+                                                            </button>
+                                                            <button ng-if="compte.categorieCompte!=='AUTRE' && compte.categorieCompte!=='BANQUE'  " type="button" data-toggle="tooltip"
+                                                                    data-original-title="Supprimer"
+                                                                    ng-click="vm.removeCompte($index,compte)"
+                                                                    class="btn btn-danger shiny btn-xs btn-circle ">
+                                                                    <span
+                                                                            class="glyphicon glyphicon-remove-circle"></span>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="footer actions actions-footer" id="simplewizard-actions">
+        <div class="btn-group">
+            <button ng-click="vm.decrementStep()" type="button" ng-if="vm.hasPreviousStep()"
+                    class="btn btn-default btn-sm btn-prev"><i class="fa fa-angle-left"></i>Precedent
+            </button>
+
+            <button ng-disabled="(editForm.$invalid || vm.isSaving) && !vm.showOnglet('Compte')"
+                    ng-click=" vm.incrementStep()" type="button" class="btn btn-primary btn-sm btn-next"
+                    ng-if="vm.hasNextStep()&&!(vm.selection=='Documents'&&!vm.clientSaved)" data-last="Finish">Suivant
+            </button>
+
+            <button ng-if="(!vm.hasNextStep() && !vm.isViewing)||(vm.selection=='Documents'&&!vm.clientSaved)"
+                    type="submit"
+                    class="btn btn-success btn-sm" data-last="Finish"
+                    ng-disabled="editForm.$invalid || vm.isSaving">Valider
+            </button>
+        </div>
+    </div>
+</form>

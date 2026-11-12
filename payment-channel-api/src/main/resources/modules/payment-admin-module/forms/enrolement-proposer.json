@@ -1,0 +1,27 @@
+{
+  "formio": {
+    "display": "form",
+    "title": "Ouverture Coris Money",
+    "components": [
+      {
+        "type": "radio",
+        "key": "reponse",
+        "label": "Créer un compte Coris Money ?",
+        "input": true,
+        "validate": {
+          "required": true
+        },
+        "values": [
+          {
+            "label": "Oui",
+            "value": "OUI"
+          },
+          {
+            "label": "Non",
+            "value": "NON"
+          }
+        ]
+      }
+    ]
+  }
+}

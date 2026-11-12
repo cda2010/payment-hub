@@ -1,0 +1,63 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="well with-header" style="margin-top:10px ">
+            <div class="header bg-blue ">
+                <div class="col-xs-11">
+                    <h4 >Liste des fichiers export</h4>
+                </div>
+                <div class="no-padding-left col-xs-1" has-any-authority="ROLE_GENERATEUR_ETAT_CREATE" >
+                    <button class="btn btn-default  btn-circle btn-xs">
+                        <span class="glyphicon glyphicon-plus" ui-sref="file-export.new"></span>
+                    </button>
+                </div>
+            </div>
+            <!--filtes -->
+        
+            <!--/filtes -->
+            <table class="jh-table table table-hover">
+                <thead>
+                <tr>
+                    <th><span>Table export</span></th>
+                    <th><span> Date de generation </span></th>
+                    <th><span> Output </span></th>
+                       <th><span> Critères </span></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr  ng-repeat="f in vm.datas track by f.id">
+                    <td>{{f.exportTable.libelle}}</td>
+                    <td>{{f.dateGeneration}}</td>
+                    <td>{{f.fileName}}</td>
+                     <td>{{f.parameter}}</td>
+                    
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button has-any-authority="ROLE_GENERATEUR_ETAT_UPDATE"
+                                ui-sref="file-export.edit({id: f.id})" 
+                                class="btn btn-warning btn-xs">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button
+                                ng-click="vm.downloadFile(f.id)"
+                                class="btn btn-primary btn-xs">
+                                <span class="glyphicon glyphicon-save"></span>
+                            </button>
+                            <button has-any-authority="ROLE_GENERATEUR_ETAT_DELETE"
+                                ui-sref="file-export.delete({id: f.id})" 
+                                class="btn btn-danger btn-xs">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center">
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page"></uib-pagination>
+        </div>
+    </div>
+    </div>
+    

@@ -1,0 +1,27 @@
+
+{
+    "ptiApp": {
+        "typeService" : {
+            "home": {
+                "title": "TypeServices",
+                "createLabel": "Créer un nouveau Type Service",
+                "createOrEditLabel": "Créer ou éditer un Type Service"
+            },
+            "created": "Un nouveau Type Service a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Type Service avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Type Service avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Type Service {{ id }} ?"
+            },
+            "detail": {
+                "title": "Type Service"
+            },
+            "libelle": "Libelle",
+            "cmpteClientSournce": "Cmpte Client Sournce",
+            "cmpteClientDest": "Cmpte Client Dest",
+            "operationClient": "Operation Client",
+            "fraisApplicable": "Frais Applicable",
+            "instruction": "Instruction"
+        }
+    }
+}

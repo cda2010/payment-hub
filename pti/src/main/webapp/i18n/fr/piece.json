@@ -1,0 +1,27 @@
+{
+    "ptiApp": {
+        "piece" : {
+            "home": {
+                "title": "Pieces",
+                "createLabel": "Créer un nouveau Piece",
+                "createOrEditLabel": "Créer ou éditer un Piece"
+            },
+            "created": "Un nouveau Piece a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Piece avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Piece avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Piece {{ id }} ?"
+            },
+            "detail": {
+                "title": "Piece"
+            },
+            "referencePiece": "Reference Piece",
+            "dateDelivrance": "Date Delivrance",
+            "dateExpiration": "Date Expiration",
+            "copie": "Copie",
+            "lieuDelivrance": "Lieu Delivrance",
+            "titulaire": "Titulaire",
+            "typePiece": "Type Piece"
+        }
+    }
+}

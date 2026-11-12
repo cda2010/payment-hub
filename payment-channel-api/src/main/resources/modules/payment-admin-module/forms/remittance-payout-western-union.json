@@ -1,0 +1,62 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "hidden",
+        "key": "providerCode",
+        "defaultValue": "WESTERN_UNION",
+        "input": true
+      },
+      {
+        "type": "select",
+        "key": "payoutMethod",
+        "label": "Mode de réception Western Union",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "Retrait cash (WU)", "value": "CASH_PICKUP" },
+            { "label": "Dépôt bancaire", "value": "BANK_DEPOSIT" },
+            { "label": "Mobile money", "value": "WALLET" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "payoutAccount",
+        "label": "IBAN / compte / MSISDN",
+        "input": true,
+        "customConditional": "show = data.payoutMethod === 'BANK_DEPOSIT' || data.payoutMethod === 'WALLET'"
+      },
+      {
+        "type": "textfield",
+        "key": "wuCityCode",
+        "label": "Code ville WU (optionnel)",
+        "input": true,
+        "customConditional": "show = data.payoutMethod === 'CASH_PICKUP'"
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Mode de réception Western Union": "Mode de réception Western Union",
+      "IBAN / compte / MSISDN": "IBAN / compte / MSISDN",
+      "Code ville WU (optionnel)": "Code ville WU (optionnel)"
+    },
+    "en": {
+      "Mode de réception Western Union": "Western Union payout method",
+      "IBAN / compte / MSISDN": "IBAN / account / MSISDN",
+      "Code ville WU (optionnel)": "WU city code (optional)"
+    }
+  }
+}

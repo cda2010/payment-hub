@@ -1,0 +1,26 @@
+
+{
+    "ptiApp": {
+        "ligneFrais" : {
+            "home": {
+                "title": "LigneFrais",
+                "createLabel": "Créer un nouveau Ligne Frais",
+                "createOrEditLabel": "Créer ou éditer un Ligne Frais"
+            },
+            "created": "Un nouveau Ligne Frais a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Ligne Frais avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Ligne Frais avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Ligne Frais {{ id }} ?"
+            },
+            "detail": {
+                "title": "Ligne Frais"
+            },
+            "typeFrais": "Type Frais",
+            "maximun": "Maximun",
+            "minimun": "Minimun",
+            "valeur": "Valeur",
+            "tableauFrais": "Tableau Frais"
+        }
+    }
+}

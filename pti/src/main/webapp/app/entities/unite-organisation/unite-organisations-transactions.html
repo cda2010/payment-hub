@@ -1,0 +1,176 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="vm.clear()">&times;
+    </button>
+</div>
+<div class="modal-body">
+    <div class="container-fluid">
+        <div class="well with-header" style="margin-top:10px ">
+            <div class="header bg-blue ">
+                <div class="col-xs-8">
+
+                </div>
+                <div class="no-padding-left col-xs-4">
+
+                    <div class="btn-group mr15" uib-dropdown>
+                        <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"
+                                aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                            éléments par page <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row primary" ng-if="vm.canShowResultCount">
+                <i ng-if="vm.totalItems>1">{{vm.totalItems}} éléments trouvés</i>
+                <i ng-if="vm.totalItems==1">{{vm.totalItems}} élément trouvé</i>
+                <i ng-if="vm.totalItems<1">Aucun résultat</i>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <select class=" col-sm-5" id="filed_format" name="format" ng-model="vm.format" >
+                        <option value="">Format</option>
+                        <option value="PDF">PDF</option>
+                        <option value="XLSX">XLSX</option>
+                        <option value="CSV">CSV</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <button  ng-click="vm.exporterComm()" class="btn btn-primary mt5">
+                        <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Exporter</span>
+                    </button>
+                </div>
+            </div>
+            <br>
+            <div class="row" >
+                <div class="form-group col-sm-4">
+                    <div class="input-group">
+                        <input autocomplete="off" class="form-control" id="dateDebut" is-open="vm.datePickerOpenStatus.dateDebut"
+                               name="dateDebut" ng-model="vm.itemSearch.dateDebut"
+                               placeholder=" Date debut" show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" />
+                        <span class="input-group-btn">
+                                             <button class="btn btn-default btn-xs" ng-click="vm.openCalendar('dateDebut')"
+                                                     type="button"><i
+                                                     class="glyphicon glyphicon-calendar"></i></button>
+                                             </span>
+                    </div>
+
+                </div>
+                <div class="form-group col-sm-4">
+                    <div class="input-group">
+                        <input autocomplete="off" class="form-control" id="dateFin" is-open="vm.datePickerOpenStatus.dateFin"
+                               name="dateFin" ng-model="vm.itemSearch.dateFin" placeholder=" Date fin"
+                               show-button-bar="false" uib-datepicker-popup="dd/MM/yyyy" />
+                        <span class="input-group-btn">
+                                            <button class="btn btn-default btn-xs" ng-click="vm.openCalendar('dateFin')" type="button"><i
+                                                    class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                    </div>
+                </div>
+                <div class=" col-sm-2">
+                    <button class="btn btn-primary btn-md " ng-click="vm.transactionDate()">
+                        <span class="glyphicon glyphicon-search">Chercher</span>
+                    </button>
+                </div>
+                <div class=" col-sm-2">
+                    <button class="btn btn-warnig btn-md " ng-click="vm.initFiltre()">
+                        <span class="glyphicon glyphicon-search">Annuler</span>
+                    </button>
+                </div>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                <tr class="mf-table-header">
+                    <th ng-click="vm.sortBy('date')">
+                        <span>Date</span>
+                        <span ng-if="vm.isCurrentColumn('date')"
+                              ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                    <th ng-click="vm.sortBy('type')">
+                        <span>Type</span>
+                        <span ng-if="vm.isCurrentColumn('type')"
+                              ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                    <th ng-click="vm.sortBy('montant')">
+                        <span>Montant</span>
+                        <span ng-if="vm.isCurrentColumn('montant')"
+                              ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                    <th>
+                        <span>Statut</span>
+                    </th>
+                    
+                    <th>
+                        <span>Service</span>
+                    </th>
+                    <th ng-click="vm.sortBy('soldeCourant')">
+                        <span>Solde Courant</span>
+                        <span ng-if="vm.isCurrentColumn('soldeCourant')"
+                              ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                    <th ng-click="vm.sortBy('soldeApres')">
+                        <span>Solde Apres</span>
+                        <span ng-if="vm.isCurrentColumn('soldeApres')"
+                              ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+
+                    <th ng-click="vm.sortBy('etat')">
+                        <span>Etat</span>
+                        <span ng-if="vm.isCurrentColumn('etat')"
+                              ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                    <th>
+                        <span>Operation Motif</span>
+                    </th>
+                    <th>
+                        <span>Code Opération</span>
+                    </th>
+                    
+                    <th>
+                        <span>Valeur compte source</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="mf-table-body" ng-repeat="transation in vm.transactions track by transation.id">
+                    <td><span>{{transation.date | date:'medium' }}</span></td>
+                    <td><span>{{transation.type}}</span></td>
+                    <td><span>{{transation.montant | currency:""}}</span></td>
+                    <td><span>{{transation.operationStatut}}</span></td>
+                    <td><span>{{transation.typeService}}</span></td>
+                    <td><span>{{transation.soldeCourant | currency:""}}</span></td>
+                    <td><span>{{transation.soldeApres | currency:""}}</span></td>
+                    <td><span>{{transation.etat}}</span></td>
+                    <td><span>{{transation.operationMotif}}</span></td>
+                    <td><span>{{transation.codeExterne}}</span></td>
+                 
+                    <td>{{transation.operationCompteSrc}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="center-block text-center" ng-show="vm.totalItems>vm.queryCount">
+        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+        </uib-pagination>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+        <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+    >Fermer</span>
+    </button>
+</div>

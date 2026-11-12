@@ -1,0 +1,44 @@
+
+{
+    "ptiApp": {
+        "uniteOrganisation" : {
+            "home": {
+                "title": "UniteOrganisations",
+                "createLabel": "Créer un nouveau Unite Organisation",
+                "createOrEditLabel": "Créer ou éditer un Unite Organisation"
+            },
+            "created": "Un nouveau Unite Organisation a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Unite Organisation avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Unite Organisation avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Unite Organisation {{ id }} ?"
+            },
+            "detail": {
+                "title": "Unite Organisation"
+            },
+            "libelleUniteOrganisation": "Libelle Unite Organisation",
+            "estSiege": "Est Siege",
+            "codeUO": "Code UO",
+            "numeroOrdre": "Numero Ordre",
+            "feuille": "Feuille",
+            "codeFse": "Code Fse",
+            "estFiliale": "Est Filiale",
+            "telephone": "Telephone",
+            "email": "Email",
+            "niveau": "Niveau",
+            "filsUO": "Fils UO",
+            "compte": "Compte",
+            "tableauFraisEm": "Tableau Frais Em",
+            "tableauFraisAcq": "Tableau Frais Acq",
+            "operation": "Operation",
+            "pointVente": "Point Vente",
+            "autorisation": "Autorisation",
+            "commission": "Commission",
+            "pereUO": "Pere UO",
+            "typeUO": "Type UO",
+            "representant": "Representant",
+            "fournisseur": "Fournisseur"
+
+        }
+    }
+}

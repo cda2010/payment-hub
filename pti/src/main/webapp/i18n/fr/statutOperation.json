@@ -1,0 +1,15 @@
+{
+    "ptiApp": {
+        "StatutOperation" : {
+            "null": "",
+            "ENCOURS": "ENCOURS",
+            "ENATTENTE": "ENATTENTE",
+            "ANNULLE": "ANNULLE",
+            "PAYE": "PAYE",
+            "SUSPENDU": "SUSPENDU",
+            "REJETE": "REJETE",
+            "VALIDE": "VALIDE",
+            "REMBOURSE": "REMBOURSE"
+        }
+    }
+}

@@ -1,0 +1,116 @@
+<br>
+<br>
+<br>
+<br>
+<div class="col-sm-6">
+    <form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+        <div class="modal-body ">
+            <fieldset class=" mf-fieldset p10 ">
+                <legend>Choisir l'etat</legend>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="etat" mf-required>Etat</label>
+                    <div class="col-sm-7">
+                        <select ng-change="vm.getEtatChoisi(vm.etatId)" required class="form-control" name="etat" id="etat"
+                                ng-model="vm.etatId"
+                                ng-options="etat.id as etat.libelle for etat in vm.etats">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="vm.etat.params.typeService">
+                    <label class="control-label col-sm-4" for="etat" >Type</label>
+                    <div class="col-sm-7">
+                        <select  class="form-control input-xs" id="field_typeService" name="typeService" ng-model="vm.item.typeServiceId" ng-options="typeService.id as typeService.libelle for typeService in vm.typeServices">
+                            <option value="">Choisir</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group"  ng-if="vm.etat.params.uoPaysId">
+                    <label class="control-label col-sm-4" for="etat">Pays</label>
+                    <div class="col-sm-7">
+                        <select  class="form-control input-xs" id="field_pays" name="pays" ng-model="vm.item.uoPaysId" ng-options="pays.id as pays.libelleUniteOrganisation for pays in vm.pays">
+                            <option value="">Choisir</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="etat">date Debut</label>
+                    <div class=" col-sm-7">
+                        <input autocomplete="off" id="dateOperation" show-button-bar="false"  popup-placement="top"
+                               placeholder=" Date debut" is-open="vm.datePickerOpenStatus.dateOperation"
+                               uib-datepicker-popup="dd/MM/yyyy" ng-focus="vm.openCalendar('dateOperation')"
+                               class="form-control"  ng-model="vm.item.dateDebut" name="dateOperation"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="etat">date Fin</label>
+                    <div class=" col-sm-7">
+                        <input autocomplete="off" id="dateFin" show-button-bar="false"  popup-placement="top"
+                               placeholder=" Date fin" is-open="vm.datePickerOpenStatus.dateFin"
+                               uib-datepicker-popup="dd/MM/yyyy" ng-focus="vm.openCalendar('dateFin')"
+                               class="form-control"  ng-model="vm.item.dateFin" name="dateFin"/>
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="control-label col-sm-4" for="filed_format">Format</label>
+                    <div class=" col-sm-7">
+                    <select  id="filed_format" name="format" ng-model="vm.format" >
+                        <option value="">Format</option>
+                        <option value="PDF">PDF</option>
+                        <option value="XLSX">XLSX</option>
+                        <option value="CSV">CSV</option>
+                    </select>
+                    </div>
+                </div>
+            </fieldset>
+            <div>
+                <fieldset class="p10  mf-fieldset" ng-if="vm.isMasterOnly() || vm.isAgence()">
+                    <legend>Choisir l'organisation</legend>
+                    <div class="form-group" >
+                        <label class="control-label col-sm-4" for="field_type">Type acteur</label>
+                        <div class="col-sm-7">
+                            <select  class="form-control " name="type" ng-model="vm.typeActeur" id="field_type">
+                                <option ng-if="vm.isAgence()" value="MASTER">MASTER</option>
+                                <option ng-if="vm.isMasterOnly() || vm.isAgence()" value="SOUS_DISTRIBUTEUR">SOUS DISTRIBUTEUR</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="vm.typeActeur=='MASTER'">
+                        <label class="control-label col-sm-4" for="field_master">Master</label>
+                        <div class="col-sm-7">
+                            <select   class="form-control" id="field_master" name="master" ng-model="vm.item.uoSourceId" ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.masters">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="vm.typeActeur=='SOUS_DISTRIBUTEUR'">
+                        <label class="control-label col-sm-4" for="field_sousDistributeur">SousDistributeur</label>
+                        <div class="col-sm-7">
+                            <select class="form-control" id="field_sousDistributeur" name="sousDistributeur" ng-model="vm.item.uoSourceId" ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.sousDistributeurs">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" ng-click="vm.clear()">
+                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Annuler</span>
+            </button>
+            <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Générer</span>
+            </button>
+
+            <!-- <button type="button"  ng-click="vm.printTest()" class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Générer</span>
+            </button> -->
+        </div>
+    </form>
+</div>
+

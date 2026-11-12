@@ -1,0 +1,11 @@
+entity GroupeProfilActeur{
+	nom String,
+    description String,
+    type String,
+    destineA String,
+    codeFSE String,
+    active Boolean
+}
+paginate all with pagination
+dto * with mapstruct
+service all with serviceClass

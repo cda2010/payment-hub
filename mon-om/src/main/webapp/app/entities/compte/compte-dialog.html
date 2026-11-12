@@ -1,0 +1,176 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title text-white" id="myCompteLabel" ng-show="vm.compte.id">
+            <i class="fa fa-edit"></i> Editer un compte
+        </h4>
+        <h4 class="modal-title text-white" id="myCompteLabel" ng-show="vm.compte.id == undefined">
+            <i class="fa fa-plus-circle"></i> Ajouter un compte
+        </h4>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group row" ng-show="vm.compte.id">
+            <label class="col-sm-3 col-form-label" for="id">ID</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.compte.id" readonly />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_fournisseurService">FSE Teneur</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="field_relation" name="teneur" 
+                    ng-model="vm.compte.fseTeneur" 
+                    ng-options="fournisseurService as fournisseurService.nom for fournisseurService in vm.fournisseurServices track by fournisseurService.id" 
+                    required ng-change="vm.getAgence(vm.compte.fseTeneur)">
+                    <option value="">Sélectionnez un FSE teneur</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_fournisseurService">FSE Titulaire</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="field_relation" name="titulaire" 
+                    ng-model="vm.compte.fseTitulaire" 
+                    ng-options="fournisseurService as fournisseurService.nom for fournisseurService in vm.fournisseurServices track by fournisseurService.id" 
+                    required>
+                    <option value="">Sélectionnez un FSE titulaire</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_Agence">Agence</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="field_relation" name="titulaire" 
+                    ng-model="vm.compte.agence" 
+                    ng-options="agence as agence.nomAgence for agence in vm.agences track by agence.id" 
+                    required ng-change="vm.getCodeAgence(vm.compte.agence)">
+                    <option value="">Sélectionnez une agence</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_fournisseurService">Service</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="field_service" name="service" 
+                    ng-model="vm.compte.service" 
+                    ng-options="traitementService as traitementService.libelleTypeService for traitementService in vm.typeServices track by traitementService.id">
+                    <option value="">Sélectionnez un service</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_fournisseurService">Type de Compte</label>
+            <div class="col-sm-9">
+                <select required class="form-control" id="field_relation" name="relation" 
+                    ng-model="vm.compte.typeCompte" 
+                    ng-options="typecompte as typecompte.nomTypeCompte for typecompte in vm.typecomptes track by typecompte.id">
+                    <option value="">Sélectionnez un type de compte</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_codeAgence">Code UO du Titulaire</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="codeAgence" id="field_codeAgence"
+                    ng-model="vm.compte.codeUoTitulaire"
+                    placeholder="Entrez le code UO du titulaire"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_codeAgence">Code Banque</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="codeAgence" id="field_codeAgence"
+                    ng-model="vm.compte.codeBanque"
+                    placeholder="Entrez le code banque"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_codeAgence">Code Agence</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="codeAgence" id="field_codeAgence"
+                    ng-model="vm.compte.codeAgence"
+                    placeholder="Entrez le code agence"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_codeAgence">Numéro de Compte</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="codeAgence" id="field_codeAgence"
+                    ng-model="vm.compte.numeroCompte"
+                    placeholder="Entrez le numéro de compte"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_codeAgence">Clé</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="codeAgence" id="field_codeAgence"
+                    ng-model="vm.compte.cle"
+                    placeholder="Entrez la clé"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_codeAgence">Libellé du compte</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="codeAgence" id="field_libelle"
+                    ng-model="vm.compte.libelleCompte"
+                    placeholder="Entrez le libellé du compte"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_devise">Devise</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="devise" id="field_devise"
+                    ng-model="vm.compte.devise"
+                    placeholder="Entrez la devise"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_fournisseurService">Compte miroir</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="field_mirr" name="relation" 
+                    ng-model="vm.compte.mirroir" 
+                    ng-options="cpte as cpte.numeroCompte+' '+cpte.libelleCompte for cpte in vm.comptes track by cpte.id">
+                    <option value="">Sélectionnez un compte miroir</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_relation">Relation</label>
+            <div class="col-sm-9">
+                <select class="form-control" id="field_relation" name="relation" 
+                    ng-model="vm.compte.relation" 
+                    ng-options="relation as relation.fseSource.nom+'---'+relation.fseDestination.nom for relation in vm.relations track by relation.id">
+                    <option value="">Sélectionnez une relation</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="vm.clear()">
+            <i class="fa fa-ban"></i>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <i class="fa fa-save"></i>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+</form>

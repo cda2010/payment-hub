@@ -1,0 +1,14 @@
+entity RoleValidation{
+	 typeService String,
+     operateur String,
+
+     montant BigDecimal,
+
+     role String
+}
+
+paginate all with pagination
+
+dto * with mapstruct
+
+service all with serviceClass

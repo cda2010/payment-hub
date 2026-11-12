@@ -1,0 +1,100 @@
+<div>
+    <h2 data-translate="ptiApp.tableauCumul.home.title">Tableau Cumuls</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="tableau-cumul.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="ptiApp.tableauCumul.home.createLabel">
+                        Create new Tableau Cumul
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="poidsNum"><span data-translate="ptiApp.tableauCumul.poidsNum">Poids Num</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="codeRegle"><span data-translate="ptiApp.tableauCumul.codeRegle">Code Regle</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="temps"><span data-translate="ptiApp.tableauCumul.temps">Temps</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="nombre"><span data-translate="ptiApp.tableauCumul.nombre">Nombre</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="montant"><span data-translate="ptiApp.tableauCumul.montant">Montant</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="action"><span data-translate="ptiApp.tableauCumul.action">Action</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="dateDebut"><span data-translate="ptiApp.tableauCumul.dateDebut">Date Debut</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="dateFin"><span data-translate="ptiApp.tableauCumul.dateFin">Date Fin</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="typeRegle"><span data-translate="ptiApp.tableauCumul.typeRegle">Type Regle</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="typeServiceLibelle"><span data-translate="ptiApp.tableauCumul.typeService">Type Service</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="canalLibelleCanal"><span data-translate="ptiApp.tableauCumul.canal">Canal</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="beneficiaireCodeClient"><span data-translate="ptiApp.tableauCumul.beneficiaire">Beneficiaire</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="emetteurCodeClient"><span data-translate="ptiApp.tableauCumul.emetteur">Emetteur</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="organisationEmLibelleUniteOrganisation"><span data-translate="ptiApp.tableauCumul.organisationEm">Organisation Em</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="organisationAcqLibelleUniteOrganisation"><span data-translate="ptiApp.tableauCumul.organisationAcq">Organisation Acq</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="tableauCumul in vm.tableauCumuls track by tableauCumul.id">
+                    <td><a ui-sref="tableau-cumul-detail({id:tableauCumul.id})">{{tableauCumul.id}}</a></td>
+                    <td>{{tableauCumul.poidsNum}}</td>
+                    <td>{{tableauCumul.codeRegle}}</td>
+                    <td data-translate="{{'ptiApp.Temps.' + tableauCumul.temps}}">{{tableauCumul.temps}}</td>
+                    <td>{{tableauCumul.nombre}}</td>
+                    <td>{{tableauCumul.montant}}</td>
+                    <td data-translate="{{'ptiApp.Action.' + tableauCumul.action}}">{{tableauCumul.action}}</td>
+                        <td>{{tableauCumul.dateDebut | date:'mediumDate'}}</td>
+                        <td>{{tableauCumul.dateFin | date:'mediumDate'}}</td>
+                    <td data-translate="{{'ptiApp.TypeRegle.' + tableauCumul.typeRegle}}">{{tableauCumul.typeRegle}}</td>
+                    <td>
+                        <a ui-sref="type-service-detail({id:tableauCumul.typeServiceId})">{{tableauCumul.typeServiceLibelle}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="canal-detail({id:tableauCumul.canalId})">{{tableauCumul.canalLibelleCanal}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="client-detail({id:tableauCumul.beneficiaireId})">{{tableauCumul.beneficiaireCodeClient}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="client-detail({id:tableauCumul.emetteurId})">{{tableauCumul.emetteurCodeClient}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="unite-organisation-detail({id:tableauCumul.organisationEmId})">{{tableauCumul.organisationEmLibelleUniteOrganisation}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="unite-organisation-detail({id:tableauCumul.organisationAcqId})">{{tableauCumul.organisationAcqLibelleUniteOrganisation}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="tableau-cumul-detail({id:tableauCumul.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="tableau-cumul.edit({id:tableauCumul.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="tableau-cumul.delete({id:tableauCumul.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

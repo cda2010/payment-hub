@@ -1,0 +1,47 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.verificationByCodeOperation()" show-validation
+    class="form-horizontal ">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myDeviseLabel">Mise à jour d'une opération</h4>
+    </div>
+    <div class="modal-body">
+        <fieldset class="mf-fieldset">
+            <legend>Vérification</legend>
+            <div class="col-sm-offset-4" ng-if="!vm.canUpdate"> <span class="label label-danger">Impossible d'effectuer la mise à jour!</span>
+            </div>
+            <div class="form-group" ng-if="!vm.isViewing">
+                <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4"
+                    data-translate="ptiApp.operation.codeOperation" for="field_codeOperation">Code operation</label>
+                <div class="col-xs-6 col-sm-6 col-lg-6">
+                    <input autocomplete="off" type="text" class="form-control input-xs" name="codeOperation"
+                        id="field_codeOperation" ng-model="vm.operation.codeOperation" />
+                </div>
+            </div>
+            <div class="form-group" ng-if="!vm.isViewing">
+                <label  class="control-label col-sm-4 col-xs-4 col-lg-4"
+                    for="field_codeOperation">Statut actuel</label>
+                <div class="col-xs-6 col-sm-6 col-lg-6">
+                    <input autocomplete="off" disabled type="text" class="form-control input-xs" name="codeOperation"
+                        id="field_codeOperation" ng-model="vm.operation.statut" />
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <button type="button" ng-if="!vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit"
+            ng-disabled="!vm.canVerif || vm.operation.codeOperation==null  || vm.operation.codeOperation==''"
+            class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.valid">Save</span>
+        </button>
+        <button type="button" ng-if="vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+            <span>Fermer</span>
+        </button>
+    </div>
+</form>

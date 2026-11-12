@@ -1,0 +1,299 @@
+BLOB_DEFAULT_MIN_BYTES = 1
+BLOB_DEFAULT_MAX_BYTES = 10240000
+
+entity UniteOrganisation{
+	libelleUniteOrganisation String required,
+	estSiege Boolean,
+	codeUO String,
+	numeroOrdre Integer ,
+    feuille Boolean
+}
+
+
+
+
+entity TypeUniteOrganisation{
+	libelleTypeUO String,
+	codeTypeUO String,
+	niveau Integer
+}
+
+entity Personne{
+	typePersonne TypePersonne,
+	telephone String
+}
+
+enum TypePersonne{
+	PHYSIQUE,MORALE
+}
+
+entity Piece{
+	referencePiece String required,
+	dateDelivrance LocalDate,
+	dateExpiration LocalDate,
+	copie Blob,
+	lieuDelivrance String
+}
+
+entity TypePiece{
+	codeTypePiece String required,
+	libelleTypePiece String required
+}
+
+entity PersonnePhysique{
+	nomClient String required,
+	prenomClient String required,
+	dateNaissance LocalDate,
+	personnePrevenir String,
+	lieuNaissance String,
+	sexe Sexe
+}
+
+enum Sexe{
+	MASCULIN,FEMININ
+}
+
+entity Nationalite{
+	code String,
+	libelle String
+}
+
+entity PersonneMorale{
+	raisonSociale String required,
+	registreCommerce String,
+	numreoIfu String
+}
+
+entity Emetteur{
+	code String
+}
+
+entity Beneficiaire{
+	code String
+}
+
+entity Client{
+	codeClient String
+}
+
+
+
+
+
+
+
+entity Compte{
+	etiquette String required,
+	valeurCompte String,
+	categorieCompte CategorieCompte
+}
+
+enum CategorieCompte{
+	BANQUE,AUTRE
+}
+
+entity TypeCompte{
+	codeTypeCompte Integer required,
+	libelleTypeCompte String required
+}
+
+entity CompteBanque{
+	codeAgence String required,
+	codeBanque String required
+}
+
+
+entity Devise{
+    code String required,
+    libelle String required,
+    symbole String
+}
+
+entity CompteAutre{
+	solde BigDecimal
+}
+
+entity EtiquetteCompte{
+	code String
+}
+
+
+
+entity TableauFrais{
+	poidsNum Integer
+}
+
+entity LigneFrais{
+	typeFrais TypeTarif,
+	maximun Integer,
+	minimun Integer,
+	valeur Integer
+}
+
+
+enum TypeTarif{
+	FIXE,POURCENTAGE
+}
+
+
+
+
+entity Canal{
+	codeCanal String required,
+	libelleCanal String required
+}
+
+entity Operation{
+	montantOp BigDecimal,
+	montantFrais BigDecimal,
+	dateOperation ZonedDateTime,
+	statut StatutOperation,
+	codeRetrait String
+}
+
+enum StatutOperation{
+	ENCOURS,ENATTENTE,ANNULLE,PAYE
+}
+
+
+entity TypeService{
+	libelle String required,
+	cmpteClientSournce Boolean,
+	cmpteClientDest Boolean,
+	operationClient Boolean,
+	fraisApplicable Boolean
+}
+
+entity PointVente{
+	codePointVente String required,
+	libellePointVente String required
+}
+
+entity FournisseurService{
+	codeFse String required,
+	libelleFse String required
+}
+
+entity TableauRepartitionCommission{
+	niveaoOperation Integer,
+	dateDebut LocalDate,
+	dateFin LocalDate
+}
+
+entity LigneRepartitionCommission{
+	niveau Integer,
+	valeur Integer
+}
+
+entity Autorisation{
+	code String
+}
+
+entity Pays{
+	codePays String required,
+	libellePays String
+}
+
+entity EtiquetteComptable{
+	code String
+}
+
+
+/**
+*Les relations avec _Compte
+*/
+
+relationship OneToMany{
+	Client{compte} to Compte{client(codeClient)},
+	TypeCompte{compte} to Compte{typeCompte(libelleTypeCompte)}
+}
+
+relationship OneToOne{
+	Compte{compteBanque} to CompteBanque,
+	Compte{compteAutre} to CompteAutre
+}
+
+
+/**
+*	Les relations avec l'entité _Operation
+*/
+
+relationship OneToMany{
+	TypeService to Operation{typeService(libelle)},
+	Beneficiaire to Operation{beneficaire},
+	Emetteur to Operation{emetteur},
+	PointVente to Operation{pointVente},
+	Pays to Operation{pays(libellePays)},
+	Canal to Operation{canal(libelleCanal)}
+	UniteOrganisation to Operation{uoAcquereur(libelleUniteOrganisation)}
+}
+
+
+relationship OneToOne{
+     Personne{personnePhysique} to PersonnePhysique,
+     Personne{personneMorale} to PersonneMorale,
+	 Client{personne} to Personne
+}
+
+relationship OneToMany{
+	Personne{piece} to Piece{titulaire},
+	Personne{emetteur} to Emetteur,
+	Personne{beneficiaire} to Beneficiaire
+}
+
+/**
+*	Relations avec l'entite _TableauFrais
+*/
+
+relationship OneToMany{
+	TableauFrais to LigneFrais{tableauFrais},
+	TypeService to TableauFrais{typeService(libelle)},
+	Canal to TableauFrais{canal(libelleCanal)},
+	TypeUniteOrganisation{tableauFraisEm} to TableauFrais{typeUoEmetteur(libelleTypeUO)},
+	TypeUniteOrganisation{tableauFraisAcq} to TableauFrais{typeUoAcquereur(libelleTypeUO)},
+	Client{tableauFraisBen} to TableauFrais{beneficiaire(codeClient)},
+	Client{tableauFraisEm} to TableauFrais{emetteur(codeClient)},
+	UniteOrganisation{filsUO} to UniteOrganisation{pereUO(libelleUniteOrganisation)}
+}
+
+/**
+*	Les relations avec l'entité _UniteOrganisation
+*	UniteOrganisation to User{uniteOrganisation}
+*
+*/
+relationship OneToMany{
+	TypeUniteOrganisation{organisation} to UniteOrganisation{typeUO(libelleTypeUO)},
+	UniteOrganisation{tableauFraisEm} to TableauFrais{organisationEm(libelleUniteOrganisation)},
+	UniteOrganisation{tableauFraisAcq} to TableauFrais{organisationAcq(libelleUniteOrganisation)},
+	UniteOrganisation{compte} to Compte{uniteOrganisation(libelleUniteOrganisation)},
+	UniteOrganisation to Autorisation{uniteOrganisation(libelleUniteOrganisation)},
+	Personne to UniteOrganisation{representant},
+	UniteOrganisation{pointVente} to PointVente{uniteOrganisation(libelleUniteOrganisation)},
+	FournisseurService{organisation} to UniteOrganisation{fournisseur(libelleFse)}
+}
+
+/**
+*	Relations
+*	 Ajouter manuellement User to Autorisation{user},
+*
+*/
+relationship OneToMany{
+	TypeService to TableauRepartitionCommission{typeService(libelle)},
+	TypeService to Autorisation{typeService(libelle)},
+	TableauRepartitionCommission to LigneRepartitionCommission{tableauRepartitionCommission}
+	Pays to FournisseurService{pays(libellePays)},
+	TypePiece to Piece{typePiece(libelleTypePiece)},
+	Devise to CompteBanque{devise(code)},
+	Devise to Pays{devise(code)},//ajout
+	Nationalite to PersonnePhysique{nationalite(libelle)}
+}
+
+
+relationship ManyToMany{
+	Canal{typeService} to TypeService{canal}
+}
+
+
+	dto * with mapstruct
+	paginate * with pagination
+	service * with serviceClass

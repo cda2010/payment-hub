@@ -1,0 +1,37 @@
+
+{
+    "ptiApp": {
+        "operation" : {
+            "home": {
+                "title": "Operations",
+                "createLabel": "Créer un nouveau Operation",
+                "createOrEditLabel": "Créer ou éditer un Operation"
+            },
+            "created": "Un nouveau Operation a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Operation avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Operation avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Operation {{ id }} ?"
+            },
+            "detail": {
+                "title": "Operation"
+            },
+            "montantOp": "Montant",
+            "montantFrais": "Montant Frais",
+            "montantFraisEm": "Montant Frais Em",
+            "montantFraisAcq": "Montant Frais Acq",
+            "dateOperation": "Date Operation",
+            "statut": "Statut",
+            "codeRetrait": "Code Retrait",
+            "secret": "Secret",
+            "codeOperation": "Code Operation",
+            "dateExpiration": "Date Expiration",
+            "motif": "Motif",
+            "codeExterne": "Code Externe",
+            "commentaire": "Commentaire",
+            "dateTraitement": "Date Traitement",
+            "etape": "Etape",
+            "operationTraite": "Operation Traite"
+        }
+    }
+}

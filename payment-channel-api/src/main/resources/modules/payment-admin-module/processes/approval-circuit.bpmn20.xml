@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             targetNamespace="http://payment-gateway/approval"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+
+  <!--
+    Circuit d'approbation réutilisable (callActivity).
+    Entrée : paymentId (+ variables parent héritées / in).
+    Sortie : approvalRejected = true si un niveau refuse, sinon false.
+    Policy catalogue / DMN pilotent 0–3 niveaux (skip si 0).
+  -->
+  <process id="approvalCircuit" name="Approval Circuit" isExecutable="true">
+    <documentation>
+      EVALUATE_APPROVAL → L1..L3 ou skip. Rejet → fin avec approvalRejected=true.
+    </documentation>
+
+    <startEvent id="start" name="Start"/>
+    <sequenceFlow id="flow_start" sourceRef="start" targetRef="markNotRejected"/>
+
+    <serviceTask id="markNotRejected" name="Init approvalRejected=false"
+                 flowable:expression="${execution.setVariable('approvalRejected', false)}"/>
+    <sequenceFlow id="flow_init" sourceRef="markNotRejected" targetRef="EVALUATE_APPROVAL"/>
+
+    <serviceTask id="EVALUATE_APPROVAL" name="Évaluer approbation"
+                 flowable:delegateExpression="${gatewayTransferApprovalEvaluateDelegate}"/>
+    <sequenceFlow id="flow_eval" sourceRef="EVALUATE_APPROVAL" targetRef="gw_approvalNeeded"/>
+
+    <exclusiveGateway id="gw_approvalNeeded" name="Approbation requise ?" default="flow_skip"/>
+    <sequenceFlow id="flow_skip" sourceRef="gw_approvalNeeded" targetRef="end_passed"/>
+    <sequenceFlow id="flow_to_l1" sourceRef="gw_approvalNeeded" targetRef="APPROVAL_L1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approvalLevelsRequired != null && approvalLevelsRequired >= 1}]]></conditionExpression>
+    </sequenceFlow>
+
+    <userTask id="APPROVAL_L1" name="Validation L1"
+              flowable:formKey="account-transfer-approval"
+              flowable:candidateGroups="${approvalCandidateGroupL1}"/>
+    <sequenceFlow id="flow_l1_done" sourceRef="APPROVAL_L1" targetRef="gw_l1_result"/>
+
+    <exclusiveGateway id="gw_l1_result" name="Résultat L1" default="flow_l1_passed"/>
+    <sequenceFlow id="flow_l1_reject" sourceRef="gw_l1_result" targetRef="markRejected">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == false}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_l1_to_l2" sourceRef="gw_l1_result" targetRef="APPROVAL_L2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == true && approvalLevelsRequired >= 2}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_l1_passed" sourceRef="gw_l1_result" targetRef="end_passed"/>
+
+    <userTask id="APPROVAL_L2" name="Validation L2"
+              flowable:formKey="account-transfer-approval"
+              flowable:candidateGroups="${approvalCandidateGroupL2}"/>
+    <sequenceFlow id="flow_l2_done" sourceRef="APPROVAL_L2" targetRef="gw_l2_result"/>
+
+    <exclusiveGateway id="gw_l2_result" name="Résultat L2" default="flow_l2_passed"/>
+    <sequenceFlow id="flow_l2_reject" sourceRef="gw_l2_result" targetRef="markRejected">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == false}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_l2_to_l3" sourceRef="gw_l2_result" targetRef="APPROVAL_L3">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == true && approvalLevelsRequired >= 3}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_l2_passed" sourceRef="gw_l2_result" targetRef="end_passed"/>
+
+    <userTask id="APPROVAL_L3" name="Validation L3"
+              flowable:formKey="account-transfer-approval"
+              flowable:candidateGroups="${approvalCandidateGroupL3}"/>
+    <sequenceFlow id="flow_l3_done" sourceRef="APPROVAL_L3" targetRef="gw_l3_result"/>
+
+    <exclusiveGateway id="gw_l3_result" name="Résultat L3" default="flow_l3_passed"/>
+    <sequenceFlow id="flow_l3_reject" sourceRef="gw_l3_result" targetRef="markRejected">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == false}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_l3_passed" sourceRef="gw_l3_result" targetRef="end_passed"/>
+
+    <serviceTask id="markRejected" name="approvalRejected=true"
+                 flowable:expression="${execution.setVariable('approvalRejected', true)}"/>
+    <sequenceFlow id="flow_rejected_end" sourceRef="markRejected" targetRef="end_rejected"/>
+
+    <endEvent id="end_passed" name="Passed"/>
+    <endEvent id="end_rejected" name="Rejected"/>
+  </process>
+</definitions>

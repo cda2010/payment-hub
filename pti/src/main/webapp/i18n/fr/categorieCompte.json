@@ -1,0 +1,10 @@
+{
+    "ptiApp": {
+        "CategorieCompte" : {
+            "null": "",
+            "BANQUE": "BANQUE",
+            "AUTRE": "AUTRE",
+             "CARTE": "CARTE"
+        }
+    }
+}

@@ -1,0 +1,38 @@
+<form name="editForm" class="form-horizontal" role="form" novalidate ng-submit="vm.save()">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myRepartionFraisEmAcqLabel" data-translate="ptiApp.repartionFraisEmAcq.home.createOrEditLabel">Create or edit a Repartion Frais Em Acq</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" for="field_partEm">Part Em(%)</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"min="0" oninput="validity.valid||(value='');"  required type="number" class="form-control" name="partEm" id="field_partEm" ng-model="vm.repartionFraisEmAcq.partEm" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" for="field_partAcq">Part Acq(%)</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"min="0" oninput="validity.valid||(value='');" required type="number" class="form-control" name="partAcq" id="field_partAcq" ng-model="vm.repartionFraisEmAcq.partAcq" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.repartionFraisEmAcq.typeService" for="field_typeService">Type Service</label>
+            <div class="col-sm-6">
+                <select required class="form-control" id="field_typeService" name="typeService" ng-model="vm.repartionFraisEmAcq.typeServiceId" ng-options="typeService.id as typeService.libelle for typeService in vm.typeservices">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

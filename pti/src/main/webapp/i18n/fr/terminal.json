@@ -1,0 +1,29 @@
+{
+    "ptiApp": {
+        "terminal" : {
+            "home": {
+                "title": "Terminals",
+                "createLabel": "Créer un nouveau Terminal",
+                "createOrEditLabel": "Créer ou éditer un Terminal"
+            },
+            "created": "Un nouveau Terminal a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Terminal avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Terminal avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Terminal {{ id }} ?"
+            },
+            "detail": {
+                "title": "Terminal"
+            },
+            "codePays": "Code Pays",
+            "uuid": "Uuid",
+            "plateform": "Plateform",
+            "model": "Model",
+            "manufacturer": "Manufacturer",
+            "codeTerminal": "Code Terminal",
+            "codeUo": "Code Uo",
+            "activeTerminal": "Active Terminal",
+            "typeTerminal": "Type Terminal"
+        }
+    }
+}

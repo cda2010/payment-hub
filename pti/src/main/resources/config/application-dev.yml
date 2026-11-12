@@ -1,0 +1,309 @@
+# ===================================================================
+# Spring Boot configuration for the "dev" profile.
+#
+# This configuration overrides the application.yml file.
+#
+# More information on profiles: https://jhipster.github.io/profiles/
+# More information on configuration properties: https://jhipster.github.io/common-application-properties/
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+spring:
+    main:
+        allow-bean-definition-overriding: true
+        allow-circular-references: true
+    devtools:
+        restart:
+            enabled: false
+        livereload:
+            enabled: false # we use gulp + BrowserSync for livereload
+    jackson:
+        serialization.indent_output: true
+    datasource:
+        type: com.zaxxer.hikari.HikariDataSource
+#        url: jdbc:postgresql://127.0.0.1:5432/pti #Base test
+        #url: jdbc:po
+      #  url: jdbc:postgresql://172.27.4.155:5432/bfcorismoneydb2 #Base test
+       # url: jdbc:postgresql://172.27.4.155:5432/bfcorismoneydb_migration
+        #username: adminptibd
+        #password: P77hgHG8F4LRZaSH91
+        #url: jdbc:postgresql://localhost:5432/bfcorismoneydb_migr_partiel   #Base test tgcorismoney
+
+        #url: jdbc:postgresql://localhost:5432/tgcorismoney #Base test
+        #url: jdbc:postgresql://localhost:5432/bfcorismoneydb_05?autoReconnect=true #Base test
+
+        #url: jdbc:postgresql://localhost:5432/pti_new #Base test
+
+      
+
+
+
+       # username: admindb
+       # password: P77hgHG8F4LRZaSH91
+      #  url: jdbc:postgresql://localhost:5432/corispti
+       # url: jdbc:postgresql://localhost:5432/bdtagpay1
+      #  url: jdbc:postgresql://localhost:5432/corisml
+       # username: admindb
+        #password: P77hgHG8F4LRZaSH91
+
+#        username: postgres
+#        password: HwuLpZ845
+
+
+
+#
+#
+#
+        #url: jdbc:postgresql://localhost:5432/pti_bd  #Base test
+        url: jdbc:postgresql://localhost:5432/corismoney  #Base test
+        username: gateway
+        password: gateway
+        
+        #url: jdbc:postgresql://172.27.4.155:5432/bfcorismoneydb #Base test
+        #username: admindb
+        #password: P77hgHG8F4LRZaSH91
+
+
+        #url: jdbc:postgresql://172.27.4.50:5432/pti #Base test
+        #username: adminptibd
+        #password: P77hgHG8F4LRZaSH91
+
+
+
+       
+        #username: admindb
+        #password: P77hgHG8F4LRZaSH91
+        #url: jdbc:postgresql://10.87.202.10:5432/pti #Base test
+
+
+        #url: jdbc:postgresql://localhost:5432/sncorismoneydb #Base test
+        #username: admindb
+        #password: admin
+        #url: jdbc:postgresql://10.87.202.10:5432/pti #Base test
+        #username: postgres
+        #password: admin
+
+        # url: jdbc:postgresql://localhost:5432/tgcorismoneydb #Base test
+        #username: postgres
+        #password: admin
+
+        #username: postgres
+        #password: admin
+
+        # url: jdbc:postgresql://localhost:5432/tgcorismoneydb #Base test
+  #      username: postgres
+   #     password: admin
+#        url: jdbc:postgresql://10.87.202.10:5432/ptidump #Base test
+#        username: postgres
+#        password: HwuLpZ845
+       # url: jdbc:postgresql://172.27.4.155:5432/bfcorismoneydb2 
+        #Base test
+        #username: admindb
+       # password: P77hgHG8F4LRZaSH91
+
+
+#         url: jdbc:postgresql://10.87.202.10:5432/ptidump #Base test
+#         username: postgres
+#         password: HwuLpZ845
+        #url: jdbc:postgresql://localhost:5432/corismoney 
+        #Base test
+        #username: postgres
+        #password: root
+
+
+
+
+
+
+        hikari:
+            data-source-properties:
+                cachePrepStmts: true
+                prepStmtCacheSize: 250
+                prepStmtCacheSqlLimit: 2048
+                useServerPrepStmts: true
+            maximumPoolSize: 10
+            maxLifetime: 60000
+            minimumIdle: 0
+            IdleTimeout: 35000
+            connectionTimeout: 60000
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        hibernate:
+            ddl-auto: none
+        database: POSTGRESQL
+        show-sql: false
+        properties:
+            hibernate.cache.use_second_level_cache: false
+            hibernate.cache.use_query_cache: false
+            hibernate.generate_statistics: true
+            hibernate.cache.region.factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+            hibernate.max_fetch_depth: 0
+    data:
+        elasticsearch:
+            cluster-name:
+            cluster-nodes:
+            properties:
+                path:
+                    logs: target/elasticsearch/log
+                    data: target/elasticsearch/data
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: imanet.burkina@gmail.com  #Replace this field with your Gmail username.
+        password: imanet++           #Replace this field with your Gmail password.
+        protocol: smtp
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
+    messages:
+        cache-seconds: 1
+    thymeleaf:
+        cache: false
+
+liquibase:
+    contexts: dev
+
+# ===================================================================
+# To enable SSL, generate a certificate using:
+# keytool -genkey -alias pti -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
+#
+# You can also use Let's Encrypt:
+# https://maximilian-boehm.com/hp2121/Create-a-Java-Keystore-JKS-from-Let-s-Encrypt-Certificates.htm
+#
+# Then, modify the server.ssl properties so your "server" configuration looks like:
+#
+# server:
+#    port: 8443
+#    ssl:
+#        key-store: keystore.p12
+#        key-store-password: <your-password>
+#        keyStoreType: PKCS12
+#        keyAlias: pti
+# ===================================================================
+tenant:
+  numero: 226
+biller:
+      file:
+          path: /migrate_2210/new_migration/
+server:
+    port: 9002
+
+operation:
+  cache:
+       timeToLive: 20
+       host: 127.0.0.1
+       name: cache-prod
+       statut: true
+       port: 5701
+#===================================================================
+# JHipster specific properties
+#
+# Full reference is available at: https://jhipster.github.io/common-application-properties/
+# ===================================================================
+decryptParam:
+    salt: NEcDYHmeSUQ= 
+    key: 33ZQPH4qeNMv9vrhpPAQ+xNunwqL5EO/AzTHBW1fcVicZ7NEo65Uk6e5hHAAzz3d
+    password: S&KUr-@MAi2M
+   # keyCrypt: $2a$10$K.tDl5cg4PAyQB2CK
+    keyCrypt:  b23936330fc97c79e8db9d76
+replica: 
+    datasource:
+          url: jdbc:postgresql://localhost:5432/corismoney?autoReconnect=true
+          username: postgres
+          password: root
+jhipster:
+    http:
+        version: V_1_1 # To use HTTP/2 you will need SSL support (see above the "server.ssl" configuration)
+    cache: # Cache configuration
+        ehcache: # Ehcache configuration
+            time-to-live-seconds: 3600 # By default objects stay 1 hour in the cache
+            max-entries: 100 # Number of objects in each cache entry
+    #CORS is only enabled by default with the "dev" profile, so BrowserSync can access the API
+    cors:
+        allowed-origins: "*"
+        allowed-methods: GET, PUT, POST, DELETE, OPTIONS
+        allowed-headers: "*"
+        exposed-headers:
+        allow-credentials: true
+        max-age: 1800
+    mail: # specific JHipster mail property, for standard properties see MailProperties
+        from: pti@localhost
+        base-url: http://127.0.0.1:8080
+    metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
+        jmx.enabled: true
+        graphite: # Use the "graphite" Maven profile to have the Graphite dependencies
+            enabled: false
+            host: localhost
+            port: 2003
+            prefix: pti
+        prometheus: # Use the "prometheus" Maven profile to have the Prometheus dependencies
+            enabled: false
+            endpoint: /prometheusMetrics
+        logs: # Reports Dropwizard metrics in the logs
+            enabled: false
+            report-frequency: 60 # in seconds
+    logging:
+        logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
+            enabled: false
+            host: localhost
+            port: 5000
+            queue-size: 512
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the JHipsterProperties above
+#
+# More documentation is available at:
+# https://jhipster.github.io/common-application-properties/
+# ===================================================================
+
+application:
+
+minio:
+    folder: pti
+
+pentaho:
+    trans:
+        dir: target/pti-trans
+
+m2i:
+    security:
+        pti:
+            ca:
+                file:
+                    linux: target/pti-files/ca
+                    windows: target/pti-files/ca
+            clientAllow:
+                file:
+                    linux: target/pti-files/client
+                    windows: target/pti-files/client
+            images:
+                linux: target/pti-files/images
+                windows: target/pti-files/images
+            keys:
+                path:
+                    linux: target/pti-files/keys
+                    windows: target/pti-files/keys
+            pem:
+                file:
+                    linux: target/pti-files/pem
+                    windows: target/pti-files/pem
+            privatekeys:
+                extension: .key
+            publickeys:
+                extension: .pub
+            qrCode:
+                linux: target/pti-files/qr
+                windows: target/pti-files/qr
+            scripts:
+                genkeys:
+                    linux: target/pti-files/genkeys.sh
+                    windows: target/pti-files/genkeys.bat

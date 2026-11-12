@@ -1,0 +1,50 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title text-white" id="myEtiquetteLabel" ng-show="vm.etiquetteMethode.id">
+            <i class="fa fa-edit"></i> Editer une étiquette
+        </h4>
+        <h4 class="modal-title text-white" id="myEtiquetteLabel" ng-show="vm.etiquetteMethode.id == undefined">
+            <i class="fa fa-plus-circle"></i> Ajouter une étiquette
+        </h4>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group row" ng-show="vm.etiquetteMethode.id">
+            <label class="col-sm-3 col-form-label" for="id">ID</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.etiquetteMethode.id" readonly />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_code">Code</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="code" id="field_code"
+                    ng-model="vm.etiquetteMethode.code"
+                    placeholder="Entrez le code de l'étiquette"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="field_libelle">Libellé</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="libelle" id="field_libelle"
+                    ng-model="vm.etiquetteMethode.libelle"
+                    placeholder="Entrez le libellé de l'étiquette"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="vm.clear()">
+            <i class="fa fa-ban"></i>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <i class="fa fa-save"></i>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+</form>

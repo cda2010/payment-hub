@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://rapidframe.com/schema/domain"
+               name="FeeRule"
+               class="com.gateway.payment.transfer.domain.FeeRule"
+               table="fee_rule"
+               repository="none">
+
+  <string name="code" title="Code" required="true" unique="true"/>
+  <string name="name" title="Nom" required="true" namecolumn="true"/>
+  <string name="currency" title="Devise" required="true" default="XOF"/>
+  <string name="description" title="Description" large="true"/>
+  <boolean name="actif" title="Actif" default="true"/>
+  <string name="feeBearer" title="À la charge de" required="true" default="SENDER"/>
+  <one-to-many name="lines" ref="com.gateway.payment.transfer.domain.FeeRuleLine" mappedBy="feeRule" orphanRemoval="true"/>
+  <datetime name="createdAt" title="Créé le" readonly="true"/>
+  <datetime name="updatedAt" title="Modifié le" readonly="true"/>
+
+  <finder name="findByCode" using="code"/>
+
+</domain-models>

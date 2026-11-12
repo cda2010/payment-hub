@@ -1,0 +1,34 @@
+
+
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+    <div class="modal-header">
+
+        <h4 class="modal-title" id="myInterfaceUtilisateurLabel">Transfertss</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+
+        <select class="form-control" id="field_service" name="service" ng-model="vm.codeservice" ng-options="service as service.nomService for service in vm.servicetraitements track by service.id" ng-change="vm.onChangeService(vm.codeservice.id)">
+                <option value=""></option>
+            </select>
+
+    <div class="form-group" ng-repeat="user in vm.parametreutiliateurs">
+    <label>{{ user.nomParametre }}</label>
+    <input type="text" class="form-control"  name=" user.codeParametre " ng-model="user.valeur" >
+
+  </div>
+
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+</form>

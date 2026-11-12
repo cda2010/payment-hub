@@ -1,0 +1,34 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation class="form-horizontal">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myTypeCompteLabel" data-translate="ptiApp.typeCompte.home.createOrEditLabel">Create or edit a Type Compte</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.typeCompte.codeTypeCompte" for="field_codeTypeCompte">Code Type Compte</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"type="text" class="form-control" name="codeTypeCompte" id="field_codeTypeCompte" ng-model="vm.typeCompte.codeTypeCompte" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.typeCompte.libelleTypeCompte" for="field_libelleTypeCompte">Libelle Type Compte</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"type="text" class="form-control" name="libelleTypeCompte" id="field_libelleTypeCompte" ng-model="vm.typeCompte.libelleTypeCompte" required/>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" ng-if="!vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-if="!vm.isViewing" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+        <button type="button" ng-if="vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+            <span>Fermer</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-view name="audit-all" title="Journal d'audit"
+             model="com.gateway.payment.audit.domain.AuditLog" icon="pi pi-history">
+  <view type="grid" name="audit-grid"/>
+  <view type="form" name="audit-form"/>
+</action-view>

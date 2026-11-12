@@ -1,0 +1,75 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "hidden",
+        "key": "providerCode",
+        "defaultValue": "RIA",
+        "input": true
+      },
+      {
+        "type": "htmlelement",
+        "key": "intro",
+        "tag": "p",
+        "content": "Bénéficiaire RIA — nom, téléphone et ville de retrait."
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryFirstName",
+        "label": "Prénom bénéficiaire",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryLastName",
+        "label": "Nom bénéficiaire",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryName",
+        "label": "Nom complet (affichage)",
+        "input": true,
+        "calculateValue": "value = (data.beneficiaryFirstName || '') + ' ' + (data.beneficiaryLastName || '')"
+      },
+      {
+        "type": "phoneNumber",
+        "key": "beneficiaryPhone",
+        "label": "Téléphone bénéficiaire",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryCity",
+        "label": "Ville de retrait / livraison",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Prénom bénéficiaire": "Prénom bénéficiaire",
+      "Nom bénéficiaire": "Nom bénéficiaire",
+      "Téléphone bénéficiaire": "Téléphone bénéficiaire",
+      "Ville de retrait / livraison": "Ville de retrait / livraison"
+    },
+    "en": {
+      "Prénom bénéficiaire": "Beneficiary first name",
+      "Nom bénéficiaire": "Beneficiary last name",
+      "Téléphone bénéficiaire": "Beneficiary phone",
+      "Ville de retrait / livraison": "Payout / delivery city"
+    }
+  }
+}

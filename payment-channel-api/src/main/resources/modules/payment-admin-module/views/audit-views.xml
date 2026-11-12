@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_8.0.xsd">
+<grid name="audit-grid" title="Audit"
+        model="com.gateway.payment.audit.domain.AuditLog"
+        edit-form="audit-form"
+        rest-resource="/api/v1/admin/audit"
+        canNew="false" canEdit="false" canDelete="false">
+    <field name="createdAt"/>
+    <field name="actorUsername"/>
+    <field name="action"/>
+    <field name="resourceType"/>
+    <field name="resourceId"/>
+  </grid>
+
+  <form name="audit-form" title="Entrée d'audit"
+        model="com.gateway.payment.audit.domain.AuditLog" canNew="false" canEdit="false">
+    <panel name="main" title="Événement">
+      <field name="createdAt" readonly="true" colSpan="4"/>
+      <field name="actorUsername" readonly="true" colSpan="4"/>
+      <field name="action" readonly="true" colSpan="4"/>
+      <field name="resourceType" readonly="true" colSpan="4"/>
+      <field name="resourceId" readonly="true" colSpan="4"/>
+      <field name="ipAddress" readonly="true" colSpan="4"/>
+      <field name="traceId" readonly="true" colSpan="6"/>
+      <field name="details" readonly="true" colSpan="12" widget="Text"/>
+    </panel>
+  </form>
+
+</object-views>

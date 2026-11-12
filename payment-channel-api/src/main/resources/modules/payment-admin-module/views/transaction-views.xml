@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_8.0.xsd">
+<grid name="transaction-grid" title="Transactions"
+        model="com.gateway.payment.payment.domain.PaymentTransaction"
+        edit-form="transaction-form"
+        rest-resource="/api/v1/admin/transactions"
+        canNew="false" canDelete="false">
+    <field name="paymentId"/>
+    <field name="providerCode"/>
+    <field name="operationType"/>
+    <field name="amount"/>
+    <field name="currency"/>
+    <field name="status"/>
+    <field name="createdAt"/>
+  </grid>
+
+  <form name="transaction-form" title="Transaction"
+        model="com.gateway.payment.payment.domain.PaymentTransaction" canNew="false">
+    <panel name="main" title="Paiement">
+      <field name="paymentId" readonly="true" colSpan="6"/>
+      <field name="status" readonly="true" colSpan="3"/>
+      <field name="operationType" readonly="true" colSpan="3"/>
+      <field name="providerCode" readonly="true" colSpan="4"/>
+      <field name="amount" readonly="true" colSpan="4"/>
+      <field name="currency" readonly="true" colSpan="4"/>
+      <field name="customerReference" readonly="true" colSpan="4"/>
+      <field name="merchantReference" readonly="true" colSpan="4"/>
+      <field name="phoneNumber" readonly="true" colSpan="4"/>
+      <field name="providerReference" readonly="true" colSpan="6"/>
+      <field name="currentStep" readonly="true" colSpan="6"/>
+      <field name="errorCode" readonly="true" colSpan="4"/>
+      <field name="errorMessage" readonly="true" colSpan="8"/>
+      <field name="createdAt" readonly="true" colSpan="4"/>
+      <field name="updatedAt" readonly="true" colSpan="4"/>
+      <field name="completedAt" readonly="true" colSpan="4"/>
+    </panel>
+  </form>
+
+</object-views>

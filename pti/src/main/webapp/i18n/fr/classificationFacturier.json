@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "classificationFacturier" : {
+            "home": {
+                "title": "ClassificationFacturiers",
+                "createLabel": "Créer un nouveau Classification Facturier",
+                "createOrEditLabel": "Créer ou éditer un Classification Facturier"
+            },
+            "created": "Un nouveau Classification Facturier a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Classification Facturier avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Classification Facturier avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Classification Facturier {{ id }} ?"
+            },
+            "detail": {
+                "title": "Classification Facturier"
+            },
+            "libelleClassification": "Libelle Classification",
+            "uniteOrganisationId": "Unite Organisation Id",
+            "niveauSuperieurID": "Niveau Superieur ID"
+        }
+    }
+}

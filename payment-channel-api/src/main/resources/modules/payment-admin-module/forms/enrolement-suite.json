@@ -1,0 +1,27 @@
+{
+  "formio": {
+    "display": "form",
+    "title": "Ouverture du compte",
+    "components": [
+      {
+        "type": "radio",
+        "key": "reponse",
+        "label": "Que souhaitez-vous faire ?",
+        "input": true,
+        "validate": {
+          "required": true
+        },
+        "values": [
+          {
+            "label": "Créer le compte maintenant",
+            "value": "CREATION"
+          },
+          {
+            "label": "Identifiez-vous",
+            "value": "IDENTIFICATION"
+          }
+        ]
+      }
+    ]
+  }
+}

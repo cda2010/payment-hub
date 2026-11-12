@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_8.0.xsd">
+
+  <grid name="fee-rule-grid" title="Règles de frais"
+        model="com.gateway.payment.transfer.domain.FeeRule"
+        edit-form="fee-rule-form" new-action-view="fee-rule-new"
+        rest-resource="/api/v1/admin/transfers/fee-rules"
+        canDelete="false">
+    <field name="code"/>
+    <field name="name"/>
+    <field name="currency"/>
+    <field name="feeBearer"/>
+    <field name="actif"/>
+  </grid>
+
+  <form name="fee-rule-form" title="Règle de frais"
+        model="com.gateway.payment.transfer.domain.FeeRule"
+        rest-resource="/api/v1/admin/transfers/fee-rules">
+    <panel name="main" title="Règle">
+      <field name="code" required="true" colSpan="4"/>
+      <field name="name" required="true" colSpan="8"/>
+      <field name="currency" required="true" colSpan="3"/>
+      <field name="feeBearer" required="true" colSpan="3"/>
+      <field name="actif" colSpan="2"/>
+      <field name="description" colSpan="12" widget="Text"/>
+    </panel>
+    <panel-related name="linesPanel" title="Paliers" field="lines"
+                   form-view="fee-rule-line-form" grid-view="fee-rule-line-grid"
+                   canNew="true" canEdit="true" canRemove="true" colSpan="12"/>
+  </form>
+
+  <grid name="fee-rule-line-grid" title="Paliers"
+        model="com.gateway.payment.transfer.domain.FeeRuleLine">
+    <field name="ordre"/>
+    <field name="feeType"/>
+    <field name="minAmount"/>
+    <field name="maxAmount"/>
+    <field name="value"/>
+    <field name="fixedAmount"/>
+    <field name="percentValue"/>
+  </grid>
+
+  <form name="fee-rule-line-form" title="Palier"
+        model="com.gateway.payment.transfer.domain.FeeRuleLine">
+    <panel name="main" title="Palier">
+      <field name="ordre" required="true" colSpan="2"/>
+      <field name="feeType" required="true" colSpan="4"/>
+      <field name="minAmount" colSpan="3"/>
+      <field name="maxAmount" colSpan="3"/>
+      <field name="value" required="true" colSpan="3"/>
+      <field name="fixedAmount" colSpan="3"/>
+      <field name="percentValue" colSpan="3"/>
+      <field name="minFee" colSpan="3"/>
+      <field name="maxFee" colSpan="3"/>
+    </panel>
+  </form>
+
+</object-views>

@@ -1,0 +1,159 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0007",
+  "providerCodeHint": "FSE_0007",
+  "providerLibelle": "Office Nationale de l'Eau et de l'Assainissement",
+  "participantKindHint": "FACTURIER",
+  "fseStatut": "AUTRE",
+  "groupCode": "ENF",
+  "codeExterne": "0007",
+  "typeEtc": "AUT",
+  "api": {
+    "nomApi": "ApiONEA",
+    "codeApi": "0004",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "NONE",
+    "clientId": ""
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "CONSULTATIONFACTURE",
+      "codeMethode": "000401",
+      "operationCode": "CONSULTATIONFACTURE",
+      "nom": "/api/onea/get-facture-onea",
+      "httpMethod": "POST",
+      "path": "api/onea/get-facture-onea",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"referenceAbonne\": \"${referenceAbonne}\"}",
+      "parameters": [
+        {
+          "code": "referenceAbonne",
+          "nomExterne": "referenceAbonne",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "SETTLEMENT",
+      "codeMethode": "000402",
+      "operationCode": "SETTLEMENT",
+      "nom": "api/onea/paiement",
+      "httpMethod": "GET",
+      "path": "api/onea/paiement",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"transactionId\": \"${transactionId}\", \"refenrenceAbonne\": \"${refenrenceAbonne}\", \"factureIds\": \"${factureIds}\", \"penalite\": \"${penalite}\", \"montant\": \"${montant}\", \"periode\": \"${periode}\", \"nom\": \"${nom}\", \"transId\": \"${transId}\", \"montantht\": \"${montantht}\"}",
+      "parameters": [
+        {
+          "code": "transactionId",
+          "nomExterne": "transactionId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "refenrenceAbonne",
+          "nomExterne": "refenrenceAbonne",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "factureIds",
+          "nomExterne": "factureIds",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "penalite",
+          "nomExterne": "penalite",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "periode",
+          "nomExterne": "periode",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nom",
+          "nomExterne": "nom",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "transId",
+          "nomExterne": "transId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montantht",
+          "nomExterne": "montantht",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "GETMONTANT",
+      "codeMethode": "000403",
+      "operationCode": "GETMONTANT",
+      "nom": "api/onea/getmontant-onea",
+      "httpMethod": "POST",
+      "path": "api/onea/getmontant-onea",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"nombre\": \"${nombre}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "VERIFREGLEFACTURIER",
+      "codeMethode": "000404",
+      "operationCode": "VERIFREGLEFACTURIER",
+      "nom": "api/onea/getregle-onea",
+      "httpMethod": "POST",
+      "path": "api/onea/getregle-onea",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"reference\": \"${reference}\", \"montant\": \"${montant}\"}",
+      "parameters": [
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

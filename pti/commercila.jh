@@ -1,0 +1,4 @@
+entity Commerciale{
+	nom String,
+    prenom String,
+}

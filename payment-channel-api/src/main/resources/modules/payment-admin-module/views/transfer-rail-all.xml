@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-view name="transfer-rail-all" title="Corridors / Rails"
+             model="com.gateway.payment.transfer.domain.TransferRail" icon="pi pi-arrow-right-arrow-left">
+  <view type="grid" name="transfer-rail-grid"/>
+  <view type="form" name="transfer-rail-form"/>
+</action-view>

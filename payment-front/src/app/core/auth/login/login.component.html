@@ -1,0 +1,20 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>Payment Gateway</h1>
+      <p>Espace administration</p>
+    </div>
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    <button pButton type="button" class="w-full" [disabled]="loading()" (click)="submit()">
+      @if (loading()) {
+        <p-progressSpinner [style]="{ width: '20px', height: '20px' }" strokeWidth="4" />
+      } @else {
+        Se connecter
+      }
+    </button>
+  </div>
+</div>

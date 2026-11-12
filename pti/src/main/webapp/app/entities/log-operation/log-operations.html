@@ -1,0 +1,111 @@
+<div class="container-fluid">
+    <div class="row mt5">
+        <div class="form-group col-sm-4" ng-if="vm.filtrer">
+            <input autocomplete="off" title="Code opération" placeholder="Code opération"
+                   type="text" class="form-control" name="codeOperation" id="field_codeOperation"
+                   ng-model="vm.itemSearch.codeOperation" />
+        </div>
+        <div class="form-group col-sm-4" ng-if="vm.filtrer">
+            <input autocomplete="off" title="Login" placeholder="Login"
+                   type="text" class="form-control" name="login" id="field_login"
+                   ng-model="vm.itemSearch.login" />
+        </div>
+    </div>
+    <div class="row" ng-if="vm.filtrer">
+
+        <div class="form-group col-sm-4">
+            <div class="col-sm-4">
+                <button class="btn btn-warnig btn-md" ng-click="vm.initFiltre()">
+                    <span class="glyphicon glyphicon-search">Annuler</span>
+                </button>
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-info btn-md " ng-click="vm.filtre()">
+                    <span class="glyphicon glyphicon-search">Filtrer</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group " ng-if="!vm.filtrer">
+        <div class="col-sm-3">
+            <button class="btn btn-info btn-md" ng-click="vm.filtrer=true">
+                <span class="glyphicon glyphicon-search">Filtrer</span>
+            </button>
+        </div>
+    </div>
+</div>
+    <div class="row">
+        <div>
+            <div class="well with-header" style="margin-top:10px ">
+                <div class="header bg-blue " >
+                    <div class="col-xs-9">
+                        <h4>Logs operations</h4>
+                    </div>
+                    <div class="no-padding-left col-xs-3" >
+                        <div class="btn-group mr15" uib-dropdown>
+                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false" uib-dropdown-toggle>{{vm.itemsPerPage}}
+                                éléments par page <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(15)">15 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(20)">20 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(30)">30 éléments par page</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" ng-click="vm.setItemsPerPage(40)">40 éléments par page</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-hover">
+            <thead>
+                <tr>
+<!--                    <th><span data-translate="global.field.id">ID</span></th>-->
+                    <th class="col-sm-1" ng-click="vm.sortBy('dateOperation')">
+                        <span data-translate="ptiApp.logOperation.dateOperation"> Date Operation</span>
+                        <span ng-if="vm.isCurrentColumn('dateOperation')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                    <th class="col-sm-1" ng-click="vm.sortBy('codeOperation')">
+                        <span data-translate="ptiApp.logOperation.codeOperation">Code Operation</span>
+                        <span ng-if="vm.isCurrentColumn('codeOperation')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                    <th class="col-sm-1" ng-click="vm.sortBy('login')">
+                        <span data-translate="ptiApp.logOperation.login">Login</span>
+                        <span ng-if="vm.isCurrentColumn('login')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th >
+                    <th class="col-sm-1" ng-click="vm.sortBy('result')">
+                        <span data-translate="ptiApp.logOperation.result">Result</span>
+                        <span ng-if="vm.isCurrentColumn('result')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+                    <th class="col-sm-6" ng-click="vm.sortBy('description')">
+                        <span data-translate="ptiApp.logOperation.description">Description</span>
+                        <span ng-if="vm.isCurrentColumn('description')" ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                    </th>
+<!--                    <th></th>-->
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="logOperation in vm.datas track by logOperation.id">
+                    <td class="col-sm-1">{{logOperation.dateOperation | date:'medium'}}</td>
+                    <td class="col-sm-1">{{logOperation.codeOperation}}</td>
+                    <td class="col-sm-1">{{logOperation.login}}</td>
+                    <td class="col-sm-1">{{logOperation.result}}</td>
+                    <td class="col-sm-6">{{logOperation.description}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+    <div class="center-block text-center" ng-show="vm.canShowPagination()">
+        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage" >
+        </uib-pagination>
+    </div>
+</div>

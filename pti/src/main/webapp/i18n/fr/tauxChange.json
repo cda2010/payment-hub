@@ -1,0 +1,25 @@
+{
+    "ptiApp": {
+        "tauxChange" : {
+            "home": {
+                "title": "TauxChanges",
+                "createLabel": "Créer un nouveau Taux Change",
+                "createOrEditLabel": "Créer ou éditer un Taux Change"
+            },
+            "created": "Un nouveau Taux Change a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Taux Change avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Taux Change avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Taux Change {{ id }} ?"
+            },
+            "detail": {
+                "title": "Taux Change"
+            },
+            "dateTaux": "Date Taux",
+            "taux": "Taux",
+            "typeChange": "Type Change",
+            "deviseDepart": "Devise Depart",
+            "deviseArrivee": "Devise Arrivee"
+        }
+    }
+}

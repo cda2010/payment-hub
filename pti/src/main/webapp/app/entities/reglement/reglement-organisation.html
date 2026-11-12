@@ -1,0 +1,95 @@
+<div>
+    <!--<h2 data-translate="ptiApp.reglement-organisation.home.title">Reglements</h2>-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ng-if="vm.afficheButtonAjout" ng-click="vm.addReglement()">
+                    <span class="glyphicon glyphicon-plus"> </span>
+                    <span >Ajouter </span>
+                </button>
+                <button  ng-if="!vm.ctrlValide&&vm.afficheButtonValider&&vm.estAnnuler==false&&(vm.enTraitement==false||vm.enTraitement==null)" class="btn btn-success" ng-click="vm.traitementOperationReglement()">
+                    <span >Valider </span>
+                </button>
+<!--                <button class="btn btn-primary" ui-sref="reglement-organisation.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="ptiApp.reglement-organisation.home.createLabel">
+                        Create new Reglement
+                    </span>
+                </button>-->
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="well with-header" >
+        <div class="header bg-blue row">
+            <div class="col-xs-8">
+                <h4>Liste des reglements</h4>
+            </div>
+        </div>
+            <div class="table-responsive">
+        <table class="table-responsive table table-hover">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    
+                    <th jh-sort-by="dateReglement"><span data-translate="ptiApp.reglement-organisation.dateReglement">Date Reglement</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th>Data de création</th>
+                    <th>Créer par</th>
+                     <th>Montant total</th>
+                    <th>Statut</th>
+                    <th>Valider Par</th>
+                    <th>Etat du Règlement</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="reglement in vm.reglements track by reglement.id "  ng-click="vm.voirReglement(reglement)" ng-class="{'table-row-selected':reglement.id===vm.idSelectedCode}">
+                   
+                    <td >{{reglement.dateReglement | date:'medium' }}</td>
+                    <td>{{reglement.createdDate | date:'medium' }}</td>
+                    <td>{{reglement.createdBy}}</td>
+                    <td >{{reglement.montantTotal | number }}</td>
+
+                    <td> <span class="bg-success white" ng-if="reglement.statut">Valide</span>
+                            <span class="bg-danger white" ng-if="!reglement.statut">Non Valide</span>
+                    </td>
+                    <td>{{reglement.validerPar}}</td>
+                        <td><span class="bg-danger white" ng-if="reglement.estAnnuler===true">Est Annuler</span>
+                  </td>
+
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ng-click="vm.voirLigneRegl(reglement.id)"
+                                    class="btn btn-info btn-sm" title="Voir détail">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                               <!-- <span class="hidden-sm-down" data-translate="entity.action.view"></span>-->
+                            </button>
+                      <!--      <button type="submit"
+                                    ui-sref="reglement-organisation.edit({id:reglement.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>-->
+                            <button type="submit"
+                                    ng-click="vm.imprimerRapportReglmt(reglement.id)"
+                                    class="btn btn-info btn-sm" title="Imprimer rapport">
+                                <span class="glyphicon glyphicon-save"></span>
+                            </button>
+                            <button type="submit" ng-if="vm.afficheButtonValider"
+                                    ng-click="vm.confirmAnnulation(reglement)" title="Annuler le règlement"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-off"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+            </div>
+    </div>
+    <div class="center-block text-center" >
+        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage" ng-change="vm.transition()">
+        </uib-pagination>
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+    </div>
+   <!-- <uib-pager total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pager>-->
+</div>

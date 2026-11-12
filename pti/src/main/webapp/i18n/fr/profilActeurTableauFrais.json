@@ -1,0 +1,20 @@
+{
+    "ptiApp": {
+        "profilActeurTableauFrais" : {
+            "home": {
+                "title": "ProfilActeurTableauFrais",
+                "createLabel": "Créer un nouveau Profil Acteur Tableau Frais",
+                "createOrEditLabel": "Créer ou éditer un Profil Acteur Tableau Frais"
+            },
+            "created": "Un nouveau Profil Acteur Tableau Frais a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Profil Acteur Tableau Frais avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Profil Acteur Tableau Frais avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Profil Acteur Tableau Frais {{ id }} ?"
+            },
+            "detail": {
+                "title": "Profil Acteur Tableau Frais"
+            }
+        }
+    }
+}

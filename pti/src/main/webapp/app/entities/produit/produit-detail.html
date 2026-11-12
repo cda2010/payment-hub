@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span data-translate="ptiApp.produit.detail.title">Produit</span> {{vm.produit.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.produit.nomProduit">Nom Produit</span></dt>
+        <dd>
+            <span>{{vm.produit.nomProduit}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.produit.numeroOrdre">Numero Ordre</span></dt>
+        <dd>
+            <span>{{vm.produit.numeroOrdre}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.produit.actif">Actif</span></dt>
+        <dd>
+            <span>{{vm.produit.actif}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.produit.facturierId">Facturier Id</span></dt>
+        <dd>
+            <span>{{vm.produit.facturierId}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="produit-detail.edit({id:vm.produit.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

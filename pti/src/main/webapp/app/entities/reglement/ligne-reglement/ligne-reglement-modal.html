@@ -1,0 +1,60 @@
+<div >
+    <div class="modal-header">
+        <h4 style="background-color: #1758a3 !important; color: white !important;text-align: center;">Liste des lignes reglements</h4>
+    </div>
+    <div class="modal-body">
+        <div class="table-responsive">
+            <table class="jh-table table table-striped">
+                <thead>
+                  <tr>
+                    <th><span>Date de règlement</span></th>
+                      <th><span>Créer par</span></th>
+                      <th ng-if="vm.ligneReglement.reglementStatut"><span>Date de validation</span></th>
+                      <th ng-if="vm.ligneReglement.reglementStatut"><span>Valider par</span></th>
+                    <th><span>Montant commission</span></th>
+                    <th><span>Solde compte operation</span></th>
+                      <th><span>Solde du compte après</span></th>
+                      <th><span>Etat</span></th>
+                    <th><span>Organisation</span></th>
+                    <th><span>Action</span></th>
+                  </tr>
+                </thead>
+                <tbody ng-repeat="ligneReglement in vm.ligneReglement track by ligneReglement.id ">
+                <tr>
+                    <td>{{ligneReglement.createdDate | date: 'medium'}}</td>
+                    <td>{{ligneReglement.createdBy }}</td>
+                    <td ng-if="vm.ligneReglement.reglementStatut">{{ligneReglement.lastModifiedDate | date: 'medium' }}</td>
+                    <td ng-if="vm.ligneReglement.reglementStatut">{{ligneReglement.lastModifiedBy }}</td>
+                    <td>{{ligneReglement.montantCommission | currency:""}}</td>
+                    <td>{{ligneReglement.soldeCompteOp | currency:""}}</td>
+                    <td>{{ligneReglement.soldeCompteOpApres | currency:""}}</td>
+                    <td>
+                        <span class="bg-success white" ng-if="ligneReglement.valide">Valide</span>
+                        <span class="bg-danger white" ng-if="!ligneReglement.valide">Non Valide</span>
+                    </td>
+                    <td>{{ligneReglement.libelleUO}}</td>
+                    <td class="text-right">
+                        <button type="submit" ng-if="!ligneReglement.valide &&ligneReglement.estDetacher!=true"
+                                 title="Détacher le règlement"
+                                ng-click="vm.confirmDetachement(ligneReglement)"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-off"></span>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="center-block text-center" ng-show="vm.totalItems>vm.queryCount">
+            <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+            </uib-pagination>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-default"  ng-click="fermerM()">
+                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Fermer</span>
+            </button>
+        </div>
+    </div>
+</div>

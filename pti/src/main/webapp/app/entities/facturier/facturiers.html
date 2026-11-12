@@ -1,0 +1,158 @@
+<div class="container-fluid">
+<div class="row">
+    <div class="well with-header" style="margin-top:10px ">
+        <div class="header bg-blue ">
+            <div class="col-xs-11">
+                <h4 >Liste des Facturiers</h4>
+            </div>
+            <div class="no-padding-left col-xs-1">
+                <button class="btn btn-default  btn-circle btn-xs" ui-sref="facturier.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+        <!--filtes -->
+        <button ng-if="! vm.afficheFiltre" class="btn btn-primary mt5" ng-click="vm.afficherFiltre()">
+            <span class="glyphicon glyphicon-search" > Filtrer</span>
+        </button>
+
+        <div ng-if="vm.afficheFiltre" class="contaner-fluid mt5">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label" for="field_possesseur">Possesseur</label>
+                    <select ng-change="vm.initClassifications(vm.itemSearch.possesseur_id)" name="possesseur" id="field_possesseur"  class="form-control"
+                            ng-model="vm.itemSearch.possesseur_id"
+                            ng-options="possesseur.id as possesseur.libelleUniteOrganisation for possesseur in vm.possesseurs"
+                    >
+                        <option value="">Choisir Prosesseur</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label" for="field_classification">Classification</label>
+                    <select name="classification" id="field_classification" class="form-control"
+                            ng-model="vm.itemSearch.classification_id"
+                            ng-options="classification.id as classification.libelleClassification for classification in vm.classifications"
+                    >
+                    </select>
+                </div>
+            </div>
+<!--            <div class="col-sm-4">-->
+<!--                <div class="form-group">-->
+<!--                    <label class="control-label" for="field_type">Type</label>-->
+<!--                    <select name="type" id="field_type"  class="form-control"-->
+<!--                            ng-model="vm.itemSearch.typeFacturier"-->
+<!--                            ng-options="type for type in vm.typeFacturiers"-->
+<!--                    >-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label" for="field_code">Code</label>
+                    <input type="text"  class="form-control" name="code" id="field_code"
+                           ng-model="vm.itemSearch.codeFacturier">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label" for="field_nom">Nom</label>
+                    <input type="text"  class="form-control" name="nom" id="field_nom"
+                           ng-model="vm.itemSearch.nomFacturier">
+                </div>
+            </div>
+
+            <div class="col-sm-12" >
+                <div class="col-sm-3">
+                <button ng-if="vm.afficheFiltre" class="btn btn-danger mt5" ng-click="vm.afficherFiltre()">
+                    <span class="glyphicon glyphicon-remove"> Annuler</span>
+                </button>
+                </div>
+                <div class="col-sm-3">
+                    <button  ng-if=" vm.fact===true " ng-click="vm.genererFacturier()" class="btn btn-primary mt5">
+                        <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Générer</span>
+                    </button>
+                </div>
+                <div class="col-sm-3" ng-if="vm.fact===true ">
+                    <select class=" col-sm-5" id="filed_format" name="format" ng-model="vm.format" >
+                        <option value="">Format</option>
+                        <option value="PDF">PDF</option>
+                        <option value="XLSX">XLSX</option>
+                        <option value="CSV">CSV</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn btn-primary mt5" ng-click="vm.chercher()">
+                        <span class="glyphicon glyphicon-search" > Chercher</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--/filtes -->
+        <table class="jh-table table table-hover">
+            <thead>
+            <tr>
+<!--                <th><span data-translate="global.field.id">ID</span></th>-->
+                <th><span data-translate="ptiApp.facturier.nomFacturier">Nom Facturier</span></th>
+                <th><span>Classification</span></th>
+                <th><span data-translate="ptiApp.facturier.codeFacturier">Code Facturier</span></th>
+                <th><span data-translate="ptiApp.facturier.typeFacturier">Type Facturier</span></th>
+                <th><span data-translate="ptiApp.facturier.possesseur">Possesseur</span></th>
+                <th><span>Marchand</span></th>
+                <th><span>FSE</span></th>
+                <th><span>Secteur d'activité</span></th>
+                <th><span>Statut</span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  ng-repeat="facturier in vm.facturiers track by facturier.id">
+<!--                <td><a ui-sref="facturier-detail({id:facturier.id})">{{facturier.id}}</a></td>-->
+                <td>{{facturier.nomFacturier}}</td>
+                <td>{{facturier.classificationLibelle}}</td>
+                <td>{{facturier.codeFacturier}}</td>
+                <td>{{facturier.typeFacturierLibelle}}</td>
+                <td>{{facturier.possesseurLibelle}}</td>
+                <td>{{facturier.marchand}}</td>
+                <td>{{facturier.fse}}</td>
+                <td>{{facturier.secteurActiviteLibelle}}</td>
+                <td>
+                    <button class="btn btn-danger btn-xs" ng-click="vm.setActive(facturier, true)"
+                            ng-show="!facturier.activated"
+                            >Desactivé
+                    </button>
+                    <button class="btn btn-success btn-xs" ng-click="vm.setActive(facturier, false)"
+                            ng-show="facturier.activated"
+                           >Activé
+                    </button>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                ng-click="vm.viewFacturier(facturier.id)"
+                                class="btn btn-info btn-xs">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </button>
+                        <button
+                                ui-sref="facturier.edit({id:facturier.id})"
+                                class="btn btn-warning btn-xs">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="facturier.delete({id:facturier.id})"
+                                class="btn btn-danger btn-xs">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>
+</div>

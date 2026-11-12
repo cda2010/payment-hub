@@ -1,0 +1,43 @@
+
+<div>
+    <h2><span data-translate="ptiApp.taxe.detail.title">Taxe</span> {{vm.taxe.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.taxe.modeCalcul">Mode Calcul</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.TypeTarif.' + vm.taxe.modeCalcul}}">{{vm.taxe.modeCalcul}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.taxe.appliqueSur">Applique Sur</span></dt>
+        <dd>
+            <span data-translate="{{'ptiApp.MontantsAComptabilise.' + vm.taxe.appliqueSur}}">{{vm.taxe.appliqueSur}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.taxe.valeur">Valeur</span></dt>
+        <dd>
+            <span>{{vm.taxe.valeur}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.taxe.typeService">Type Service</span></dt>
+        <dd>
+            <span ng-repeat="typeService in vm.taxe.typeServices">
+                <a ui-sref="type-service-detail({id: typeService.id})">{{typeService.id}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span data-translate="ptiApp.taxe.operation">Operation</span></dt>
+        <dd>
+            <span ng-repeat="operation in vm.taxe.operations">
+                <a ui-sref="operation-detail({id: operation.id})">{{operation.id}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="taxe-detail.edit({id:vm.taxe.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,61 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+    <div class="modal-header text-center" style="background-color: #210aec; color: white; border-radius: 5px 5px 0 0;">
+        <h4 class="modal-title text-white" id="myOperationLabel">
+            <i class="fa fa-list-alt text-warning me-2"></i>
+            Liste des lignes opérations de l'opération n° <span>{{vm.defOperation.codeOperation}}</span>
+        </h4>
+    </div>
+    <div class="modal-body" style="background-color: #f8f9fa; padding: 20px;">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="panel panel-filled" style="background-color: #ffffff; border: 2px solid #7485e6; border-radius: 5px; padding: 15px;">
+            <h4 class="m-t-n-sm m-b-xs text-primary">Ligne Opération</h4>
+            <small class="text-muted">Détail de la transaction n°<a class="text-primary"> {{ vm.defOperation.id}} {{ vm.defOperation.codeOperation}}  {{ vm.defOperation.reponse}} </a></small>
+
+            <div class="m-t-sm" id="serverMap"></div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-filled">
+                        <div class="panel-body">
+                            <div class="table-responsive fixTableHead">
+                                <table class="table table-hover" id="logsTable" style="border: 2px solid #7485e6;">
+                                    <thead>
+                                        <tr class="bg-primary text-white" style="background-color: #7485e6;">
+                                            <th class="text-center text-white"><span>ID</span></th>
+                                            <th class="text-center text-white"><span>Statut</span></th>
+                                            <th class="text-center text-white"><span>Nom</span></th>
+                                            <th class="text-center text-white"><span>Parametre</span></th>
+                                            <th class="text-center text-white"><span>Fournisseur Service</span></th>
+                                            <th class="text-center text-white"><span>Reponse</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="op in vm.trans">
+                                            <td class="text-center">{{op.id}}</td>
+                                            <td class="text-center"><span class="badge" ng-class="{'badge-success': op.execute, 'badge-danger': !op.execute}">{{op.execute}}</span></td>
+                                            <td class="text-center">{{op.JsonLigneTransactionUser.ligneTransaction.methodeApi.nomMethode}}</td>
+                                            <td class="text-center">
+                                                <div ng-repeat="param in op.JsonLigneTransactionUser.ligneTransaction.parametreService">
+                                                    <span class="badge badge-info">{{param.codeParametre}}</span>
+                                                    <span class="badge badge-warning">{{param.valeur}}</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">{{op.JsonLigneTransactionUser.ligneTransaction.methodeApi.api.fournisseurService.nom}}</td>
+                                            <td class="text-center"><span class="text-primary">{{op.reponse}}</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer" style="background-color: #f8f9fa; border-top: 2px solid #7485e6;">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()"
+                style="background-color: white; border: 1px solid #7485e6; color: #7485e6;">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>OK</span>
+        </button>
+    </div>
+</form>

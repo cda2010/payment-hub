@@ -1,0 +1,53 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "hidden",
+        "key": "destRail",
+        "defaultValue": "WAVE",
+        "input": true
+      },
+      {
+        "type": "phoneNumber",
+        "key": "destPhone",
+        "label": "Mobile Wave (destinataire)",
+        "placeholder": "22670009988",
+        "input": true,
+        "validate": {
+          "required": true,
+          "pattern": "^226\\d{8}$",
+          "customMessage": "Format 226 + 8 chiffres"
+        }
+      },
+      {
+        "type": "phoneNumber",
+        "key": "destAccount",
+        "label": "Identifiant compte destinataire (MSISDN)",
+        "placeholder": "22670009988",
+        "input": true,
+        "validate": {
+          "required": true,
+          "pattern": "^226\\d{8}$"
+        }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Mobile Wave (destinataire)": "Mobile Wave (destinataire)",
+      "Identifiant compte destinataire (MSISDN)": "Identifiant compte destinataire (MSISDN)"
+    },
+    "en": {
+      "Mobile Wave (destinataire)": "Wave mobile (recipient)",
+      "Identifiant compte destinataire (MSISDN)": "Destination account id (MSISDN)"
+    }
+  }
+}

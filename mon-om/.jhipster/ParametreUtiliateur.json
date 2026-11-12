@@ -1,0 +1,30 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "interfaceUtilisateur",
+            "otherEntityName": "interfaceUtilisateur",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "nomParametreUtil",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "typeParametre",
+            "fieldType": "ParamatreType",
+            "fieldValues": "STRING,DOUBLE,INTEGER,FLOAT,LONG",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170404133237",
+    "entityTableName": "parametre_utiliateur",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

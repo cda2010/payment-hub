@@ -1,0 +1,21 @@
+{
+    "ptiApp": {
+        "texBox" : {
+            "home": {
+                "title": "TexBoxes",
+                "createLabel": "Créer un nouveau Tex Box",
+                "createOrEditLabel": "Créer ou éditer un Tex Box"
+            },
+            "created": "Un nouveau Tex Box a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Tex Box avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Tex Box avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Tex Box {{ id }} ?"
+            },
+            "detail": {
+                "title": "Tex Box"
+            },
+            "composant": "Composant"
+        }
+    }
+}

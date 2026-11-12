@@ -1,0 +1,25 @@
+{
+    "ptiApp": {
+        "tableauRepartitionCommission" : {
+            "home": {
+                "title": "TableauRepartitionCommissions",
+                "createLabel": "Créer un nouveau Tableau Repartition Commission",
+                "createOrEditLabel": "Créer ou éditer un Tableau Repartition Commission"
+            },
+            "created": "Un nouveau Tableau Repartition Commission a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Tableau Repartition Commission avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Tableau Repartition Commission avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Tableau Repartition Commission {{ id }} ?"
+            },
+            "detail": {
+                "title": "Tableau Repartition Commission"
+            },
+            "niveaoOperation": "Niveao Operation",
+            "dateDebut": "Date Debut",
+            "dateFin": "Date Fin",
+            "ligneRepartitionCommission": "Ligne Repartition Commission",
+            "typeService": "Type Service"
+        }
+    }
+}

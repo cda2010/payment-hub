@@ -1,0 +1,36 @@
+{
+  "formio": {
+    "display": "form",
+    "title": "Compte bancaire",
+    "components": [
+      {
+        "type": "radio",
+        "key": "reponse",
+        "label": "Avez-vous un compte bancaire ou Meso Finance ?",
+        "input": true,
+        "validate": {
+          "required": true
+        },
+        "values": [
+          {
+            "label": "Oui",
+            "value": "OUI"
+          },
+          {
+            "label": "Non",
+            "value": "NON"
+          }
+        ]
+      },
+      {
+        "type": "textfield",
+        "key": "numero",
+        "label": "Numéro de compte",
+        "input": true,
+        "validate": {
+          "required": false
+        }
+      }
+    ]
+  }
+}

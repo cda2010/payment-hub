@@ -1,0 +1,65 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="well with-header" style="margin-top:10px ">
+            <div class="header bg-blue ">
+                <div class="col-xs-11">
+                    <h4 >Liste des Etats</h4>
+                </div>
+                <div class="no-padding-left col-xs-1" has-any-authority="ROLE_ADMIN,ROLE_CREATE_GENERATEUR_ETAT_VIEW">
+                    <button class="btn btn-default  btn-circle btn-xs">
+                        <span class="glyphicon glyphicon-plus" ui-sref="export-table.new"></span>
+                    </button>
+                </div>
+            </div>
+            <!--filtes -->
+        
+            <!--/filtes -->
+    
+            <table class="jh-table table table-hover">
+                <thead>
+                <tr>
+                    <th><span>Libelle</span></th>
+                    <th><span>Description</span></th>
+                    <th><span>Nom fichier </span></th>
+                    <th><span>Fichier de sortie</span></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr  ng-repeat="exp in vm.exportTables track by exp.id">
+                    <td>{{exp.libelle}}</td>
+                    <td>{{exp.description}}</td>
+                    <td>{{exp.nomFichier}}</td>
+                    <td>{{exp.outputFilename}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"  has-any-authority="ROLE_ADMIN,ROLE_CREATE_GENERATEUR_ETAT_VIEW"
+                                    ng-click="vm.viewExportTable(exp.id)"
+                                    class="btn btn-info btn-xs">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+                            <button
+                                type="submit"  has-any-authority="ROLE_ADMIN,ROLE_CREATE_GENERATEUR_ETAT_EDIT"
+                                    ui-sref="export-table.edit({id:exp.id})"
+                                    class="btn btn-warning btn-xs">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button type="submit"  has-any-authority="ROLE_ADMIN,ROLE_CREATE_GENERATEUR_ETAT_DELETE"
+                                    ui-sref="export-table.delete({id:exp.id})"
+                                    class="btn btn-danger btn-xs">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                            </button>
+                        </div>
+                    </td>
+                  
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center">
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+        </div>
+    </div>
+    </div>
+    

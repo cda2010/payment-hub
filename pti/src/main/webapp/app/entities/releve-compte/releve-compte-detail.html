@@ -1,0 +1,69 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="well with-header" style="margin-top:10px ">
+            <div class="header bg-blue ">
+                <div class="col-xs-8">
+                    <h4>Releve Compte</span> {{vm.releveCompte.id}}</h4>
+                </div>
+            </div>
+            <hr>
+            <dl class="dl-horizontal jh-entity-details">
+                <dt><span data-translate="ptiApp.releveCompte.soldeInitial">Solde Initial</span></dt>
+                <dd>
+                    <span>{{vm.releveCompte.soldeInitial}}</span>
+                </dd>
+                <dt><span data-translate="ptiApp.releveCompte.dateDebut">Date Debut</span></dt>
+                <dd>
+                    <span>{{vm.releveCompte.dateDebut | date:'medium'}}</span>
+                </dd>
+                <dt><span data-translate="ptiApp.releveCompte.soldeFinal">Solde Final</span></dt>
+                <dd>
+                    <span>{{vm.releveCompte.soldeFinal}}</span>
+                </dd>
+                <dt><span data-translate="ptiApp.releveCompte.dateFin">Date Fin</span></dt>
+                <dd>
+                    <span>{{vm.releveCompte.dateFin | date:'medium'}}</span>
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+  <div class="well with-header" style="margin-top:10px ">
+      <div class="header bg-blue ">
+          <div class="col-xs-8">
+              <h4>Liste des transactions</h4>
+          </div>
+      </div>
+  <table class="table table-hover">
+      <thead>
+      <tr>
+          <th>Type</th>
+          <th>Etat</th>
+          <th>Date</th>
+          <th>Montant</th>
+          <th>Solde Courant</th>
+          <th>Solde Apres</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="transaction in vm.transactions track by transaction.id">
+          <td>{{transaction.type}}</td>
+          <td>{{transaction.etat}}</td>
+          <td>{{transaction.date | date:'medium'}}</td>
+          <td>{{transaction.montant}}</td>
+          <td>{{transaction.soldeCourant}}</td>
+          <td>{{transaction.soldeApres}}</td>
+      </tr>
+    </tbody>
+  </table>
+    </div>
+</div>
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+</div>

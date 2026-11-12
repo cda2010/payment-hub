@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://rapidframe.com/schema/domain"
+               name="TransferFeePolicy"
+               class="com.gateway.payment.transfer.domain.TransferFeePolicy"
+               table="transfer_fee_policy"
+               repository="none">
+
+  <string name="code" title="Code" required="true" unique="true"/>
+  <string name="name" title="Nom" required="true" namecolumn="true"/>
+  <string name="policyType" title="Type" required="true"/>
+  <string name="countryCode" title="Pays" required="true" default="BF"/>
+  <string name="currency" title="Devise" required="true" default="XOF"/>
+  <string name="emitterCode" title="Émetteur"/>
+  <string name="beneficiaryCode" title="Bénéficiaire"/>
+  <string name="railCode" title="Rail"/>
+  <many-to-one name="feeRule" ref="com.gateway.payment.transfer.domain.FeeRule" title="Règle de frais" required="true"/>
+  <boolean name="actif" title="Actif" default="true"/>
+  <integer name="ordre" title="Ordre" default="0"/>
+  <datetime name="createdAt" title="Créé le" readonly="true"/>
+  <datetime name="updatedAt" title="Modifié le" readonly="true"/>
+
+  <finder name="findByCode" using="code"/>
+
+</domain-models>

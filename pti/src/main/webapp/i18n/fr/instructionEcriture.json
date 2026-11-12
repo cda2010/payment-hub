@@ -1,0 +1,10 @@
+{
+    "ptiApp": {
+        "InstructionEcriture" : {
+            "null": "",
+            "DEBITER": "DEBITER",
+            "CREDITER": "CREDITER",
+            "SOLDER": "SOLDER"
+        }
+    }
+}

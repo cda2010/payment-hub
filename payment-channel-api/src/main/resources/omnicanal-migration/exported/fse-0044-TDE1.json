@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0044",
+  "providerCodeHint": "FSE_0044",
+  "providerLibelle": "TDE1",
+  "participantKindHint": "FACTURIER",
+  "fseStatut": "AUTRE",
+  "groupCode": "ENF",
+  "codeExterne": "0",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "API TDE",
+    "codeApi": "0041",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "NONE"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "GETMONTANT",
+      "codeMethode": "004101",
+      "operationCode": "GETMONTANT",
+      "nom": "api/tde/getmontant",
+      "httpMethod": "POST",
+      "path": "api/tde/getmontant",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"nombre\": \"${nombre}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "VERIFREGLEFACTURIER",
+      "codeMethode": "004102",
+      "operationCode": "VERIFREGLEFACTURIER",
+      "nom": "api/tde/getregle",
+      "httpMethod": "POST",
+      "path": "api/tde/getregle",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"reference\": \"${reference}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "CONSULTATIONFACTURE",
+      "codeMethode": "004103",
+      "operationCode": "CONSULTATIONFACTURE",
+      "nom": "api/tde/getfacture",
+      "httpMethod": "POST",
+      "path": "api/tde/getfacture",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"reference\": \"${reference}\"}",
+      "parameters": [
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "SETTLEMENT",
+      "codeMethode": "004104",
+      "operationCode": "SETTLEMENT",
+      "nom": "api/tde/payer-facture",
+      "httpMethod": "POST",
+      "path": "api/tde/payer-facture",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"transactionId\": \"${transactionId}\", \"refAbonne\": \"${refAbonne}\", \"refFacture\": \"${refFacture}\", \"periodeFacture\": \"${periodeFacture}\", \"montant\": \"${montant}\"}",
+      "parameters": [
+        {
+          "code": "transactionId",
+          "nomExterne": "transactionId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "refAbonne",
+          "nomExterne": "refAbonne",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "refFacture",
+          "nomExterne": "refFacture",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "periodeFacture",
+          "nomExterne": "periodeFacture",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

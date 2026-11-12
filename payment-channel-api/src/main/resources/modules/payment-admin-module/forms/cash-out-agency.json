@@ -1,0 +1,36 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "agencyInfo",
+        "tag": "p",
+        "content": "Retrait en agence. Indiquez l'agence où vous retirerez le cash."
+      },
+      {
+        "type": "textfield",
+        "key": "agencyCode",
+        "label": "Code agence",
+        "placeholder": "Ex. AG-OUAGA-CENTRE",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Code agence": "Code agence"
+    },
+    "en": {
+      "Code agence": "Branch code"
+    }
+  }
+}

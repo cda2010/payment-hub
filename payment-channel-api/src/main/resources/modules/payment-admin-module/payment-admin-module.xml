@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Module admin RapidFrame — meta domains/views sur entités UUID gateway.
+  Pas de codegen rapidframe-maven-plugin (repository=none).
+  CRUD métier via rest-resource → /api/v1/* (controllers Spring existants).
+  UI riches (produits JSON, corridors) : pages Angular /admin/* .
+-->
+<module name="payment-admin-module"
+        title="Administration"
+        version="0.1.0"
+        description="Configuration providers, facturiers, supervision"
+        icon="pi pi-cog"
+        entry-action="admin-dashboard">
+
+  <components>
+    <models>
+      <model name="com.gateway.payment.configuration.domain.PaymentProvider"/>
+      <model name="com.gateway.payment.configuration.domain.Pays"/>
+      <model name="com.gateway.payment.billing.domain.Biller"/>
+      <model name="com.gateway.payment.billing.domain.BillerProduct"/>
+      <model name="com.gateway.payment.security.domain.GatewayUser"/>
+      <model name="com.gateway.payment.audit.domain.AuditLog"/>
+      <model name="com.gateway.payment.payment.domain.PaymentTransaction"/>
+      <model name="com.gateway.payment.transfer.domain.TransferRail"/>
+      <model name="com.gateway.payment.transfer.domain.FeeRule"/>
+      <model name="com.gateway.payment.transfer.domain.FeeRuleLine"/>
+      <model name="com.gateway.payment.transfer.domain.TransferFeePolicy"/>
+      <model name="com.gateway.payment.approval.domain.ApprovalProfileEntity"/>
+    </models>
+
+    <views>
+      <view name="menu"/>
+      <view name="admin-dashboard"/>
+      <view name="catalog-services-all"/>
+      <view name="provider-all"/>
+      <view name="provider-views"/>
+      <view name="provider-new"/>
+      <view name="pays-all"/>
+      <view name="pays-views"/>
+      <view name="pays-new"/>
+      <view name="biller-all"/>
+      <view name="biller-views"/>
+      <view name="biller-new"/>
+      <view name="biller-product-all"/>
+      <view name="biller-product-views"/>
+      <view name="biller-product-new"/>
+      <view name="transfer-rail-all"/>
+      <view name="transfer-rail-views"/>
+      <view name="transfer-rail-new"/>
+      <view name="fee-rule-all"/>
+      <view name="fee-rule-views"/>
+      <view name="fee-rule-new"/>
+      <view name="approval-profile-all"/>
+      <view name="approval-profile-views"/>
+      <view name="approval-profile-new"/>
+      <view name="approval-inbox"/>
+      <view name="content-promo-all"/>
+      <view name="content-cms-all"/>
+      <view name="transfer-fee-policy-all"/>
+      <view name="transfer-fee-policy-views"/>
+      <view name="transfer-fee-policy-new"/>
+      <view name="user-all"/>
+      <view name="user-views"/>
+      <view name="user-new"/>
+      <view name="audit-all"/>
+      <view name="audit-views"/>
+      <view name="transaction-all"/>
+      <view name="transaction-views"/>
+    </views>
+
+    <actions>
+      <action name="admin-dashboard"/>
+      <action name="catalog-services-all"/>
+      <action name="provider-all"/>
+      <action name="provider-new"/>
+      <action name="pays-all"/>
+      <action name="pays-new"/>
+      <action name="biller-all"/>
+      <action name="biller-new"/>
+      <action name="biller-product-all"/>
+      <action name="biller-product-new"/>
+      <action name="transfer-rail-all"/>
+      <action name="transfer-rail-new"/>
+      <action name="fee-rule-all"/>
+      <action name="fee-rule-new"/>
+      <action name="approval-profile-all"/>
+      <action name="approval-profile-new"/>
+      <action name="approval-inbox"/>
+      <action name="content-promo-all"/>
+      <action name="content-cms-all"/>
+      <action name="transfer-fee-policy-all"/>
+      <action name="transfer-fee-policy-new"/>
+      <action name="user-all"/>
+      <action name="user-new"/>
+      <action name="audit-all"/>
+      <action name="transaction-all"/>
+    </actions>
+
+    <controllers>
+      <controller name="com.gateway.payment.configuration.api.ProviderController"/>
+      <controller name="com.gateway.payment.configuration.api.PaysController"/>
+      <controller name="com.gateway.payment.billing.api.AdminBillerController"/>
+      <controller name="com.gateway.payment.payment.api.SupervisionController"/>
+      <controller name="com.gateway.payment.security.api.UserController"/>
+      <controller name="com.gateway.payment.audit.api.AuditController"/>
+      <controller name="com.gateway.payment.transfer.api.AdminTransferController"/>
+      <controller name="com.gateway.payment.approval.api.AdminApprovalController"/>
+    </controllers>
+  </components>
+</module>

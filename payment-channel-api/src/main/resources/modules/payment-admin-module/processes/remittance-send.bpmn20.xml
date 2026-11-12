@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             targetNamespace="http://payment-gateway/catalog"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+
+  <!--
+    REMITTANCE — envoi d'argent (RIA / MoneyGram / …).
+    Clé Flowable : remittanceSend
+    Ne pas réutiliser swiftTransfer.
+  -->
+  <process id="remittanceSend" name="Remittance Send (Catalog)" isExecutable="true">
+    <documentation>
+      Expéditeur → bénéficiaire → pays → provider → mode payout → montant →
+      quote → documents (DMN) → récap → OTP → exécution → disponible payout.
+    </documentation>
+
+    <startEvent id="start" name="Start"/>
+    <sequenceFlow id="flow_start" sourceRef="start" targetRef="CAPTURE_SENDER"/>
+
+    <userTask id="CAPTURE_SENDER" name="01 Capture sender"
+              flowable:formKey="remittance-sender"/>
+    <sequenceFlow id="flow_01" sourceRef="CAPTURE_SENDER" targetRef="SELECT_PROVIDER"/>
+
+    <userTask id="SELECT_PROVIDER" name="02 Select remittance provider"
+              flowable:formKey="remittance-provider"/>
+    <sequenceFlow id="flow_02" sourceRef="SELECT_PROVIDER" targetRef="CAPTURE_BENEFICIARY"/>
+
+    <userTask id="CAPTURE_BENEFICIARY" name="03 Capture beneficiary"
+              flowable:formKey="remittance-beneficiary"/>
+    <sequenceFlow id="flow_03" sourceRef="CAPTURE_BENEFICIARY" targetRef="SELECT_COUNTRY"/>
+
+    <userTask id="SELECT_COUNTRY" name="04 Select destination country"
+              flowable:formKey="remittance-country"/>
+    <sequenceFlow id="flow_04" sourceRef="SELECT_COUNTRY" targetRef="SELECT_PAYOUT_METHOD"/>
+
+    <userTask id="SELECT_PAYOUT_METHOD" name="05 Select payout method"
+              flowable:formKey="remittance-payout"/>
+    <sequenceFlow id="flow_05" sourceRef="SELECT_PAYOUT_METHOD" targetRef="CAPTURE_AMOUNT"/>
+
+    <userTask id="CAPTURE_AMOUNT" name="06 Capture amount"
+              flowable:formKey="remittance-amount"/>
+    <sequenceFlow id="flow_06" sourceRef="CAPTURE_AMOUNT" targetRef="VALIDATE_AMOUNT"/>
+
+    <serviceTask id="VALIDATE_AMOUNT" name="07 Validate amount"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_07" sourceRef="VALIDATE_AMOUNT" targetRef="GET_QUOTE"/>
+
+    <serviceTask id="GET_QUOTE" name="08 Get quote"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_08" sourceRef="GET_QUOTE" targetRef="RESOLVE_DOCUMENTS"/>
+
+    <serviceTask id="RESOLVE_DOCUMENTS" name="09 Resolve documents (DMN)"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_09" sourceRef="RESOLVE_DOCUMENTS" targetRef="gw_documents"/>
+
+    <exclusiveGateway id="gw_documents" name="Documents required?"/>
+    <sequenceFlow id="flow_skip_docs" sourceRef="gw_documents" targetRef="CONFIRM">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${documentsRequired == null || documentsRequired == false}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_need_docs" sourceRef="gw_documents" targetRef="UPLOAD_DOCUMENTS">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${documentsRequired == true}]]></conditionExpression>
+    </sequenceFlow>
+
+    <userTask id="UPLOAD_DOCUMENTS" name="10 Upload documents"
+              flowable:formKey="product-document-upload"/>
+    <sequenceFlow id="flow_10a" sourceRef="UPLOAD_DOCUMENTS" targetRef="VALIDATE_DOCUMENTS"/>
+
+    <serviceTask id="VALIDATE_DOCUMENTS" name="11 Validate documents"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_10b" sourceRef="VALIDATE_DOCUMENTS" targetRef="CONFIRM"/>
+
+    <userTask id="CONFIRM" name="12 Recap confirm"
+              flowable:formKey="product-recap"/>
+    <sequenceFlow id="flow_12" sourceRef="CONFIRM" targetRef="SELECT_FUNDING"/>
+
+    <userTask id="SELECT_FUNDING" name="12b Select funding wallet"
+              flowable:formKey="remittance-funding"/>
+    <sequenceFlow id="flow_12b" sourceRef="SELECT_FUNDING" targetRef="generateOtp"/>
+
+    <serviceTask id="generateOtp" name="13 Authenticate — generate OTP"
+                 flowable:delegateExpression="${gatewayProviderCallDelegate}"/>
+    <sequenceFlow id="flow_13a" sourceRef="generateOtp" targetRef="enterOtp"/>
+
+    <userTask id="enterOtp" name="13 Authenticate — enter OTP"
+              flowable:formKey="provider-otp-code"/>
+    <sequenceFlow id="flow_13b" sourceRef="enterOtp" targetRef="EXECUTE_REMITTANCE"/>
+
+    <serviceTask id="EXECUTE_REMITTANCE" name="14 Execute remittance"
+                 flowable:delegateExpression="${gatewayProviderCallDelegate}"/>
+    <sequenceFlow id="flow_14" sourceRef="EXECUTE_REMITTANCE" targetRef="NOTIFY"/>
+
+    <serviceTask id="NOTIFY" name="15 Notify (deferred success)"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_15" sourceRef="NOTIFY" targetRef="WAIT_PAYOUT"/>
+
+    <serviceTask id="WAIT_PAYOUT" name="16 Available for payout"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_16" sourceRef="WAIT_PAYOUT" targetRef="end"/>
+
+    <endEvent id="end" name="End"/>
+  </process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_remittanceSend">
+    <bpmndi:BPMNPlane id="BPMNPlane_remittanceSend" bpmnElement="remittanceSend">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <omgdc:Bounds x="40" y="102" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CAPTURE_SENDER_di" bpmnElement="CAPTURE_SENDER">
+        <omgdc:Bounds x="110" y="80" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CAPTURE_BENEFICIARY_di" bpmnElement="CAPTURE_BENEFICIARY">
+        <omgdc:Bounds x="250" y="80" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SELECT_COUNTRY_di" bpmnElement="SELECT_COUNTRY">
+        <omgdc:Bounds x="390" y="80" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SELECT_PROVIDER_di" bpmnElement="SELECT_PROVIDER">
+        <omgdc:Bounds x="530" y="80" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SELECT_PAYOUT_METHOD_di" bpmnElement="SELECT_PAYOUT_METHOD">
+        <omgdc:Bounds x="670" y="80" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CAPTURE_AMOUNT_di" bpmnElement="CAPTURE_AMOUNT">
+        <omgdc:Bounds x="810" y="80" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="VALIDATE_AMOUNT_di" bpmnElement="VALIDATE_AMOUNT">
+        <omgdc:Bounds x="110" y="220" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GET_QUOTE_di" bpmnElement="GET_QUOTE">
+        <omgdc:Bounds x="250" y="220" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RESOLVE_DOCUMENTS_di" bpmnElement="RESOLVE_DOCUMENTS">
+        <omgdc:Bounds x="390" y="220" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="gw_documents_di" bpmnElement="gw_documents">
+        <omgdc:Bounds x="545" y="245" width="40" height="40"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UPLOAD_DOCUMENTS_di" bpmnElement="UPLOAD_DOCUMENTS">
+        <omgdc:Bounds x="620" y="220" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="VALIDATE_DOCUMENTS_di" bpmnElement="VALIDATE_DOCUMENTS">
+        <omgdc:Bounds x="760" y="220" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CONFIRM_di" bpmnElement="CONFIRM">
+        <omgdc:Bounds x="110" y="360" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="generateOtp_di" bpmnElement="generateOtp">
+        <omgdc:Bounds x="250" y="360" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="enterOtp_di" bpmnElement="enterOtp">
+        <omgdc:Bounds x="390" y="360" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EXECUTE_REMITTANCE_di" bpmnElement="EXECUTE_REMITTANCE">
+        <omgdc:Bounds x="530" y="360" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="NOTIFY_di" bpmnElement="NOTIFY">
+        <omgdc:Bounds x="670" y="360" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WAIT_PAYOUT_di" bpmnElement="WAIT_PAYOUT">
+        <omgdc:Bounds x="810" y="360" width="110" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="end_di" bpmnElement="end">
+        <omgdc:Bounds x="960" y="382" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

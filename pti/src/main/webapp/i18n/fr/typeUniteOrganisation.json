@@ -1,0 +1,26 @@
+{
+    "ptiApp": {
+        "typeUniteOrganisation" : {
+            "home": {
+                "title": "TypeUniteOrganisations",
+                "createLabel": "Créer un nouveau Type Unite Organisation",
+                "createOrEditLabel": "Créer ou éditer un Type Unite Organisation"
+            },
+            "created": "Un nouveau Type Unite Organisation a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Type Unite Organisation avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Type Unite Organisation avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Type Unite Organisation {{ id }} ?"
+            },
+            "detail": {
+                "title": "Type Unite Organisation"
+            },
+            "libelleTypeUO": "Libelle Type UO",
+            "codeTypeUO": "Code Type UO",
+            "niveau": "Niveau",
+            "tableauFraisEm": "Tableau Frais Em",
+            "tableauFraisAcq": "Tableau Frais Acq",
+            "organisation": "Organisation"
+        }
+    }
+}

@@ -1,0 +1,56 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "select",
+        "key": "destRail",
+        "label": "Compte destination",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "WAVE", "value": "WAVE" },
+            { "label": "CORIS_MONEY", "value": "CORIS_MONEY" },
+            { "label": "ORANGE_MONEY", "value": "ORANGE_MONEY" },
+            { "label": "CORIS_BANK", "value": "CORIS_BANK" }
+          ]
+        },
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "phoneNumber",
+        "key": "destPhone",
+        "label": "Téléphone / compte destinataire",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "destAccount",
+        "label": "Compte destination (optionnel)",
+        "input": true
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Compte destination": "Compte destination",
+      "Téléphone / compte destinataire": "Téléphone / compte destinataire",
+      "Compte destination (optionnel)": "Compte destination (optionnel)"
+    },
+    "en": {
+      "Compte destination": "Destination account",
+      "Téléphone / compte destinataire": "Recipient phone / account",
+      "Compte destination (optionnel)": "Destination account (optional)"
+    }
+  }
+}

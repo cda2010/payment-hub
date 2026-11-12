@@ -1,0 +1,77 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "hidden",
+        "key": "providerCode",
+        "defaultValue": "WESTERN_UNION",
+        "input": true
+      },
+      {
+        "type": "htmlelement",
+        "key": "intro",
+        "tag": "p",
+        "content": "Contrôle d'identité Western Union (MTCN / pièce)."
+      },
+      {
+        "type": "select",
+        "key": "beneficiaryIdType",
+        "label": "Type de pièce (WU)",
+        "input": true,
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            { "label": "CNI", "value": "CNI" },
+            { "label": "Passeport", "value": "PASSPORT" },
+            { "label": "Carte de séjour", "value": "RESIDENCE_PERMIT" }
+          ]
+        },
+        "defaultValue": "CNI",
+        "widget": "choicesjs",
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryIdNumber",
+        "label": "N° pièce d'identité",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "beneficiaryNameConfirm",
+        "label": "Nom présenté",
+        "input": true,
+        "validate": { "required": true }
+      },
+      {
+        "type": "textfield",
+        "key": "mtcnConfirm",
+        "label": "MTCN (confirmation)",
+        "input": true
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Type de pièce (WU)": "Type de pièce (WU)",
+      "N° pièce d'identité": "N° pièce d'identité",
+      "Nom présenté": "Nom présenté",
+      "MTCN (confirmation)": "MTCN (confirmation)"
+    },
+    "en": {
+      "Type de pièce (WU)": "ID type (WU)",
+      "N° pièce d'identité": "ID number",
+      "Nom présenté": "Presented name",
+      "MTCN (confirmation)": "MTCN (confirmation)"
+    }
+  }
+}

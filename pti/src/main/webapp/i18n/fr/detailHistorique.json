@@ -1,0 +1,24 @@
+{
+    "ptiApp": {
+        "detailHistorique" : {
+            "home": {
+                "title": "DetailHistoriques",
+                "createLabel": "Créer un nouveau Detail Historique",
+                "createOrEditLabel": "Créer ou éditer un Detail Historique"
+            },
+            "created": "Un nouveau Detail Historique a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Detail Historique avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Detail Historique avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Detail Historique {{ id }} ?"
+            },
+            "detail": {
+                "title": "Detail Historique"
+            },
+            "numeroCpt": "Numero Cpt",
+            "libelle": "Libelle",
+            "solde": "Solde",
+            "historique": "Historique"
+        }
+    }
+}

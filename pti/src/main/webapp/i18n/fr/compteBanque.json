@@ -1,0 +1,25 @@
+
+{
+    "ptiApp": {
+        "compteBanque" : {
+            "home": {
+                "title": "CompteBanques",
+                "createLabel": "Créer un nouveau Compte Banque",
+                "createOrEditLabel": "Créer ou éditer un Compte Banque"
+            },
+            "created": "Un nouveau Compte Banque a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Compte Banque avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Compte Banque avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Compte Banque {{ id }} ?"
+            },
+            "detail": {
+                "title": "Compte Banque"
+            },
+            "codeAgence": "Code Agence",
+            "codeBanque": "Code Banque",
+            "codeFse": "Code Fse",
+            "devise": "Devise"
+        }
+    }
+}

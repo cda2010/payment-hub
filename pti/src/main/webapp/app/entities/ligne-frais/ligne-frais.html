@@ -1,0 +1,47 @@
+<div>
+    <div class="">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myCompteLabel"> Details</h4>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <h4>
+                        Details tableau frais
+                    </h4>
+                </div>
+                <table class="table table-hover table-responsive">
+                    <table class="table table-hover">
+                        <thead class="bordered-blue">
+                            <tr>
+                                <th>Type Frais</th>
+                                <th>Maximun</th>
+                                <th>Minimun</th>
+                                <th>Valeur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="mf-table-body" ng-repeat="ligneFrais in vm.datas track by ligneFrais.id">
+                                <td data-translate="{{'ptiApp.TypeTarif.' + ligneFrais.typeFrais}}">
+                                    {{ligneFrais.typeFrais}}</td>
+                                <td>{{ligneFrais.maximun}}</td>
+                                <td>{{ligneFrais.minimun}}</td>
+                                <td>{{ligneFrais.valeur}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+            <div class="center-block text-center" ng-show="vm.canShowPagination()">
+                <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+                </uib-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer actions actions-footer" id="simplewizard-actions">
+    <div class="btn-group">
+        <button ng-click="vm.clear()" type="button" class="btn btn-default btn-sm"> Fermer</button>
+    </div>
+</div>

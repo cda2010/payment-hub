@@ -1,0 +1,111 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation class="form-horizontal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">&times;
+        </button>
+        <h4 class="modal-title" id="title"></h4>
+    </div>
+    <div class="modal-body">
+        <fieldset class="mf-fieldset">
+            <legend>Choisir l'organisation</legend>
+            <div class="form-group" ng-if="(vm.typeActeur=='MASTER'||vm.typeActeur=='MARCHAND' || vm.typeActeur=='SOUS_DISTRIBUTEUR' || vm.typeActeur=='FSE' || vm.typeActeur=='AGENCE' || vm.typeActeur=='PAYS') || vm.paysId!=null">
+                <label mf-required class="control-label col-sm-4" for="field_pays">Pays</label>
+                <div class="col-sm-6">
+                    <select disabled required class="form-control" id="field_pays" name="pays" ng-model="vm.paysId"
+                            ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.organisationPays">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <i ng-if="!vm.isViewing" title="Sélectionnez le pays" class="btn btn-primary btn-xs" j-select-dialog
+                   j-multiple="false" j-model="vm.paysId" j-list="vm.organisationPays" j-columns='vm.organisationColums'
+                   j-event-name="onLoadOrganisation">Choisir...</i>
+            </div>
+
+            <div class="form-group" ng-if="(vm.typeActeur=='MASTER'||vm.typeActeur=='MARCHAND' || vm.typeActeur=='SOUS_DISTRIBUTEUR' || vm.typeActeur=='FSE' || vm.typeActeur=='AGENCE') || vm.fseId!=null">
+                <label mf-required class="control-label col-sm-4" for="field_fse">FSE</label>
+                <div class="col-sm-6">
+                    <select disabled required class="form-control" id="field_fse" name="fse" ng-model="vm.fseId"
+                            ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.organisationFSE">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <i ng-if="!vm.isViewing" ng-disabled="vm.paysId==null " title="Sélectionnez le fse"
+                   class="btn btn-primary btn-xs" j-select-dialog j-multiple="false" j-model="vm.fseId"
+                   j-list="vm.organisationFSE" j-columns='vm.organisationColums' j-event-name="onLoadOrganisation">Choisir...</i>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="field_typeUoActeur">Type acteur</label>
+                <div class="col-sm-6">
+                        <select id="field_typeUoActeur" required class="form-control" name="type" ng-model="vm.typeActeur"
+                        ng-options="type for type in vm.typeActeurs">
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="vm.typeActeur=='MASTER' ||vm.typeActeur=='MARCHAND'|| vm.typeActeur=='SOUS_DISTRIBUTEUR' || vm.typeActeur=='AGENCE'">
+                <label mf-required class="control-label col-sm-4" for="field_agence">Agence</label>
+                <div class="col-sm-6">
+                    <select disabled required class="form-control" id="field_agence" name="agence"
+                            ng-model="vm.agenceId"
+                            ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.organisationAgence">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <i ng-if="!vm.isViewing" ng-disabled="vm.fseId==null" title="Sélectionnez le agence"
+                   class="btn btn-primary btn-xs" j-select-dialog j-multiple="false" j-model="vm.agenceId"
+                   j-list="vm.organisationAgence" j-columns='vm.organisationColums'
+                   j-event-name="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in ">Choisir...</i>
+            </div>
+
+            <div class="form-group" ng-if="vm.typeActeur=='MASTER' || vm.typeActeur=='SOUS_DISTRIBUTEUR'">
+                <label mf-required class="control-label col-sm-4" for="field_type">Master</label>
+                <div class="col-sm-6">
+                    <select disabled required class="form-control" id="field_type" name="master" ng-model="vm.masterId"
+                            ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.organisationMaster">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <i ng-if="!vm.isViewing" ng-disabled="vm.agenceId==null" title="Sélectionnez le master"
+                   class="btn btn-primary btn-xs" j-select-dialog j-multiple="false" j-model="vm.masterId"
+                   j-list="vm.organisationMaster" j-columns='vm.organisationColums' j-event-name="onLoadOrganisation">Choisir...</i>
+            </div>
+
+            <div class="form-group" ng-if="vm.typeActeur=='MARCHAND'">
+                <label mf-required class="control-label col-sm-4" for="field_type">Marchand</label>
+                <div class="col-sm-6">
+                    <select disabled required class="form-control" id="field_type" name="marchand" ng-model="vm.marchandId"
+                            ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.organisationMarchand">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <i ng-if="!vm.isViewing" ng-disabled="vm.agenceId==null" title="Sélectionnez le marchand"
+                   class="btn btn-primary btn-xs" j-select-dialog j-multiple="false" j-model="vm.marchandId"
+                   j-list="vm.organisationMarchand" j-columns='vm.organisationColums' j-event-name="onLoadOrganisation">Choisir...</i>
+            </div>
+
+            <div class="form-group" ng-if="vm.typeActeur=='SOUS_DISTRIBUTEUR'">
+                <label mf-required class="control-label col-sm-4" for="field_sousDistributeur">SousDistributeur</label>
+                <div class="col-sm-6">
+                    <select disabled required class="form-control" id="field_sousDistributeur" name="sousDistributeur"
+                            ng-model="vm.sousDistributeurId"
+                            ng-options="uniteOrganisation.id as uniteOrganisation.libelleUniteOrganisation for uniteOrganisation in vm.organisationSousDistributeur">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <i ng-if="!vm.isViewing" ng-disabled="vm.agenceId==null" title="Sélectionnez le sousDistributeur"
+                   class="btn btn-primary btn-xs" j-select-dialog j-multiple="false" j-model="vm.sousDistributeurId"
+                   j-list="vm.organisationSousDistributeur" j-columns='vm.organisationColums'
+                   j-event-name="onLoadOrganisation">Choisir...</i>
+            </div>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span >Valider</span>
+        </button>
+    </div>
+</form>

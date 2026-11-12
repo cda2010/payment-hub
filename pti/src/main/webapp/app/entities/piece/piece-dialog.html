@@ -1,0 +1,88 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myPieceLabel" data-translate="ptiApp.piece.home.createOrEditLabel">Create or edit a Piece</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+                    <label class="control-label col-sm-4" data-translate="ptiApp.piece.typePiece" for="field_typePiece">Type Piece</label>
+                    <div class="col-sm-6">
+                            <select class="form-control" id="field_typePiece" name="typePiece" ng-model="vm.piece.typePieceId" ng-options="typePiece.id as typePiece.libelleTypePiece for typePiece in vm.typepieces"            >
+                                    <option value=""></option>
+                                </select>  
+                    </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.piece.referencePiece" for="field_referencePiece">Reference Piece</label>
+                    <div class="col-sm-6">
+                            <input autocomplete="off"type="text" class="form-control" name="referencePiece" id="field_referencePiece"
+                            ng-model="vm.piece.referencePiece"
+                            required/>
+                    </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.piece.dateDelivrance" for="field_dateDelivrance">Date Delivrance</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"id="field_dateDelivrance" type="text" class="form-control" name="dateDelivrance" uib-datepicker-popup="{{dateformat}}" ng-model="vm.piece.dateDelivrance" is-open="vm.datePickerOpenStatus.dateDelivrance"
+                    />
+                </div>   
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.piece.dateExpiration" for="field_dateExpiration">Date Expiration</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"id="field_dateExpiration" type="text" class="form-control" name="dateExpiration" uib-datepicker-popup="{{dateformat}}" ng-model="vm.piece.dateExpiration" is-open="vm.datePickerOpenStatus.dateExpiration"
+                    />
+                </div>
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setCopie($file, vm.piece)">
+            <label class="control-label col-sm-4" data-translate="ptiApp.piece.copie" for="field_copie">Copie</label>
+            <div>
+                <div ng-if="vm.piece.copie" class="help-block clearfix">
+                    <a class="pull-left" ng-click="vm.openFile(vm.piece.copieContentType, vm.piece.copie)" data-translate="entity.action.open">open</a><br>
+                    <span class="pull-left">{{vm.piece.copieContentType}}, {{vm.byteSize(vm.piece.copie)}}</span>
+                    <button type="button" ng-click="vm.piece.copie=null;vm.piece.copieContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="button" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setCopie($file, vm.piece)" data-translate="entity.action.addblob">
+                    Add blob
+                </button>
+            </div>
+            <input autocomplete="off"type="hidden" class="form-control" name="copie" id="field_copie"
+                    ng-model="vm.piece.copie"
+                    />
+            <input autocomplete="off"type="hidden" class="form-control" name="copieContentType" id="field_copieContentType"
+                    ng-model="vm.piece.copieContentType" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.piece.lieuDelivrance" for="field_lieuDelivrance">Lieu Delivrance</label>
+           
+                    <div class="col-sm-6">
+                            <input autocomplete="off"type="text" class="form-control" name="lieuDelivrance" id="field_lieuDelivrance"
+                            ng-model="vm.piece.lieuDelivrance"
+                            />
+                        </div>
+        </div>
+
+        <div class="form-group">
+            <label data-translate="ptiApp.piece.titulaire" for="field_titulaire">Titulaire</label>
+            <select class="form-control" id="field_titulaire" name="titulaire" ng-model="vm.piece.titulaireId" ng-options="personne.id as personne.id for personne in vm.personnes"            >
+                <option value=""></option>
+            </select>
+        </div>
+       
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

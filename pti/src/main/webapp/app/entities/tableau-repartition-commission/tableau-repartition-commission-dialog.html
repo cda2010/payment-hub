@@ -1,0 +1,81 @@
+<form class="form-horizontal" name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myTableauRepartitionCommissionLabel">Créer ou modifier un Tableau Repartition Commission</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4"  for="field_niveaoOperation">Niveau Operation</label>
+            <div class="col-sm-6">
+                <select required class="form-control" name="niveaoOperation" id="field_niveaoOperation" ng-model="vm.tableauRepartitionCommission.niveaoOperation" ng-options="typeUo.niveau as typeUo.libelleTypeUO for typeUo in vm.typeUos">
+                    <option value="" ></option>
+                </select>
+            </div>
+        </div>
+        <!-- <div class="form-group">
+            <label  mf-required class="control-label col-sm-4" data-translate="ptiApp.tableauRepartitionCommission.dateDebut" for="field_dateDebut">Date Debut</label>
+            <div class="col-sm-6">
+                <input autocomplete="off" required uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" ng-focus="vm.openCalendar('dateDebut')" id="field_dateDebut" type="text" class="form-control" name="dateDebut" uib-datepicker-popup="{{dateformat}}" ng-model="vm.tableauRepartitionCommission.dateDebut"
+                    is-open="vm.datePickerOpenStatus.dateDebut" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label  mf-required class="control-label col-sm-4" data-translate="ptiApp.tableauRepartitionCommission.dateFin" for="field_dateFin">Date Fin</label>
+            <div class="col-sm-6">
+                <input autocomplete="off"required uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" ng-focus="vm.openCalendar('dateFin')" id="field_dateFin" type="text" class="form-control" name="dateFin" uib-datepicker-popup="{{dateformat}}" ng-model="vm.tableauRepartitionCommission.dateFin"
+                    is-open="vm.datePickerOpenStatus.dateFin" />
+            </div>
+        </div> -->
+
+        <div class="form-group">
+            <div class="checkbox col-sm-6 col-sm-offset-4">
+                <label>
+                    <input autocomplete="off"class="colored-success" type="checkbox" name="obligatoire" id="field_obligatoire"
+                        ng-model="vm.tableauRepartitionCommission.activated" />
+                    <b class="text">Active ?</b>
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label  mf-required class="control-label col-sm-4" for="field_typeService">Type Service</label>
+            <div class="col-sm-6">
+                <select required class="form-control" id="field_typeService" name="typeService"
+                        ng-model="vm.tableauRepartitionCommission.typeServiceId"
+                        ng-options="typeService.id as typeService.libelle for typeService in vm.typeservices"
+                disabled>
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label  mf-required class="control-label col-sm-4" for="field_grp">Groupe</label>
+            <div class="col-sm-6">
+                <select ng-change="vm.setTypeService()" required class="form-control" id="field_grp" name="grp"
+                        ng-model="vm.tableauRepartitionCommission.groupId"
+                        ng-options="group.id as group.libelleGroup for group in vm.groups"
+                ng-disabled="vm.tableauRepartitionCommission.disableGroupField">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label   class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_orgSrc">Orgaisation src </label>
+            <div class="col-xs-6 col-sm-6 col-lg-6">
+                <input autocomplete="off" disabled type="tex" class="form-control input-xs ft20" name="orgSrc" id="field_orgSrc" ng-model="vm.organisation.libelleUniteOrganisation" />
+            </div>
+            <button  type="button" ng-click="vm.choisirUo()" class="btn-info col-sm-1">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

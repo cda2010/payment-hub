@@ -1,0 +1,26 @@
+
+<div>
+    <h2><span data-translate="ptiApp.blackList.detail.title">Black List</span> {{vm.blackList.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.blackList.client">Client</span>
+        </dt>
+        <dd>
+            <a ui-sref="client-detail({id:vm.blackList.clientId})">{{vm.blackList.clientId}}</a>
+        </dd>
+        <dt><span data-translate="">Action</span></dt>
+        <dd> <a ui-sref="client-detail({id:vm.blackList.actionBlackList})">{{vm.blackList.actionBlackList}}</a></dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="black-list-detail.edit({id:vm.blackList.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,119 @@
+<div>
+    
+ 
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            ng-click="vm.close()">&times;</button>
+        <h4 class="modal-title" id="myCompteLabel"> Liste des transactions</h4>
+    </div>
+    <div>
+        <div class="container">
+            <div class="row mt5">
+                <div class="form-group col-sm-4">
+                    <div class="input-group">
+                        <input autocomplete="off" id="dateOperation" show-button-bar="false" placeholder=" Date debut"
+                            is-open="vm.datePickerOpenStatus.dateOperation" uib-datepicker-popup="dd/MM/yyyy"
+                            class="form-control"
+                            ng-model="vm.itemSearch.dateDebut" name="dateOperation" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default btn-xs"
+                                ng-click="vm.openCalendar('dateOperation')"><i
+                                    class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <div class="input-group">
+                        <input autocomplete="off" id="dateFin" show-button-bar="false" placeholder=" Date fin"
+                            is-open="vm.datePickerOpenStatus.dateFin" uib-datepicker-popup="dd/MM/yyyy"
+                             class="form-control" ng-model="vm.itemSearch.dateFin"
+                            name="dateFin" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default btn-xs"
+                                ng-click="vm.openCalendar('dateFin')"><i
+                                    class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-sm-1 mt5">
+                    <button class="btn btn-warnig btn-xs" ng-click="vm.initFiltre()">
+                        <span class="glyphicon glyphicon-search">Annuler</span>
+                    </button>
+                </div>
+                <div class="col-sm-1 mt5">
+                    <button class="btn btn-info btn-xs " ng-click="vm.filtre()">
+                        <span class="glyphicon glyphicon-search">Filtrer</span>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+               
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        <h4>
+                            Liste des transactions du compte {{vm.compte.valeurCompte}} {{vm.soldeBilan}}
+                        </h4>
+                    </div>
+                    <table class="table table-hover table-responsive">
+                        <thead>
+                            <tr class="mf-table-header">
+                                <th ng-click="vm.sortBy('date')">
+                                    <span>Date</span>
+                                    <span ng-if="vm.isCurrentColumn('date')"
+                                        ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                </th>
+                                <th ng-click="vm.sortBy('type')">
+                                    <span>Type</span>
+                                    <span ng-if="vm.isCurrentColumn('type')"
+                                        ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                </th>
+                                <th ng-click="vm.sortBy('montant')">
+                                    <span>Montant</span>
+                                    <span ng-if="vm.isCurrentColumn('montant')"
+                                        ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                </th>
+                                <th ng-click="vm.sortBy('soldeCourant')">
+                                    <span>Solde Courant</span>
+                                    <span ng-if="vm.isCurrentColumn('soldeCourant')"
+                                        ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                </th>
+                                <th ng-click="vm.sortBy('soldeApres')">
+                                    <span>Solde Apres</span>
+                                    <span ng-if="vm.isCurrentColumn('soldeApres')"
+                                        ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                </th>
+                                <th ng-click="vm.sortBy('etat')">
+                                    <span>Etat</span>
+                                    <span ng-if="vm.isCurrentColumn('etat')"
+                                        ng-class="{'fa fa-sort-amount-asc':vm.reverse, 'fa fa-sort-amount-desc': !vm.reverse}"></span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="mf-table-body" ng-repeat="transation in vm.datas track by transation.id">
+                                <td><span>{{transation.date | date:'medium' }}</span></td>
+                                <td><span>{{transation.type}}</span></td>
+                                <td><span>{{transation.montant}}</span></td>
+                                <td><span>{{transation.soldeCourant}}</span></td>
+                                <td><span>{{transation.soldeApres }}</span></td>
+                                <td><span>{{transation.etat}}</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="center-block text-center" ng-show="vm.canShowPagination()">
+                    <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage">
+                    </uib-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="footer actions actions-footer" id="simplewizard-actions">
+    <div class="btn-group">
+        <button ng-click="vm.close()" type="button" class="btn btn-default btn-sm"> Fermer</button>
+    </div>
+</div>
+</div>

@@ -1,0 +1,154 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0037",
+  "providerCodeHint": "FSE_0037",
+  "providerLibelle": "Université Libre",
+  "participantKindHint": "WALLET",
+  "fseStatut": "NONBANQUE",
+  "groupCode": "ENF",
+  "codeExterne": "0",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "UL API TOGO",
+    "codeApi": "0034",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "OAUTH2_CLIENT_CREDENTIALS",
+    "tokenUrl": "http://172.27.4.186:7930/oauth/token",
+    "grantType": "client_credentials"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "CONSULTATIONFACTURE",
+      "codeMethode": "003401",
+      "operationCode": "CONSULTATIONFACTURE",
+      "nom": "/api/services/universitetg/lignes-facture",
+      "httpMethod": "POST",
+      "path": "api/services/universitetg/lignes-facture",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"codeEtudiant\": \"${codeEtudiant}\", \"identifiant\": \"${identifiant}\"}",
+      "parameters": [
+        {
+          "code": "codeEtudiant",
+          "nomExterne": "codeEtudiant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "identifiant",
+          "nomExterne": "identifiant",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "VERIFREGLEFACTURIER",
+      "codeMethode": "003402",
+      "operationCode": "VERIFREGLEFACTURIER",
+      "nom": "/api/services/universitetg/getregle",
+      "httpMethod": "POST",
+      "path": "api/services/universitetg/getregle",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"reference\": \"${reference}\", \"montant\": \"${montant}\"}",
+      "parameters": [
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "GETMONTANT",
+      "codeMethode": "003403",
+      "operationCode": "GETMONTANT",
+      "nom": "/api/services/universitetg/getmontant",
+      "httpMethod": "POST",
+      "path": "api/services/universitetg/getmontant",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"nombre\": \"${nombre}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "SETTLEMENT",
+      "codeMethode": "003404",
+      "operationCode": "SETTLEMENT",
+      "nom": "/api/services/universitetg/paiement-facture",
+      "httpMethod": "POST",
+      "path": "api/services/universitetg/paiement-facture",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"reference\": \"${reference}\", \"codeEtudiant\": \"${codeEtudiant}\", \"nomEtudiant\": \"${nomEtudiant}\", \"montant\": \"${montant}\", \"sessionId\": \"${sessionId}\", \"identifiant\": \"${identifiant}\", \"referenceExterne\": \"${referenceExterne}\"}",
+      "parameters": [
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeEtudiant",
+          "nomExterne": "codeEtudiant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nomEtudiant",
+          "nomExterne": "nomEtudiant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "sessionId",
+          "nomExterne": "sessionId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "identifiant",
+          "nomExterne": "identifiant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "referenceExterne",
+          "nomExterne": "referenceExterne",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myRecepteurAlarmeLabel" data-translate="ptiApp.recepteurAlarme.home.createOrEditLabel">Create or edit a Recepteur Alarme</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.recepteurAlarme.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.recepteurAlarme.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.recepteurAlarme.etiquette" for="field_etiquette">Etiquette</label>
+            <input type="text" class="form-control" name="etiquette" id="field_etiquette"
+                    ng-model="vm.recepteurAlarme.etiquette"
+                   ng-disabled="vm.isViewing"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.recepteurAlarme.emails" for="field_emails">Emails</label>
+            <textarea name="emails" id="field_emails" class="form-control"
+                      ng-model="vm.recepteurAlarme.emails"
+                      cols="20" rows="8" ng-disabled="vm.isViewing">
+
+            </textarea>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.recepteurAlarme.sms" for="field_sms">Sms</label>
+            <textarea name="sms" id="field_sms" class="form-control"
+                      ng-model="vm.recepteurAlarme.sms"
+                      cols="20" rows="8" ng-disabled="vm.isViewing"
+            >
+            </textarea>
+        </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving || vm.isViewing" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

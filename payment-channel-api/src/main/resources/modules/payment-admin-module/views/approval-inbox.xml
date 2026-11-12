@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Stub méta : UI réelle = ApprovalInboxComponent (RF_CUSTOM_ACTION_VIEWS). -->
+<action-view name="approval-inbox" title="Validations en attente"
+             model="com.gateway.payment.payment.domain.PaymentTransaction" icon="pi pi-inbox">
+  <view type="grid" name="transaction-grid"/>
+</action-view>

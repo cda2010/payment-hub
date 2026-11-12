@@ -1,0 +1,240 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0028",
+  "providerCodeHint": "FSE_0028",
+  "providerLibelle": "Coris Banque Internationale SN",
+  "participantKindHint": "BANQUE",
+  "fseStatut": "BANQUE",
+  "groupCode": "ETA",
+  "codeExterne": "SN213",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "ApiCBI-SN",
+    "codeApi": "0005",
+    "type": "REST",
+    "host": "10.176.4.1",
+    "port": "8081",
+    "useSsl": false,
+    "useProxy": true,
+    "baseUrl": "http://10.176.4.1:8081",
+    "authType": "OAUTH2_CLIENT_CREDENTIALS",
+    "clientId": "ApiCBIapp",
+    "clientSecret": "api-cbi",
+    "tokenUrl": "http://10.176.4.1:8080/0005/oauth/token",
+    "grantType": "password",
+    "username": "admin",
+    "password": "admin"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "CONSULTATIONHIST",
+      "codeMethode": "000106",
+      "operationCode": "CONSULTATIONHIST",
+      "nom": "api/v1/soap/historiqueCompteBanque",
+      "httpMethod": "POST",
+      "path": "api/v1/soap/historiqueCompteBanque",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"numeroCompte\": \"${numeroCompte}\", \"debutPeriode\": \"${debutPeriode}\", \"finPeriode\": \"${finPeriode}\", \"agence\": \"${agence}\"}",
+      "parameters": [
+        {
+          "code": "numeroCompte",
+          "nomExterne": "numeroCompte",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "debutPeriode",
+          "nomExterne": "debutPeriode",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "finPeriode",
+          "nomExterne": "finPeriode",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "agence",
+          "nomExterne": "agence",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000108",
+      "operationCode": "NOP",
+      "nom": "api/v1/virementsMultiple",
+      "httpMethod": "POST",
+      "path": "api/v1/virementsMultiple",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{}",
+      "parameters": []
+    },
+    {
+      "typeMethode": "CONSULTATIONSOLDE",
+      "codeMethode": "000110",
+      "operationCode": "CONSULTATIONSOLDE",
+      "nom": "api/v1/soap/solde",
+      "httpMethod": "POST",
+      "path": "api/v1/soap/solde",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"numeroCompte\": \"${numeroCompte}\", \"agence\": \"${agence}\"}",
+      "parameters": [
+        {
+          "code": "numeroCompte",
+          "nomExterne": "numeroCompte",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "agence",
+          "nomExterne": "agence",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "INFOCLIENT",
+      "codeMethode": "000116",
+      "operationCode": "INFOCLIENT",
+      "nom": "api/v1/soap/infoClientCompte",
+      "httpMethod": "POST",
+      "path": "api/v1/soap/infoClientCompte",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"numeroCompte\": \"${numeroCompte}\", \"agence\": \"${agence}\", \"cle\": \"${cle}\"}",
+      "parameters": [
+        {
+          "code": "numeroCompte",
+          "nomExterne": "numeroCompte",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "agence",
+          "nomExterne": "agence",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "cle",
+          "nomExterne": "cle",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "CARTEMOUVEMENT",
+      "codeMethode": "000117",
+      "operationCode": "CARTEMOUVEMENT",
+      "nom": "api/v1/carteMouvement",
+      "httpMethod": "POST",
+      "path": "api/v1/carteMouvement",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{}",
+      "parameters": []
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000502",
+      "operationCode": "NOP_000502",
+      "nom": "api/sendMessageSms",
+      "httpMethod": "GET",
+      "path": "api/sendMessageSms",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"numero\": \"${numero}\", \"message\": \"${message}\"}",
+      "parameters": [
+        {
+          "code": "numero",
+          "nomExterne": "numero",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "message",
+          "nomExterne": "message",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "TRANSFERT",
+      "codeMethode": "000503",
+      "operationCode": "TRANSFERT",
+      "nom": "api/v1/soap/virements",
+      "httpMethod": "POST",
+      "path": "api/v1/soap/virements",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"nomBeneficiaire\": \"${nomBeneficiaire}\", \"compteDebiteur\": \"${compteDebiteur}\", \"codeAgenceDebit\": \"${codeAgenceDebit}\", \"referenceExterne\": \"${referenceExterne}\", \"codeBanqueDebit\": \"${codeBanqueDebit}\", \"nomDonneurOrdre\": \"${nomDonneurOrdre}\", \"montantDebit\": \"${montantDebit}\", \"compteCredit\": \"${compteCredit}\", \"codeAgenceCredit\": \"${codeAgenceCredit}\", \"codeBanqueCredit\": \"${codeBanqueCredit}\"}",
+      "parameters": [
+        {
+          "code": "nomBeneficiaire",
+          "nomExterne": "nomBeneficiaire",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "compteDebiteur",
+          "nomExterne": "compteDebiteur",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeAgenceDebit",
+          "nomExterne": "codeAgenceDebit",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "referenceExterne",
+          "nomExterne": "referenceExterne",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeBanqueDebit",
+          "nomExterne": "codeBanqueDebit",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nomDonneurOrdre",
+          "nomExterne": "nomDonneurOrdre",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montantDebit",
+          "nomExterne": "montantDebit",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "compteCredit",
+          "nomExterne": "compteCredit",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeAgenceCredit",
+          "nomExterne": "codeAgenceCredit",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeBanqueCredit",
+          "nomExterne": "codeBanqueCredit",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

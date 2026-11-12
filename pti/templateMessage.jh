@@ -1,0 +1,15 @@
+
+enum Langues{
+FRANCAIS , ENGLAIS, ALLEMAND, ESPAGNOLE
+}
+entity TemplateMessage{
+etiquette String,
+contenu String,
+langue Langues,
+}
+
+paginate all with pagination
+
+dto * with mapstruct
+
+service all with serviceClass

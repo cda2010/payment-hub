@@ -1,0 +1,146 @@
+<div>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel m-b-none" style="border: 1px solid #dcdde0; border-radius: 1px;">
+                    <div class="panel-body">
+                        <h3 class="m-b-xs text-center m-t-n">
+                            <i class="pe pe-7s-config text-warning m-r-xs"></i> 
+                            <span class="text-primary">Interface Utilisateurs</span>
+                        </h3>
+                        <hr style="border-top: 1px solid #7485e6;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-filled" style="border-radius: 0px;">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label" for="field_typeMethode">Type méthode</label>
+                            <select class="form-control" name="typeMethode" ng-model="vm.typeMethode" id="field_typeMethode" style="border-radius: 0px;">
+                                <option value=""></option>
+                                <option value="TRANSFERT">TRANSFERT</option>
+                                <option value="DEBIT">DEBIT</option>
+                                <option value="CREDIT">CREDIT</option>
+                                <option value="CONSULTATION">CONSULTATION</option>
+                                <option value="CONSULTATIONSOLDE">CONSULTATIONSOLDE</option>
+                                <option value="ENVOISMS">ENVOISMS</option>
+                                <option value="ENVOIMAIL">ENVOIMAIL</option>
+                                <option value="CONSULTATIONHIST">CONSULTATIONHIST</option>
+                                <option value="LISTEVENEMENT">LISTEVENEMENT</option>
+                                <option value="INFOCLIENT">INFOCLIENT</option>
+                                <option value="CARTEMOUVEMENT">CARTEMOUVEMENT</option>
+                                <option value="GETMONTANT">GETMONTANT</option>
+                                <option value="CONSULTATIONFACTURE">CONSULTATIONFACTURE</option>
+                                <option value="VERIFREGLEFACTURIER">VERIFREGLEFACTURIER</option>
+                                <option value="GETAIRTIME">GETAIRTIME</option>
+                                <option value="GETINFOS">GETINFOS</option>
+                                <option value="SETTLEMENT">SETTLEMENT</option>
+                                <option value="GETDATA">GETDATA</option>
+                                <option value="GETCARDLESSTOKEN">CARDLESS TOKEN</option>
+                                <option value="TRANSACTIONSTATUS">TRANSACTIONSTATUS</option>
+                                <option value="SENDFILEMAIL">SENDFILEMAIL</option>
+                                <option value="SENDFILEFTP">SENDFILEFTP</option>
+                                <option value="PING">PING SYSTEME</option>
+                                <option value="LISTEFACTURIER">LISTEFACTURIER</option>
+                                <option value="TRAITEOTP">TRAITEOTP</option>
+                                <option value="GETDATATRANSACTION">GETDATATRANSACTION</option>
+                                <option value="NOP">NOP</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label for="fseSrc">Fse</label>
+                            <div class="input-group">
+                                <select class="form-control" id="fseSrc" name="fse" ng-model="vm.fse" ng-options="fournisseurService as fournisseurService.nom for fournisseurService in vm.fournisseurServices track by fournisseurService.id" style="border-radius: 0px;">
+                                    <option value=""></option>
+                                </select>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" ng-click="vm.affiche()" style="border-radius: 0px;">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                        <span>Chercher</span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 text-right" style="margin-top: 25px;">
+                        <button class="btn btn-primary" ui-sref="interface-utilisateur.new" style="border-radius: 0px;">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            <span>Nouveau</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover" style="border: 1px solid #7485e6;">
+            <thead>
+                <tr class="bg-primary">
+                    <th class="text-center text-white"><span>ID</span></th>
+                    <th class="text-center text-white"><span>Code Interface</span></th>
+                    <th class="text-center text-white"><span>Nom Interface</span></th>
+                    <th class="text-center text-white"><span>Type Interface</span></th>
+                    <th class="text-center text-white"><span>Type methode</span></th>
+                    <th class="text-center text-white"><span>fse</span></th>
+                    <th class="text-center text-white">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="interfaceUtilisateur in vm.interfaceUtilisateurs track by interfaceUtilisateur.id">
+                    <td class="text-center"><a ui-sref="interface-utilisateur-detail({id:interfaceUtilisateur.id})">{{interfaceUtilisateur.id}}</a></td>
+                    <td class="text-center">{{interfaceUtilisateur.codeInterface}}</td>
+                    <td class="text-center">{{interfaceUtilisateur.nomInterface}}</td>
+                    <td class="text-center"><span class="badge badge-info" style="border-radius: 0px;">{{interfaceUtilisateur.typeInterface}}</span></td>
+                    <td class="text-center"><span class="badge badge-primary" style="border-radius: 0px;">{{interfaceUtilisateur.typeMethode}}</span></td>
+                    <td class="text-center">{{interfaceUtilisateur.fournisseurService.nom}}</td>
+                    <td class="text-center">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="interface-utilisateur-detail({id:interfaceUtilisateur.id})"
+                                    class="btn btn-info btn-sm" style="border-radius: 0px;">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="interface-utilisateur.edit({id:interfaceUtilisateur.id})"
+                                    class="btn btn-primary btn-sm" style="border-radius: 0px;">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="interface-utilisateur.delete({id:interfaceUtilisateur.id})"
+                                    class="btn btn-danger btn-sm" style="border-radius: 0px;">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="parametre-utilisateur({idinterface:interfaceUtilisateur.id})"
+                                    class="btn btn-primary btn-sm" style="border-radius: 0px;">
+                                <span class="glyphicon glyphicon-cog"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="interface-utilisateur.duplicate({id:interfaceUtilisateur.id})"
+                                    class="btn btn-success btn-sm" style="border-radius: 0px;">
+                                <span class="glyphicon glyphicon-duplicate"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+     
+   private final Logger log = LoggerFactory.getLogger(ApiService.class);
+        public ApiService(@Value("${connexionOmnicanal.login}")  String login, 
+            @Value("${connexionOmnicanal.password}") String password,  @Value("${connexionOmnicanal.url}") String url,
+            @Value("${connexionOmnicanal.clientId}") String clientId,  @Value("${connexionOmnicanal.secretWord}") String secretWord) {
+        this.login = login;
+        this.password = password;
+        this.url = url;
+        this.clientId = clientId;
+        this.secretWord = secretWord;
+    
+     resClient = new RestClient();
+        resClient.setPassword(this.password);
+        resClient.setLogin(this.login);
+        resClient.setPlainClientCredentials(this.secretWord);
+        resClient.setClientID(this.clientId);
+        resClient.setGrantUri("?username=" + resClient.getLogin() + "&password=" + resClient.getPassword() + "&grant_type=password&scope=read write&client_secret=" + resClient.getPlainClientCredentials() + "&client_id=" + resClient.getClientID());
+        resClient.setSecureServerUri(this.url + "/oauth/token");
+       
+    }
+     public  List<ListFournisseurServiceDto> getListeFournisseur() throws IOException{
+              AuthTokenInfo tokeinfo = resClient.sendTokenRequest();
+                 String destUrl = this.url+"/api/fournisseur-services-ext";
+               resClient.setRestServerUri(destUrl);
+                HashMap<String, Object> param = new HashMap();
+
+                 ResponseEntity fse=      resClient.getRessources(tokeinfo, param, "GET");
+             List<ListFournisseurServiceDto> fo = new ArrayList();
+                 
+ List<ListFournisseurServiceDto> list =  (List<ListFournisseurServiceDto> )resClient.convert(fse.getBody(), (Class<T>) fo.getClass());
+ 
+
+            return list;
+        }
+}
++

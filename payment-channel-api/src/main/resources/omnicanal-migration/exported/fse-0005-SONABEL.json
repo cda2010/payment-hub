@@ -1,0 +1,344 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0005",
+  "providerCodeHint": "FSE_0005",
+  "providerLibelle": "Sonabel",
+  "participantKindHint": "WALLET",
+  "fseStatut": "NONBANQUE",
+  "groupCode": "ENF",
+  "codeExterne": "0005",
+  "typeEtc": "AUT",
+  "api": {
+    "nomApi": "api SONABEL",
+    "codeApi": "0003",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "OAUTH2_CLIENT_CREDENTIALS",
+    "clientId": "apiPartenersapp",
+    "clientSecret": "api-partners",
+    "tokenUrl": "http://localhost:6981/oauth/token",
+    "grantType": "password",
+    "username": "admin",
+    "password": "admin"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "CONSULTATIONFACTURE",
+      "codeMethode": "000301",
+      "operationCode": "CONSULTATIONFACTURE",
+      "nom": "api/lignes-facture",
+      "httpMethod": "POST",
+      "path": "api/lignes-facture",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"police\": \"${police}\", \"codeExpl\": \"${codeExpl}\", \"username_api\": \"${username_api}\", \"password_api\": \"${password_api}\"}",
+      "parameters": [
+        {
+          "code": "police",
+          "nomExterne": "police",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeExpl",
+          "nomExterne": "codeExpl",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "username_api",
+          "nomExterne": "username_api",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "password_api",
+          "nomExterne": "password_api",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "SETTLEMENT",
+      "codeMethode": "000302",
+      "operationCode": "SETTLEMENT",
+      "nom": "api/paiement-facture",
+      "httpMethod": "POST",
+      "path": "api/paiement-facture",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"police\": \"${police}\", \"codeExpl\": \"${codeExpl}\", \"username_api\": \"${username_api}\", \"password_api\": \"${password_api}\", \"montant\": \"${montant}\", \"referenceSonabel\": \"${referenceSonabel}\", \"referenceTransaction\": \"${referenceTransaction}\", \"periode\": \"${periode}\", \"telephone\": \"${telephone}\", \"penalite\": \"${penalite}\", \"nom\": \"${nom}\"}",
+      "parameters": [
+        {
+          "code": "police",
+          "nomExterne": "police",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeExpl",
+          "nomExterne": "codeExpl",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "username_api",
+          "nomExterne": "username_api",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "password_api",
+          "nomExterne": "password_api",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "referenceSonabel",
+          "nomExterne": "referenceSonabel",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "referenceTransaction",
+          "nomExterne": "referenceTransaction",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "periode",
+          "nomExterne": "periode",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "telephone",
+          "nomExterne": "telephone",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "penalite",
+          "nomExterne": "penalite",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nom",
+          "nomExterne": "nom",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000303",
+      "operationCode": "NOP",
+      "nom": "api/paiement-facture-sonabels",
+      "httpMethod": "POST",
+      "path": "api/paiement-facture-sonabels",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"rrn\": \"${rrn}\", \"montant\": \"${montant}\", \"penalite\": \"${penalite}\", \"policeClient\": \"${policeClient}\", \"username\": \"${username}\", \"nomClient\": \"${nomClient}\", \"codeAgence\": \"${codeAgence}\", \"timbre\": \"${timbre}\", \"periode\": \"${periode}\"}",
+      "parameters": [
+        {
+          "code": "rrn",
+          "nomExterne": "rrn",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "penalite",
+          "nomExterne": "penalite",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "policeClient",
+          "nomExterne": "policeClient",
+          "type": "DOUBLE",
+          "categorie": "USER"
+        },
+        {
+          "code": "username",
+          "nomExterne": "username",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nomClient",
+          "nomExterne": "nomClient",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codeAgence",
+          "nomExterne": "codeAgence",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "timbre",
+          "nomExterne": "timbre",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "periode",
+          "nomExterne": "periode",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000304",
+      "operationCode": "NOP_000304",
+      "nom": "api/paiement-facture-sonabels/police",
+      "httpMethod": "POST",
+      "path": "api/paiement-facture-sonabels/police",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"police\": \"${police}\"}",
+      "parameters": [
+        {
+          "code": "police",
+          "nomExterne": "police",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000305",
+      "operationCode": "NOP_000305",
+      "nom": "api/paiement-facture-sonabels/facture",
+      "httpMethod": "POST",
+      "path": "api/paiement-facture-sonabels/facture",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"rrn\": \"${rrn}\"}",
+      "parameters": [
+        {
+          "code": "rrn",
+          "nomExterne": "rrn",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000306",
+      "operationCode": "NOP_000306",
+      "nom": "api/paiement-facture-sonabels/update",
+      "httpMethod": "POST",
+      "path": "api/paiement-facture-sonabels/update",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"rrn\": \"${rrn}\", \"eve\": \"${eve}\"}",
+      "parameters": [
+        {
+          "code": "rrn",
+          "nomExterne": "rrn",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "eve",
+          "nomExterne": "eve",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "NOP",
+      "codeMethode": "000307",
+      "operationCode": "NOP_000307",
+      "nom": "api/traitement-facture-sonabels/update",
+      "httpMethod": "POST",
+      "path": "api/traitement-facture-sonabels/update",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"rrn\": \"${rrn}\", \"eve\": \"${eve}\"}",
+      "parameters": [
+        {
+          "code": "rrn",
+          "nomExterne": "rrn",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "eve",
+          "nomExterne": "eve",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "GETMONTANT",
+      "codeMethode": "000308",
+      "operationCode": "GETMONTANT",
+      "nom": "api/getmontant",
+      "httpMethod": "POST",
+      "path": "api/getmontant",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"nombre\": \"${nombre}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "VERIFREGLEFACTURIER",
+      "codeMethode": "000309",
+      "operationCode": "VERIFREGLEFACTURIER",
+      "nom": "api/getregle",
+      "httpMethod": "POST",
+      "path": "api/getregle",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"reference\": \"${reference}\", \"montant\": \"${montant}\"}",
+      "parameters": [
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

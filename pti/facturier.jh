@@ -1,0 +1,19 @@
+enum TypeFacturier{FSE,MARCHAND,AUTRES}
+entity Facturier{
+	nomFacturier String,
+    codeFacturier String,
+    typeFacturier TypeFacturier,
+    possesseur Integer,
+    uniteOrganisation Integer,
+}
+
+entity Facture{
+	referenceFacature String,
+    montantFacture String,
+    referencePaiement String,
+    datePaiement String,
+}
+
+relationship OneToMany {
+	Facturier to Facture{facturier}
+}

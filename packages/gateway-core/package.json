@@ -1,0 +1,14 @@
+{
+  "name": "@payment2/gateway-core",
+  "version": "0.1.0",
+  "description": "Client headless payment-2 Product Gateway (types, form mapping, rf-datasource, HTTP loop)",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "sideEffects": false,
+  "license": "UNLICENSED"
+}

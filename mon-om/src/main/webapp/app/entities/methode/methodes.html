@@ -1,0 +1,82 @@
+<div class="container-fluid">
+    <div class="col-lg-12">
+        <div class="panel m-b-none" style="border: 2px solid #e3e5f0; border-radius: 5px;">
+            <div class="panel-body">
+                <h3 class="m-b-xs text-center m-t-n">
+                    <i class="pe pe-7s-config text-warning m-r-xs"></i> 
+                    <span class="text-primary">Gestions des Méthodes</span>
+                </h3>
+                <hr style="border-top: 2px solid #7485e6;"/>
+            </div>
+        </div>
+    </div>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-xs-6">
+            <button class="btn btn-default" ui-sref="api" style="border: 1px solid #7485e6; color: #7485e6;">
+                <span class="glyphicon glyphicon-arrow-left"></span>
+                <span>Retour</span>
+            </button>
+        </div>
+        <div class="col-xs-6 text-right">
+            <button class="btn btn-primary" ui-sref="methode.new" style="background-color: #2610ee;">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span>Nouveau</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="panel" style="border: 2px solid #dee0e7; border-radius: 5px;">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" style="border: 2px solid #d4d7e4;">
+                    <thead>
+                        <tr class="bg-primary text-white">
+                            <th class="text-white"><span>Code Méthode</span></th>
+                            <th class="text-white"><span>Type</span></th>
+                            <th class="text-white"><span>Nom d'Appel</span></th>
+                            <th class="text-white"><span>Type d'Appel</span></th>
+                            <th class="text-center text-white">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="methode in vm.methodes track by methode.id" style="background-color: #f8f9fa;">
+                            <td><span class="text-primary">{{methode.codeMethode}}</span></td>
+                            <td><span class="badge" style="background-color: #7485e6;">{{methode.typeMethode}}</span></td>
+                            <td>{{methode.nomMethode}}</td>
+                            <td><span class="badge badge-info">{{methode.typeAppel}}</span></td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button type="submit"
+                                            ui-sref="methode-detail({id:methode.id})"
+                                            class="btn btn-info btn-sm" 
+                                            style="margin: 0 2px;">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    </button>
+                                    <button type="submit"
+                                            ui-sref="methode.edit({id:methode.id})"
+                                            class="btn btn-primary btn-sm"
+                                            style="margin: 0 2px;">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
+                                    <button type="submit"
+                                            ui-sref="methode.delete({id:methode.id})"
+                                            class="btn btn-danger btn-sm"
+                                            style="margin: 0 2px;">
+                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                    </button>
+                                    <button type="submit"
+                                            ui-sref="parametre-methode({idmethode:methode.id})"
+                                            class="btn btn-warning btn-sm"
+                                            style="margin: 0 2px;">
+                                        <span class="glyphicon glyphicon-cog"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

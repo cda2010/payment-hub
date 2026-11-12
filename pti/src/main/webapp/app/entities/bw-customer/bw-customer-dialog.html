@@ -1,0 +1,80 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myBwCustomerLabel" data-translate="ptiApp.bwCustomer.home.createOrEditLabel">Create or edit a Bw Customer</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.bwCustomer.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.bwCustomer.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.bwCustomer.nomCustomer" for="field_nomCustomer">Nom Customer</label>
+            <input type="text" class="form-control" name="nomCustomer" id="field_nomCustomer"
+                    ng-model="vm.bwCustomer.nomCustomer"
+                    required/>
+            <div ng-show="editForm.nomCustomer.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.nomCustomer.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.bwCustomer.prenomCustomer" for="field_prenomCustomer">Prenom Customer</label>
+            <input type="text" class="form-control" name="prenomCustomer" id="field_prenomCustomer"
+                    ng-model="vm.bwCustomer.prenomCustomer"
+                    required/>
+            <div ng-show="editForm.prenomCustomer.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.prenomCustomer.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.bwCustomer.typePiece" for="field_typePiece">Type Piece</label>
+            <input type="text" class="form-control" name="typePiece" id="field_typePiece"
+                    ng-model="vm.bwCustomer.typePiece"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.bwCustomer.numeroPiece" for="field_numeroPiece">Numero Piece</label>
+            <input type="text" class="form-control" name="numeroPiece" id="field_numeroPiece"
+                    ng-model="vm.bwCustomer.numeroPiece"
+                    required/>
+            <div ng-show="editForm.numeroPiece.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.numeroPiece.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.bwCustomer.codePays" for="field_codePays">Code Pays</label>
+            <input type="text" class="form-control" name="codePays" id="field_codePays"
+                    ng-model="vm.bwCustomer.codePays"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.bwCustomer.msisdn" for="field_msisdn">Msisdn</label>
+            <input type="text" class="form-control" name="msisdn" id="field_msisdn"
+                    ng-model="vm.bwCustomer.msisdn"
+                    />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

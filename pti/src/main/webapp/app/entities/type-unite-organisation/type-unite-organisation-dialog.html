@@ -1,0 +1,64 @@
+
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation class="form-horizontal container-fluid" >
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myTypeUniteOrganisationLabel" data-translate="ptiApp.typeUniteOrganisation.home.createOrEditLabel">Create or edit a Type Unite Organisation</h4>
+    </div>
+    <div class="modal-body">
+
+        <fieldset class="p10 mf-fieldset col-md-5" >
+            <legend>Type Unité organisation</legend>
+            <div class="form-group">
+                <label class="control-label col-sm-4" mf-required data-translate="ptiApp.typeUniteOrganisation.libelleTypeUO" for="field_libelleTypeUO">Libelle Type UO</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"type="text" ng-disabled="vm.isViewing" class="form-control" name="libelleTypeUO" id="field_libelleTypeUO"
+                           ng-model="vm.typeUniteOrganisation.codeTypeUO"
+                           required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" mf-required data-translate="ptiApp.typeUniteOrganisation.codeTypeUO" for="field_codeTypeUO">Code Type UO</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"type="text" class="form-control" ng-disabled="vm.isViewing" name="codeTypeUO" id="field_codeTypeUO"
+                           ng-model="vm.typeUniteOrganisation.libelleTypeUO"
+                           required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4" mf-required data-translate="ptiApp.typeUniteOrganisation.niveau" for="field_niveau">Niveau</label>
+                <div class="col-sm-6">
+                    <input autocomplete="off"type="number" class="form-control" ng-disabled="vm.isViewing" name="niveau" id="field_niveau"
+                           ng-model="vm.typeUniteOrganisation.niveau"
+                           required />
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="p10 mf-fieldset col-md-7" >
+            <legend>Roles</legend>
+            <div class="form-group privileges">
+                <div class="col-sm-12">
+                    <span class="label label-info">Appuyez sur la touche Ctrl pour sélectionner ou désélectionner</span>
+                    <select  ng-if="!vm.agent.id" style=" min-height :300px; max-height: 400px;" class="h140 form-control" multiple
+                             name="authority" ng-model="vm.typeUniteOrganisation.authorities"
+                             ng-options="role.name as role.name for role in vm.roles">
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+
+    </div>
+     <div class="modal-footer">
+        <button type="button" ng-if="!vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-if="!vm.isViewing" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+        <button type="button" ng-if="vm.isViewing" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+            <span>Fermer</span>
+        </button>
+    </div>
+</form>

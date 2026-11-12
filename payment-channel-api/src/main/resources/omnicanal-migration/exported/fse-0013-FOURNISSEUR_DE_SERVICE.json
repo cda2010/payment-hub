@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0013",
+  "providerCodeHint": "FSE_0013",
+  "providerLibelle": "Fournisseur de service",
+  "participantKindHint": "FACTURIER",
+  "fseStatut": "AUTRE",
+  "groupCode": "ENF",
+  "codeExterne": "00",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "Api fournisseur",
+    "codeApi": "0009",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7930",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7930",
+    "authType": "OAUTH2_CLIENT_CREDENTIALS",
+    "clientId": "ptimobile",
+    "tokenUrl": "http://172.27.4.186:9181/oauth/token",
+    "grantType": "client_credentials",
+    "username": "client_credentials"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "GETMONTANT",
+      "codeMethode": "000901",
+      "operationCode": "GETMONTANT",
+      "nom": "api/generique/getmontant",
+      "httpMethod": "POST",
+      "path": "api/generique/getmontant",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"montant\": \"${montant}\", \"nombre\": \"${nombre}\"}",
+      "parameters": [
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "nombre",
+          "nomExterne": "nombre",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "CONSULTATIONFACTURE",
+      "codeMethode": "000902",
+      "operationCode": "CONSULTATIONFACTURE",
+      "nom": "api/generique/getFacture",
+      "httpMethod": "POST",
+      "path": "api/generique/getFacture",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"reference\": \"${reference}\"}",
+      "parameters": [
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "VERIFREGLEFACTURIER",
+      "codeMethode": "000903",
+      "operationCode": "VERIFREGLEFACTURIER",
+      "nom": "api/generique/getregle",
+      "httpMethod": "POST",
+      "path": "api/generique/getregle",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"reference\": \"${reference}\", \"montant\": \"${montant}\"}",
+      "parameters": [
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    },
+    {
+      "typeMethode": "SETTLEMENT",
+      "codeMethode": "000904",
+      "operationCode": "SETTLEMENT",
+      "nom": "api/generique/settlement",
+      "httpMethod": "POST",
+      "path": "api/generique/settlement",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"transactionId\": \"${transactionId}\", \"reference\": \"${reference}\"}",
+      "parameters": [
+        {
+          "code": "transactionId",
+          "nomExterne": "transactionId",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "reference",
+          "nomExterne": "reference",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

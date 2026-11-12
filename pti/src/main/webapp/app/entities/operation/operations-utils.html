@@ -1,0 +1,215 @@
+<form name="editForm" role="form" novalidate class="form-horizontal well">
+    <div class="modal-header">
+        <h4 class="modal-title" id="appel_fond">Simulateur</h4>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="field_typeService">Type Service</label>
+                <div class="col-sm-6">
+                    <select ng-disabled="vm.isViewing || vm.isFraisDispo" class="form-control" id="field_typeService"
+                        name="typeService" ng-model="vm.typeService"
+                        ng-options="typeService.libelle as typeService.libelle for typeService in vm.typeservices">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="vm.typeService=='ENVOI_CASH'">
+                <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_paysDest">Pays
+                    destination</label>
+                <div class="col-xs-6 col-sm-6 col-lg-6">
+                    <select required ng-disabled="vm.isViewing || vm.isFraisDispo" class="form-control input-xs"
+                        id="field_paysDest" name="pays" ng-model="vm.operation.uoAcquereurId"
+                        ng-options="pays.id as pays.libelleUniteOrganisation for pays in vm.pays">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+
+
+            <div class="form-group" ng-if="vm.typeService=='ACCOUNT_CASH' || vm.typeService=='ACCOUNT_ACCOUNT'">
+                <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_paysEm">Pays compte à
+                    débiter</label>
+                <div class="col-xs-6 col-sm-6 col-lg-6">
+                    <select required ng-disabled="vm.isViewing || vm.isFraisDispo" class="form-control input-xs"
+                        id="field_paysEm" name="pays" ng-change="vm.getFse(vm.operation.uoEmetteurId,'E')"
+                        ng-model="vm.operation.uoEmetteurId"
+                        ng-options="pays.id as pays.libelleUniteOrganisation for pays in vm.pays">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group"
+                ng-if="(vm.typeService=='ACCOUNT_CASH' || vm.typeService=='ACCOUNT_ACCOUNT') && !vm.isViewing && vm.operation.uoEmetteurId!=null">
+                <label class="col-sm-4 control-label" mf-required for="field_fournisseur">Teneur compte à
+                    débiter</label>
+                <div class="col-sm-6">
+                    <select ng-disabled="vm.isViewing || vm.isFraisDispo" class="form-control input-xs" required
+                        id="field_fournisseur" name="fournisseur" ng-model="vm.fseSrc"
+                        ng-options="fse.id as fse.libelleUniteOrganisation for fse in vm.organisationFSE">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group" ng-if="vm.typeService=='ACCOUNT_ACCOUNT' || vm.typeService=='CASH_ACCOUNT'">
+                <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_pays">Pays compte à
+                    créditer</label>
+                <div class="col-xs-6 col-sm-6 col-lg-6">
+                    <select required ng-disabled="vm.isFraisDispo" class="form-control input-xs" id="field_pays"
+                        name="pays" ng-change="vm.getFse(vm.operation.uoAcquereurId,'B')"
+                        ng-model="vm.operation.uoAcquereurId"
+                        ng-options="pays.id as pays.libelleUniteOrganisation for pays in vm.pays">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="vm.typeService=='ACCOUNT_ACCOUNT' || vm.typeService=='CASH_ACCOUNT'">
+                <label class="col-sm-4 control-label" mf-required for="field_fournisseur">Teneur compte à
+                    créditer</label>
+                <div class="col-sm-6">
+                    <select ng-disabled="vm.isFraisDispo" class="form-control input-xs" required id="field_fournisseur"
+                        name="fournisseur" ng-model="vm.fseDest"
+                        ng-options="fse.id as fse.libelleUniteOrganisation for fse in vm.organisationFSEB">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4"
+                    data-translate="ptiApp.operation.montantOp" for="field_montantOp">Montant</label>
+                <div class="col-xs-6 col-sm-6 col-lg-6">
+                    <input autocomplete="off" required ng-disabled="vm.montantTtc!=null || vm.isFraisDispo" type="number"
+                        class="form-control input-xs" name="montantOp" id="field_montantOp"
+                        ng-model="vm.operation.montantOp" min="0" oninput="validity.valid||(value='');" />
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="vm.typeService=='ACCOUNT_CASH' || vm.typeService=='ENVOI_CASH'">
+                <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_devise">Devise
+                    paiement</label>
+                <div class="col-xs-6 col-sm-6 col-lg-6">
+                    <select ng-disabled="vm.isViewing" required class="form-control" id="field_devise" name="devise"
+                        ng-model="vm.operation.devisePaiementId"
+                        ng-options="devise.deviseId as devise.deviseLibelle for devise in vm.devises">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_tauxChange">Taux change</label>
+                <div class="col-xs-6 col-sm-6 col-lg-6">
+                    <input autocomplete="off" disabled type="number" class="form-control input-xs" name="tauxChange" id="field_tauxChange"
+                        ng-model="vm.tauxChange.taux" min="0" oninput="validity.valid||(value='');" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-lg-12 col-xs-12">
+                <fieldset class="mf-fieldset">
+                    <legend>Calcul frais <span class="label label-danger">{{vm.message}}</span></legend>
+                    <div class="row">
+                        <div class="form-group col-sm-3" ng-class="{'has-info has-feedback': vm.isFraisDispo}">
+                            <label class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                for="field_montantFrais">Frais</label>
+                            <div class="col-xs-8 col-sm-8 col-lg-8">
+                                <input autocomplete="off" disabled type="number" class="form-control input-xs ft20" name="montantFrais"
+                                    id="field_montantFrais" ng-value="vm.operation.montantFrais" />
+                            </div>
+                        </div>
+
+                        <div class="form-group col-sm-5 " ng-class="{'has-info has-feedback': vm.isFraisDispo}">
+                            <label class="control-label col-sm-5 col-xs-5 col-lg-5" for="field_montantTaxe">Taxe
+                            </label>
+                            <div class="col-xs-6 col-sm-6 col-lg-6">
+                                <input autocomplete="off" disabled type="number" class="form-control input-xs ft20" name="montantTaxe"
+                                    id="field_montantTaxe" ng-model="vm.operation.montantTaxe" />
+                            </div>
+                            <button ng-if="vm.operation.montantTaxe!=null&&vm.operation.montantTaxe!=0" type="button"
+                                ng-click="vm.detailTaxes()" class="btn-info col-sm-1">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <button ng-click="vm.annulerCalcul()" ng-if="vm.isFraisDispo && !vm.isViewing" type="button"
+                                class="btn btn-default btn-xs" data-dismiss="modal">
+                                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                                    data-translate="entity.action.cancel">Cancel</span>
+                            </button>
+
+
+                            <button ng-disabled="!vm.canCalcul(vm.fseDest)"
+                                ng-if="!vm.isFraisDispo && !vm.isViewing && (vm.typeService=='ACCOUNT_ACCOUNT')"
+                                ng-click="vm.calcul(vm.fseDest,vm.fseSrc)" type="button" class="btn btn-warning btn-xs">
+                                <span class="fa fa-calculator"></span>&nbsp;<span></span>Calculer</span>
+                            </button>
+
+                            <button ng-disabled="!vm.canCalcul(vm.fseSrc)"
+                                ng-if="!vm.isFraisDispo && vm.typeService=='ACCOUNT_CASH'" ng-click="vm.calcul(vm.fseSrc)"
+                                type="button" class="btn btn-warning btn-xs">
+                                <span class="fa fa-calculator"></span>&nbsp;<span></span>Calculer</span>
+                            </button>
+
+                            <button ng-disabled="!vm.canCalcul(vm.operation.uoAcquereurId)"
+                            ng-if="!vm.isFraisDispo && vm.typeService=='ENVOI_CASH'"
+                                ng-click="vm.calcul(vm.operation.uoAcquereurId)" type="button"
+                                class="btn btn-warning btn-xs">
+                                <span class="fa fa-calculator"></span>&nbsp;<span></span>Calculer</span>
+                            </button>
+
+                            <button ng-if="!vm.isFraisDispo && vm.typeService=='CASH_ACCOUNT'"
+                                ng-disabled="!vm.canCalcul(vm.fseDest)" ng-click="vm.calcul(vm.fseDest)" type="button"
+                                class="btn btn-warning btn-xs">
+                                <span class="fa fa-calculator"></span>&nbsp;<span></span>Calculer</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-sm-3" ng-class="{'has-info has-feedback': vm.isFraisDispo}">
+                            <label mf-required class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                for="field_montant_Frais">TTC</label>
+                            <div class="col-xs-8 col-sm-8 col-lg-8">
+                                <input autocomplete="off" ng-disabled="vm.operation.montantOp!=null || vm.isFraisDispo" required
+                                    type="number" class="form-control input-xs ft20" name="montantFrais"
+                                    id="field_montant_Frais" ng-model="vm.montantTtc" />
+                            </div>
+                        </div>
+
+                        <div class="form-group  col-sm-5" ng-class="{'has-info has-feedback': vm.isFraisDispo}">
+                            <label class="control-label col-sm-5 col-xs-5 col-lg-5" for="field_montantTtc">Montant
+                                envoyé <span
+                                    ng-if="vm.defaultDevise!=null&& vm.defaultDevise.deviseLibelle!=null && vm.defaultDevise.deviseLibelle!=''">({{vm.defaultDevise.deviseLibelle}})</span>
+                            </label>
+                            <div class="col-xs-6 col-sm-6 col-lg-6">
+                                <input autocomplete="off" disabled type="number" class="form-control input-xs ft20" name="montantTtc"
+                                    id="field_montantTtc" ng-value="vm.operation.montantOp" />
+                            </div>
+                        </div>
+
+                        <div class="form-group  col-sm-4" ng-class="{'has-info has-feedback': vm.isFraisDispo}">
+                            <label class="control-label col-sm-6 col-xs-6 col-lg-6" for="field_montantTtc">Montant
+                                envoyé <span
+                                    ng-if="vm.deviseP.deviseLibelle!=null && vm.deviseP.deviseLibelle!='' ">({{vm.deviseP.deviseLibelle}})</span>
+                            </label>
+                            <div class="col-xs-5 col-sm-5 col-lg-5">
+                                <input autocomplete="off" disabled type="number" class="form-control input-xs ft20" name="montantTtc"
+                                    id="field_montantTtc" ng-value="vm.operation.montantOpEnDevise" />
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</form>

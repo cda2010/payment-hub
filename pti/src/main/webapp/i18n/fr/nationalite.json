@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "nationalite" : {
+            "home": {
+                "title": "Nationalites",
+                "createLabel": "Créer un nouveau Nationalite",
+                "createOrEditLabel": "Créer ou éditer un Nationalite"
+            },
+            "created": "Un nouveau Nationalite a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Nationalite avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Nationalite avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Nationalite {{ id }} ?"
+            },
+            "detail": {
+                "title": "Nationalite"
+            },
+            "code": "Code",
+            "libelle": "Libelle",
+            "personnePhysique": "Personne Physique"
+        }
+    }
+}

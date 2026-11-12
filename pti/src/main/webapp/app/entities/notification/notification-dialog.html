@@ -1,0 +1,70 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myNotificationLabel" data-translate="ptiApp.notification.home.createOrEditLabel">Create or edit a Notification</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.notification.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.notification.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.notification.typeNotification" for="field_typeNotification">Type Notification</label>
+            <select class="form-control" name="typeNotification" ng-model="vm.notification.typeNotification" id="field_typeNotification" required>
+                <option value="SMS" data-translate="ptiApp.TypeNotification.SMS">SMS</option>
+                <option value="EMAIL" >EMAIL</option>
+                <option value="MESSAGEPUSH" data-translate="ptiApp.TypeNotification.MESSAGEPUSH">MESSAGEPUSH</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.notification.destinataire" for="field_destinataire">Destinataire</label>
+            <input type="text" class="form-control" name="destinataire" id="field_destinataire"
+                   ng-model="vm.notification.destinataire" required
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.notification.dateHeureEnvoie" for="field_dateHeureEnvoie">Date Heure Envoie</label>
+                <div class="input-group">
+                    <input id="field_dateHeureEnvoie" type="text" class="form-control" name="dateHeureEnvoie" datetime-picker="{{dateformat}}" ng-model="vm.notification.dateHeureEnvoie" is-open="vm.datePickerOpenStatus.dateHeureEnvoie"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateHeureEnvoie')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="ptiApp.notification.contenu" for="field_contenu">Contenu</label>
+<!--            <input type="text" class="form-control" name="contenu" id="field_contenu"-->
+<!--                    ng-model="vm.notification.contenu"-->
+<!--                    />-->
+            <textarea ng-disabled="vm.isViewing" class="form-control" name="libelle" id="field_contenu" cols="30" rows="6"
+                      ng-model="vm.notification.contenu" required
+            >
+                        </textarea>
+        </div>
+        <div class="form-group">
+<!--            <label class="control-label" data-translate="ptiApp.notification.isDelivred" for="field_isDelivred">Is Delivred</label>-->
+<!--                <input type="checkbox" name="isDelivred" id="field_isDelivred"-->
+<!--                          ng-model="vm.notification.isDelivred"/>-->
+            <label >
+                <input autocomplete="off"type="checkbox" class="checkbox-slider colored-blue checkbox-lg"
+                       ng-model="vm.notification.isDelivred"/>
+                <span class="text">Est délivrée ?</span>
+            </label>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "source": "omnicanal-db-export",
+  "codeFse": "0019",
+  "providerCodeHint": "FSE_0019",
+  "providerLibelle": "Orange Burkina",
+  "participantKindHint": "WALLET",
+  "fseStatut": "AUTRE",
+  "groupCode": "ENF",
+  "codeExterne": "00",
+  "typeEtc": null,
+  "api": {
+    "nomApi": "API ORANGE BURKINA",
+    "codeApi": "0017",
+    "type": "REST",
+    "host": "172.27.4.186",
+    "port": "7911",
+    "useSsl": false,
+    "useProxy": false,
+    "baseUrl": "http://172.27.4.186:7911",
+    "authType": "OAUTH2_CLIENT_CREDENTIALS",
+    "clientId": "apiPartenersapp",
+    "clientSecret": "my-secret-token-to-change-in-production",
+    "tokenUrl": "http://172.27.4.186:7981/oauth/token",
+    "grantType": "client_credentials",
+    "username": "admin",
+    "password": "admin"
+  },
+  "targetEnvironmentCode": "DEVELOPPEMENT",
+  "methods": [
+    {
+      "typeMethode": "GETAIRTIME",
+      "codeMethode": "001701",
+      "operationCode": "GETAIRTIME",
+      "nom": "api/services/orange/orange-recharge",
+      "httpMethod": "POST",
+      "path": "api/services/orange/orange-recharge",
+      "typeReponse": "JSON",
+      "requestMappingJson": "{\"requestGatewaytype\": \"${requestGatewaytype}\", \"servicePort\": \"${servicePort}\", \"requestGatewaycode\": \"${requestGatewaycode}\", \"serviceType\": \"${serviceType}\", \"password\": \"${password}\", \"login\": \"${login}\", \"selector\": \"${selector}\", \"pin\": \"${pin}\", \"numero\": \"${numero}\", \"montant\": \"${montant}\", \"retailMsisdn\": \"${retailMsisdn}\", \"codePays\": \"${codePays}\", \"transExt\": \"${transExt}\"}",
+      "parameters": [
+        {
+          "code": "requestGatewaytype",
+          "nomExterne": "requestGatewaytype",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "servicePort",
+          "nomExterne": "servicePort",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "requestGatewaycode",
+          "nomExterne": "requestGatewaycode",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "serviceType",
+          "nomExterne": "serviceType",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "password",
+          "nomExterne": "password",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "login",
+          "nomExterne": "login",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "selector",
+          "nomExterne": "selector",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "pin",
+          "nomExterne": "pin",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "numero",
+          "nomExterne": "numero",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "montant",
+          "nomExterne": "montant",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "retailMsisdn",
+          "nomExterne": "retailMsisdn",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "codePays",
+          "nomExterne": "codePays",
+          "type": "STRING",
+          "categorie": "USER"
+        },
+        {
+          "code": "transExt",
+          "nomExterne": "transExt",
+          "type": "STRING",
+          "categorie": "USER"
+        }
+      ]
+    }
+  ]
+}

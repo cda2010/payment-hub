@@ -1,0 +1,27 @@
+{
+    "ptiApp": {
+        "histExecutionJob" : {
+            "home": {
+                "title": "HistExecutionJobs",
+                "createLabel": "Créer un nouveau Hist Execution Job",
+                "createOrEditLabel": "Créer ou éditer un Hist Execution Job"
+            },
+            "created": "Un nouveau Hist Execution Job a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Hist Execution Job avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Hist Execution Job avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Hist Execution Job {{ id }} ?"
+            },
+            "detail": {
+                "title": "Hist Execution Job"
+            },
+            "typeTrigger": "Type Trigger",
+            "debutExecution": "Debut Execution",
+            "finExecution": "Fin Execution",
+            "statut": "Statut",
+            "messageErreur": "Message Erreur",
+            "erreurLog": "Erreur Log",
+            "ptiJobDetail": "Pti Job Detail"
+        }
+    }
+}

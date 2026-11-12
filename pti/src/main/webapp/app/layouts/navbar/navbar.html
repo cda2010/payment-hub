@@ -1,0 +1,221 @@
+<div class="navbar" ng-show="vm.isAuthenticated()">
+    <div class="navbar-inner">
+        <div class="navbar-container">
+            <!-- Navbar Barnd -->
+            <div class="navbar-header pull-left">
+                <a href="#" class="navbar-brand">
+                    <small>
+                        <img src="../../../content/img/logo-square.png" alt="" />
+                    </small>
+                </a>
+            </div>
+            <!-- /Navbar Barnd -->
+            <!-- Sidebar Collapse -->
+            <!-- <div class="sidebar-collapse" id="sidebar-collapse" ng-show="vm.isAuthenticated()">
+                <i class="collapse-icon fa fa-bars"></i>
+            </div> -->
+            <!-- /Sidebar Collapse -->
+            <!-- Account Area and Settings -->
+            <div class="navbar-header pull-right">
+                <div class="navbar-account" ng-switch="vm.isAuthenticated()">
+                    <ul class="nav navbar-nav navbar-right account-area header-ul">
+                        <li ui-sref-active="active" class="text-center header-li">
+                            <a ui-sref="home" ng-click="vm.collapseNavbar()" class="flex-wrapper toggle-custom">
+                                <span class="glyphicon glyphicon-home header-icon"></span>
+                                <span class="hidden-sm text header-nav-title" data-translate="global.menu.home">Home</span>
+                            </a>
+                        </li>
+
+
+                        <li ng-class="{active: vm.$state.includes('account')}" uib-dropdown class="dropdown pointer"
+                            ng-switch-when="false">
+                            <a class="dropdown-toggle" uib-dropdown-toggle href="" id="account-menu">
+                                <span>
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    <span class="hidden-sm" data-translate="global.menu.account.main">
+                                        Account
+                                    </span>
+                                    <b class="caret"></b>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu" uib-dropdown-menu>
+
+
+                                <li ui-sref-active="active">
+                                    <a href="" ng-click="vm.login()" id="login">
+                                        <span class="glyphicon glyphicon-log-in"></span>&nbsp;
+                                        <span data-translate="global.menu.account.login">Sign in</span>
+                                    </a>
+                                </li>
+                                <li ui-sref-active="active">
+                                    <a ui-sref="register" ng-click="vm.collapseNavbar()">
+                                        <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
+                                        <span data-translate="global.menu.account.register">Register</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- <li style="width: 200px; height: 20px;" ng-class="{active: vm.$state.includes('admin')}" ng-switch-when="true"
+                            has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
+                           <a class="dropdown-toggle toggle-custom" uib-dropdown-toggle href="" id="admin-menu" style="display: flex; justify-content: center; ">
+                                <span id="group"  class="flex-wrapper">
+                                    <span class="glyphicon glyphicon-bell header-icon" style="color: white;" ></span>
+                                    <span class="badge" style="
+                                    background: radial-gradient(red, red 100%);
+                                    position: relative;
+                                    top: -15px;
+                                    left: -20px;
+                                    border-radius: 50%;"  ng-if="vm.nombre > 0">{{vm.nombre}}</span>
+                                </span>
+
+                            </a>
+                            <ul class="dropdown-menu" uib-dropdown-menu  style="margin-top: 35px;">
+                                <li ng-repeat="ts in vm.typeService">{{ts.typeService}}: {{ts.nombre}}</li>
+                            </ul>
+                        </li> -->
+
+                        <li ng-class="{active: vm.$state.includes('admin')}" ng-switch-when="true"
+                            has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
+                            <a class="dropdown-toggle toggle-custom" uib-dropdown-toggle href="" id="admin-menu">
+                                <span class="flex-wrapper">
+                                    <span class="glyphicon glyphicon-tower header-icon"></span>
+                                    <span class="hidden-sm header-nav-title"
+                                        data-translate="global.menu.admin.main">Administration</span>
+                                    <b class="caret"></b>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu" uib-dropdown-menu>
+                                <li ui-sref-active="active">
+                                    <a ui-sref="user-management" ng-click="vm.collapseNavbar()">
+                                        <span class="glyphicon glyphicon-user"></span>&nbsp;
+                                        <span data-translate="global.menu.admin.userManagement">User management</span>
+                                    </a>
+                                </li>
+
+                                <li ui-sref-active="active">
+                                    <a ui-sref="jhi-tracker" ng-click="vm.collapseNavbar()">
+                                        <span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+                                        <span data-translate="global.menu.admin.tracker">User tracker</span>
+                                    </a>
+                                </li>
+
+                                <li ui-sref-active="active">
+                                    <a ui-sref="jhi-metrics" ng-click="vm.collapseNavbar()">
+                                        <span class="glyphicon glyphicon-dashboard"></span>&nbsp;
+                                        <span data-translate="global.menu.admin.metrics">Metrics</span>
+                                    </a>
+                                </li>
+
+                                <li ui-sref-active="active">
+                                    <a ui-sref="jhi-health" ng-click="vm.collapseNavbar()">
+                                        <span class="glyphicon glyphicon-heart"></span>&nbsp;
+                                        <span data-translate="global.menu.admin.health">Health</span>
+                                    </a>
+                                </li>
+
+                                <li ui-sref-active="active">
+                                    <a ui-sref="jhi-configuration" ng-click="vm.collapseNavbar()">
+                                        <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+                                        <span data-translate="global.menu.admin.configuration">Configuration</span>
+                                    </a>
+                                </li>
+                                <li ui-sref-active="active">
+                                    <a ui-sref="audits" ng-click="vm.collapseNavbar()">
+                                        <span class="glyphicon glyphicon-bell"></span>&nbsp;
+                                        <span data-translate="global.menu.admin.audits">Audits</span>
+                                    </a>
+                                </li>
+                                
+                                <li ui-sref-active="active">
+                                    <a ui-sref="logs" ng-click="vm.collapseNavbar()">
+                                        <span class="glyphicon glyphicon-tasks"></span>&nbsp;
+                                        <span data-translate="global.menu.admin.logs">Logs</span>
+                                    </a>
+                                </li>
+                                
+                                <li ng-show="vm.swaggerEnabled" ui-sref-active="active">
+                                    <a ui-sref="docs" ng-click="vm.collapseNavbar()">
+                                        <span class="glyphicon glyphicon-book"></span>&nbsp;
+                                        <span data-translate="global.menu.admin.apidocs">API</span>
+                                    </a>
+                                </li>
+                                <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+                            </ul>
+                        </li>
+
+                        <li ui-sref-active="active" uib-dropdown class="dropdown pointer"
+                            ng-controller="JhiLanguageController as languageVm">
+                            <a class="dropdown-toggle" uib-dropdown-toggle href=""
+                                ng-if="languageVm.languages.length > 1">
+                                <span>
+                                    <span class="glyphicon glyphicon-flag"></span>
+                                    <span class="hidden-sm" data-translate="global.menu.language">Language</span>
+                                    <b class="caret"></b>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu" uib-dropdown-menu ng-if="languageVm.languages.length > 1">
+                                <li active-menu="{{language}}" ng-repeat="language in languageVm.languages">
+                                    <a href=""
+                                        ng-click="languageVm.changeLanguage(language);vm.collapseNavbar();">{{language | findLanguageFromKey}}</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li ng-switch-when="true" >
+                            <a class="dropdown-toggle toggle-custom flex-wrapper" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-user header-icon"></span>
+                                <span class="badge" style="
+                                    background: radial-gradient(red, red 100%);
+                                    position: relative;
+                                    top: -15px;
+                                    left: -20px;
+                                    border-radius: 50%;"  ng-if="vm.nombre > 0">{{vm.nombre}}</span>
+                                <span class="profile header-nav-title">{{vm.account.login}}(
+                                    {{vm.account.uniteOrganisationNom | uppercase}} )</span>
+                            </a>
+                            <!--Login Area Dropdown-->
+                            <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+                                <li class="edit">
+                                    <a ui-sref="settings" ng-click="vm.collapseNavbar()">
+                                        <span class="glyphicon glyphicon-wrench"></span>&nbsp;
+                                        <span data-translate="global.menu.account.settings">Settings</span>
+                                    </a>
+                                    <a ui-sref="password" ng-click="vm.collapseNavbar()">
+                                        <span class="glyphicon glyphicon-lock"></span>&nbsp;
+                                        <span data-translate="global.menu.account.password">Password</span>
+                                    </a>
+                                </li>
+                                <div class="dropdown-footer" style="border-top:3px solid #2dc3e8; margin-bottom: 10px;">
+                                    <p style="text-align: center;"><u>Opérations en attente de validation</u></p>
+                                    <li ng-repeat="ts in vm.typeService" style="pointer-events: none;">{{ts.typeService}}: {{ts.nombre}}</li>
+                                    <!-- <a ng-repeat="ts in vm.typeService">{{ts.typeService}}: {{ts.nombre}}</a>
+                                    <ul class="dropdown-menu" uib-dropdown-menu  style="margin-top: 35px;">
+                                        <li ng-repeat="ts in vm.typeService">{{ts.typeService}}: {{ts.nombre}}</li>
+                                    </ul> -->
+                                </div>
+                                <li class="dropdown-footer">
+                                    <a href="" ng-click="vm.qRcode()" id="qrCode">
+                                        <span class="glyphicon glyphicon-lock"></span>&nbsp;
+                                        <span >Mon code secret</span>
+                                    </a>
+                                    <a href="" ng-click="vm.logout()" id="logout">
+                                        <span class="glyphicon glyphicon-log-out"></span>&nbsp;
+                                        <span data-translate="global.menu.account.logout">Sign out</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                            <!--/Login Area Dropdown-->
+                        </li>
+
+                    </ul>
+                </div>
+
+
+            </div>
+            <!-- /Account Area and Settings -->
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,65 @@
+<div>
+    <h2>Relations</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="relation.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Relation
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                   
+                      <th><span>Relation</span></th>
+                    
+                    <th><span>Service</span></th>
+                     <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="relation in vm.relations track by relation.id">
+                  
+                      <td>{{relation.fseSource.nom}}------> {{relation.fseDestination.nom}}</td>
+                       <td>{{relation.service.nomService}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="relation-detail({id:relation.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="relation.edit({id:relation.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="relation.delete({id:relation.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                             <button type="submit"
+                                    ui-sref="compte({idrelation:relation.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-cog"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

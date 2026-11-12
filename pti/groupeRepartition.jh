@@ -1,0 +1,8 @@
+entity GroupRepartition{
+	libelleGroup String,
+}
+paginate all with pagination
+
+dto * with mapstruct
+
+service all with serviceClass

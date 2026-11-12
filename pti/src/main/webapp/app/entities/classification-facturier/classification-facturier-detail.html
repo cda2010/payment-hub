@@ -1,0 +1,31 @@
+
+<div>
+    <h2><span data-translate="ptiApp.classificationFacturier.detail.title">Classification Facturier</span> {{vm.classificationFacturier.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.classificationFacturier.libelleClassification">Libelle Classification</span></dt>
+        <dd>
+            <span>{{vm.classificationFacturier.libelleClassification}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.classificationFacturier.uniteOrganisationId">Unite Organisation Id</span></dt>
+        <dd>
+            <span>{{vm.classificationFacturier.uniteOrganisationId}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.classificationFacturier.niveauSuperieurID">Niveau Superieur ID</span></dt>
+        <dd>
+            <span>{{vm.classificationFacturier.niveauSuperieurID}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="classification-facturier-detail.edit({id:vm.classificationFacturier.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,25 @@
+{
+  "partnerApp": {
+    "bwAccount": {
+      "home": {
+        "title": "BwAccounts",
+        "createLabel": "Créer un nouveau Bw Account",
+        "createOrEditLabel": "Créer ou éditer un Bw Account",
+        "notFound": "Aucun Bw Account trouvé"
+      },
+      "created": "Un nouveau Bw Account a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Bw Account avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Bw Account avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Bw Account {{ id }} ?"
+      },
+      "detail": {
+        "title": "Bw Account"
+      },
+      "codeBanque": "Code Banque",
+      "codeAgence": "Code Agence",
+      "numeroCompte": "Numero Compte",
+      "bwCustomer": "Bw Customer"
+    }
+  }
+}

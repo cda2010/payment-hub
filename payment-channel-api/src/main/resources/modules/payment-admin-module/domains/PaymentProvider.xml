@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Meta RF — entité UUID existante, pas de codegen DomainEntity -->
+<domain-models xmlns="http://rapidframe.com/schema/domain"
+               name="PaymentProvider"
+               class="com.gateway.payment.configuration.domain.PaymentProvider"
+               table="payment_provider"
+               repository="none">
+
+  <string name="code" title="Code" required="true" unique="true"/>
+  <string name="libelle" title="Libellé" required="true" namecolumn="true"/>
+  <string name="description" title="Description" large="true"/>
+  <string name="logoUrl" title="Logo URL"/>
+  <boolean name="actif" title="Actif" default="true"/>
+  <integer name="ordreAffichage" title="Ordre d'affichage"/>
+  <string name="paymentMethodType" title="Type de moyen" required="true" default="MOBILE_MONEY"/>
+  <string name="modeExecution" title="Mode d'exécution" required="true"/>
+  <datetime name="createdAt" title="Créé le" readonly="true"/>
+  <datetime name="updatedAt" title="Modifié le" readonly="true"/>
+
+  <finder name="findByCode" using="code"/>
+  <finder name="findActive" using="actif" all="true" orderBy="ordreAffichage ASC"/>
+
+</domain-models>

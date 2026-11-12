@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-view name="biller-product-all" title="Produits facturier"
+             model="com.gateway.payment.billing.domain.BillerProduct" icon="pi pi-box">
+  <view type="grid" name="biller-product-grid"/>
+  <view type="form" name="biller-product-form"/>
+</action-view>

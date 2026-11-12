@@ -1,0 +1,50 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "hidden",
+        "key": "destRail",
+        "defaultValue": "CORIS_BANK",
+        "input": true
+      },
+      {
+        "type": "textfield",
+        "key": "destAccount",
+        "label": "N° de compte bancaire (destinataire)",
+        "placeholder": "00047324101",
+        "input": true,
+        "validate": {
+          "required": true
+        }
+      },
+      {
+        "type": "textfield",
+        "key": "accountName",
+        "label": "Titulaire du compte destinataire",
+        "placeholder": "Nom du titulaire",
+        "input": true,
+        "validate": {
+          "required": true
+        }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "N° de compte bancaire (destinataire)": "N° de compte bancaire (destinataire)",
+      "Titulaire du compte destinataire": "Titulaire du compte destinataire"
+    },
+    "en": {
+      "N° de compte bancaire (destinataire)": "Bank account number (recipient)",
+      "Titulaire du compte destinataire": "Recipient account holder"
+    }
+  }
+}

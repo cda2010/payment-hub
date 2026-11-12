@@ -1,0 +1,162 @@
+{
+  "formio": {
+    "display": "form",
+    "title": "Identité Maroc",
+    "components": [
+      {
+        "type": "textfield",
+        "key": "nom",
+        "label": "Nom",
+        "input": true,
+        "validate": {
+          "required": true
+        }
+      },
+      {
+        "type": "textfield",
+        "key": "prenom",
+        "label": "Prénom",
+        "input": true,
+        "validate": {
+          "required": true
+        }
+      },
+      {
+        "type": "datetime",
+        "key": "dateNaissance",
+        "label": "Date de naissance",
+        "input": true,
+        "validate": {
+          "required": true
+        },
+        "format": "yyyy-MM-dd",
+        "enableTime": false,
+        "widget": {
+          "type": "calendar",
+          "displayInTimezone": "viewer",
+          "locale": "fr",
+          "useLocaleSettings": false,
+          "allowInput": true,
+          "mode": "single",
+          "enableTime": false,
+          "noCalendar": false,
+          "format": "yyyy-MM-dd",
+          "hourIncrement": 1,
+          "minuteIncrement": 1,
+          "time_24hr": true
+        }
+      },
+      {
+        "type": "textfield",
+        "key": "numeroPiece",
+        "label": "Numéro CIN",
+        "input": true,
+        "validate": {
+          "required": true
+        }
+      },
+      {
+        "type": "textfield",
+        "key": "lieuNaissance",
+        "label": "Lieu de naissance",
+        "input": true,
+        "validate": {
+          "required": true
+        }
+      },
+      {
+        "type": "radio",
+        "key": "sexe",
+        "label": "Sexe",
+        "input": true,
+        "validate": {
+          "required": true
+        },
+        "values": [
+          {
+            "label": "Femme",
+            "value": "F"
+          },
+          {
+            "label": "Homme",
+            "value": "M"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "key": "nationalite",
+        "label": "Nationalité",
+        "input": true,
+        "validate": {
+          "required": true
+        },
+        "dataSrc": "values",
+        "data": {
+          "values": [
+            {
+              "label": "Burkinabè",
+              "value": "BF"
+            },
+            {
+              "label": "Béninois",
+              "value": "BJ"
+            },
+            {
+              "label": "Ivoirienne",
+              "value": "CI"
+            },
+            {
+              "label": "Bissau-Guinéen",
+              "value": "GW"
+            },
+            {
+              "label": "Guinéen",
+              "value": "GN"
+            },
+            {
+              "label": "Malien",
+              "value": "ML"
+            },
+            {
+              "label": "Marocain",
+              "value": "MA"
+            },
+            {
+              "label": "Nigérien",
+              "value": "NE"
+            },
+            {
+              "label": "Sénégalais",
+              "value": "SN"
+            },
+            {
+              "label": "Tchadien",
+              "value": "TD"
+            },
+            {
+              "label": "Togolais",
+              "value": "TG"
+            }
+          ]
+        }
+      },
+      {
+        "type": "datetime",
+        "key": "dateValidite",
+        "label": "Fin de validité de la pièce",
+        "input": true,
+        "validate": {
+          "required": true
+        },
+        "format": "yyyy-MM-dd",
+        "enableTime": false,
+        "widget": {
+          "type": "calendar",
+          "format": "yyyy-MM-dd",
+          "enableTime": false
+        }
+      }
+    ]
+  }
+}

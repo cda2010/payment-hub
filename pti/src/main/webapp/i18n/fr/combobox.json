@@ -1,0 +1,21 @@
+{
+    "ptiApp": {
+        "combobox" : {
+            "home": {
+                "title": "Comboboxes",
+                "createLabel": "Créer un nouveau Combobox",
+                "createOrEditLabel": "Créer ou éditer un Combobox"
+            },
+            "created": "Un nouveau Combobox a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Combobox avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Combobox avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Combobox {{ id }} ?"
+            },
+            "detail": {
+                "title": "Combobox"
+            },
+            "composant": "Composant"
+        }
+    }
+}

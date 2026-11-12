@@ -1,0 +1,27 @@
+{
+    "ptiApp": {
+        "detailReleveCompte" : {
+            "home": {
+                "title": "DetailReleveComptes",
+                "createLabel": "Créer un nouveau Detail Releve Compte",
+                "createOrEditLabel": "Créer ou éditer un Detail Releve Compte"
+            },
+            "created": "Un nouveau Detail Releve Compte a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Detail Releve Compte avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Detail Releve Compte avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Detail Releve Compte {{ id }} ?"
+            },
+            "detail": {
+                "title": "Detail Releve Compte"
+            },
+            "date": "Date",
+            "etat": "Etat",
+            "montant": "Montant",
+            "soldeCourant": "Solde Courant",
+            "soldeApres": "Solde Apres",
+            "type": "Type",
+            "releve": "Releve"
+        }
+    }
+}

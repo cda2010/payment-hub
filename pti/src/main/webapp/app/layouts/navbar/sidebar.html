@@ -1,0 +1,1090 @@
+<div class="page-sidebar" id="sidebar" ng-show="vs.isAuthenticated() && vs.passwordChanged" ng-cloak>
+    <!-- Sidebar Menu -->
+    <ul class="nav sidebar-menu">
+
+        <!--UI Paramétrages-->
+        <li has-any-authority="ROLE_CRE_PROFIL,ROLE_CRE_USER">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-cogs"></i>
+                <span class="menu-text">Administration</span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                    <a ui-sref="parametre-app">
+                        <span>Paramètres</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_PROFIL">
+                    <a ui-sref="profil">
+                        <span>Profils</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_USER">
+                    <a ui-sref="user-management">
+                        <span>Utilisateurs</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CONFIG_MACHINE">
+                    <a ui-sref="machine">
+                        <span>Machines</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_CONFIG_HORAIRE">
+                    <a ui-sref="horaire-authentification">
+                        <span>Horaire auth</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                    <a ui-sref="backup-data">
+                        <span>Backup Data</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CRE_JOB">
+                    <a ui-sref="pti-job-details">
+                        <span>Gestionnaire des jobs</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                    <a ui-sref="etape-service">
+                        <span>Etape des Services</span>
+                    </a>
+                </li>
+
+               
+                
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                    <a ui-sref="param-canal">
+                        <span>Parametre Canal</span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+        <li
+            has-any-authority="ROLE_CRE_TYPE_PIECE,ROLE_CRE_TYPE_SERVICE,ROLE_CRE_TYPE_COMPTE,ROLE_CRE_CANAL,ROLE_CRE_DEVISE,ROLE_CRE_NATIONALITE,ROLE_SELECT_USER_PV,ROLE_CRE_MOTIF_OPERATION,ROLE_CRE_BRANCHE_ACTIVITE">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-wrench"></i>
+                <span class="menu-text"> Paramètres Globaux </span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+            <ul class="submenu">
+                <!--<li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                    <a ui-sref="utilitaire">
+                        <span >Utilitaire</span>
+                    </a>
+                </li>-->
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_TYPE_PIECE">
+                    <a ui-sref="type-piece">
+                        <span >Type de piece</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_TYPE_SERVICE">
+                    <a ui-sref="type-service">
+                        <span >Type de service</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_TYPE_COMPTE">
+                    <a ui-sref="type-compte">
+                        <span >Type de compte</span>
+                    </a>
+                </li>
+
+
+
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_TYPE_PIECE">
+                    <a ui-sref="type-document">
+                        <span >Type de document</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CREATE_INFO_SUPP">
+                    <a ui-sref="info-supp">
+                        <span >Info Supp</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_CANAL">
+                    <a ui-sref="canal">
+                        <span >Canal</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_DEVISE">
+                    <a ui-sref="devise">
+                        <span data-translate="global.menu.entities.devise">Devises</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_NATIONALITE">
+                    <a ui-sref="nationalite">
+                        <span >Pays</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_NATIONALITE">
+                    <a ui-sref="ville">
+                        <span >Ville</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_SELECT_USER_PV">
+                    <a ui-sref="point-vente">
+                        <span >Point ventes</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_BRANCHE_ACTIVITE">
+                    <a ui-sref="branche-activite">
+                        <span >Branche d'activité</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_MOTIF_OPERATION">
+                    <a ui-sref="motif-operation">
+                        <span >Motif opération</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_TAXE">
+                    <a ui-sref="taxe">
+                        <span >Taxe</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CONFIG_TAXE">
+                    <a ui-sref="taxeOperation">
+                        <span >Configuraiton de taxes</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CONFIG_DEVISE">
+                    <a ui-sref="uo-devise">
+                        <span >Devises par pays</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CONFIG_DEVISE">
+                    <a ui-sref="taux-change">
+                        <span >Taux change</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CONFIG_TABLEAU_CUMUL">
+                    <a ui-sref="tableau-cumul">
+                        <span>Tableau cumul</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CONFIG_TEMPLATE_MESSAGE,ROLE_ADMIN">
+                    <a ui-sref="liste-diffusion">
+                        <span>Liste de diffusion</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CONFIG_TEMPLATE_MESSAGE,ROLE_ADMIN">
+                    <a ui-sref="template-message">
+                        <span>Template Message</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CONFIG_VALIDATION_OP,ROLE_ADMIN">
+                    <a ui-sref="role-validation">
+                        <span>Validation opérations</span>
+                    </a>
+                </li>
+                
+                       <li ui-sref-active="active" has-any-authority="ROLE_CRE_PROFIL,ROLE_CRE_USER,ROLE_CRE_PAYS" >
+                    <a href="#" class="menu-dropdown">
+                        <span > Paramètres Supp.</span>
+                        <i class="expand-icon fa fa-angle-right"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                            <a ui-sref="etape-service">
+                                <span>Etape des Services</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                            <a ui-sref="param-canal">
+                                <span>Paramètre Canal</span>
+                            </a>
+                        </li>
+        
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                            <a ui-sref="type-service-fse">
+                                <span>Type Service Fse</span>
+                            </a>
+                        </li>
+        
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                            <a ui-sref="categorie-service">
+                                <span>Categorie Service</span>
+                            </a>
+                        </li>
+        
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                            <a ui-sref="groupe-fse">
+                                <span>Groupe FSE</span>
+                            </a>
+                        </li>
+                        
+                        <li ui-sref-active="active" has-any-authority="ROLE_CRE_PAYS,ROLE_ADMIN">
+                            <a ui-sref="pays">
+                                <span>Pays</span>
+                            </a>
+                        </li>
+        
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                            <a ui-sref="config-publicite">
+                                <span>Config Publicite</span>
+                            </a>
+                        </li>
+        
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                            <a ui-sref="type-service-reseau-organisation">
+                                <span>Type Service Reseau Organisation</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+                
+                
+            </ul>
+        </li>
+
+        <li
+            has-any-authority="ROLE_CRE_ORG,ROLE_CRE_TYPE_ORG,ROLE_CONSULT_FOURN_SERVICE,ROLE_CONSULT_ORG,ROLE_DO_SOUSCRIPTION_CLIENT,ROLE_CONSULT_CLIENT">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-sitemap"></i>
+                <span class="menu-text"> Organisations </span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_CONSULT_CLIENT,ROLE_CONSULT_CLIENT,ROLE_DO_SOUSCRIPTION_CLIENT" >
+                    <a href="#" class="menu-dropdown">
+                        <span > Clients</span>
+                        <i class="expand-icon fa fa-angle-right"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li ui-sref-active="active" has-any-authority="ROLE_CONSULT_CLIENT">
+                            <a ui-sref="client">
+                                <span>Liste des clients</span>
+                            </a>
+                        </li>
+
+                        <li ui-sref-active="active" has-any-authority="ROLE_DO_SOUSCRIPTION_CLIENT">
+                            <a ui-sref="client-creation">
+                                <span>Création</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" has-any-authority="ROLE_DO_SOUSCRIPTION_CLIENT">
+
+                            <a ui-sref="client-souscription">
+                                <span>Souscription</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" has-any-authority="ROLE_CONSULT_CLIENT">
+                            <a ui-sref="personne">
+                                <span>Recherche</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CONSULT_CLIENT,ROLE_CONSULT_CLIENT,ROLE_DO_SOUSCRIPTION_CLIENT" >
+                    <a href="#" class="menu-dropdown">
+                        <span >Entreprises</span>
+                        <i class="expand-icon fa fa-angle-right"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li ui-sref-active="active"has-any-authority="ROLE_CONSULT_CLIENT">
+                            <a ui-sref="entreprises">
+                                <span>Liste entreprises</span>
+                            </a>
+                        </li>
+
+                        <li ui-sref-active="active" has-any-authority="ROLE_DO_SOUSCRIPTION_CLIENT">
+                            <a ui-sref="entreprise-creation">
+                                <span>Création</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" has-any-authority="ROLE_CONSULT_CLIENT">
+                            <a ui-sref="personne-morale">
+                                <span>Recherche</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_CONSULT_CLIENT,ROLE_CONSULT_CLIENT" >
+                    <a href="#" class="menu-dropdown">
+                        <span > Paramètres</span>
+                        <i class="expand-icon fa fa-angle-right"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li ui-sref-active="active" has-any-authority="ROLE_CRE_TYPE_ORG">
+                            <a ui-sref="type-unite-organisation">
+                                <span >Type d'Organisation</span>
+                            </a>
+                        </li>
+
+                        <li ui-sref-active="active" has-any-authority="ROLE_CRE_ORG">
+                            <a ui-sref="service-profil">
+                                <span >Service par les clients</span>
+                            </a>
+                        </li>
+
+                        <li ui-sref-active="active" has-any-authority="ROLE_CRE_ORG">
+                            <a ui-sref="groupe-profil-acteur">
+                                <span >Catégories/Profils</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+
+
+
+
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_ORG, ROLE_CONSULT_ORG">
+                    <a ui-sref="unite-organisation">
+                        <span >Organisations</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_ORG,ROLE_CONSULT_ORG">
+                    <a ui-sref="unite-organisation-paginer">
+                        <span >Gestion des acteurs</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CONSULT_ORG">
+                    <a ui-sref="consulter-unite-organisation">
+                        <span >Mon Organisation</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_ORG">
+                    <a ui-sref="terminal">
+                        <span >Terminal</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_ORG">
+                    <a ui-sref="commerciale">
+                        <span >Commerciaux</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_CONSULT_FOURN_SERVICE">
+                    <a ui-sref="fournisseur-service">
+                        <span data-translate="global.menu.entities.fournisseurService">Fournisseur Service</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li
+            has-any-authority="ROLE_CRE_FRAIS,ROLE_CRE_REPART_COMMISSION,ROLE_CONSULT_COMMISION,ROLE_CRE_REPART_FRAIS_EM_ACQ">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-percentage"></i>
+                <span class="menu-text"> Frais et Commissions </span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_FRAIS">
+                    <a ui-sref="tableau-frais">
+                        <span >Tableau frais</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_REPART_FRAIS_EM_ACQ">
+                    <a ui-sref="repartition-frais">
+                        <span>Repartition Comm. Réseau</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_REPART_COMMISSION">
+                    <a ui-sref="group-repartition">
+                        <span> Repartition Commission</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CONFIG_REGLE_COMMISSION">
+                    <a ui-sref="regle-commission">
+                        <span>Règles commissions</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CONSULT_COMMISION">
+                    <a ui-sref="commission">
+                        <span>Commission</span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
+        <li has-any-authority="ROLE_CRE_ETIQUETTE_COMPT,ROLE_CRE_INSTRUCTION_COMPT,ROLE_CRE_COMPTE">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-calculator"></i>
+                <span class="menu-text"> Comptabilité </span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_ETIQUETTE_COMPT">
+                    <a ui-sref="etiquette-compte">
+                        <span>Etiquettes compte</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CRE_INSTRUCTION_COMPT">
+                    <a ui-sref="instruction-comptable">
+                        <span >Instructions comptable</span>
+                    </a>
+                </li>
+                <!--                comptes-->
+                <li
+                    has-any-authority="ROLE_ADMIN,ROLE_CRE_COMPTE">
+                    <a href="#" class="menu-dropdown">
+                        <span >Comptes</span>
+                        <i class="expand-icon fa fa-angle-right"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li ui-sref-active="active" has-any-authority="ROLE_CRE_COMPTE">
+                            <a ui-sref="compte">
+                                <span >Liste des comptes</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" has-any-authority="ROLE_CRE_COMPTE">
+                            <a ui-sref="compte-historique">
+                                <span>Historique</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <!--                /comptes-->
+            </ul>
+        </li>
+
+
+        <!--Operations-->
+        <li
+            has-any-authority="ROLE_DO_OP_REGULATION,ROLE_DO_OP_REGLEMENT,ROLE_CONSULT_OPERATION,ROLE_DO_OP_RETRAIT,ROLE_DO_OP_APPROV,ROLE_DO_OP_ENVOI_CASH,ROLE_DO_OP_CASH_ACCOUNT,ROLE_DO_OP_MAD_INITIATION,ROLE_DO_OP_MAD_VALIDATION,ROLE_DO_OP_VIREMENT_INITIATION,ROLE_DO_OP_VIREMENT_VALIDATION,ROLE_ADMIN,ROLE_DO_OP_VALIDATION">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-credit-card"></i>
+                <span class="menu-text"> Opérations </span>
+
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_CONSULT_OPERATION">
+                    <a ui-sref="operation">
+                        <span>Consultation</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_DO_OP_VALIDATION">
+                    <a ui-sref="traitement-op">
+                        <span>Validations</span>
+                    </a>
+                </li>
+
+
+                <li ui-sref-active="active" has-any-authority="ROLE_DO_OP_RETRAIT_OLD">
+                    <a ui-sref="operation-retrait">
+                        <span>Retrait</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_DO_OP_APPROV,ROLE_DO_OP_REGLEMENT,ROLE_DO_OP_REGLEMENT">
+                    <a href="#" class="menu-dropdown">
+                        <span> Opérations membre</span>
+                        <i class="expand-icon fa fa-angle-right"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li ui-sref-active="active" has-any-authority="ROLE_DO_OP_APPROV">
+                            <a ui-sref="approvisionnement">
+                                <span>Approvisionnement</span>
+                            </a>
+                        </li>
+
+                        <li ui-sref-active="active" has-any-authority="ROLE_DO_OP_APPROV">
+                            <a ui-sref="retrait-membre">
+                                <span>Rétrait</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_DO_OP_REGULATION">
+                            <a ui-sref="regulation">
+
+                                <span>Régulation</span>
+                            </a>
+                        </li>
+
+
+
+                        <li has-any-authority="ROLE_ADMIN,ROLE_DO_OP_REGLEMENT,ROLE_DO_OP_VALIDATION">
+                            <a href="#" class="menu-dropdown">
+                                <span>Règlement</span>
+                                <i class="expand-icon fa fa-angle-right"></i>
+                            </a>
+                            <ul class="submenu">
+                                 <li ui-sref-active="active" has-any-authority="ROLE_DO_OP_REGLEMENT,ROLE_ADMIN">
+                                    <a ui-sref="reglement-template">
+                                           <span data-translate="global.menu.reglement.template">Template</span>
+                                    </a>
+                                </li>
+                                <li ui-sref-active="active" has-any-authority="ROLE_DO_OP_REGLEMENT,ROLE_ADMIN">
+                                    <a ui-sref="reglement-organisation">
+                                        <span>Création</span>
+                                    </a>
+                                </li>
+                                <li ui-sref-active="active" has-any-authority="ROLE_DO_OP_VALIDATION,ROLE_ADMIN">
+                                    <a ui-sref="reglement-organisation-valide">
+                                         <span data-translate="global.menu.reglement.validation">Validation</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                 <!--       <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_DO_OP_REGLEMENT">
+                            <a ui-sref="reglement-organisation">
+
+                                <span>Règlement</span>
+                            </a>
+                        </li>-->
+                    </ul>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_DO_OP_ENVOI_CASH_OLD">
+                    <a ui-sref="operation-envoi-cash">
+                        <span>Envoi cash</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_DO_OP_CASH_ACCOUNT_OLD">
+                    <a ui-sref="operation-envoi-cash-to-account">
+                        <span>Cash account</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_DO_OP_MAD_INITIATION_OLD">
+                    <a ui-sref="account-cash">
+                        <span> Appel de fonds</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_DO_OP_VIREMENT_INITIATION_OLD">
+                    <a ui-sref="account-account">
+                        <span>Virement</span>
+                    </a>
+                </li>
+
+
+                <!-- Pour la gestion des bloquages et annulations -->
+                <li
+                    has-any-authority="ROLE_ADMIN,ROLE_BLOQUAGE_OP,ROLE_DO_OP_REDRESSEMENT,ROLE_ANNULATION_ENVOI_CASH">
+                    <a href="#" class="menu-dropdown">
+                        <span > Mise à jour</span>
+                        <i class="expand-icon fa fa-angle-right"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li ui-sref-active="active" has-any-authority="ROLE_ANNULATION_ENVOI_CASH">
+                            <a ui-sref="annulation-operation">
+                                <span>Operations expirées</span>
+                            </a>
+                        </li>
+
+                        <li ui-sref-active="active" has-any-authority="ROLE_BLOQUAGE_OP">
+                            <a ui-sref="operation-maj">
+                                <span>Bloquage|Reactivation</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" has-any-authority="ROLE_DO_OP_REDRESSEMENT">
+                            <a ui-sref="operation-redressement">
+                                <span>Redressement</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" >
+                            <a ui-sref="evenement-operation">
+                                <span>Bloqué un montant</span>
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+            </ul>
+        </li>
+
+
+        <!--Facturiers-->
+        <li  has-any-authority="ROLE_ADMIN,ROLE_ADMIN_FACTURIER,ROLE_GEST_API">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-receipt"></i>
+                <span class="menu-text">Facturiers</span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+
+            <ul class="submenu">
+                <li  has-any-authority="ROLE_ADMIN">
+                    <a href="#" class="menu-dropdown">
+                        <span > Paramètres</span>
+                        <i class="expand-icon fa fa-angle-right"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN, ROLE_ADMIN_FACTURIER">
+                            <a ui-sref="classification-facturier">
+                                <span>Classifications</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_ADMIN_FACTURIER">
+                            <a ui-sref="composant">
+                                <span>Composants</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_ADMIN_FACTURIER">
+                    <a ui-sref="facturier">
+                        <span>Facturiers</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-ny-authority="ROLE_ADMIN,ROLE_ADMIN_FACTURIER">
+                    <a ui-sref="facturier-profil">
+                        <span>Facturier Profils</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_ADMIN_FACTURIER">
+                    <a ui-sref="verif-transaction">
+                        <span>Vérification Transaction</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_ADMIN_FACTURIER">
+                    <a ui-sref="produit">
+                        <span>Produits</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN, ROLE_ADMIN_FACTURIER, ROLE_FACTURE">
+                    <a ui-sref="facture">
+                        <span>Factures</span>
+                    </a>
+                </li>
+                 <li ui-sref-active="active" has-any-authority="ROLE_GEST_API,ROLE_ADMIN">
+                    <a ui-sref="credential-api">
+                        <span>Gestion des API</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+        <li has-any-authority="ROLE_CREA_MONNAIE,ROLE_DEST_MONNAIE,ROLE_ADMIN">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-coins"></i>
+                <span class="menu-text">Gestion de la Monnaie</span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_CREA_MONNAIE,ROLE_ADMIN">
+                    <a ui-sref="creation-monnaie">
+                        <span>Création</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_DEST_MONNAIE,ROLE_ADMIN">
+                    <a ui-sref="destruction-monnaie">
+                        <span>Destruction</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li has-any-authority="ROLE_VALIDE_TRANSFERT_MASSE,ROLE_TRANSFERT_MASSE,ROLE_ADMIN">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-broadcast-tower"></i>
+                <span class="menu-text">Transfert en Masse</span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_TRANSFERT_MASSE,ROLE_ADMIN">
+                    <a ui-sref="chargement-transfert">
+                        <span>Création</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_VALIDE_TRANSFERT_MASSE,ROLE_ADMIN">
+                    <a ui-sref="chargement-transfert-valide">
+                        <span>Validation</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li has-any-authority="ROLE_CREA_COMPTE_MASSE,ROLE_VALIDE_CREA_COMPTE_MASSE,ROLE_ADMIN">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-wallet"></i>
+                <span class="menu-text">Compte en masse</span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_CREA_COMPTE_MASSE,ROLE_ADMIN">
+                    <a ui-sref="chargement-compte">
+                        <span>Création</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_VALIDE_CREA_COMPTE_MASSE,ROLE_ADMIN">
+                    <a ui-sref="chargement-compte">
+                        <span>Validation</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li has-any-authority="ROLE_VALIDE_MESSAGE_MASSE,ROLE_MESSAGE_MASSE,ROLE_ADMIN">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-bullhorn"></i>
+                <span class="menu-text">Message en masse</span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_MESSAGE_MASSE,ROLE_ADMIN">
+                    <a ui-sref="chargement-message" >
+                        <span>Création</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_VALIDE_MESSAGE_MASSE,ROLE_ADMIN">
+                    <a ui-sref="chargement-message-valide">
+                        <span>Validation</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li has-any-authority="ROLE_VALIDE_TRANSFERT_MASSE,ROLE_TRANSFERT_MASSE,ROLE_ADMIN">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-broadcast-tower"></i>
+                <span class="menu-text">Traitement en Masse</span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_TRANSFERT_MASSE,ROLE_ADMIN">
+                    <a ui-sref="chargement-fichier">
+                        <span>Création</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_VALIDE_TRANSFERT_MASSE,ROLE_ADMIN">
+                    <a ui-sref="chargement-fichier-valide">
+                        <span>Validation</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- Fin Facturier-->
+
+        <li has-any-authority="ROLE_CONSULT_LOCALISATEUR,ROLE_CONSULT_SIMULATEUR">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-tools"></i>
+                <span class="menu-text">Outils</span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_CONSULT_LOCALISATEUR,ROLE_ADMIN">
+                    <a ui-sref="simulation-operation">
+                        <span>Simulateur</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CONSULT_LOCALISATEUR">
+                    <a ui-sref="localisateur">
+                        <span>Localisateur</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_CONSULT_LOCALISATEUR">
+                    <a ui-sref="faq">
+                        <span>FAQ</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_IMPORTATION">
+                    <a ui-sref="etat-importation">
+                        <span>Importation</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!--REclamation-->
+        <li  has-any-authority="ROLE_ADMIN,ROLE_CONSULT_RECLAMATION,ROLE_MAJ_RECLAMATION">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-file-alt"></i>
+                <span class="menu-text"> Reclamations </span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CONSULT_RECLAMATION">
+                    <a ui-sref="type-reclamation">
+                        <span> Paramètres</span>
+                        <!-- <span class="fa fa-wrench"> Paramètres</span> -->
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CONSULT_RECLAMATION">
+                    <a ui-sref="consult-reclamation">
+                        <span>Consultation</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CONSULT_RECLAMATION">
+                    <a ui-sref="reclamation">
+                        <span>MAJ Reclamations</span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+        <!-- Fin REclamation-->
+
+
+        <!--REclamation-->
+        <li  has-any-authority="ROLE_MAJ_NOTIFICATIONS,ROLE_CONSUL_NOTIFICATIONS">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-bell"></i>
+                <span class="menu-text"> Notifications </span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_CONSUL_NOTIFICATIONS">
+                    <a ui-sref="notification">
+                        <span>Consultation</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_MAJ_NOTIFICATIONS">
+                    <a ui-sref="notification">
+                        <span>Envoyer</span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+        <!-- Fin REclamation-->
+        <!--Compte
+        <li ui-sref-active="active" has-any-authority="ROLE_CONSULT_ALL_TRANSACTIONS">
+            <a ui-sref="transaction-compte-pti">
+                <i class="c-icon fa fa-exchange"></i>
+                <span class="menu-text">
+                        Transactions
+                    </span>
+            </a>
+        </li>-->
+
+
+        
+          <!---->
+        <li  has-any-authority="ROLE_ADMIN">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-receipt"></i>
+                <span class="menu-text">Service Exterieurs</span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                    <a ui-sref="bw-customer">
+                         <span>Souscription</span>
+                    </a>
+                </li>
+              
+            </ul>
+        </li>
+
+        <li  has-any-authority="ROLE_ETAT_DIVERS,ROLE_SOLDE_COMPTE,ROLE_AUDIT_OP,ROLE_CONSULT_TRANS_CLI,ROLE_ADMIN">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-folder-open"></i>
+                <span class="menu-text">Rapports</span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_ETAT_DIVERS">
+                    <a ui-sref="etat-divers" >
+                        <!-- <i class="c-icon fa fa-print"></i> -->
+                        <span>
+                            Etat divers
+                        </span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" >
+                    <a ui-sref="etat-compte" >
+                        <!-- <i class="c-icon fa fa-print"></i> -->
+                        <span>
+                          Etat des comptes
+                        </span>
+                    </a>
+                </li>
+
+
+<!--                <li ui-sref-active="active">
+                    <a ui-sref="compte-en-instance">
+                        <i class="c-icon fa fa-print"></i>
+                        <span class="menu-text">
+                            Compte en Instance
+                        </span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="etat-list-user">
+                        <i class="c-icon fa fa-print"></i>
+                        <span class="menu-text">
+                            Compte User
+                        </span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="etat-beneficiaire">
+                        <i class="c-icon fa fa-print"></i>
+                        <span class="menu-text">
+                            Bénéficiaire
+                        </span>
+                    </a>
+                </li>-->
+                <li ui-sref-active="active">
+                    <a ui-sref="operation-agent">
+                        <!-- <i class="c-icon fa fa-print"></i> -->
+                        <span >
+                            Opération/Agent
+                        </span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CONSULT_TRANS_CLI">
+                    <a ui-sref="etats">
+                        <!-- <i class="c-icon fa fa-print"></i> -->
+                        <span>
+                            Opérations
+                        </span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_AUDIT_OP, ROLE_ADMIN, ROLE_CONSULT_TRANS_CLI">
+                    <a ui-sref="etat-client">
+                        <span >
+                            <!-- <i class="c-icon fa fa-print"></i> -->
+                            Transaction client
+                        </span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CONSULT_TRANS_CLI">
+                    <a ui-sref="etat-listing">
+                        <!-- <i class="c-icon fa fa-print"></i> -->
+                        <span >
+                            Listing
+                        </span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                    <a ui-sref="lot">
+                        <!-- <i class="c-icon fa fa-print"></i> -->
+                        <span >
+                            Lot Client
+                        </span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                    <a ui-sref="lot-organisation">
+                        <!-- <i class="c-icon fa fa-print"></i> -->
+                        <span >
+                            Lot Agent/Marchand
+                        </span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_CONSULT_TRANS_CLI">
+                    <a ui-sref="etat-operation">
+
+                        <!-- <i class="c-icon fa fa-print"></i> -->
+                        <span >
+                            Opérat.en attentes
+                        </span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_AUDIT_OPER_SUSPECT, ROLE_ADMIN,ROLE_CONSULT_TRANS_CLI">
+                    <a ui-sref="etat-balance">
+                        <!-- <i class="c-icon fa fa-print"></i> -->
+                        <span>
+                            Etat des balances
+                        </span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN, ROLE_SOLDE_COMPTE">
+                    <a ui-sref="tableau-solde">
+                        <!-- <i class="c-icon fa fa-users"></i> -->
+                        <span>Tableau des soldes</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN, ROLE_SOLDE_COMPTE">
+                    <a ui-sref="detail-historique">
+                        <!-- <i class="c-icon fa fa-users"></i> -->
+                        <span>Historiques soldes</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN, ROLE_EDIT_DOUBLON">
+                    <a ui-sref="liste-doublon">
+                        <!-- <i class="c-icon fa fa-users"></i> -->
+                        <span>Liste des doublons</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN">
+                    <a ui-sref="lien">
+                        <!-- <i class="c-icon fa fa-users"></i> -->
+                        <span>Traitement doublons</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_GENERATEUR_ETAT" >
+                    <a href="#" class="menu-dropdown">
+                        <span > Générateur d'état</span>
+                        <i class="expand-icon fa fa-angle-right"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_GENERATEUR_ETAT_CREATE">
+                            <a ui-sref="export-table">
+                                <span>Configuration</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active"  has-any-authority="ROLE_ADMIN,ROLE_GENERATEUR_ETAT_VIEW">
+                            <a ui-sref="file-export">
+                                <span>Génération</span>
+                            </a>
+                        </li>
+                        
+                    </ul>
+
+                </li>
+            </ul>
+        </li>
+
+        <li has-any-authority="ROLE_GEST_ALARME,ROLE_AUDIT_OP,ROLE_AUDIT_OP,ROLE_MAJ_BLACKLIST,ROLE_MAJ_BLACKLIST,ROLE_AUDIT_OPER_SUSPECT,ROLE_ADMIN">
+            <a href="#" class="menu-dropdown">
+                <i class="c-icon fa fa-clipboard-check"></i>
+                <span class="menu-text">Audit</span>
+                <i class="expand-icon fa fa-angle-right"></i>
+            </a>
+            <ul class="submenu">
+                <li ui-sref-active="active" has-any-authority="ROLE_AUDIT_OP,ROLE_ADMIN">
+                    <a ui-sref="log-operation">
+                        <span>Logs</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_AUDIT_OP,ROLE_ADMIN">
+                    <a ui-sref="entity-audit-event">
+                        <span>Audit Event</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_AUDIT_OP,ROLE_ADMIN">
+                    <a ui-sref="operation-audit">
+                        <span>Audit Operations</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_MAJ_BLACKLIST,ROLE_ADMIN">
+                    <a ui-sref="black-list">
+                        <span>Surveillance</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_AUDIT_OPER_SUSPECT, ROLE_ADMIN">
+                    <a ui-sref="operation-suivis">
+                        <span>Opérations surveillées</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" has-any-authority="ROLE_ADMIN, ROLE_GEST_ALARME">
+                    <a ui-sref="recepteur-alarme">
+                        <span>Gestion des alarmes</span>
+                    </a>
+                </li>
+
+
+            </ul>
+        </li>
+
+
+
+
+        <!--Utilisateur-->
+    </ul>
+
+    <!-- /Sidebar Menu -->
+</div>

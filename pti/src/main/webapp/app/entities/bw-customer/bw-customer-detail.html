@@ -1,0 +1,43 @@
+
+<div>
+    <h2><span data-translate="ptiApp.bwCustomer.detail.title">Bw Customer</span> {{vm.bwCustomer.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.bwCustomer.nomCustomer">Nom Customer</span></dt>
+        <dd>
+            <span>{{vm.bwCustomer.nomCustomer}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.bwCustomer.prenomCustomer">Prenom Customer</span></dt>
+        <dd>
+            <span>{{vm.bwCustomer.prenomCustomer}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.bwCustomer.typePiece">Type Piece</span></dt>
+        <dd>
+            <span>{{vm.bwCustomer.typePiece}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.bwCustomer.numeroPiece">Numero Piece</span></dt>
+        <dd>
+            <span>{{vm.bwCustomer.numeroPiece}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.bwCustomer.codePays">Code Pays</span></dt>
+        <dd>
+            <span>{{vm.bwCustomer.codePays}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.bwCustomer.msisdn">Msisdn</span></dt>
+        <dd>
+            <span>{{vm.bwCustomer.msisdn}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="bw-customer-detail.edit({id:vm.bwCustomer.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

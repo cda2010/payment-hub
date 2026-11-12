@@ -1,0 +1,349 @@
+<mxfile host="app.diagrams.net" agent="Cursor" version="24.7.17" type="device">
+  <diagram id="arch-plateforme" name="Architecture Plateforme">
+    <mxGraphModel dx="1600" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TITLE -->
+        <mxCell id="title" value="Architecture Plateforme — Canaux · Gateway · Backend · Payment Hub · Omnicanal · Connecteurs · Cores + Data / Kafka / Temporal / Observabilité" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontStyle=1;fontColor=#111827;" parent="1" vertex="1">
+          <mxGeometry x="40" y="16" width="1600" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ========== L1 CANAUX ========== -->
+        <mxCell id="l1" value="1 · Canaux" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=#DBEAFE;strokeColor=#1D4ED8;fontColor=#1E3A8A;fontStyle=1;startSize=28;rounded=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="55" width="1180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="ch1" value="Mobile App&#xa;Client&#xa;&#xa;RETAIL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1D4ED8;fontStyle=1;fontSize=12;" parent="l1" vertex="1">
+          <mxGeometry x="40" y="20" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ch2" value="Mobile App&#xa;Agent&#xa;&#xa;AGENT" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1D4ED8;fontStyle=1;fontSize=12;" parent="l1" vertex="1">
+          <mxGeometry x="190" y="20" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ch3" value="Web App&#xa;Corporate&#xa;&#xa;CORPORATE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1D4ED8;fontStyle=1;fontSize=12;" parent="l1" vertex="1">
+          <mxGeometry x="340" y="20" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ch4" value="USSD&#xa;&#xa;*xxx#&#xa;USSD" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1D4ED8;fontStyle=1;fontSize=12;" parent="l1" vertex="1">
+          <mxGeometry x="490" y="20" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ch5" value="GAB / ATM&#xa;&#xa;Guichet&#xa;GAB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1D4ED8;fontStyle=1;fontSize=12;" parent="l1" vertex="1">
+          <mxGeometry x="640" y="20" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ch6" value="Autres&#xa;(optionnel)&#xa;&#xa;Web Agent / Marchand" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#93C5FD;dashed=1;fontColor=#64748B;fontSize=11;" parent="l1" vertex="1">
+          <mxGeometry x="790" y="20" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="chN" value="HTTPS / JWT&#xa;→ /api/v1/gateway" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;fontColor=#475569;fontStyle=2;" parent="l1" vertex="1">
+          <mxGeometry x="960" y="35" width="180" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ========== L2 GATEWAY ========== -->
+        <mxCell id="l2" value="2 · Accès" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=#FFEDD5;strokeColor=#EA580C;fontColor=#9A3412;fontStyle=1;startSize=28;rounded=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="200" width="1180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gw" value="API Gateway  ·  Auth (OAuth2/OIDC)  ·  Routage  ·  Rate-limit  ·  Canal (MOBILE | WEB | GAB | USSD | BACKOFFICE)  ·  Idempotency-Key" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EA580C;fontStyle=1;fontSize=12;" parent="l2" vertex="1">
+          <mxGeometry x="40" y="18" width="1100" height="46" as="geometry" />
+        </mxCell>
+
+        <!-- ========== L3 BACKEND ========== -->
+        <mxCell id="l3" value="3 · Backend" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=#EDE9FE;strokeColor=#7C3AED;fontColor=#5B21B6;fontStyle=1;startSize=28;rounded=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="305" width="1180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="be" value="Backend Produit (payment-2)&#xa;Catalogue · Journeys · Identity · Pricing (frais/taux/limites) · Publication" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7C3AED;fontSize=12;" parent="l3" vertex="1">
+          <mxGeometry x="40" y="18" width="1100" height="54" as="geometry" />
+        </mxCell>
+
+        <!-- ========== L4 PAYMENT HUB ========== -->
+        <mxCell id="l4" value="4 · Initiation" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=#D1FAE5;strokeColor=#059669;fontColor=#065F46;fontStyle=1;startSize=28;rounded=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="420" width="1180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ph" value="Payment Initiation Hub&#xa;Draft · Validation · Pricing · Consent / OTP · Maker-Checker · Outbox transactionnelle&#xa;Décide SI la demande est prête et autorisée (ne débite / ne crédite pas)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#059669;fontSize=12;" parent="l4" vertex="1">
+          <mxGeometry x="40" y="18" width="1100" height="64" as="geometry" />
+        </mxCell>
+
+        <!-- ========== L5 OMNICANAL ========== -->
+        <mxCell id="l5" value="5 · Exécution" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#DC2626;fontColor=#991B1B;fontStyle=1;startSize=28;rounded=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="545" width="1180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="omni" value="Omnicanal — Orchestration financière&#xa;Schema Selection · SchemaÉcriture · ExecutionPlan · Débit / Crédit / Frais · Compensation / Manual Review&#xa;Décide COMMENT exécuter, reprendre ou compenser" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#DC2626;fontSize=12;" parent="l5" vertex="1">
+          <mxGeometry x="40" y="18" width="1100" height="64" as="geometry" />
+        </mxCell>
+
+        <!-- ========== L6 CONNECTEURS ========== -->
+        <mxCell id="l6" value="6 · Connecteurs / FSE" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=#E0F2FE;strokeColor=#0284C7;fontColor=#075985;fontStyle=1;startSize=28;rounded=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="670" width="1180" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="c1" value="Bill Payment&#xa;Connector&#xa;&#xa;SONABEL · ONEA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0284C7;fontStyle=1;fontSize=11;" parent="l6" vertex="1">
+          <mxGeometry x="40" y="18" width="160" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" value="Coris Money&#xa;Connector&#xa;&#xa;Wallet / FSE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0284C7;fontStyle=1;fontSize=11;" parent="l6" vertex="1">
+          <mxGeometry x="220" y="18" width="160" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" value="Bank / CBS&#xa;Connector&#xa;&#xa;Core Banking" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0284C7;fontStyle=1;fontSize=11;" parent="l6" vertex="1">
+          <mxGeometry x="400" y="18" width="160" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" value="RTGS / SWIFT&#xa;/ STAR&#xa;&#xa;Rails interbancaires" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0284C7;fontStyle=1;fontSize=11;" parent="l6" vertex="1">
+          <mxGeometry x="580" y="18" width="160" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" value="Autres&#xa;Connecteurs&#xa;&#xa;SPI / Registry" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0F9FF;strokeColor=#7DD3FC;dashed=1;fontColor=#64748B;fontSize=11;" parent="l6" vertex="1">
+          <mxGeometry x="760" y="18" width="160" height="72" as="geometry" />
+        </mxCell>
+
+        <!-- ========== L7 CORES ========== -->
+        <mxCell id="l7" value="7 · Systèmes cœur" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#111827;fontColor=#F9FAFB;fontStyle=1;startSize=28;rounded=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="805" width="1180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="core1" value="Coris Money Core System&#xa;Wallet · Comptes digitaux · Transferts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#374151;strokeColor=#9CA3AF;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" parent="l7" vertex="1">
+          <mxGeometry x="120" y="20" width="380" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="core2" value="CBS — Core Banking System&#xa;Comptes · Soldes · Écritures comptables" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#374151;strokeColor=#9CA3AF;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" parent="l7" vertex="1">
+          <mxGeometry x="560" y="20" width="380" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Vertical flow arrows -->
+        <mxCell id="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#1D4ED8;endArrow=block;endFill=1;" parent="1" source="l1" target="l2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#EA580C;endArrow=block;endFill=1;" parent="1" source="l2" target="l3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#7C3AED;endArrow=block;endFill=1;" parent="1" source="l3" target="l4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" value="Canonical Command&#xa;(Outbox → Kafka)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#059669;endArrow=block;endFill=1;fontSize=10;fontColor=#065F46;labelBackgroundColor=#FFFFFF;" parent="1" source="l4" target="l5" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#DC2626;endArrow=block;endFill=1;" parent="1" source="l5" target="l6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#0284C7;endArrow=block;endFill=1;" parent="1" source="l6" target="l7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ========== RIGHT: PLATFORM SERVICES ========== -->
+        <mxCell id="plat" value="Plateforme transversale" style="swimlane;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#475569;fontColor=#0F172A;fontStyle=1;startSize=32;rounded=1;childLayout=0;" parent="1" vertex="1">
+          <mxGeometry x="1260" y="55" width="680" height="850" as="geometry" />
+        </mxCell>
+
+        <!-- Temporal -->
+        <mxCell id="tmp" value="Temporal&#xa;&#xa;Workflows durables&#xa;• InitiationWorkflow (Hub)&#xa;• ExecutionWorkflow (Omnicanal)&#xa;• Retries · Timers · Compensations&#xa;• Human tasks (approval / OTP)" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#FEF3C7;strokeColor=#D97706;fontColor=#92400E;fontStyle=0;fontSize=11;verticalAlign=top;" parent="plat" vertex="1">
+          <mxGeometry x="20" y="45" width="310" height="140" as="geometry" />
+        </mxCell>
+
+        <!-- Kafka -->
+        <mxCell id="kfk" value="Apache Kafka&#xa;&#xa;Bus d'événements&#xa;• payment.initiated / validated&#xa;• payment.submitted&#xa;• payment.operation.*&#xa;• Outbox → topics&#xa;• Projection statut Hub" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#FFEDD5;strokeColor=#C2410C;fontColor=#7C2D12;fontSize=11;verticalAlign=top;" parent="plat" vertex="1">
+          <mxGeometry x="350" y="45" width="310" height="140" as="geometry" />
+        </mxCell>
+
+        <!-- PostgreSQL -->
+        <mxCell id="pg" value="PostgreSQL — Bases transactionnelles&#xa;&#xa;• DB Gateway / Produit (catalogue, tx, journeys)&#xa;• DB Payment Hub (drafts, outbox, approvals)&#xa;• DB Omnicanal (operations, plans, steps)&#xa;• DB Temporal (persistence workflows)&#xa;• DB Connecteurs (état technique local)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#DBEAFE;strokeColor=#1D4ED8;fontColor=#1E3A8A;align=left;spacingLeft=12;fontSize=11;verticalAlign=top;" parent="plat" vertex="1">
+          <mxGeometry x="20" y="205" width="640" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- Redis -->
+        <mxCell id="rds" value="Redis — Caches &amp; locks&#xa;&#xa;• Cache catalogue / layout canal&#xa;• Session / rate-limit gateway&#xa;• Distributed locks (idempotence)&#xa;• Caches courts (pricing, OTP TTL)&#xa;• Hot-path Gateway" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#FCE7F3;strokeColor=#DB2777;fontColor=#9D174D;fontSize=11;verticalAlign=top;" parent="plat" vertex="1">
+          <mxGeometry x="20" y="375" width="310" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- Observability -->
+        <mxCell id="obs" value="Observabilité&#xa;&#xa;• OpenTelemetry (traces)&#xa;• Prometheus + Grafana (métriques)&#xa;• Logs centralisés (Loki / ELK)&#xa;• Corrélation :&#xa;  commandId · operationId · planId&#xa;  workflowId · correlationId · UETR&#xa;• Alerting (SLO latence / erreurs)" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ECFDF5;strokeColor=#059669;fontColor=#065F46;fontSize=11;verticalAlign=top;" parent="plat" vertex="1">
+          <mxGeometry x="350" y="375" width="310" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- Security strip -->
+        <mxCell id="sec" value="Sécurité &amp; conformité (transverse)&#xa;Keycloak / OAuth2 · mTLS · Vault · RBAC · Audit · Anti-rejeu · Masquage PII · AML / sanctions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;fontColor=#334155;fontSize=11;" parent="plat" vertex="1">
+          <mxGeometry x="20" y="545" width="640" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Object storage -->
+        <mxCell id="obj" value="Object Storage&#xa;Justificatifs · pièces jointes · exports" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#94A3B8;fontColor=#475569;fontSize=11;" parent="plat" vertex="1">
+          <mxGeometry x="20" y="620" width="310" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="sch" value="Schema Registry (opt.)&#xa;Avro / JSON Schema Kafka" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#94A3B8;fontColor=#475569;fontSize=11;" parent="plat" vertex="1">
+          <mxGeometry x="350" y="620" width="310" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="platN" value="Les services de droite sont consommés par Gateway, Backend, Hub, Omnicanal et Connecteurs (pas par les fronts)." style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontColor=#64748B;fontStyle=2;whiteSpace=wrap;" parent="plat" vertex="1">
+          <mxGeometry x="20" y="690" width="640" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Dashed links from main stack to platform (conceptual) -->
+        <mxCell id="x1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;dashed=1;dashPattern=8 8;strokeColor=#94A3B8;endArrow=open;endFill=0;strokeWidth=1;" parent="1" source="l3" target="pg" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1240" y="350" />
+              <mxPoint x="1240" y="335" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="x2" value="événements" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;dashed=1;dashPattern=8 8;strokeColor=#C2410C;endArrow=open;endFill=0;strokeWidth=1;fontSize=9;fontColor=#C2410C;" parent="1" source="l5" target="kfk" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1240" y="595" />
+              <mxPoint x="1240" y="170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="x3" value="workflows" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;dashed=1;dashPattern=8 8;strokeColor=#D97706;endArrow=open;endFill=0;strokeWidth=1;fontSize=9;fontColor=#D97706;" parent="1" source="l4" target="tmp" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1240" y="470" />
+              <mxPoint x="1240" y="170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="x4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;dashed=1;dashPattern=8 8;strokeColor=#DB2777;endArrow=open;endFill=0;strokeWidth=1;" parent="1" source="l2" target="rds" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1240" y="240" />
+              <mxPoint x="1240" y="505" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ========== BOTTOM: OBS CROSS-CUTTING BAND ========== -->
+        <mxCell id="obsBand" value="Couche Observabilité (transverse à toute la stack)" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#059669;fontColor=#065F46;fontStyle=1;startSize=28;rounded=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="930" width="1900" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ob1" value="OpenTelemetry&#xa;SDK / Collector&#xa;Traces distribuées" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#059669;fontSize=11;fontStyle=1;" parent="obsBand" vertex="1">
+          <mxGeometry x="40" y="18" width="200" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="ob2" value="Prometheus&#xa;Métriques métiers&#xa;&amp; SLO" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#059669;fontSize=11;fontStyle=1;" parent="obsBand" vertex="1">
+          <mxGeometry x="260" y="18" width="180" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="ob3" value="Grafana&#xa;Dashboards&#xa;Alerting" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#059669;fontSize=11;fontStyle=1;" parent="obsBand" vertex="1">
+          <mxGeometry x="460" y="18" width="180" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="ob4" value="Logs&#xa;Loki / ELK&#xa;Audit trail" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#059669;fontSize=11;fontStyle=1;" parent="obsBand" vertex="1">
+          <mxGeometry x="660" y="18" width="180" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="ob5" value="IDs de corrélation&#xa;commandId · operationId · planId&#xa;workflowId · UETR · correlationId" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#059669;fontSize=11;fontStyle=1;" parent="obsBand" vertex="1">
+          <mxGeometry x="860" y="18" width="320" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="ob6" value="Métriques clés&#xa;succès · latence · retries&#xa;compensations · manual review" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#059669;fontSize=11;fontStyle=1;" parent="obsBand" vertex="1">
+          <mxGeometry x="1200" y="18" width="280" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="ob7" value="Tracing Kafka&#xa;&amp; Temporal&#xa;workers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#059669;fontSize=11;fontStyle=1;" parent="obsBand" vertex="1">
+          <mxGeometry x="1500" y="18" width="180" height="64" as="geometry" />
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="leg" value="Flux synchrone canaux → Gateway → Backend → Hub. Exécution asynchrone Hub → (Outbox/Kafka) → Omnicanal → Connecteurs → Coris Money Core / CBS. Temporal orchestre les workflows ; Redis accélère le hot-path ; PostgreSQL persiste l'état ; l'observabilité traverse toutes les couches." style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;fontColor=#475569;fontStyle=2;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="40" y="1050" width="1900" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ========== PAGE 2: DATA FLOW DETAIL ========== -->
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="arch-dataflow" name="Flux Data / Events">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="t2" value="Détail — Flux données, événements Kafka &amp; Temporal" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=16;fontStyle=1;fontColor=#111827;" parent="1" vertex="1">
+          <mxGeometry x="40" y="20" width="800" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Actors -->
+        <mxCell id="f1" value="Canal&#xa;(Mobile / Web / USSD / GAB)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DBEAFE;strokeColor=#1D4ED8;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="80" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="f2" value="Gateway&#xa;+ Backend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEDD5;strokeColor=#EA580C;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="300" y="80" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="f3" value="Payment Hub&#xa;Initiation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D1FAE5;strokeColor=#059669;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="540" y="80" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="f4" value="Omnicanal&#xa;Exécution" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#DC2626;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="780" y="80" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="f5" value="Connecteur&#xa;→ Core / CBS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2FE;strokeColor=#0284C7;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="1020" y="80" width="160" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#334155;endArrow=block;endFill=1;" parent="1" source="f1" target="f2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#334155;endArrow=block;endFill=1;" parent="1" source="f2" target="f3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="Outbox" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#059669;endArrow=block;endFill=1;fontSize=10;" parent="1" source="f3" target="f4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeWidth=2;strokeColor=#334155;endArrow=block;endFill=1;" parent="1" source="f4" target="f5" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Temporal row -->
+        <mxCell id="tw" value="Temporal Workers" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;fontColor=#92400E;fontStyle=1;startSize=28;rounded=1;" parent="1" vertex="1">
+          <mxGeometry x="300" y="200" width="640" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="tw1" value="InitiationWorkflow&#xa;DRAFT → APPROVED → SUBMITTED" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D97706;fontSize=11;" parent="tw" vertex="1">
+          <mxGeometry x="30" y="35" width="260" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="tw2" value="ExecutionWorkflow&#xa;DEBIT → CREDIT → COMPLETED" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D97706;fontSize=11;" parent="tw" vertex="1">
+          <mxGeometry x="330" y="35" width="280" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="et1" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;strokeColor=#D97706;endArrow=open;endFill=0;" parent="1" source="f3" target="tw" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="et2" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;strokeColor=#D97706;endArrow=open;endFill=0;" parent="1" source="f4" target="tw" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Kafka bus -->
+        <mxCell id="kb" value="Kafka Topics" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFEDD5;strokeColor=#C2410C;fontColor=#7C2D12;fontStyle=1;startSize=28;rounded=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="350" width="1120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="kt1" value="payment.initiated&#xa;payment.validated&#xa;payment.approved" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C2410C;fontSize=10;" parent="kb" vertex="1">
+          <mxGeometry x="30" y="40" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="kt2" value="payment.submitted&#xa;(command ready)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C2410C;fontSize=10;" parent="kb" vertex="1">
+          <mxGeometry x="250" y="40" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="kt3" value="payment.operation.processing&#xa;completed / failed&#xa;manual-review" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C2410C;fontSize=10;" parent="kb" vertex="1">
+          <mxGeometry x="450" y="40" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="kt4" value="payment.compensated&#xa;payment.reconciliation.*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C2410C;fontSize=10;" parent="kb" vertex="1">
+          <mxGeometry x="690" y="40" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="kt5" value="Projection Hub&#xa;SUBMITTED→PROCESSING→COMPLETED" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#C2410C;fontSize=10;" parent="kb" vertex="1">
+          <mxGeometry x="910" y="40" width="180" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Data stores -->
+        <mxCell id="ds" value="Stores" style="swimlane;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#475569;fontColor=#0F172A;fontStyle=1;startSize=28;rounded=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="520" width="1120" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="ds1" value="PostgreSQL&#xa;Gateway DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#DBEAFE;strokeColor=#1D4ED8;fontSize=11;" parent="ds" vertex="1">
+          <mxGeometry x="30" y="40" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ds2" value="PostgreSQL&#xa;Hub DB&#xa;+ Outbox" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#DBEAFE;strokeColor=#1D4ED8;fontSize=11;" parent="ds" vertex="1">
+          <mxGeometry x="180" y="40" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ds3" value="PostgreSQL&#xa;Omnicanal DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#DBEAFE;strokeColor=#1D4ED8;fontSize=11;" parent="ds" vertex="1">
+          <mxGeometry x="330" y="40" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ds4" value="PostgreSQL&#xa;Temporal DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#FEF3C7;strokeColor=#D97706;fontSize=11;" parent="ds" vertex="1">
+          <mxGeometry x="480" y="40" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ds5" value="Redis&#xa;Cache / Locks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE7F3;strokeColor=#DB2777;fontSize=11;fontStyle=1;" parent="ds" vertex="1">
+          <mxGeometry x="640" y="45" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ds6" value="Object Storage&#xa;Justificatifs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#94A3B8;fontSize=11;" parent="ds" vertex="1">
+          <mxGeometry x="810" y="45" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ds7" value="OTel → Prom&#xa;Grafana / Logs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#059669;fontSize=11;fontStyle=1;" parent="ds" vertex="1">
+          <mxGeometry x="980" y="45" width="120" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n2" value="Règle : Hub n'est pas source de vérité du statut financier — Omnicanal publie sur Kafka ; le Hub projette pour le front." style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=12;fontColor=#475569;fontStyle=2;" parent="1" vertex="1">
+          <mxGeometry x="60" y="690" width="1100" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://rapidframe.com/schema/domain"
+               name="TransferRail"
+               class="com.gateway.payment.transfer.domain.TransferRail"
+               table="transfer_rail"
+               repository="none">
+
+  <string name="code" title="Code" required="true" unique="true"/>
+  <string name="name" title="Nom" required="true" namecolumn="true"/>
+  <string name="description" title="Description" large="true"/>
+  <string name="railScope" title="Périmètre" required="true" default="EXTERNAL"/>
+  <string name="currency" title="Devise" required="true" default="XOF"/>
+  <decimal name="minAmount" title="Montant min" precision="18" scale="2"/>
+  <decimal name="maxAmount" title="Montant max" precision="18" scale="2"/>
+  <boolean name="requiresBank" title="Banque requise" default="false"/>
+  <boolean name="sameCountryOnly" title="Même pays" default="false"/>
+  <boolean name="sameGroupOnly" title="Même groupe" default="false"/>
+  <boolean name="crossBorderOnly" title="Transfrontalier" default="false"/>
+  <string name="extraFieldsJson" title="Champs extra (JSON)" large="true"/>
+  <boolean name="actif" title="Actif" default="true"/>
+  <integer name="ordre" title="Ordre" default="0"/>
+  <datetime name="createdAt" title="Créé le" readonly="true"/>
+  <datetime name="updatedAt" title="Modifié le" readonly="true"/>
+
+  <finder name="findByCode" using="code"/>
+  <finder name="findActive" using="actif" all="true" orderBy="ordre ASC"/>
+
+</domain-models>

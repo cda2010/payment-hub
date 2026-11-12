@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "personneMorale" : {
+            "home": {
+                "title": "PersonneMorales",
+                "createLabel": "Créer un nouveau Personne Morale",
+                "createOrEditLabel": "Créer ou éditer un Personne Morale"
+            },
+            "created": "Un nouveau Personne Morale a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Personne Morale avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Personne Morale avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Personne Morale {{ id }} ?"
+            },
+            "detail": {
+                "title": "Personne Morale"
+            },
+            "raisonSociale": "Raison Sociale",
+            "registreCommerce": "Registre Commerce",
+            "numreoIfu": "Numreo Ifu"
+        }
+    }
+}

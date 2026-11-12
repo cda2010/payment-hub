@@ -1,0 +1,128 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myChampsLabel">Créer ou éditer un champs</h4>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group col-sm-12" ng-show="vm.champs.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.champs.id" readonly />
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group col-sm-6">
+                <label for="field_composant">Composant</label>
+                <select class="form-control" id="field_composant" name="composant" ng-model="vm.champs.composant.id"
+                 ng-change="vm.selectedComposant(vm.champs.composant)"       ng-options="composant.id as composant.typeComposant+' ('+composant.label+'      : '+composant.type+')' for composant in vm.composants" required>
+                </select>
+            </div>
+
+            <div class="form-group col-sm-6">
+                <label class="control-label" for="field_ecran">Ecran</label>
+                <select ng-disabled="vm.champs.ecran" class="form-control" id="field_ecran" name="ecran" ng-model="vm.champs.ecran.id"
+                        ng-options="ecran.id as 'Ecran n°: '+ecran.numeroOrdre+' '+ecran.produit.nomProduit for ecran in vm.ecrans">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group col-sm-4">
+                <div class="col-sm-6">
+                    <label class="control-label"for="fiel_Asaisir">A Saisir</label>
+                    <span id="fiel_Asaisir" ng-click="vm.champs.aSaisir=0" ng-if="vm.champs.aSaisir" class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-ok-circle"></span>
+                </span>
+                    <span id="fiel_Asaisir" ng-click="vm.champs.aSaisir=1" ng-if="!vm.champs.aSaisir" class="btn btn-danger btn-sm">
+                    <span class="glyphicon glyphicon-remove-circle"></span>
+                </span>
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label" for="fiel_isVisible">Visible</label>
+                    <span id="fiel_isVisible" ng-click="vm.champs.isVisible=0" ng-if="vm.champs.isVisible" class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-ok-circle"></span>
+                </span>
+                    <span id="fiel_isVisible" ng-click="vm.champs.isVisible=1" ng-if="!vm.champs.isVisible" class="btn btn-danger btn-sm">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+                </span>
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label" for="fiel_isVisible">Obligatoir</label>
+                    <span id="fiel_obligatoire" ng-click="vm.champs.obligatoire=0" ng-if="vm.champs.obligatoire" class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-ok-circle"></span>
+                </span>
+                    <span id="fiel_obligatoire" ng-click="vm.champs.obligatoire=1" ng-if="!vm.champs.obligatoire" class="btn btn-danger btn-sm">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+                </span>
+                </div>
+
+            </div>
+            <div class="form-group col-sm-4">
+                <label class="control-label" for="field_min">Min</label>
+                <input type="number" class="form-control" name="min" id="field_min"
+                       ng-model="vm.champs.min" min="0"
+                />
+            </div>
+            <div class="form-group col-sm-4">
+                <label class="control-label" for="field_max">Max</label>
+                <input type="number" class="form-control" name="max" id="field_max"
+                       ng-model="vm.champs.max" min="0"
+                />
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group col-sm-4">
+                <label class="control-label" for="field_minLength">Min Length</label>
+                <input type="number" class="form-control" name="minLength" id="field_minLength"
+                       ng-model="vm.champs.minLength" min="0"
+                />
+            </div>
+            <div class="form-group col-sm-4">
+                <label class="control-label" for="field_maxLength">Max Length</label>
+                <input type="number" class="form-control" name="maxLength" id="field_maxLength"
+                       ng-model="vm.champs.maxLength"
+                />
+            </div>
+            <div class="form-group col-sm-4">
+                <label class="control-label" for="field_pattern">Pattern</label>
+                <input type="text" class="form-control" name="pattern" id="field_pattern"
+                       ng-model="vm.champs.pattern"
+                />
+            </div>
+            <div class="form-group col-sm-4">
+                <label class="control-label" for="field_default_value">Default value</label>
+                <input type="text" class="form-control" name="defaultValue" id="field_default_value"
+                       ng-model="vm.champs.defaultValue"
+                />
+            </div>
+            <div class="form-group col-sm-4">
+                <label class="control-label" for="field_label">Libellé</label>
+                <input type="text" class="form-control" name="label" id="field_label"
+                       ng-model="vm.champs.label"
+                />
+            </div>
+               <div class="form-group col-sm-4"  ng-if="vm.champs.composant.liste.estStatic===false || vm.isData">
+                <label class="control-label" for="field_label">Type Donnée</label>
+                <input type="text" class="form-control" name="label" id="field_label"
+                       ng-model="vm.champs.selectComponentData.data"
+                />
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+       <div class="col-sm-12">
+           <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+               <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Annuler</span>
+           </button>
+           <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+               <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Sauvegarder</span>
+           </button>
+       </div>
+    </div>
+
+</form>

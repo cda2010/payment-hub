@@ -1,0 +1,27 @@
+{
+    "ptiApp": {
+        "personnePhysique" : {
+            "home": {
+                "title": "PersonnePhysiques",
+                "createLabel": "Créer un nouveau Personne Physique",
+                "createOrEditLabel": "Créer ou éditer un Personne Physique"
+            },
+            "created": "Un nouveau Personne Physique a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Personne Physique avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Personne Physique avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Personne Physique {{ id }} ?"
+            },
+            "detail": {
+                "title": "Personne Physique"
+            },
+            "nomClient": "Nom Client",
+            "prenomClient": "Prenom Client",
+            "dateNaissance": "Date Naissance",
+            "personnePrevenir": "Personne Prevenir",
+            "lieuNaissance": "Lieu Naissance",
+            "sexe": "Sexe",
+            "nationalite": "Nationalite"
+        }
+    }
+}

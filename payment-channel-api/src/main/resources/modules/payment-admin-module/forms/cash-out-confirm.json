@@ -1,0 +1,36 @@
+{
+  "formio": {
+    "display": "form",
+    "components": [
+      {
+        "type": "htmlelement",
+        "key": "recap",
+        "tag": "p",
+        "content": "Vérifiez le montant, les frais, le compte débité et le réseau agent avant de continuer."
+      },
+      {
+        "type": "checkbox",
+        "key": "confirmCashOut",
+        "label": "Je confirme le cash-out (montant, frais, agent)",
+        "input": true,
+        "defaultValue": false,
+        "validate": { "required": true }
+      },
+      {
+        "type": "button",
+        "key": "submit",
+        "label": "Submit",
+        "input": true,
+        "hidden": true
+      }
+    ]
+  },
+  "i18n": {
+    "fr": {
+      "Je confirme le cash-out (montant, frais, agent)": "Je confirme le cash-out (montant, frais, agent)"
+    },
+    "en": {
+      "Je confirme le cash-out (montant, frais, agent)": "I confirm the cash-out (amount, fees, agent)"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "api",
+            "otherEntityName": "api",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "possede",
+            "otherEntityName": "parametre",
+            "otherEntityRelationshipName": "serviceApi"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "codeService",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170404133237",
+    "javadoc": "not an ignored comment",
+    "entityTableName": "service_api",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

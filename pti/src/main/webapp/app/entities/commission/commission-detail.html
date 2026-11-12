@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span data-translate="ptiApp.commission.detail.title">Commission</span> {{vm.commission.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.commission.montant">Montant</span></dt>
+        <dd>
+            <span>{{vm.commission.montant}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.commission.estPaye">Est Paye</span></dt>
+        <dd>
+            <span>{{vm.commission.estPaye}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.commission.datePaiement">Date Paiement</span></dt>
+        <dd>
+            <span>{{vm.commission.datePaiement | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.commission.operation">Operation</span></dt>
+        <dd>
+            <a ui-sref="operation-detail({id:vm.commission.operationId})">{{vm.commission.operationCodeOperation}}</a>
+        </dd>
+        <dt><span data-translate="ptiApp.commission.organisation">Organisation</span></dt>
+        <dd>
+            <a ui-sref="unite-organisation-detail({id:vm.commission.organisationId})">{{vm.commission.organisationLibelleUniteOrganisation}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="commission-detail.edit({id:vm.commission.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

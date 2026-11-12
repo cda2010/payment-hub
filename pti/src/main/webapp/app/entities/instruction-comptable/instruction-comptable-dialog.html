@@ -1,0 +1,81 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" class="form-horizontal">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myInstructionComptableLabel" data-translate="ptiApp.instructionComptable.home.createOrEditLabel">Create or edit a Instruction Comptable</h4>
+    </div>
+    <div class="modal-body">
+            <div class="form-group">
+                    <label mf-required class="control-label col-sm-4" for="field_numero">Ordre d'execution</label>
+                    <div class="col-sm-6">
+                            <input autocomplete="off" ng-disabled="vm.isViewing" required type="text" class="form-control" name="numeroOrdre" id="field_numero"
+                            ng-model="vm.instructionComptable.numeroOrdre"
+                            />
+                    </div>
+                </div>
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4"  for="field_instruction">Type d'ecriture</label>
+            <div class="col-sm-6">
+                <select required class="form-control" ng-disabled="vm.isViewing" name="instruction" ng-model="vm.instructionComptable.instruction" id="field_instruction">
+                    <option value="DEBITER" data-translate="ptiApp.InstructionEcriture.DEBITER">DEBITER</option>
+                    <option value="CREDITER" data-translate="ptiApp.InstructionEcriture.CREDITER">CREDITER</option>
+                    <option value="SOLDER" data-translate="ptiApp.InstructionEcriture.SOLDER">SOLDER</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4"  for="field_instructionUo">Organisation </label>
+            <div class="col-sm-6">
+                <select required class="form-control" ng-disabled="vm.isViewing" name="instructionUo" ng-model="vm.instructionComptable.instructionUo" id="field_instructionUo">
+                    <option value="UO_SOURCE">UO_SOURCE</option>
+                    <option value="UO_DEST">UO_DEST</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.instructionComptable.etiquetteComptable" for="field_etiquette">Etiquette Comptable</label>
+            <div class="col-sm-6">
+                <select class="form-control" ng-disabled="vm.isViewing" id="field_etiquette" name="etiquette" ng-model="vm.instructionComptable.etiquetteComptable" ng-options="etiquette.code as etiquette.code for etiquette in vm.etiquetteComptes" required>
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.instructionComptable.montant" for="field_montant">Montant</label>
+            <div class="col-sm-6">
+                <select required class="form-control" ng-disabled="vm.isViewing" name="montant" ng-model="vm.instructionComptable.montant" id="field_montant">
+                    <option value="MONTANT" data-translate="ptiApp.MontantsAComptabiliser.MONTANT">MONTANT</option>
+                    <option value="FRAIS" data-translate="ptiApp.MontantsAComptabiliser.FRAIS">FRAIS</option>
+                    <option value="FRAISEMT" data-translate="ptiApp.MontantsAComptabiliser.FRAISEMT">FRAISEMT</option>
+                    <option value="FRAISACQ" data-translate="ptiApp.MontantsAComptabiliser.FRAISACQ">FRAISACQ</option>
+                    <option value="MONTANTHT">MONTANTHT</option>
+                    <option value="MONTANTTVA" >MONTANTTVA</option>
+                    <option value="MONTANTCOMM" >MONTANTCOMM</option>
+                    <option value="MONTANTCOMACQ" >MONTANTCOMACQ</option> 
+                    <option value="MONTANTCOMEMT" >MONTANTCOMEMT</option> 
+                    <option value="MONTANTHTCOMACQ" >MONTANTHTCOMACQ</option> 
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.instructionComptable.typeService" for="field_typeService">Type Service</label>
+            <div class="col-sm-6">
+                <select required class="form-control" ng-disabled="vm.isViewing" id="field_typeService" name="typeService" ng-model="vm.instructionComptable.typeServiceId" ng-options="typeService.id as typeService.libelle for typeService in vm.typeservices"            >
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

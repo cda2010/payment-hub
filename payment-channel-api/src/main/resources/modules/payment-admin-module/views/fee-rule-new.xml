@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-view name="fee-rule-new" title="Nouvelle règle de frais"
+             model="com.gateway.payment.transfer.domain.FeeRule" icon="pi pi-plus">
+  <view type="form" name="fee-rule-form"/>
+</action-view>

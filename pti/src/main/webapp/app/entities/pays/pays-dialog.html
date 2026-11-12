@@ -1,0 +1,44 @@
+
+<form class="form-horizontal" name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myPaysLabel" data-translate="ptiApp.pays.home.createOrEditLabel">Create or edit a Pays</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.pays.codePays" for="field_codePays">Code Pays</label>
+            <div class="col-sm-6">
+                    <input autocomplete="off"type="text" class="form-control" name="codePays" id="field_codePays"
+                    ng-model="vm.pays.codePays"
+                    required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label mf-required class="control-label col-sm-4" data-translate="ptiApp.pays.libellePays" for="field_libellePays">Libelle Pays</label>
+                    <div class="col-sm-6">
+                            <input autocomplete="off"type="text" required class="form-control" name="libellePays" id="field_libellePays"
+                            ng-model="vm.pays.libellePays"
+                            />
+                        </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" data-translate="ptiApp.pays.devise" for="field_devise">Devise</label>
+            <div class="col-sm-6">
+                    <select class="form-control" id="field_devise" name="devise" ng-model="vm.pays.deviseId" ng-options="devise.id as devise.code for devise in vm.devises"            >
+                            <option value=""></option>
+                        </select>    
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

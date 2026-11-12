@@ -1,0 +1,150 @@
+<div class="row">
+    <div class="well with-header" style="margin-top:10px ">
+        <div class="header bg-blue ">
+            <div class="col-xs-11">
+                <div ng-if="vm.goBack" class="col-xs-1">
+                    <button ui-sref="facturier" class="btn btn-default  btn-circle btn-xs">
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                    </button>
+                </div>
+                <h4 >Liste des produits</h4>
+            </div>
+            <div class="no-padding-left col-xs-1">
+                <button class="btn btn-default  btn-circle btn-xs" ui-sref="produit.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+        <table class="jh-table table table-hover">
+            <thead>
+                <tr>
+<!--                    <th><span >ID</span></th>-->
+                    <th><span >Nom Produit</span></th>
+                    <th><span>Numero Ordre</span></th>
+                    <th><span >Est actif ?</span></th>
+                    <th><span >A un montant ?</span></th>
+                    <th><span >Montant</span></th>
+                    <th><span>Facturier</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="produit in vm.datas track by produit.id" ng-click="vm.findEcransOfProduit(produit)">
+<!--                    <td><a ui-sref="produit-detail({id:produit.id})">{{produit.id}}</a></td>-->
+                    <td>{{produit.nomProduit}}</td>
+                    <td>{{produit.numeroOrdre}}</td>
+                    <td>
+                        <span ng-if="produit.actif" class=" btn-success btn-sm" >
+                            <span  class="glyphicon glyphicon-ok"></span>
+                        </span>
+                        <span ng-if="!produit.actif" class="btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </span>
+<!--                        <label >-->
+<!--                            <input autocomplete="off"type="checkbox" class="checkbox-slider colored-blue checkbox-lg"-->
+<!--                                   ng-model="produit.actif" disabled/>-->
+<!--                            <span class="text"></span>-->
+<!--                        </label>-->
+                    </td>
+                    <td>
+                        <span ng-if="produit.aUnMontant" class=" btn-success btn-sm" >
+                            <span  class="glyphicon glyphicon-ok"></span>
+                        </span>
+                        <span ng-if="!produit.aUnMontant" class="btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </span>
+<!--                        <label >-->
+<!--                            <input autocomplete="off"type="checkbox" class="checkbox-slider colored-blue checkbox-lg"-->
+<!--                                   ng-model="produit.aUnMontant" disabled/>-->
+<!--                            <span class="text"></span>-->
+<!--                        </label>-->
+                    </td>
+                    <td><span ng-if="produit.aUnMontant">{{produit.montant}}</span></td>
+                    <td>{{produit.facturier.nomFacturier}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                          <!--<button type="submit"
+                                    ui-sref="produit-detail({id:produit.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>-->
+                            <button type="submit"
+                                    ui-sref="produit.edit({id:produit.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <!-- <span class="hidden-sm-down" data-translate="entity.action.edit"></span>-->
+                            </button>
+                            <button type="submit"
+                                    ui-sref="produit.delete({id:produit.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <!--  <span class="hidden-sm-down" data-translate="entity.action.delete"></span>-->
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="center-block text-center" ng-show="vm.canShowPagination()">
+        <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage" >
+        </uib-pagination>
+    </div>
+</div>
+
+<!-- -->
+<div ng-if="vm.selectedProduit">
+    <div class="well with-header" style="margin-top:10px ">
+        <div class="header bg-blue ">
+            <div class="col-xs-11">
+                <h4 >Ecrans du produit {{vm.selectedProduit.nomProduit}}</h4>
+            </div>
+            <div class="no-padding-left col-xs-1">
+                <button ng-click="vm.addEcran()" class="btn btn-default  btn-circle btn-xs">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+        <table class="jh-table table table-hover">
+            <thead>
+            <tr>
+                <th><span>ID</span></th>
+                <th><span ></span></th>
+                <!-- <th><span>Produit</span></th>-->
+                 <th></th>
+             </tr>
+             </thead>
+             <tbody>
+             <tr ng-repeat="ecran in vm.produitEcrans track by ecran.id">
+                 <td>{{ecran.id}}</td>
+                 <td>Ecran N°: {{ecran.numeroOrdre}}</td>
+                 <!--<td>
+                     {{ecran.produit.nomProduit}}
+                 </td>-->
+                 <td class="text-right">
+                     <div class="btn-group flex-btn-group-container">
+                         <button type="submit"
+                                  ng-click="vm.viewEcran(ecran.id)"
+                                  class="btn btn-info btn-sm">
+                              <span class="glyphicon glyphicon-eye-open"></span>
+                          </button>
+                         <button type="submit"
+                                 ng-click="vm.editEcran(ecran.id)"
+                                 class="btn btn-primary btn-sm">
+                             <span class="glyphicon glyphicon-pencil"></span>
+                             <!-- <span class="hidden-sm-down" data-translate="entity.action.edit"></span>-->
+                        </button>
+                        <button type="submit"
+                                ng-click="vm.deleteEcran(ecran.id)"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                            <!-- <span class="hidden-sm-down" data-translate="entity.action.delete"></span>-->
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myFileExportLabel" data-translate="ptiApp.fileExport.home.createOrEditLabel">Créer</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.fileExport.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.fileExport.id" readonly />
+        </div>
+        <!-- <div class="form-group">
+            <label class="control-label" for="field_fileName">Nom fichier</label>
+            <input type="text" class="form-control" name="fileName" id="field_fileName"
+                    ng-model="vm.fileExport.fileName"
+                    />
+        </div> -->
+        <div class="form-group">
+            <label class="control-label"  for="field_exportTable">Table Export</label>
+            <select required class="form-control" name="etat" id="field_exportTable"
+                ng-model="vm.fileExport.exportTable.id"
+                ng-options="expT.id as expT.libelle for expT in vm.exportTables">
+            </select>
+        </div>
+
+        <button type="button" class="btn btn-primary" ng-click="vm.afficherListParam()" ng-if="!vm.afficherList && vm.fileExport.exportTable.id && !vm.fileExport.id">
+            <span >Ajouter parametre</span>
+        </button>
+
+        <div class="form-group" ng-if="vm.afficherList">
+            <label class="control-label"  for="field_param">Liste des parametres</label>
+            <row>
+                <select required class="form-control" name="etat" id="field_param"
+                    ng-model="vm.param"
+                    ng-options="param.id as param.nomParametre for param in vm.paramsExporter" ng-change="vm.addField()">
+                </select>
+            </row>   
+        </div>
+            <div class="form-group" ng-repeat="ligne in vm.ligneParam">
+                <div class="form-group" ng-repeat="col in ligne" style="justify-content: center; align-items: center; margin-top: 15px; display: flex; flex-direction: row;  flex: 0 1 1; justify-content: space-between; ">
+                    <label style="width: 10%; ">{{col.title}}</label>
+                    <select  id="filed_operateur" name="operateur" ng-model="col.operateurNgModel" style="width: 40%;" class="form-control" ng-if="col.optr=='true'" ng-required="true">
+                        <option value="EGALE">EGALE</option>
+                        <option value="IN">IN</option>
+                        <option value="NOT_IN">NOT IN</option>
+                        <option value="SUPERIEUR">SUPERIEUR</option>
+                        <option value="INFERIEUR">INFERIEUR</option>
+                        <option value="SUPERIEUR_EGALE">SUPERIEUR OU EGALE</option>
+                        <option value="INFERIEUR_EGALE">INFERIEUR OU EGALE</option>
+                    </select>
+
+                    <input ng-if="col.type=='TEXT' && col.type_liste!='LISTE_DYNAMIQUE' && col.type_liste!='LISTE_STATIQUE'" type="text" class="form-control" name="" id="" style="width: 40%;" placeholder="Valeur" ng-model="col.valeurNgModel" ng-required="true"/>
+                    <input ng-if="col.type=='NUMBER'  && col.type_liste!='LISTE_DYNAMIQUE' && col.type_liste!='LISTE_STATIQUE'" type="number" class="form-control" name="" id="" style="width: 40%;" placeholder="Valeur" ng-model="col.valeurNgModel" ng-required="true"/>
+                    <input ng-if="col.type=='DATE' && col.type_liste!='LISTE_DYNAMIQUE' && col.type_liste!='LISTE_STATIQUE'" type="date" class="form-control"  style="width: 40%;" ng-model="col.valeurNgModel" ng-required="true"/>
+                    
+                    <select required class="form-control" name="valeur" id="valeur"
+                        ng-model="col.valeurNgModel"
+                        ng-options="choix.valeur as choix.label for choix in vm.listeDynamiqueValeur"
+                        style="width: 40%;" ng-if="col.type_liste=='LISTE_DYNAMIQUE'" ng-required="true">
+                    </select>
+
+                    <select required class="form-control" name="valeur" id="valeur"
+                        ng-model="col.valeurNgModel"
+                        ng-options="choix.valeur as choix.label for choix in vm.listeStatiqueValeur"
+                        style="width: 40%;" ng-if="col.type_liste=='LISTE_STATIQUE'" ng-required="true">
+                    </select>
+
+                    <select required class="form-control" name="valeur" id="valeur"
+                        ng-model="col.valeurNgModel"
+                        ng-options="choix for choix in vm.choix" style="width: 40%;" ng-if="col.type=='BOOLEAN'" ng-required="true">
+                    </select>
+
+                    <button type="button" ng-click="vm.deleteParam(col.ligneParamIndex)" ng-if="col.optr=='true'" style="height: 3rem;" class="btn btn-danger btn-xs">
+                        <span class="glyphicon glyphicon-remove-circle"></span>
+                    </button>
+
+                    <select  id="filed_operateur_log" name="operateur_log" ng-model="col.opLogiqNgModel" style="width: 10%;" class="form-control" ng-if="col.type=='opLogique'" ng-required="true">
+                        <option value="AND">ET</option>
+                        <option value="OR">OU</option>
+                    </select>
+
+                </div>
+            </div>
+
+        <br>
+
+                
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <!-- <button type="button" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Générer</span>
+        </button> -->
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

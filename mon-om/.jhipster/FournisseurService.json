@@ -1,0 +1,50 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "realisepar",
+            "otherEntityName": "traitement",
+            "otherEntityRelationshipName": "fournisseurService"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "fournit",
+            "otherEntityName": "api",
+            "otherEntityRelationshipName": "fournisseurService"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "codeFse",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "nom",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "pays",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "groupe",
+            "fieldType": "FseGroup",
+            "fieldValues": "ETA,ETC,ENF"
+        }
+    ],
+    "changelogDate": "20170404133237",
+    "entityTableName": "fournisseur_service",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

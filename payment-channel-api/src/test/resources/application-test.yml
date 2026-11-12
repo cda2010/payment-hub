@@ -1,0 +1,55 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment_gateway_test
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    enabled: true
+    clean-disabled: false
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+
+rapidframe:
+  bpm:
+    enabled: true
+    deploy-module-processes: true
+    dmn-enabled: true
+    deploy-module-decisions: true
+    classpath-deploy-locations:
+      - classpath*:/modules/*/processes/
+
+flowable:
+  database-schema-update: true
+  async-executor-activate: false
+  check-process-definitions: false
+  dmn:
+    enabled: true
+
+gateway:
+  performance:
+    redis-enabled: false
+  bootstrap:
+    providers: true
+  canal:
+    enabled: true
+    api-key: change-me-mobile
+  orchestration:
+    mode: flowable
+  security:
+    jwt:
+      secret: test-secret-key-must-be-long-enough-32b
+      issuer: payment-gateway-test
+      access-token-ttl: 15m
+      refresh-token-ttl: 1d
+    cors:
+      allowed-origins: http://localhost:4200
+  encryption:
+    secret-key: 0123456789abcdef0123456789abcdef

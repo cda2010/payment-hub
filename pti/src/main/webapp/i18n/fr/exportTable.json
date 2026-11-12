@@ -1,0 +1,24 @@
+
+{
+    "ptiApp": {
+        "exportTable" : {
+            "home": {
+                "title": "ExportTables",
+                "createLabel": "Créer un nouveau Export Table",
+                "createOrEditLabel": "Créer ou éditer un Export Table"
+            },
+            "created": "Un nouveau Export Table a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Export Table avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Export Table avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Export Table {{ id }} ?"
+            },
+            "detail": {
+                "title": "Export Table"
+            },
+            "nomExport": "Nom Export",
+            "description": "Description",
+            "dateGeneration": "Date Generation"
+        }
+    }
+}

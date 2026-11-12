@@ -1,0 +1,214 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation class="form-horizontal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">&times;
+        </button>
+        <h4 class="modal-title" id="appel_fond" ng-if="vm.typeService=='APPEL_FOND'">Appel de fonds</h4>
+        <h4 class="modal-title" id="compte_compte" ng-if="vm.typeService=='ACCOUNT_ACCOUNT'">Compte à compte</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <div id="simplewizard" class="wizard" data-target="#simplewizard-steps">
+                    <ul class="steps">
+                        <li data-target="#simplewizardstep1" ng-repeat="step in vm.steps"
+                            ng-class="{active: $index==vm.getCurrentStepIndex()}">
+                            <span class="step">{{$index+1}}</span>{{step}}<span class="chevron"></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="step-content" id="simplewizard-steps">
+                    <div ng-if="vm.showOnglet('Information')" class="step-pane active"
+                         ng-class="{active: $index==vm.getCurrentStepIndex()}" id="simplewizardstep1">
+                        <div class="row">
+                            <div ng-include="'app/entities/operation/operations-utils.html'"></div>
+                            <!--Account To Account-->
+                            <div class="row" ng-if="vm.typeService=='ACCOUNT_ACCOUNT'"
+                                 ng-init="vm.typeBeneficiaire='Autre'">
+                                <div ng-include="'app/entities/operation/emetteur-with-compte.html'"></div>
+                                <div ng-include="'app/entities/operation/beneficiaire-with-compte.html'"></div>
+                            </div>
+                            <!--Account To Cash-->
+                            <div class="row" ng-if="vm.typeService=='APPEL_FOND'">
+                                <div ng-include="'app/entities/operation/emetteur-with-compte.html'"></div>
+                                <div ng-include="'app/entities/operation/beneficiaire-without-compte.html'"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-pane active" ng-class="{active: $index==vm.getCurrentStepIndex()}"
+                         id="simplewizardstep2" ng-if="vm.showOnglet('Validation')">
+                        <div class="row">
+                            <div class="form-group" ng-if="vm.operation.statut=='REJETE'&& vm.isViewing">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_description">Raison
+                                    du rejet</label>
+                                <div class="col-sm-6">
+                            <textarea ng-disabled="vm.isViewing" ng-model="vm.operation.commentaire"
+                                              rows="4"
+                                              ng-maxlength="1000" class="form-control" name="commentaire"
+                                              id="field_description">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="form-group" ngf-drop ngf-change="vm.setBordereau($file, vm.operation)">
+                                <label mf-required class="control-label col-sm-4"
+                                       for="field_bordereau">Bordereau</label>
+                                <div class="col-sm-6">
+                                    <div ng-if="vm.operation.bordereau" class="help-block clearfix">
+                                        <a class="pull-left"
+                                           ng-click="vm.openFile(vm.operation.bordereauContentType, vm.operation.bordereau)"
+                                                   data-translate="entity.action.open">open</a><br>
+                                        <span class="pull-left">{{vm.operation.bordereauContentType}}, {{vm.byteSize(vm.operation.bordereau)}}</span>
+                                        <button ng-if="!vm.isViewing" type="button"
+                                                ng-click="vm.operation.bordereau=null;vm.operation.bordereauContentType=null;"
+                                                class="btn btn-default btn-xs pull-right">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </div>
+                                    <button ngf-pattern="'image/*,application/pdf'"
+                                            ngf-accept="'image/*,application/pdf'" ng-if="!vm.isViewing" type="button" ngf-select
+                                            class="btn btn-default btn-block"
+                                            ngf-change="vm.setBordereau($file, vm.operation)">
+                                        Ajouter
+                                    </button>
+                                </div>
+                                <input autocomplete="off" required type="hidden" class="form-control" name="bordereau" id="field_bordereau"
+                                       ng-model="vm.operation.bordereau"
+                                />
+                                <input autocomplete="off" required type="hidden" class="form-control" name="bordereauContentType"
+                                       id="field_bordereauContentType"
+                                       ng-model="vm.operation.bordereauContentType"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_pays">Pays
+                                    emetteur</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <select disabled class="form-control input-xs" id="field_pays" name="pays"
+                                            ng-model="vm.operation.uoEmetteurId"
+                                            ng-options="pays.id as pays.libelleUniteOrganisation for pays in vm.pays">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-if="vm.personneE.typePersonne=='PHYSIQUE'">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                       for="field_emetteurE">Emetteur</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" disabled class="form-control input-xs" id="field_emetteurE" name="emetteur"
+                                           ng-model="vm.emetteur"
+                                           ng-init="vm.emetteur=vm.personnePhysiqueE.nomClient+' '+vm.personnePhysiqueE.prenomClient"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-if="vm.personneE.typePersonne=='MORALE'">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                       for="field_emetteur">Emetteur</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" disabled class="form-control input-xs" id="field_emetteur" name="emetteur"
+                                           ng-model="vm.emetteur"
+                                           ng-init="vm.emetteur=vm.personneMoraleE.raisonSociale"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-if="vm.personneB.typePersonne=='PHYSIQUE'">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_beneficiaireP">Béneficiare</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" ng-if="vm.typeBeneficiaire=='Autre'" disabled class="form-control input-xs"
+                                           id="field_beneficiaireP" name="beneficiaire" ng-model="vm.beneficiaire"
+                                           ng-init="vm.beneficiaire=vm.personnePhysiqueB.nomClient+' '+vm.personnePhysiqueB.prenomClient"/>
+                                    <input autocomplete="off" ng-if="vm.typeBeneficiaire=='Titulaire'" disabled
+                                           class="form-control input-xs" id="field_emetteurE" name="emetteur"
+                                           ng-model="vm.emetteur"
+                                           ng-init="vm.emetteur=vm.personnePhysiqueE.nomClient+' '+vm.personnePhysiqueE.prenomClient"/>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group" ng-if="vm.personneB.typePersonne=='MORALE'">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_beneficiaire">Béneficiare</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" ng-if="vm.typeBeneficiaire=='Autre'" disabled class="form-control input-xs"
+                                           id="field_beneficiaire" name="beneficiaire" ng-model="vm.beneficiaire"
+                                           ng-init="vm.beneficiaire=vm.personneMoraleB.raisonSociale"/>
+                                    <input autocomplete="off" ng-if="vm.typeBeneficiaire=='Titulaire'" disabled
+                                           class="form-control input-xs" id="field_emetteur" name="emetteur"
+                                           ng-model="vm.emetteur"
+                                           ng-init="vm.emetteur=vm.personneMoraleE.raisonSociale"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_pays">Montant
+                                    versement</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" min="0" disabled disabled class="form-control input-xs" id="field_montant"
+                                           name="montant" ng-model="vm.operation.montantOp"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4"
+                                       for="field_montantFrais">Frais</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" disabled type="number" class="form-control input-xs ft20" name="montantOp"
+                                           id="field_montantFrais" ng-model="vm.operation.montantFrais"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-xs-4 col-lg-4" for="field_montantOp">Montant
+                                    ttc</label>
+                                <div class="col-xs-6 col-sm-6 col-lg-6">
+                                    <input autocomplete="off" disabled type="number" class="form-control input-xs ft20" name="montantOp"
+                                           id="field_montantOp" ng-model="vm.montantOp"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer actions actions-footer" id="simplewizard-actions">
+        <div class="pull-left mt5" ng-if="!vm.hasNextStep()&&vm.isMaj">
+            <button ng-if="vm.operation.statut=='SUSPENDU'" ng-click="vm.majOperation(vm.operation)" type="button"
+                    class="btn btn-success btn-sm pull-left">
+                Reactivation
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+
+            <button ng-if="vm.operation.statut=='ENATTENTE'" ng-click="vm.majOperation(vm.operation)" type="button"
+                    class="btn btn-warning btn-sm pull-left">
+                Suspension
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+
+            <button ng-if="vm.operation.statut=='VALIDE'" ng-click="vm.rembourse(vm.operation)" type="button"
+                    class="btn btn-warning btn-sm pull-left">
+                Remboursement
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+        </div>
+        <div class="btn-group">
+            <button has-any-authority="ROLE_DO_OP_MAD_VALIDATION" ng-click="vm.traitementOperation()" type="button"
+                    class="btn btn-warning btn-sm"
+                    ng-if="!vm.hasNextStep()&&vm.isViewing&&vm.operation.etape=='INIT' && vm.operation.statut=='ENATTENTE'&& vm.estCompteBanque=='OUI'">
+                Traiter
+            </button>
+            <button ng-click="vm.clear()" type="button" class="btn btn-default btn-sm " ng-if="!vm.isViewing"> Annuler
+            </button>
+            <button ng-click="vm.clear()" type="button" class="btn btn-default btn-sm" ng-if="vm.isViewing"> Fermer
+            </button>
+            <button ng-click="vm.decrementStep()" type="button" ng-if="vm.hasPreviousStep()"
+                    class="btn btn-default btn-sm btn-prev"><i class="fa fa-angle-left"></i>Precedent
+            </button>
+            <button ng-click=" vm.incrementStep()" type="button" ng-if="vm.hasNextStep()"
+                    class="btn btn-primary btn-sm btn-next" ng-click="vm.suivant()" data-last="Finish"
+                    ng-disabled="editForm.$invalid || vm.isSaving">Suivant
+            </button>
+            <button ng-if="!vm.hasNextStep() && !vm.isViewing" type="submit" class="btn btn-success btn-sm "
+                    ng-disabled="editForm.$invalid || vm.isSaving" data-last="Finish">Sauvegarder
+            </button>
+        </div>
+    </div>
+</form>

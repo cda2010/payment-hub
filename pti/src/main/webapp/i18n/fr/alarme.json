@@ -1,0 +1,23 @@
+{
+    "ptiApp": {
+        "alarme" : {
+            "home": {
+                "title": "Alarmes",
+                "createLabel": "Créer un nouveau Alarme",
+                "createOrEditLabel": "Créer ou éditer un Alarme"
+            },
+            "created": "Un nouveau Alarme a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Alarme avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Alarme avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Alarme {{ id }} ?"
+            },
+            "detail": {
+                "title": "Alarme"
+            },
+            "etiquette": "Etiquette",
+            "emails": "Emails",
+            "sms": "Sms"
+        }
+    }
+}

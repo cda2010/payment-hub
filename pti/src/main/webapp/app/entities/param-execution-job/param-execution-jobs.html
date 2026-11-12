@@ -1,0 +1,62 @@
+<div>
+    <h2 data-translate="ptiApp.paramExecutionJob.home.title">Param Execution Jobs</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="param-execution-job.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="ptiApp.paramExecutionJob.home.createLabel">
+                        Create new Param Execution Job
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="ptiApp.paramExecutionJob.cle">Cle</span></th>
+                    <th><span data-translate="ptiApp.paramExecutionJob.valeur">Valeur</span></th>
+                    <th><span data-translate="ptiApp.paramExecutionJob.ptiJobDetail">Pti Job Detail</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="paramExecutionJob in vm.paramExecutionJobs track by paramExecutionJob.id">
+                    <td><a ui-sref="param-execution-job-detail({id:paramExecutionJob.id})">{{paramExecutionJob.id}}</a></td>
+                    <td>{{paramExecutionJob.cle}}</td>
+                    <td>{{paramExecutionJob.valeur}}</td>
+                    <td>
+                        <a ui-sref="pti-job-detail-detail({id:paramExecutionJob.ptiJobDetail.id})">{{paramExecutionJob.ptiJobDetail.}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="param-execution-job-detail({id:paramExecutionJob.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="param-execution-job.edit({id:paramExecutionJob.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="param-execution-job.delete({id:paramExecutionJob.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,268 @@
+<div class="container-fluid">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                    ng-click="vm.clear()">&times;</button>
+            <span class="widget-caption">
+                    <h4 class="modal-title text-center" id="myLotLabel"></strong>
+                        Détails
+                    </h4>
+                </span>
+        </div>
+        <div class="modal-body">
+            <form class="bg-white">
+                <div class="col-sm-4 form-group" ng-show="vm.lot.id">
+                    <label for="id" data-translate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                           ng-model="vm.lot.id" readonly />
+                </div>
+
+                <div class="col-sm-4 form-group">
+                    <label class="control-label" for="field_numero">Numero</label>
+                    <input class="form-control" name="numero" ng-model="vm.lot.numero" id="field_lot_numero" disabled/>
+                </div>
+
+                <div  class="col-sm-4 form-group">
+                    <label class="control-label" for="field_unite_organisation">Unité d'Organisation</label>
+                    <input type="text" class="form-control" name="unite_organisation" id="field_unite_organisation"
+                           ng-model="vm.lot.organisation.libelleUniteOrganisation" disabled
+                    />
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="control-label" for="field_date_ouverture">Date Ouverture</label>
+                    <input type="text" class="form-control" name="dateouverture" id="field_dateouverture"
+                           ng-model="vm.lot.dateOuverture" disabled
+                    />
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="control-label" for="field_date_fermeture">Date Fermeture</label>
+                    <input class="form-control" id="field_date_fermeture" name="date_fermeture" ng-model="vm.lot.dateFermeture"
+                           disabled/>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="control-label" for="field_etat">Etat</label>
+                    <input class="form-control" id="field_etat" name="etat"
+                            ng-model="vm.lot.etat" disabled/>
+
+                </div>
+                <!-- <div  class="col-sm-4 form-group">
+                    <label class="control-label" for="field_uniteOrganisation">Marchand</label>
+
+                    <input class="form-control" id="field_uniteOrganisation" name="uniteorganisation"
+                           ng-model="vm.facturier.uniteOrganisation.libelleUniteOrganisation"
+                              disabled/>
+                </div>
+                <div  class="col-sm-4 form-group">
+                    <label class="control-label" for="field_fse">FSE</label>
+
+                    <input class="form-control" id="field_fse" name="uniteorganisation"
+                           ng-model="vm.facturier.fse.libelleUniteOrganisation"
+                           disabled/>
+                </div> -->
+            </form>
+
+            <div class="col-sm-12 row">
+                <div class="widget">
+                <div class="widget-body row">
+
+                    <div class="widget-main ">
+
+                        <div class="tabbable">
+
+                            <ul class="nav nav-tabs nav-justified" id="myTab9">
+
+                                <li class="tab-blue active" >
+                                    <a data-toggle="tab" href="#clients" target="_self" aria-expanded="true">
+                                        <h4>Clients</h4>
+                                    </a>
+                                </li>
+
+                                <li class="tab-red">
+                                    <a data-toggle="tab" href="#" target="_self">
+                                        <h4>Factures</h4>
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content">
+                                <div id="clients" class="tab-pane active row">
+                                    <div class="col-sm-12" style="overflow: scroll; max-height: 500px">
+                                        <div class="well with-header" style="margin-top:10px">
+                                        <div class="header bg-blue ">
+                                            <div class="col-xs-11">
+                                                <h4 >Liste des clients</h4>
+                                            </div>
+                                            <div class="no-padding-left col-xs-1">
+                                                <button ng-click="vm.addClient()" class="btn btn-default  btn-circle btn-xs">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <table class="jh-table table table-striped mt10">
+                                            <thead>
+                                            <tr>
+                                                <th><span >ID</span></th>
+                                                <th><span>Code client</span></th>
+                                                <th><span>Nom</span></th>
+                                                <th><span>Prénom</span></th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="client in vm.clients track by client.id">
+                                                <td>{{client.id}}</td>
+                                                <td>{{client.codeClient}}</td>
+                                                <td>{{client.personne.personnePhysique.nomClient}}</td>
+                                                <td>{{client.personne.personnePhysique.prenomClient}}</td>
+                                                <td>
+                                                <!-- <span ng-if="produit.actif" class=" btn-success btn-xs" >
+                                                    <span  class="glyphicon glyphicon-ok"></span>
+                                                </span>
+                                                    <span ng-if="!produit.actif" class="btn-danger btn-xs">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                    </span>
+                                                </td> -->
+                                                <td class="text-right">
+                                                    <div class="btn-group flex-btn-group-container">
+                                                        <!-- <button ng-click="vm.editProduit(produit.id)" class="btn btn-warning btn-xs">
+                                                            <span class="glyphicon glyphicon-pencil"></span>
+                                                        </button> -->
+                                                        <!-- <button ng-click="vm.deleteClient(client.id)" class="btn btn-danger btn-xs">
+                                                            <span class="glyphicon glyphicon-trash"></span>
+                                                        </button> -->
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </div>
+<!--                                    ecrans-->
+                                    <!-- -->
+                                    <!-- <div class="col-sm-12" style="overflow: scroll; max-height: 500px">
+                                        <div ng-if="vm.selectedProduit" class="well with-header" style="margin-top:10px ">
+                                            <div class="header bg-blue ">
+                                                <div class="col-xs-11">
+                                                    <h4 >Ecrans du produit {{vm.selectedProduit.nomProduit}}</h4>
+                                                </div>
+                                                <div class="no-padding-left col-xs-1">
+                                                    <button ng-click="vm.addEcran()" class="btn btn-default  btn-circle btn-xs">
+                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <table class="jh-table table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th><span>ID</span></th>
+                                                    <th><span ></span></th> -->
+                                                    <!-- <th><span>Produit</span></th>-->
+                                                    <!-- <th></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="ecran in vm.produitEcrans track by ecran.id">
+                                                    <td>{{ecran.id}}</td>
+                                                    <td>Ecran N°: {{ecran.numeroOrdre}}</td> -->
+                                                    <!--<td>
+                                                        {{ecran.produit.nomProduit}}
+                                                    </td>-->
+                                                    <!-- <td class="text-right">
+                                                        <div class="btn-group flex-btn-group-container">
+                                                            <button type="submit"
+                                                                    ng-click="vm.viewEcran(ecran.id)"
+                                                                    class="btn btn-info btn-xs">
+                                                                <span class="glyphicon glyphicon-eye-open"></span>
+                                                            </button>
+                                                            <button type="submit"
+                                                                    ng-click="vm.editEcran(ecran.id)"
+                                                                    class="btn btn-warning btn-xs">
+                                                                <span class="glyphicon glyphicon-pencil"></span> -->
+                                                                <!-- <span class="hidden-sm-down" data-translate="entity.action.edit"></span>-->
+                                                            <!-- </button>
+                                                            <button type="submit"
+                                                                    ng-click="vm.deleteEcran(ecran.id)"
+                                                                    class="btn btn-danger btn-xs">
+                                                                <span class="glyphicon glyphicon-remove-circle"></span> -->
+                                                                <!-- <span class="hidden-sm-down" data-translate="entity.action.delete"></span>-->
+                                                            <!-- </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div> -->
+<!--                                    /ecrans-->
+                                </div>
+
+                                <!-- <div id="factures" class="tab-pane row">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-4" >
+                                            <select class=" col-sm-3" id="filed_format" name="format" ng-model="vm.format" >
+                                                <option value="">Format</option>
+                                                <option value="PDF">PDF</option>
+                                                <option value="XLSX">XLSX</option>
+                                                <option value="CSV">CSV</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-3" >
+                                            <button class="btn btn-primary btn-md" ng-click="vm.exporterFactureFacturier()">
+                                                <span class="glyphicon glyphicon-save" >Exporter</span>
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-4" >
+                                            <button style="float: right" class="btn" ng-click="vm.generateFacture()">
+                                                <span class="glyphicon glyphicon-plus-sign"> </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12" style="overflow: scroll; max-height: 500px">
+                                        <table class="jh-table table table-striped mt10">
+                                            <thead>
+                                            <tr>
+                                                <th><span >ID</span></th>
+                                                <th><span >Référence Facature</span></th>
+                                                <th><span >Montant</span></th>
+                                                <th><span >Référence Paiement</span></th>
+                                                <th><span >Date Paiement</span></th>
+                                                <th><span >Produit</span></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="facture in vm.factures track by facture.id">
+                                                <td>{{facture.id}}</td>
+                                                <td>{{facture.referenceFacature}}</td>
+                                                <td>{{facture.montantFacture}}</td>
+                                                <td>{{facture.referencePaiement}}</td>
+                                                <td>{{facture.datePaiement |date:'medium'}}</td>
+                                                <td>{{facture.produit.nomProduit}}</td>
+                                                <td>
+                                                    <button ng-click="vm.editFacture(facture.id)" class="btn btn-warning btn-xs">
+                                                        <span class="glyphicon glyphicon-pencil"></span>
+                                                    </button>
+                                                    <button ng-click="vm.deleteFacture(facture.id)" class="btn btn-danger btn-xs">
+                                                        <span class="glyphicon glyphicon-trash"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-default"  ng-click="vm.clear()">
+                <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Fermer</span>
+            </button>
+        </div>
+    </div>
+</div>

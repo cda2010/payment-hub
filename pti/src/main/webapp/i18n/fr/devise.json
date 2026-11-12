@@ -1,0 +1,25 @@
+{
+    "ptiApp": {
+        "devise" : {
+            "home": {
+                "title": "Devises",
+                "createLabel": "Créer une Devise",
+                "createOrEditLabel": "Créer ou éditer une Devise"
+            },
+            "created": "Un nouveau Devise a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Devise avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Devise avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Devise {{ id }} ?"
+            },
+            "detail": {
+                "title": "Devise"
+            },
+            "code": "Code",
+            "libelle": "Libelle",
+            "symbole": "Symbole",
+            "compteBanque": "Compte Banque",
+            "pays": "Pays"
+        }
+    }
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://rapidframe.com/schema/domain"
+               name="AuditLog"
+               class="com.gateway.payment.audit.domain.AuditLog"
+               table="audit_log"
+               repository="none">
+
+  <string name="actorUsername" title="Acteur"/>
+  <string name="action" title="Action" required="true"/>
+  <string name="resourceType" title="Type ressource"/>
+  <string name="resourceId" title="Id ressource"/>
+  <string name="details" title="Détails" large="true"/>
+  <string name="ipAddress" title="IP"/>
+  <string name="traceId" title="Trace"/>
+  <datetime name="createdAt" title="Horodatage" readonly="true"/>
+
+  <finder name="findByActor" using="actorUsername" all="true" orderBy="createdAt DESC"/>
+
+</domain-models>

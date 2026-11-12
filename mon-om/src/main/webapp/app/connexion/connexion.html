@@ -1,0 +1,44 @@
+
+        <div class="account-pages"></div>
+        <div class="clearfix"></div>
+        <div class="wrapper-page" style="background-color: #f5f5f54d; padding: 20px;">
+            <div class="text-center">
+                <br/>
+                <br/>
+                <h2 class="text-primary font-bold m-b-0">OMNICANAL</h2>
+                <h5 class="text-muted m-t-0 font-600">MONITOR</h5>
+            </div>
+            <div class="col-md-8 col-md-offset-2">
+                <div class="alert alert-danger" ng-show="vm.authenticationError" data-translate="login.messages.error.authentication" style="border-radius: 2px;">
+                    <strong>Failed to sign in!</strong> Please check your credentials and try again.
+                </div>
+            </div>
+            <div class="m-t-40 card-box" style="background-color: white; border-radius: 2px; box-shadow: 0 0 5px rgba(0,0,0,0.05); border: 1px solid #ddd; padding: 20px;">
+                <div class="text-center">
+                    <h4 class="text-uppercase font-bold m-b-0" style="color: #7485e6; margin-bottom: 20px;">Connexion</h4>
+                </div>
+                <div class="panel-body">
+                    <form class="form" role="form" ng-submit="vm.login($event)">
+                        <div class="form-group">
+                            <label class="control-label" for="username" style="color: #555;">Username</label>
+                            <input type="text" class="form-control" id="username" placeholder="Your username" ng-model="vm.username" 
+                                   style="border: 1px solid #eee; border-radius: 2px; padding: 8px;">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="password" style="color: #555;">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Your password"
+                                   ng-model="vm.password" style="border: 1px solid #eee; border-radius: 2px; padding: 8px;">
+                        </div>
+                        <div class="text-center" style="margin-top: 20px;">
+                            <button type="submit" class="btn btn-primary" style="background-color: #7485e6; border: none; padding: 8px 25px; margin-right: 10px; border-radius: 2px;">Login</button>
+                            <a class="btn btn-default" href="" ng-click="vm.register()" style="border: 1px solid #ddd; color: #7485e6; padding: 8px 25px; border-radius: 2px;">Register</a>
+                            <div style="margin-top: 15px;">
+                                <a class="alert-link" href="" ng-click="vm.requestResetPassword()" style="color: #7485e6; text-decoration: none;">Did you forget your password?</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- end card-box-->
+        </div>
+        <!-- end wrapper page -->

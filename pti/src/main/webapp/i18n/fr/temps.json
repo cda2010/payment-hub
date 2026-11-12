@@ -1,0 +1,10 @@
+{
+    "ptiApp": {
+        "Temps" : {
+            "null": "",
+            "JOURNALIER": "JOURNALIER",
+            "HEBDOMADAIRE": "HEBDOMADAIRE",
+            "MENSUEL": "MENSUEL"
+        }
+    }
+}

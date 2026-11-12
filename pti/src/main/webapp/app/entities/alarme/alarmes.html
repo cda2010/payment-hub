@@ -1,0 +1,60 @@
+<div>
+    <h2 data-translate="ptiApp.alarme.home.title">Alarmes</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="alarme.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="ptiApp.alarme.home.createLabel">
+                        Create new Alarme
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="ptiApp.alarme.etiquette">Etiquette</span></th>
+                    <th><span data-translate="ptiApp.alarme.emails">Emails</span></th>
+                    <th><span data-translate="ptiApp.alarme.sms">Sms</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="alarme in vm.alarmes track by alarme.id">
+                    <td><a ui-sref="alarme-detail({id:alarme.id})">{{alarme.id}}</a></td>
+                    <td>{{alarme.etiquette}}</td>
+                    <td>{{alarme.emails}}</td>
+                    <td>{{alarme.sms}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="alarme-detail({id:alarme.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="alarme.edit({id:alarme.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="alarme.delete({id:alarme.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

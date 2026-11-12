@@ -1,0 +1,608 @@
+{
+  "version": 1,
+  "source": "omnicanal/scripts/expbase-data-postgres.sql",
+  "interfaces": [
+    {
+      "codeFse": "0005",
+      "codeInterface": "SETTELMENT",
+      "nomInterface": "SETTELMENT",
+      "typeEnvoi": "REQUEST",
+      "typeMethode": "SETTLEMENT",
+      "parametres": [
+        {
+          "nomParametre": "referenceTransaction",
+          "codeParametre": "referenceTransaction",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "REFERENCEOPERATION",
+          "attribut": null,
+          "ordre": 1
+        },
+        {
+          "nomParametre": "CODEFSESOURCE",
+          "codeParametre": "CODEFSESOURCE",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 2
+        },
+        {
+          "nomParametre": "CODEFSEDEST",
+          "codeParametre": "CODEFSEDEST",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 3
+        },
+        {
+          "nomParametre": "Code D'exploitation",
+          "codeParametre": "codeExpl",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": "EMPTY",
+          "codeParametreMethode": "CODEEXP",
+          "attribut": null,
+          "ordre": 4
+        },
+        {
+          "nomParametre": "police",
+          "codeParametre": "police",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": "EMPTY",
+          "codeParametreMethode": "POLICE",
+          "attribut": null,
+          "ordre": 5
+        },
+        {
+          "nomParametre": "username_api",
+          "codeParametre": "username_api",
+          "typeParametre": "STRING",
+          "valeur": "CORISCASH",
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 6
+        },
+        {
+          "nomParametre": "password_api",
+          "codeParametre": "password_api",
+          "typeParametre": "STRING",
+          "valeur": "CORIS250621SNBL",
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 7
+        },
+        {
+          "nomParametre": "referenceSonabel",
+          "codeParametre": "referenceSonabel",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "SNBL_TRANSACTION_ID",
+          "attribut": null,
+          "ordre": 8
+        },
+        {
+          "nomParametre": "montant",
+          "codeParametre": "montant",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "MONTANT",
+          "attribut": null,
+          "ordre": 9
+        },
+        {
+          "nomParametre": "periode",
+          "codeParametre": "periode",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "PERIODE",
+          "attribut": null,
+          "ordre": 10
+        },
+        {
+          "nomParametre": "telephone",
+          "codeParametre": "telephone",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "PHONENUMBER",
+          "attribut": null,
+          "ordre": 11
+        },
+        {
+          "nomParametre": "penalite",
+          "codeParametre": "penalite",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "PENALITE",
+          "attribut": null,
+          "ordre": 12
+        },
+        {
+          "nomParametre": "nom",
+          "codeParametre": "nom",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "NOM",
+          "attribut": null,
+          "ordre": 13
+        }
+      ]
+    },
+    {
+      "codeFse": "0005",
+      "codeInterface": "GETREGLE",
+      "nomInterface": "GETREGLE",
+      "typeEnvoi": "REQUEST",
+      "typeMethode": "VERIFREGLEFACTURIER",
+      "parametres": [
+        {
+          "nomParametre": "Fse Source",
+          "codeParametre": "CODEFSESOURCE",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 1
+        },
+        {
+          "nomParametre": "Fse Destination",
+          "codeParametre": "CODEFSEDEST",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 2
+        },
+        {
+          "nomParametre": "reference",
+          "codeParametre": "reference",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "REFERENCE",
+          "attribut": null,
+          "ordre": 3
+        },
+        {
+          "nomParametre": "montant",
+          "codeParametre": "montant",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "MONTANT",
+          "attribut": null,
+          "ordre": 4
+        }
+      ]
+    },
+    {
+      "codeFse": "0005",
+      "codeInterface": "CONSFACTURE",
+      "nomInterface": "CONSFACTURE",
+      "typeEnvoi": "REQUEST",
+      "typeMethode": "CONSULTATIONFACTURE",
+      "parametres": [
+        {
+          "nomParametre": "Fse Source",
+          "codeParametre": "CODEFSESOURCE",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 1
+        },
+        {
+          "nomParametre": "Fse Destination",
+          "codeParametre": "CODEFSEDEST",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 2
+        },
+        {
+          "nomParametre": "codeExpl",
+          "codeParametre": "codeExpl",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "CODEEXP",
+          "attribut": null,
+          "ordre": 3
+        },
+        {
+          "nomParametre": "police",
+          "codeParametre": "police",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "REFERENCE",
+          "attribut": null,
+          "ordre": 4
+        },
+        {
+          "nomParametre": "username_api",
+          "codeParametre": "username_api",
+          "typeParametre": "STRING",
+          "valeur": "CORISCASH",
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 5
+        },
+        {
+          "nomParametre": "password_api",
+          "codeParametre": "password_api",
+          "typeParametre": "STRING",
+          "valeur": "CORIS250621SNBL",
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 6
+        }
+      ]
+    },
+    {
+      "codeFse": "0005",
+      "codeInterface": "GETMONTANT",
+      "nomInterface": "GETMONTANT",
+      "typeEnvoi": "REQUEST",
+      "typeMethode": "GETMONTANT",
+      "parametres": [
+        {
+          "nomParametre": "Fse Source",
+          "codeParametre": "CODEFSESOURCE",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 1
+        },
+        {
+          "nomParametre": "Fse Destination",
+          "codeParametre": "CODEFSEDEST",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 2
+        },
+        {
+          "nomParametre": "montant",
+          "codeParametre": "montant",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "MONTANT",
+          "attribut": null,
+          "ordre": 3
+        },
+        {
+          "nomParametre": "nombre",
+          "codeParametre": "nombre",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "NBRE",
+          "attribut": null,
+          "ordre": 4
+        }
+      ]
+    },
+    {
+      "codeFse": "0029",
+      "codeInterface": "GETINFOS",
+      "nomInterface": "GETINFOS",
+      "typeEnvoi": "REQUEST",
+      "typeMethode": "GETINFOS",
+      "parametres": [
+        {
+          "nomParametre": "Fse Source",
+          "codeParametre": "CODEFSESOURCE",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 1
+        },
+        {
+          "nomParametre": "Fse Destination",
+          "codeParametre": "CODEFSEDEST",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 2
+        },
+        {
+          "nomParametre": "username",
+          "codeParametre": "username",
+          "typeParametre": "STRING",
+          "valeur": "CORISMONEY",
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 3
+        },
+        {
+          "nomParametre": "password",
+          "codeParametre": "password",
+          "typeParametre": "STRING",
+          "valeur": "CORISMONEY123456",
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 4
+        },
+        {
+          "nomParametre": "key",
+          "codeParametre": "key",
+          "typeParametre": "STRING",
+          "valeur": "1234567890ABCDEF",
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 5
+        },
+        {
+          "nomParametre": "meterNum",
+          "codeParametre": "meterNum",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "REFERENCE",
+          "attribut": null,
+          "ordre": 6
+        },
+        {
+          "nomParametre": "calcMode",
+          "codeParametre": "calcMode",
+          "typeParametre": "STRING",
+          "valeur": "M",
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 7
+        },
+        {
+          "nomParametre": "amount",
+          "codeParametre": "amount",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "MONTANT",
+          "attribut": null,
+          "ordre": 8
+        }
+      ]
+    },
+    {
+      "codeFse": "0029",
+      "codeInterface": "SETTLEMENT",
+      "nomInterface": "SETTLEMENT",
+      "typeEnvoi": "REQUEST",
+      "typeMethode": "SETTLEMENT",
+      "parametres": [
+        {
+          "nomParametre": "Fse Source",
+          "codeParametre": "CODEFSESOURCE",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 1
+        },
+        {
+          "nomParametre": "Fse Destination",
+          "codeParametre": "CODEFSEDEST",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 2
+        },
+        {
+          "nomParametre": "username",
+          "codeParametre": "username",
+          "typeParametre": "STRING",
+          "valeur": "CORISMONEY",
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 3
+        },
+        {
+          "nomParametre": "password",
+          "codeParametre": "password",
+          "typeParametre": "STRING",
+          "valeur": "CORISMONEY123456",
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 4
+        },
+        {
+          "nomParametre": "key",
+          "codeParametre": "key",
+          "typeParametre": "STRING",
+          "valeur": "1234567890ABCDEF",
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 5
+        },
+        {
+          "nomParametre": "transId",
+          "codeParametre": "transId",
+          "typeParametre": "STRING",
+          "valeur": "",
+          "parametreApi": null,
+          "codeParametreMethode": "TRANSACTIONID",
+          "attribut": null,
+          "ordre": 6
+        },
+        {
+          "nomParametre": "meterNum",
+          "codeParametre": "meterNum",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "REFERENCE",
+          "attribut": null,
+          "ordre": 7
+        },
+        {
+          "nomParametre": "calcMode",
+          "codeParametre": "calcMode",
+          "typeParametre": "STRING",
+          "valeur": "M",
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 8
+        },
+        {
+          "nomParametre": "amount",
+          "codeParametre": "amount",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "MONTANT",
+          "attribut": null,
+          "ordre": 9
+        },
+        {
+          "nomParametre": "verifyData",
+          "codeParametre": "verifyData",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "VERIFYDATA",
+          "attribut": null,
+          "ordre": 10
+        }
+      ]
+    },
+    {
+      "codeFse": "0029",
+      "codeInterface": "GETMONTANT",
+      "nomInterface": "GETMONTANT",
+      "typeEnvoi": "REQUEST",
+      "typeMethode": "GETMONTANT",
+      "parametres": [
+        {
+          "nomParametre": "Fse Source",
+          "codeParametre": "CODEFSESOURCE",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 1
+        },
+        {
+          "nomParametre": "Fse Destination",
+          "codeParametre": "CODEFSEDEST",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 2
+        },
+        {
+          "nomParametre": "montant",
+          "codeParametre": "montant",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "MONTANT",
+          "attribut": null,
+          "ordre": 3
+        },
+        {
+          "nomParametre": "nombre",
+          "codeParametre": "nombre",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "NBRE",
+          "attribut": null,
+          "ordre": 4
+        }
+      ]
+    },
+    {
+      "codeFse": "0029",
+      "codeInterface": "GETREGLE_SONABEL",
+      "nomInterface": "GETREGLEFACTURIER_SONAB",
+      "typeEnvoi": "REQUEST",
+      "typeMethode": "VERIFREGLEFACTURIER",
+      "parametres": [
+        {
+          "nomParametre": "Fse Source",
+          "codeParametre": "CODEFSESOURCE",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 1
+        },
+        {
+          "nomParametre": "Fse Destination",
+          "codeParametre": "CODEFSEDEST",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": null,
+          "attribut": null,
+          "ordre": 2
+        },
+        {
+          "nomParametre": "reference",
+          "codeParametre": "reference",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "REFERENCE",
+          "attribut": null,
+          "ordre": 3
+        },
+        {
+          "nomParametre": "montant",
+          "codeParametre": "montant",
+          "typeParametre": "STRING",
+          "valeur": null,
+          "parametreApi": null,
+          "codeParametreMethode": "MONTANT",
+          "attribut": null,
+          "ordre": 4
+        }
+      ]
+    }
+  ]
+}

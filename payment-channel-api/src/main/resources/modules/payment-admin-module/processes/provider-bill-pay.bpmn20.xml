@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:flowable="http://flowable.org/bpmn"
+             targetNamespace="http://payment-gateway/provider"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+
+  <!--
+    Facture — 3 modes (billInquiryMode) puis suite commune :
+      LIST   : collect → BILL_LIST → selectBill → fees → confirm → [approvalCircuit] → selectPay → wallet → PAY_BILL
+      INFOS  : collect → LOOKUP/GETINFOS → fees → confirm → [approvalCircuit] → selectPay → wallet → PAY_BILL
+      DIRECT : collect → fees → confirm → [approvalCircuit] → selectPay → wallet → PAY_BILL
+
+    Approbation : un seul callActivity vers le BPMN partagé approvalCircuit
+    (policy catalogue / DMN → 0–3 niveaux). Rejet → correctBill → confirmBill.
+  -->
+  <process id="providerBillPay" name="Provider Bill Payment" isExecutable="true">
+    <documentation>
+      Facture multi-mode + callActivity approvalCircuit (policy catalogue).
+    </documentation>
+
+    <startEvent id="start" name="Start"/>
+    <sequenceFlow id="flow_start" sourceRef="start" targetRef="collectBill"/>
+
+    <userTask id="collectBill" name="Saisie infos facture"
+              flowable:formKey="provider-bill-collect"/>
+    <sequenceFlow id="flow_collect" sourceRef="collectBill" targetRef="inquiryGateway"/>
+
+    <exclusiveGateway id="inquiryGateway" name="Mode enquête" default="flow_to_infos"/>
+
+    <sequenceFlow id="flow_to_list" sourceRef="inquiryGateway" targetRef="listBills">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${billInquiryMode == 'LIST'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_to_infos" sourceRef="inquiryGateway" targetRef="lookupBill"/>
+    <sequenceFlow id="flow_to_direct" sourceRef="inquiryGateway" targetRef="calculateFees">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${billInquiryMode == 'DIRECT'}]]></conditionExpression>
+    </sequenceFlow>
+
+    <serviceTask id="listBills" name="Lister factures"
+                 flowable:delegateExpression="${gatewayProviderCallDelegate}"/>
+    <sequenceFlow id="flow_list" sourceRef="listBills" targetRef="selectBill"/>
+
+    <userTask id="selectBill" name="Sélection facture"
+              flowable:formKey="provider-bill-select"/>
+    <sequenceFlow id="flow_select_bill" sourceRef="selectBill" targetRef="calculateFees"/>
+
+    <serviceTask id="lookupBill" name="Recherche infos facture"
+                 flowable:delegateExpression="${gatewayProviderCallDelegate}"/>
+    <sequenceFlow id="flow_lookup" sourceRef="lookupBill" targetRef="calculateFees"/>
+
+    <serviceTask id="calculateFees" name="Calcul des frais"
+                 flowable:delegateExpression="${gatewayCatalogStepDelegate}"/>
+    <sequenceFlow id="flow_fees" sourceRef="calculateFees" targetRef="confirmBill"/>
+
+    <userTask id="confirmBill" name="Détail / confirmation"
+              flowable:formKey="provider-bill-confirm"/>
+    <sequenceFlow id="flow_confirm" sourceRef="confirmBill" targetRef="approvalCircuit"/>
+
+    <callActivity id="approvalCircuit" name="Circuit d'approbation"
+                  calledElement="approvalCircuit"
+                  flowable:businessKey="${paymentId}">
+      <extensionElements>
+        <flowable:in source="paymentId" target="paymentId"/>
+        <flowable:in source="amount" target="amount"/>
+        <flowable:in source="currency" target="currency"/>
+        <flowable:in source="catalogServiceCode" target="catalogServiceCode"/>
+        <flowable:out source="approvalRejected" target="approvalRejected"/>
+        <flowable:out source="approvalLevelsRequired" target="approvalLevelsRequired"/>
+        <flowable:out source="approvalProfileCode" target="approvalProfileCode"/>
+      </extensionElements>
+    </callActivity>
+    <sequenceFlow id="flow_approval_done" sourceRef="approvalCircuit" targetRef="gw_after_approval"/>
+
+    <exclusiveGateway id="gw_after_approval" name="Approbation OK ?" default="flow_to_pay"/>
+    <sequenceFlow id="flow_approval_rejected" sourceRef="gw_after_approval" targetRef="correctBill">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approvalRejected == true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_to_pay" sourceRef="gw_after_approval" targetRef="selectPayProvider"/>
+
+    <userTask id="correctBill" name="Corriger et resoumettre"
+              flowable:formKey="provider-bill-confirm"/>
+    <sequenceFlow id="flow_correct_to_confirm" sourceRef="correctBill" targetRef="confirmBill"/>
+
+    <userTask id="selectPayProvider" name="Moyen de paiement"
+              flowable:formKey="provider-bill-select-pay"
+              flowable:skipExpression="${payProviderCode != null &amp;&amp; payProviderCode != ''}"/>
+    <sequenceFlow id="flow_select_pay" sourceRef="selectPayProvider" targetRef="walletCheckout"/>
+
+    <callActivity id="walletCheckout" name="Débit wallet"
+                  calledElement="${walletCheckoutProcessKey}"
+                  flowable:businessKey="${paymentId}">
+      <extensionElements>
+        <flowable:in source="paymentId" target="paymentId"/>
+        <flowable:in source="amount" target="amount"/>
+        <flowable:in source="currency" target="currency"/>
+        <flowable:in source="phoneNumber" target="phoneNumber"/>
+        <flowable:in source="phone" target="phone"/>
+        <flowable:in source="payProviderCode" target="providerCode"/>
+        <flowable:in source="payProviderCode" target="payProviderCode"/>
+        <flowable:in source="billProviderCode" target="billProviderCode"/>
+        <flowable:in sourceExpression="${false}" target="terminalOnConfirm"/>
+        <flowable:out source="phoneNumber" target="phoneNumber"/>
+        <flowable:out source="otp" target="otp"/>
+        <flowable:out source="providerSuccess" target="otpSuccess"/>
+        <flowable:out source="redirectUrl" target="redirectUrl"/>
+      </extensionElements>
+    </callActivity>
+    <sequenceFlow id="flow_wallet_done" sourceRef="walletCheckout" targetRef="payBill"/>
+
+    <serviceTask id="payBill" name="Acquitter facture"
+                 flowable:delegateExpression="${gatewayProviderCallDelegate}"/>
+    <sequenceFlow id="flow_end" sourceRef="payBill" targetRef="end"/>
+
+    <endEvent id="end" name="End"/>
+  </process>
+</definitions>

@@ -1,0 +1,7 @@
+entity Facture{
+	referenceFacature String,
+    montantFacture String,
+    referencePaiement String,
+    datePaiement String,
+    produit_id Integer,
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity CanalCommunication.
+    -->
+    <changeSet id="20211230115053-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="facturier_id"
+                                 baseTableName="canal_communication"
+                                 constraintName="fk_canal_communication_facturier_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="facturier"/>
+
+        <addForeignKeyConstraint baseColumnNames="ftp_id"
+                                 baseTableName="canal_communication"
+                                 constraintName="fk_canal_communication_ftp_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ftp"/>
+
+        <addForeignKeyConstraint baseColumnNames="recepteur_email_id"
+                                 baseTableName="canal_communication"
+                                 constraintName="fk_canal_communication_recepteur_email_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="recepteur_email"/>
+
+    </changeSet>
+</databaseChangeLog>

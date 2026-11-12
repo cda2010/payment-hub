@@ -1,0 +1,24 @@
+{
+    "ptiApp": {
+        "roleValidation" : {
+            "home": {
+                "title": "RoleValidations",
+                "createLabel": "Créer un nouveau Role Validation",
+                "createOrEditLabel": "Créer ou éditer un Role Validation"
+            },
+            "created": "Un nouveau Role Validation a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Role Validation avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Role Validation avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Role Validation {{ id }} ?"
+            },
+            "detail": {
+                "title": "Role Validation"
+            },
+            "typeService": "Type Service",
+            "operateur": "Operateur",
+            "montant": "Montant",
+            "role": "Role"
+        }
+    }
+}

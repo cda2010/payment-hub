@@ -1,0 +1,90 @@
+entity Api {
+    nomApi String,
+    type TypeApi,
+    host String,
+    port String,
+	codeApi String
+}
+
+entity FournisseurService {
+    codeFse String required,
+	nom String required,
+   pays String required,
+   groupe FseGroup
+}
+
+// an ignored comment
+/** not an ignored comment */
+entity ServiceApi {
+	codeService String required
+}
+entity InterfaceUtilisateur {
+	codeInterface Integer,
+    nomInterface String
+}
+entity ParametreUtiliateur {
+	nomParametreUtil String,
+     typeParametre ParamatreType required
+}
+
+entity Parametre {
+	nomParametre String required,
+    typeParametre ParamatreType required,
+    categorieParametre CategorieParametre
+}
+
+/**
+ * Task Traitement.
+ * @author The JHipster team.
+ */
+entity Traitement {
+	codeTraitement String,
+	natureTraitement NatureTraitement
+}
+entity TypeTraitement {
+	codeTypeTraitement String,
+	NomTraitement String
+}
+
+/**
+ * The Employee entity.
+ */
+
+
+
+enum TypeApi {
+    WEBSERVICE, REST, RMI
+}
+enum FseGroup {
+    ETA, ETC, ENF
+}
+enum CategorieParametre {
+USER, SYSTEM
+
+}
+enum ParamatreType {
+    STRING, DOUBLE, INTEGER, FLOAT, LONG
+}
+enum NatureTraitement{
+COLLECTION , TRANSACTION, SEQUENCE
+}
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+  FournisseurService {realisepar} to Traitement,
+    TypeTraitement {est} to Traitement,
+	ServiceApi{possede} to Parametre,
+   Api {constitue} to ServiceApi ,
+  InterfaceUtilisateur   {constitue} to ParametreUtiliateur ,
+	FournisseurService{fournit} to
+	Api
+}
+
+relationship ManyToMany {
+	Traitement{compose} to ServiceApi
+}
+
+// Set pagination options
+
+// Set service options to all except few
+service all with serviceImpl 

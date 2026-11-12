@@ -1,0 +1,69 @@
+<div>
+    <!--<h2 data-translate="ptiApp.reglement-organisation.home.title">Reglements</h2>-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ng-click="vm.addReglement()">
+                    <span class="glyphicon glyphicon-plus"> </span>
+                    <span >Ajouter </span>
+                </button>
+                <button  ng-if="!vm.ctrlValide && vm.afficheButtonValider && vm.estAnnuler == false && (vm.enTraitement == false || vm.enTraitement == null)" class="btn btn-success" ng-click="vm.traitementOperationReglement()">
+                    <span >Valider </span>
+                </button>
+                <!--                <button class="btn btn-primary" ui-sref="reglement-organisation.new" >
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                    <span  data-translate="ptiApp.reglement-organisation.home.createLabel">
+                                        Create new Reglement
+                                    </span>
+                                </button>-->
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="well with-header" >
+        <div class="header bg-blue row">
+            <div class="col-xs-8">
+                <h4>Liste des reglements</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div ng-if="vm.reglementTemplate.length > 0">
+            <uib-accordion close-others="oneAtATime" class="panel-group accordion" ng-repeat="reglement in vm.reglementTemplate track by reglement.id ">
+                <div uib-accordion-group class="panel-default" heading="{{reglement.titre}}" >
+
+
+                    <div class="mf-fieldset row">
+                        <button type="submit" title="Supprimer" 
+                                ng-click="vm.deleteReglement(reglement)"
+                                class="btn btn-danger btn-xs btn-round">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                        </button>
+                        <label class="label label-success"><span>{{reglement.titre}}</span></label>
+                        <ul ng-repeat="orga in reglement.textLigneReglementTemplate.listeUo.organisation">
+                            <li>
+                                {{orga.libelleUniteOrganisation}}
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </uib-accordion>
+            <div class="center-block text-center" >
+                <uib-pagination total-items="vm.totalItems" ng-model="vm.page" items-per-page="vm.itemsPerPage" ng-change="vm.transition()">
+                </uib-pagination>
+                <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+            </div>
+        </div>
+        <div ng-if="vm.reglementTemplate.length <= 0">
+            <span>Aucune donnée trouvée</span>
+        </div>
+        </div>
+        
+
+
+
+    </div>
+
+    <!-- <uib-pager total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pager>-->
+</div>

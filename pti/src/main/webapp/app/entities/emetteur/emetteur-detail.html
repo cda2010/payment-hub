@@ -1,0 +1,27 @@
+
+<div>
+    <h2><span data-translate="ptiApp.emetteur.detail.title">Emetteur</span> {{vm.emetteur.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="ptiApp.emetteur.code">Code</span></dt>
+        <dd>
+            <span>{{vm.emetteur.code}}</span>
+        </dd>
+        <dt><span data-translate="ptiApp.emetteur.personne">Personne</span></dt>
+        <dd>
+            <a ui-sref="personne-detail({id:vm.emetteur.personneId})">{{vm.emetteur.personneId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="emetteur-detail.edit({id:vm.emetteur.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

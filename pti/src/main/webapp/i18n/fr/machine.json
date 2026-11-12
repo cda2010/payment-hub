@@ -1,0 +1,23 @@
+
+{
+    "ptiApp": {
+        "machine" : {
+            "home": {
+                "title": "Machines",
+                "createLabel": "Créer un nouveau Machine",
+                "createOrEditLabel": "Créer ou éditer un Machine"
+            },
+            "created": "Un nouveau Machine a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Machine avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Machine avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Machine {{ id }} ?"
+            },
+            "detail": {
+                "title": "Machine"
+            },
+            "uuid": "Uuid",
+            "hostName": "Host Name"
+        }
+    }
+}

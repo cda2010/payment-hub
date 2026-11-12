@@ -1,0 +1,125 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myProduitLabel">Créer ou modifier un produit</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.produit.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.produit.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label"  for="field_nomProduit">Nom Produit</label>
+            <input type="text" class="form-control" name="nomProduit" id="field_nomProduit"
+                    ng-model="vm.produit.nomProduit" required
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_numeroOrdre">Numero Ordre</label>
+            <input type="number" class="form-control" name="numeroOrdre" id="field_numeroOrdre"
+                    ng-model="vm.produit.numeroOrdre" required min="1"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_facturier">Facturier</label>
+            <select name="facturier" id="field_facturier" ng-disabled="vm.isViewing||vm.produit.facturier" class="form-control"
+                        ng-model="vm.produit.facturier.id"
+                        ng-options="facturier.id as facturier.nomFacturier for facturier in vm.facturiers"
+                    required
+            >
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_service">Service associé {{vm.produit.serviceAssocie.id}}</label>
+            <select name="serviceAssocie" id="field_service" class="form-control"
+                        ng-model="vm.produit.serviceAssocie.id"
+                        ng-options="serviceAssocie.id as serviceAssocie.libelle for serviceAssocie in vm.serviceAssocies"
+                    
+            >
+            </select>
+        </div>
+        <div class="form-group row">
+
+
+            <div  class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <label class="control-label">Choix des canaux</label>
+                </div>
+                <div class="form-group" >
+                    <div class="col-sm-6">
+                        <select disabled required class="form-control" id="field_agence" multiple name="canal" ng-model="vm.listIdcanal"
+                                ng-options="canals for canals in vm.canals">
+                        </select>
+                    </div>
+                    <i  title="Sélectionnez les canaux" class="btn btn-primary btn-xs"
+                        j-select2-dialog
+                        j-multiple="true"
+                        j-model="vm.canalIds"
+                        j-list="vm.canalList"
+                        j-columns='vm.organisationColums'
+                        j-event-name="onLoadRoles"
+                    >Choisir...</i>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-3">
+            <div class="radio " >
+                <label>
+                    <input autocomplete="off" ng-model="vm.itemSearch.hash" value="0" name="form-field-radio"
+                           type="checkbox" class="colored-blue" id="t1">
+                    <span class="text">Hash code</span>
+                </label>
+
+            </div>
+            </div>
+        </div>
+
+        </div>
+    <div class="row">
+        <div class="form-group col-sm-4">
+            <label >
+                <input autocomplete="off"type="checkbox" class="checkbox-slider colored-blue checkbox-lg"
+                       ng-model="vm.produit.actif"/>
+                <span class="text">Est actif ?</span>
+            </label>
+        </div>
+
+        <div class="form-group col-sm-4">
+            <label >
+                <input autocomplete="off" type="checkbox" class="checkbox-slider colored-blue checkbox-lg"
+                       ng-model="vm.produit.aUnMontant"/>
+                <span class="text">A .un montant ?</span>
+            </label>
+        </div>
+        <div class="form-group col-sm-4">
+            <label >
+                <input autocomplete="off" type="checkbox" class="checkbox-slider colored-blue checkbox-lg"
+                       ng-model="vm.produit.transactionnel"/>
+                <span class="text">Est Transactionnelle ?</span>
+            </label>
+        </div>
+    </div>
+        <div ng-if="vm.produit.aUnMontant" class="form-group">
+            <label class="control-label"  for="field_valeur">Montant</label>
+            <input type="number" class="form-control" name="valeur" id="field_valeur"
+                   ng-model="vm.produit.montant" required
+            />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

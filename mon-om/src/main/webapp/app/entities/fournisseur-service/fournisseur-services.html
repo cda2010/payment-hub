@@ -1,0 +1,99 @@
+<div>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel m-b-none" style="border: 2px solid #e7e9f1; border-radius: 5px;">
+                        <div class="panel-body">
+                            <h3 class="m-b-xs text-center m-t-n">
+                                <i class="pe pe-7s-config text-warning m-r-xs"></i> 
+                                <span class="text-primary">Fournisseur Services</span>
+                            </h3>
+                            <hr style="border-top: 2px solid #7485e6;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-right">
+                <button class="btn btn-primary" ui-sref="fournisseur-service.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span>
+                        Nouveau
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover" style="border: 2px solid #d8dbe9;">
+            <thead>
+                <tr class="bg-primary">
+                    <th class="text-center text-white"><span>Code Fse</span></th>
+                    <th class="text-center text-white"><span>Code Externe</span></th>
+                    <th class="text-center text-white"><span>Nom</span></th>
+                    <th class="text-center text-white"><span>Statut</span></th>
+                    <th class="text-center text-white"><span>Groupe</span></th>
+                    <th class="text-center text-white"><span>Pays</span></th>
+                    <th class="text-center text-white"><span>Type ETC</span></th>
+                    <th class="text-center text-white"><span>FSE Compense</span></th>
+                    <th class="text-center text-white">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="fournisseurService in vm.fournisseurServices track by fournisseurService.id">
+                    <td class="text-center">{{fournisseurService.codeFse}}</td>
+                    <td class="text-center">{{fournisseurService.codeExterne}}</td>
+                    <td class="text-center">{{fournisseurService.nom}}</td>
+                    <td class="text-center"><span class="badge badge-info">{{fournisseurService.statut}}</span></td>
+                    <td class="text-center">{{fournisseurService.groupe}}</td>
+                    <td class="text-center"><span class="badge badge-primary">{{fournisseurService.pays.nomPays}}</span></td>
+                    <td class="text-center">{{fournisseurService.TypeETC}}</td>
+                    <td class="text-center">{{fournisseurService.fseCompense.nom}}</td>
+                    <td class="text-center">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="fournisseur-service-detail({id:fournisseurService.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="fournisseur-service.duplicate({id:fournisseurService.id})"
+                                    class="btn btn-success btn-sm">
+                                <span class="glyphicon glyphicon-duplicate"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="fournisseur-service.edit({id:fournisseurService.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="fournisseur-service.delete({id:fournisseurService.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="agence({idFournisseur:fournisseurService.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon glyphicon-home"></span>
+                                <span class="hidden-sm-down"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

@@ -1,0 +1,99 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+    <div class="modal-header" style="background-color: #c9c6e6; color: white; border-radius: 5px 5px 0 0;">
+        <h4 class="modal-title" id="myParametreMethodeLabel">
+            <i class="fa fa-cogs text-warning me-2"></i>
+            Create or edit a Parametre Methode
+        </h4>
+    </div>
+    <div class="modal-body" style="background-color: #f8f9fa; padding: 20px;">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.parametreMethode.id">
+            <label for="id" class="text-primary">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.parametreMethode.id" readonly 
+                    style="border: 1px solid #7485e6; border-radius: 4px;"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_nomParametreUtil">Nom Parametre</label>
+            <input type="text" class="form-control" name="nomParametreUtil" id="field_nomParametreUtil"
+                    ng-model="vm.parametreMethode.nomParametre"
+                    style="border: 1px solid #7485e6; border-radius: 4px;"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_nomParametreUtil">Code</label>
+            <input type="text" class="form-control" name="code_parametre" id="code_parametre"
+                    ng-model="vm.parametreMethode.codeParametre"
+                    style="border: 1px solid #7485e6; border-radius: 4px;"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_valeur">CategorieParam</label>
+            <select class="form-control" id="field_categorieParam" name="categorieParam" 
+                    ng-model="vm.parametreMethode.categorieParam"
+                    style="border: 1px solid #7485e6; border-radius: 4px;">
+                <option value="USER">USER</option>
+                <option value="SYSTEM">SYSTEM</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_etiquetteMethode">Etiquette methode</label>
+            <select class="form-control" id="field_etiquetteMethode" name="etiquetteMethode" 
+                    ng-model="vm.parametreMethode.etiquetteMethode" 
+                    ng-options="etiquetteMethode as etiquetteMethode.libelle for etiquetteMethode in vm.etiquetteMethodes track by etiquetteMethode.id"
+                    style="border: 1px solid #7485e6; border-radius: 4px;">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_valeur">Type</label>
+            <select class="form-control" id="typeParametre" name="typeParametre" 
+                    ng-model="vm.parametreMethode.typeParametre"
+                    style="border: 1px solid #7485e6; border-radius: 4px;">
+                <option value="STRING">STRING</option>
+                <option value="DOUBLE">DOUBLE</option>
+                <option value="INTEGER">INTEGER</option>
+                <option value="FLOAT">FLOAT</option>
+                <option value="LONG">LONG</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_typeInterface">Type Envoi</label>
+            <select class="form-control" name="typeInterface" ng-model="vm.parametreMethode.typeEnvoi" 
+                    id="field_typeInterface"
+                    style="border: 1px solid #7485e6; border-radius: 4px;">
+                <option value="REQUEST">REQUEST</option>
+                <option value="RESPONSE">RESPONSE</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_valeur">Nom Externe</label>
+            <input type="text" class="form-control" name="valeur" id="field_valeur"
+                    ng-model="vm.parametreMethode.nomExterne"
+                    style="border: 1px solid #7485e6; border-radius: 4px;"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label text-primary" for="field_valeur">Code Paramètre Reversion</label>
+            <input type="text" class="form-control" name="codeParametreRevers" id="field_codeParametreRevers"
+                    ng-model="vm.parametreMethode.codeParametreRevers"
+                    style="border: 1px solid #7485e6; border-radius: 4px;"/>
+        </div>
+        <div class="form-group" ng-show="false">
+            <label for="field_methode">Methode</label>
+            <select class="form-control" id="field_methode" name="methode" 
+                    ng-model="vm.parametreMethode.methode" 
+                    ng-options="methode as methode.id for methode in vm.methodes track by methode.id"
+                    style="border: 1px solid #7485e6; border-radius: 4px;">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer" style="background-color: #f8f9fa; border-top: 2px solid #7485e6;">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()"
+                style="background-color: white; border: 1px solid #7485e6; color: #7485e6;">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Retour</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary"
+                style="background-color: #2610ee;">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Enregistrer</span>
+        </button>
+    </div>
+</form>
