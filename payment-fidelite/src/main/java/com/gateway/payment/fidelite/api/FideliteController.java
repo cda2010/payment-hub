@@ -7,6 +7,7 @@ import com.gateway.payment.fidelite.service.FideliteService.CreerProgramme;
 import com.gateway.payment.fidelite.service.FideliteService.EchangeView;
 import com.gateway.payment.fidelite.service.FideliteService.MouvementView;
 import com.gateway.payment.fidelite.service.FideliteService.RecompenseView;
+import com.gateway.payment.fidelite.service.FideliteService.ParrainageSuivi;
 import com.gateway.payment.fidelite.service.FideliteService.ParrainageView;
 import com.gateway.payment.fidelite.service.FideliteService.ProgrammeView;
 import com.gateway.payment.fidelite.service.FideliteService.Situation;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,7 +52,25 @@ public class FideliteController {
                 request.pointsParMille(),
                 request.pointsParrain(),
                 request.pointsFilleul(),
-                paliers(request.paliers())));
+                paliers(request.paliers()),
+                request.fseId(),
+                request.fseNom()));
+    }
+
+    @PutMapping("/programmes/{id}")
+    public ProgrammeView modifier(@PathVariable UUID id, @Valid @RequestBody ModifierProgrammeRequest request) {
+        return fidelite.modifier(id, new CreerProgramme(
+                request.nom(),
+                request.portee(),
+                request.uniteId(),
+                request.uniteNom(),
+                request.profils(),
+                request.pointsParMille(),
+                request.pointsParrain(),
+                request.pointsFilleul(),
+                List.of(),
+                request.fseId(),
+                request.fseNom()), request.validiteMois());
     }
 
     @GetMapping("/programmes")
@@ -61,6 +81,11 @@ public class FideliteController {
     @GetMapping("/unites/{uniteId}/programmes")
     public List<ProgrammeView> deLUnite(@PathVariable UUID uniteId) {
         return fidelite.deLUnite(uniteId);
+    }
+
+    @GetMapping("/programmes/{id}/clients")
+    public List<FideliteService.ClientView> clients(@PathVariable UUID id) {
+        return fidelite.clients(id);
     }
 
     @PostMapping("/programmes/{id}/clients")
@@ -79,6 +104,30 @@ public class FideliteController {
     @ResponseStatus(HttpStatus.CREATED)
     public ParrainageView parrainer(@PathVariable UUID id) {
         return fidelite.parrainer(id, partyId());
+    }
+
+    /** Tous les parrainages du tenant, pour le backoffice. */
+    @GetMapping("/parrainages")
+    public List<ParrainageSuivi> parrainages() {
+        CurrentUser.exigerExploitation();
+        return fidelite.parrainages(CurrentUser.tenantId());
+    }
+
+    @GetMapping("/programmes/{id}/parrainages")
+    public List<ParrainageSuivi> parrainagesDuProgramme(@PathVariable UUID id) {
+        CurrentUser.exigerExploitation();
+        return fidelite.parrainagesDuProgramme(CurrentUser.tenantId(), id);
+    }
+
+    @PutMapping("/programmes/{id}/parrainage")
+    public ProgrammeView regleParrainage(@PathVariable UUID id, @Valid @RequestBody RegleParrainageRequest request) {
+        CurrentUser.exigerExploitation();
+        return fidelite.regleParrainage(CurrentUser.tenantId(), id, new FideliteService.RegleParrainage(
+                request.kycRequis(),
+                request.montantMinimum(),
+                request.delaiJours(),
+                request.plafondMois(),
+                request.produits()));
     }
 
     @PostMapping("/parrainages/{code}/accepter")
@@ -140,7 +189,24 @@ public class FideliteController {
             int pointsParMille,
             int pointsParrain,
             int pointsFilleul,
-            List<PalierRequest> paliers
+            List<PalierRequest> paliers,
+            @NotNull UUID fseId,
+            @NotBlank String fseNom
+    ) {
+    }
+
+    public record ModifierProgrammeRequest(
+            @NotBlank String nom,
+            ProgrammePortee portee,
+            UUID uniteId,
+            String uniteNom,
+            Set<String> profils,
+            int pointsParMille,
+            int pointsParrain,
+            int pointsFilleul,
+            @NotNull UUID fseId,
+            @NotBlank String fseNom,
+            Integer validiteMois
     ) {
     }
 
@@ -154,5 +220,14 @@ public class FideliteController {
     }
 
     public record ClientRequest(@NotNull UUID partyId) {
+    }
+
+    public record RegleParrainageRequest(
+            boolean kycRequis,
+            @NotNull BigDecimal montantMinimum,
+            int delaiJours,
+            int plafondMois,
+            String produits
+    ) {
     }
 }

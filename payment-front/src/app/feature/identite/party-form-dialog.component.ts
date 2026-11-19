@@ -33,7 +33,7 @@ interface Saisie {
     <p-dialog
       [visible]="visible"
       (visibleChange)="visibleChange.emit($event)"
-      [header]="party ? 'Modifier ' + party.code : 'Nouvelle identité'"
+      [header]="party ? 'Modifier ' + party.code : (kindImpose === 'ORGANIZATION' ? 'Nouvelle entreprise' : kindImpose === 'PERSON' ? 'Nouveau client' : 'Nouvelle identité')"
       [modal]="true"
       [draggable]="false"
       [style]="{ width: '36rem' }"
@@ -61,6 +61,7 @@ interface Saisie {
             optionLabel="label"
             optionValue="value"
             [(ngModel)]="s.kind"
+            [disabled]="!!kindImpose"
             styleClass="w-full"
             appendTo="body"
           />
@@ -121,6 +122,7 @@ export class PartyFormDialogComponent implements OnChanges {
 
   @Input() visible = false;
   @Input() party: Party | null = null;
+  @Input() kindImpose: PartyKind | null = null;
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() saved = new EventEmitter<Party>();
 
@@ -145,7 +147,7 @@ export class PartyFormDialogComponent implements OnChanges {
               tenantId: this.party.tenantId,
               active: this.party.active
             }
-          : this.vide();
+          : this.vide(this.kindImpose);
       }
     }
   }
@@ -183,10 +185,10 @@ export class PartyFormDialogComponent implements OnChanges {
     });
   }
 
-  private vide(): Saisie {
+  private vide(kind: PartyKind | null = null): Saisie {
     return {
       code: '',
-      kind: 'PERSON',
+      kind: kind ?? 'PERSON',
       displayName: '',
       phone: '',
       email: '',

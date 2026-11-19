@@ -63,6 +63,12 @@ public class EnrolementController {
         return wrap(() -> enrolement.getInfos(body.codeFse(), body.indicatif(), body.telephone(), body.pays()));
     }
 
+    /** GET INFOS seul : fiche du numéro, sans créer de dossier. */
+    @PostMapping("/recherche")
+    public EnrolementService.Fiche recherche(@RequestBody InfosRequest body) {
+        return wrap(() -> enrolement.rechercher(body.codeFse(), body.indicatif(), body.telephone()));
+    }
+
     @PostMapping("/portefeuille")
     public Vue portefeuille(@RequestBody NumeroRequest body) {
         return wrap(() -> enrolement.chercherPortefeuille(body.numero()));
@@ -133,6 +139,16 @@ public class EnrolementController {
         return wrap(() -> enrolement.terminer(id));
     }
 
+    @PostMapping("/{id}/enregistrer")
+    public Vue enregistrer(@PathVariable UUID id) {
+        return wrap(() -> enrolement.enregistrer(id));
+    }
+
+    @PostMapping("/{id}/connexion")
+    public Vue connexion(@PathVariable UUID id, @RequestBody ConnexionRequest body) {
+        return wrap(() -> enrolement.connecter(id, body.motDePasse()));
+    }
+
     private <T> T wrap(java.util.concurrent.Callable<T> call) {
         try {
             return call.call();
@@ -172,5 +188,8 @@ public class EnrolementController {
     }
 
     public record PieceRequest(String face, String type, String contenu, String typeDocument) {
+    }
+
+    public record ConnexionRequest(String motDePasse) {
     }
 }

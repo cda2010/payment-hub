@@ -2,7 +2,8 @@ package com.gateway.payment.fidelite.service;
 
 import com.gateway.payment.fidelite.domain.Adhesion;
 import com.gateway.payment.fidelite.domain.Echange;
-import com.gateway.payment.fidelite.domain.Recompense;
+import com.gateway.payment.fidelite.domain.CatalogueRecompense;
+import com.gateway.payment.fidelite.domain.ProgrammeCatalogueRecompense;
 import com.gateway.payment.fidelite.domain.Palier;
 import com.gateway.payment.fidelite.domain.PalierSaisie;
 import com.gateway.payment.fidelite.domain.Parrainage;
@@ -13,7 +14,8 @@ import com.gateway.payment.fidelite.domain.ProgrammeStatut;
 import com.gateway.payment.fidelite.repository.AdhesionRepository;
 import com.gateway.payment.fidelite.repository.EchangeRepository;
 import com.gateway.payment.fidelite.repository.PalierRepository;
-import com.gateway.payment.fidelite.repository.RecompenseRepository;
+import com.gateway.payment.fidelite.repository.CatalogueRecompenseRepository;
+import com.gateway.payment.fidelite.repository.ProgrammeCatalogueRecompenseRepository;
 import com.gateway.payment.fidelite.repository.ParrainageRepository;
 import com.gateway.payment.fidelite.repository.ProgrammeRepository;
 import com.gateway.payment.fidelite.service.FideliteService.PalierView;
@@ -50,9 +52,13 @@ class FideliteServiceTest {
     @Mock ParrainageRepository parrainages;
     @Mock PalierRepository paliers;
     @Mock LedgerService ledger;
-    @Mock RecompenseRepository recompenses;
+    @Mock ProgrammeCatalogueRecompenseRepository offres;
+    @Mock CatalogueRecompenseRepository catalogues;
     @Mock EchangeRepository echanges;
     @Mock ReferralQualificationService referrals;
+
+    static final UUID FSE = UUID.fromString("10000000-0000-0000-0000-000000000001");
+    static final String FSE_NOM = "Coris Money";
 
     FideliteService service;
     final List<Programme> stock = new ArrayList<>();
@@ -60,9 +66,8 @@ class FideliteServiceTest {
     @BeforeEach
     void setUp() {
         service = new FideliteService(
-                programmes, adhesions, parrainages, paliers, recompenses, echanges, ledger, referrals);
+                programmes, adhesions, parrainages, paliers, offres, catalogues, echanges, ledger, referrals);
         lenient().when(paliers.saveAll(any())).thenAnswer(invocation -> invocation.getArgument(0));
-        lenient().when(recompenses.saveAll(any())).thenAnswer(invocation -> invocation.getArgument(0));
         lenient().when(programmes.save(any())).thenAnswer(invocation -> {
             Programme programme = invocation.getArgument(0);
             if (programme.getId() == null) {
@@ -78,6 +83,8 @@ class FideliteServiceTest {
         ProgrammeView tous = service.creer("CORIS_DEMO", new CreerProgramme(
                 "Tous", ProgrammePortee.TOUS, null, null, Set.of("IGNORE"), 1, 100, 50, null));
         assertThat(tous.portee()).isEqualTo(ProgrammePortee.TOUS);
+        assertThat(tous.fseId()).isEqualTo(FSE);
+        assertThat(tous.fseNom()).isEqualTo(FSE_NOM);
         assertThat(tous.profils()).isEmpty();
         assertThat(tous.paliers()).extracting(PalierView::label).containsExactly("Bronze", "Argent", "Or", "Platine");
 
@@ -94,6 +101,22 @@ class FideliteServiceTest {
                 "Boutique", ProgrammePortee.UNITE, marchand, "Épicerie", Set.of(), 2, 200, 80, null));
         assertThat(unite.uniteId()).isEqualTo(marchand);
         assertThat(unite.statut()).isEqualTo(ProgrammeStatut.ACTIF);
+    }
+
+    @Test
+    void modifierConserveLeCodeEtChangeLaDuree() {
+        when(programmes.findById(any())).thenAnswer(invocation -> stock.stream()
+                .filter(programme -> invocation.getArgument(0).equals(programme.getId()))
+                .findFirst());
+        when(paliers.findByProgramme_IdOrderBySeuilPointsAsc(any())).thenReturn(List.of());
+        ProgrammeView created = service.creer("CORIS_DEMO", new CreerProgramme(
+                "Tous", ProgrammePortee.TOUS, null, null, Set.of(), 1, 10, 5, null, FSE, FSE_NOM));
+        ProgrammeView updated = service.modifier(created.id(), new CreerProgramme(
+                "Tous clients", ProgrammePortee.TOUS, null, null, Set.of(), 2, 20, 8, null, FSE, FSE_NOM), 6);
+        assertThat(updated.nom()).isEqualTo("Tous clients");
+        assertThat(updated.pointsParMille()).isEqualTo(2);
+        assertThat(updated.validiteMois()).isEqualTo(6);
+        assertThat(updated.id()).isEqualTo(created.id());
     }
 
     @Test
@@ -186,14 +209,16 @@ class FideliteServiceTest {
         Programme programme = new Programme();
         programme.setId(programmeId);
         programme.setStatut(ProgrammeStatut.ACTIF);
-        Recompense reward = new Recompense();
+        CatalogueRecompense catalogue = new CatalogueRecompense();
+        catalogue.setCode("RW-FEE");
+        catalogue.setTitre("Transfert sans frais");
+        catalogue.setCout(500);
+        ProgrammeCatalogueRecompense reward = new ProgrammeCatalogueRecompense();
         reward.setProgramme(programme);
-        reward.setCode("RW-FEE");
-        reward.setTitre("Transfert sans frais");
-        reward.setCout(500);
+        reward.setCatalogue(catalogue);
         when(programmes.findById(programmeId)).thenReturn(Optional.of(programme));
         when(adhesions.existsByProgramme_IdAndPartyId(programmeId, partyId)).thenReturn(true);
-        when(recompenses.findByProgramme_IdAndCodeIgnoreCase(programmeId, "rw-fee")).thenReturn(Optional.of(reward));
+        when(offres.findByProgramme_IdAndCatalogue_CodeIgnoreCase(programmeId, "rw-fee")).thenReturn(Optional.of(reward));
         when(ledger.consommer(any(), eq(programmeId), eq(partyId), eq(500L), eq("Transfert sans frais"), any()))
                 .thenThrow(new IllegalArgumentException("Points insuffisants pour cette récompense."))
                 .thenReturn(300L);

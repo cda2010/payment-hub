@@ -14,6 +14,23 @@ export type SensLimite = 'EMETTEUR' | 'BENEFICIAIRE' | 'DETENTION';
 
 export type PartyKind = 'PERSON' | 'ORGANIZATION';
 
+export interface PieceDeclaree {
+  typeDocument?: string | null;
+  numeroPiece?: string | null;
+  dateValidite?: string | null;
+  nationalite?: string | null;
+}
+
+export interface Appareil {
+  id: string;
+  appareilId: string;
+  nom: string;
+  plateforme: string;
+  statut: string;
+  vuLe: string;
+  courant: boolean;
+}
+
 export interface Party {
   id: string;
   tenantId: string;
@@ -23,7 +40,25 @@ export interface Party {
   phone?: string | null;
   email?: string | null;
   externalRef?: string | null;
+  kycLevel?: string | null;
+  customerStatus?: string | null;
   active: boolean;
+}
+
+export interface CompteOuvert {
+  maison?: string | null;
+  numero: string;
+}
+
+export interface DossierFiche {
+  nom?: string | null;
+  prenom?: string | null;
+  dateNaissance?: string | null;
+  sexe?: string | null;
+  lieuNaissance?: string | null;
+  nationalite?: string | null;
+  adresse: Record<string, string>;
+  comptes: CompteOuvert[];
 }
 
 export interface PartyRequest {
@@ -62,6 +97,75 @@ export const KINDS_PARTY: { value: PartyKind; label: string }[] = [
   { value: 'PERSON', label: 'Personne' },
   { value: 'ORGANIZATION', label: 'Organisation' }
 ];
+
+export interface OrgNode {
+  id: string;
+  tenantId: string;
+  code: string;
+  name: string;
+  type: string;
+  parentId?: string | null;
+  active: boolean;
+  children?: OrgNode[];
+}
+
+export interface ApprovalRule {
+  code: string;
+  label: string;
+  position: number;
+  totalAmountLte?: number | null;
+  lineCountLte?: number | null;
+  maxLineAmountLte?: number | null;
+  elseRule: boolean;
+  profile: string;
+}
+
+export interface ApprovalAssignee {
+  level: string;
+  type: string;
+  value: string;
+  scope: string;
+}
+
+export interface ChannelUser {
+  id: string;
+  tenantId: string;
+  username: string;
+  partyId: string;
+  audience: IdentityAudience;
+  role: string;
+  enabled: boolean;
+  lastLoginAt?: string | null;
+}
+
+export interface Membership {
+  id: string;
+  userId: string;
+  orgNodeId: string;
+  scope: string;
+  active: boolean;
+}
+
+export interface UtilisateurOrganisation {
+  id: string;
+  username: string;
+  nom: string;
+  role: string;
+  enabled: boolean;
+  rattachements: Membership[];
+}
+
+export interface ApprovalPolicy {
+  id: string;
+  orgNodeId: string;
+  orgCode: string;
+  productCode: string;
+  enabled: boolean;
+  override: boolean;
+  rules: ApprovalRule[];
+  assignees: ApprovalAssignee[];
+  updatedAt?: string | null;
+}
 
 export interface ProfileServiceLine {
   serviceCode: string;
@@ -198,6 +302,14 @@ export class IdentityService {
     return this.http.get<Party>(`${this.base}/parties/${id}`);
   }
 
+  pieceDeclaree(partyId: string): Observable<PieceDeclaree> {
+    return this.http.get<PieceDeclaree>(`${this.base}/parties/${partyId}/piece`);
+  }
+
+  dossier(partyId: string): Observable<DossierFiche> {
+    return this.http.get<DossierFiche>(`${this.base}/parties/${partyId}/dossier`);
+  }
+
   creerParty(body: PartyRequest): Observable<Party> {
     return this.http.post<Party>(`${this.base}/parties`, body);
   }
@@ -248,6 +360,14 @@ export class IdentityService {
     return this.http.delete<void>(`${this.base}/parties/${partyId}/profiles/${profileId}`);
   }
 
+  appareilsParty(partyId: string): Observable<Appareil[]> {
+    return this.http.get<Appareil[]>(`${this.base}/parties/${partyId}/appareils`);
+  }
+
+  revoquerAppareil(partyId: string, id: string): Observable<string> {
+    return this.http.post(`${this.base}/parties/${partyId}/appareils/${id}/revoquer`, {}, { responseType: 'text' });
+  }
+
   offreParty(partyId: string, date?: string | null): Observable<Offre> {
     let params = new HttpParams();
     if (date) {
@@ -266,6 +386,32 @@ export class IdentityService {
 
   retirerProfilUnite(uniteId: string, profileId: string): Observable<void> {
     return this.http.delete<void>(`${this.base}/unites/${uniteId}/profiles/${profileId}`);
+  }
+
+  arbreOrg(tenantId: string): Observable<OrgNode[]> {
+    const params = new HttpParams().set('tenantId', tenantId);
+    return this.http.get<OrgNode[]>(`${this.base}/org-nodes/tree`, { params });
+  }
+
+  listerUtilisateurs(
+    tenantId: string,
+    audience: IdentityAudience = 'CORPORATE',
+    includeDisabled = true
+  ): Observable<ChannelUser[]> {
+    const params = new HttpParams()
+      .set('tenantId', tenantId)
+      .set('audience', audience)
+      .set('includeDisabled', String(includeDisabled));
+    return this.http.get<ChannelUser[]>(`${this.base}/users`, { params });
+  }
+
+  membershipsUtilisateur(userId: string): Observable<Membership[]> {
+    return this.http.get<Membership[]>(`${this.base}/users/${userId}/memberships`);
+  }
+
+  politiquesApprobation(tenantId: string): Observable<ApprovalPolicy[]> {
+    const params = new HttpParams().set('tenantId', tenantId);
+    return this.http.get<ApprovalPolicy[]>(`${this.base}/approval-policies`, { params });
   }
 
   offreUnite(uniteId: string, date?: string | null): Observable<Offre> {

@@ -422,7 +422,9 @@ Cet appel est public. Identity lit la version **publiée** dans `payment_gateway
 
 #### Écrans et formulaires
 
-Les `steps` publiés : `PORTEFEUILLE`, `COMPTE`, `TELEPHONE`, `CODE`, `PROPOSER`, `PAYS`, `IDENTITE`, `PIECE`, `SUITE`, `ADRESSE`.
+Les `steps` publiés : `PORTEFEUILLE`, `GETINFOS`, `COMPTE`, `TELEPHONE`, `CODE`, `PROPOSER`, `PAYS`, `IDENTITE`, `PIECE`, `SUITE`, `ADRESSE`.
+
+`GETINFOS` n’est pas un écran. Quand le client répond oui à `PORTEFEUILLE`, le flux `enrolement` exécute la capability `GET_INFOS` (opération `GETINFOS`) : payment-2 interroge l’omnicanal pour retrouver le compte Coris Money, puis le parcours continue sur `CODE`.
 
 | Étape | formKey | Rôle |
 |-------|---------|------|
@@ -499,6 +501,8 @@ Fichier : `payment-channel-api/src/main/resources/modules/payment-admin-module/d
 
 Le compte ne s’ouvre en identification que si chaque face requise est déposée dans payment-documents. Une table vide lève « Aucune pièce n'est paramétrée pour ce document ». Le DMN est chargé au démarrage d’identity : un changement de fichier demande un **redémarrage identity**.
 
+Dès que la personne existe, chaque pièce est rattachée à elle (`ownerKind` `PARTY`, `ownerId` = identifiant de la fiche). La fiche client affiche ces documents en lisant `GET /api/v1/documents?ownerKind=PARTY&ownerId={partyId}` : la liste vient du coffre. Le numéro, la validité et la nationalité viennent du dossier (`GET /parties/{id}/piece`). L’agent peut ouvrir, télécharger, vérifier ou refuser chaque face ; le statut est mis à jour dans le coffre. Le niveau KYC et le statut client (Actif, Suspendu, Clos) sont affichés sur l’identité. `GET /parties/{id}/dossier` ajoute la naissance, le sexe, le lieu de naissance, la nationalité, l’adresse structurée et les comptes ouverts (y compris le numéro Coris Money créé à l’identification).
+
 #### Profil de limite (DMN + profils LIMIT)
 
 Fichier : `…/decisions/enrolement-profil-limite.dmn`, décision `decision_EnrolementProfilLimite` (FIRST). Entrées `segment` + `choix` :
@@ -511,6 +515,27 @@ Fichier : `…/decisions/enrolement-profil-limite.dmn`, décision `decision_Enro
 | autre | autre | `RETAIL-LIMITE` | selon le chemin |
 
 Ces codes doivent exister comme profils **LIMIT** (`/admin/identite/profils/limites`), tenant `CORIS_DEMO`. Le segment envoyé aujourd’hui est `RETAIL`. Changer une ligne du DMN change le profil affecté, sans modifier le mobile ; identity doit être redémarré pour recharger le fichier. Le groupe rules du paiement (`EVALUATE_RULES`) reste indépendant de ce profil.
+
+#### Profil service et profil frais (DMN)
+
+Fichier : `…/decisions/enrolement-profil-offre.dmn`, décision `decision_EnrolementProfilOffre` (FIRST). Mêmes entrées `segment` + `choix`. Deux sorties : le code du profil **SERVICE** et le code du profil **TARIFF** (frais). `AUCUN` n’affecte pas ce profil.
+
+| Segment | Choix | Profil service | Profil frais |
+|---------|-------|----------------|--------------|
+| `RETAIL` | `REFUS` | `AUCUN` | `AUCUN` |
+| `RETAIL` | `CREATION` | `RETAIL-STD` | `RETAIL-FEE` |
+| `RETAIL` | `IDENTIFICATION` | `RETAIL-STD` | `RETAIL-FEE` |
+| autre | autre | `RETAIL-STD` | `RETAIL-FEE` |
+
+Les codes doivent exister, l’un en `SERVICE`, l’autre en `TARIFF`. Le compte reconnu suit `CREATION`. Le contenu des profils (produits, grilles) reste dans l’identité.
+
+#### Connexion
+
+Après l’enregistrement de la personne (compte reconnu, ouverture ou refus), le parcours ouvre l’étape `CONNEXION`. L’identifiant est le téléphone local. Le mot de passe, au moins 8 caractères, est créé dans Keycloak avec le rôle `CUSTOMER`, l’audience `RETAIL` et le `party_id`. Le profil utilisateur du realm doit accepter ces attributs (`audience`, `tenant_id`, `party_id`). Un utilisateur canal retail est créé dans l’identité. Le code secret à 4 chiffres reste sur l’appareil : il chiffre la session, il n’est pas enregistré.
+
+Une fois le mot de passe prouvé, l’application déclare l’installation (`POST /api/v1/identity/me/appareils`) : identifiant stable, nom, plateforme (`IOS`, `ANDROID`, `WEB`) et session Keycloak. La même installation met à jour sa dernière activité. L’écran Sécurité liste les appareils actifs et peut en révoquer un autre, ce qui ferme sa session. « Code oublié ? », lorsque la session est encore en mémoire, révoque l’appareil courant. La fiche identité du back-office montre les mêmes appareils.
+
+Rouvrir l’application redemande le code secret. Ce code déchiffre le jeton de rafraîchissement conservé sur l’appareil et reprend la session Keycloak, sans ressaisir le mot de passe. La biométrie, activée dans Sécurité après confirmation du code, restitue ce code : elle ne remplace pas le mot de passe. Si l’appareil a été révoqué, le coffre local est effacé. Le client ressaisit son mot de passe, choisit un nouveau code, et l’appareil est déclaré à nouveau.
 
 #### Recette
 

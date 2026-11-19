@@ -17,5 +17,11 @@ public interface AccountAliasRepository extends JpaRepository<AccountAlias, UUID
 
     Optional<AccountAlias> findByTenantIdAndAliasCode(String tenantId, String aliasCode);
 
+    List<AccountAlias> findByTenantIdAndOwnerKindAndOwnerIdAndParDefautTrueAndActiveTrue(
+            String tenantId, AliasOwnerKind ownerKind, UUID ownerId);
+
+    Optional<AccountAlias> findByTenantIdAndOwnerKindAndOwnerIdAndEtiquetteAndActiveTrue(
+            String tenantId, AliasOwnerKind ownerKind, UUID ownerId, String etiquette);
+
     boolean existsByTenantIdAndAliasCode(String tenantId, String aliasCode);
 }

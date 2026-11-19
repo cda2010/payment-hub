@@ -86,10 +86,7 @@ public class FormulaireCatalogue {
     }
 
     private EcranEnrolement lire(String etape, String formKey) {
-        Path fichier = Path.of(enrollment.getFormsDir(), formKey + ".json");
-        if (!Files.isRegularFile(fichier)) {
-            throw new IllegalStateException("Formulaire introuvable : " + formKey);
-        }
+        Path fichier = resoudre(formKey);
         try {
             JsonNode racine = json.readTree(fichier.toFile());
             JsonNode formio = racine.get("formio");
@@ -110,6 +107,23 @@ public class FormulaireCatalogue {
         } catch (Exception e) {
             throw new IllegalStateException("Formulaire illisible : " + formKey);
         }
+    }
+
+    /** Le chemin des formulaires est relatif à la racine du dépôt. NetBeans lance identity depuis payment-identity. */
+    private Path resoudre(String formKey) {
+        Path relatif = Path.of(enrollment.getFormsDir(), formKey + ".json");
+        if (Files.isRegularFile(relatif)) {
+            return relatif;
+        }
+        Path courant = Path.of("").toAbsolutePath();
+        for (int niveau = 0; niveau < 4 && courant != null; niveau++) {
+            Path candidat = courant.resolve(relatif);
+            if (Files.isRegularFile(candidat)) {
+                return candidat;
+            }
+            courant = courant.getParent();
+        }
+        throw new IllegalStateException("Formulaire introuvable : " + formKey);
     }
 
     private static EcranEnrolement.Champ champ(JsonNode composant) {

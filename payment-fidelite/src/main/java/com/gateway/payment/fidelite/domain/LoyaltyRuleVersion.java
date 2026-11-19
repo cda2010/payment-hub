@@ -46,4 +46,10 @@ public class LoyaltyRuleVersion {
 
     @Column(name = "published_at", nullable = false)
     private Instant publishedAt;
+
+    @Column(name = "starts_at")
+    private Instant startsAt;
+
+    @Column(name = "ends_at")
+    private Instant endsAt;
 }

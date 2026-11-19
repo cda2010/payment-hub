@@ -284,11 +284,18 @@ export const rapidframeApplication: RapidFrameApplicationSetup = {
         order: 17,
         items: [
           {
-            name: 'gw-identite-parties',
-            title: 'Identités',
-            icon: 'pi pi-users',
-            route: '/admin/identite/parties',
+            name: 'gw-identite-entreprises',
+            title: 'Entreprises',
+            icon: 'pi pi-building',
+            route: '/admin/identite/entreprises',
             order: 10,
+          },
+          {
+            name: 'gw-identite-personnes',
+            title: 'Clients physiques',
+            icon: 'pi pi-user',
+            route: '/admin/identite/personnes',
+            order: 15,
           },
           {
             name: 'gw-identite-profils-svc',

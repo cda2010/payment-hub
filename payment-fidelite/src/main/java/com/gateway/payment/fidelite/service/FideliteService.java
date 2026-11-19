@@ -4,9 +4,8 @@ import com.gateway.payment.fidelite.domain.Adhesion;
 import com.gateway.payment.fidelite.domain.Echange;
 import com.gateway.payment.fidelite.domain.MouvementPoints;
 import com.gateway.payment.fidelite.domain.Palier;
-import com.gateway.payment.fidelite.domain.Recompense;
-import com.gateway.payment.fidelite.domain.RecompenseSaisie;
-import com.gateway.payment.fidelite.domain.RecompensesStandard;
+import com.gateway.payment.fidelite.domain.CatalogueRecompense;
+import com.gateway.payment.fidelite.domain.ProgrammeCatalogueRecompense;
 import com.gateway.payment.fidelite.domain.PalierSaisie;
 import com.gateway.payment.fidelite.domain.PaliersStandard;
 import com.gateway.payment.fidelite.domain.Parrainage;
@@ -17,9 +16,11 @@ import com.gateway.payment.fidelite.domain.ProgrammeStatut;
 import com.gateway.payment.fidelite.repository.AdhesionRepository;
 import com.gateway.payment.fidelite.repository.EchangeRepository;
 import com.gateway.payment.fidelite.repository.PalierRepository;
-import com.gateway.payment.fidelite.repository.RecompenseRepository;
+import com.gateway.payment.fidelite.repository.CatalogueRecompenseRepository;
+import com.gateway.payment.fidelite.repository.ProgrammeCatalogueRecompenseRepository;
 import com.gateway.payment.fidelite.repository.ParrainageRepository;
 import com.gateway.payment.fidelite.repository.ProgrammeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,29 +48,50 @@ public class FideliteService {
     private final AdhesionRepository adhesions;
     private final ParrainageRepository parrainages;
     private final PalierRepository paliers;
-    private final RecompenseRepository recompenses;
+    private final ProgrammeCatalogueRecompenseRepository offres;
+    private final CatalogueRecompenseRepository catalogues;
     private final EchangeRepository echanges;
     private final LedgerService ledger;
     private final ReferralQualificationService referrals;
+    private final CommercialActivation commercial;
 
     public FideliteService(
             ProgrammeRepository programmes,
             AdhesionRepository adhesions,
             ParrainageRepository parrainages,
             PalierRepository paliers,
-            RecompenseRepository recompenses,
+            ProgrammeCatalogueRecompenseRepository offres,
+            CatalogueRecompenseRepository catalogues,
             EchangeRepository echanges,
             LedgerService ledger,
             ReferralQualificationService referrals
+    ) {
+        this(programmes, adhesions, parrainages, paliers, offres, catalogues, echanges, ledger, referrals, null);
+    }
+
+    @Autowired
+    public FideliteService(
+            ProgrammeRepository programmes,
+            AdhesionRepository adhesions,
+            ParrainageRepository parrainages,
+            PalierRepository paliers,
+            ProgrammeCatalogueRecompenseRepository offres,
+            CatalogueRecompenseRepository catalogues,
+            EchangeRepository echanges,
+            LedgerService ledger,
+            ReferralQualificationService referrals,
+            CommercialActivation commercial
     ) {
         this.programmes = programmes;
         this.adhesions = adhesions;
         this.parrainages = parrainages;
         this.paliers = paliers;
-        this.recompenses = recompenses;
+        this.offres = offres;
+        this.catalogues = catalogues;
         this.echanges = echanges;
         this.ledger = ledger;
         this.referrals = referrals;
+        this.commercial = commercial;
     }
 
     @Transactional
@@ -90,24 +112,70 @@ public class FideliteService {
         if (portee != ProgrammePortee.UNITE && commande.uniteId() != null) {
             throw new IllegalArgumentException("L'unité ne se renseigne que pour un programme d'unité");
         }
+        if (commande.fseId() == null) {
+            throw new IllegalArgumentException("Le FSE du programme est requis");
+        }
         Programme programme = new Programme();
         programme.setTenantId(tenant);
         programme.setCode(uniqueCode(tenant, nom));
         programme.setUnitCode("POINT");
+        appliquer(programme, commande, nom, portee, profils);
+        programme.setStatut(ProgrammeStatut.ACTIF);
+        programme.setCreatedAt(Instant.now());
+        Programme saved = programmes.save(programme);
+        List<Palier> niveaux = this.paliers.saveAll(niveaux(saved, commande.paliers()));
+        return ProgrammeView.from(saved, niveaux);
+    }
+
+    /** Met à jour le libellé, la portée, le FSE, les points et la durée. Le code reste inchangé. */
+    @Transactional
+    public ProgrammeView modifier(UUID programmeId, CreerProgramme commande, Integer validiteMois) {
+        if (validiteMois != null && validiteMois != 3 && validiteMois != 6 && validiteMois != 12) {
+            throw new IllegalArgumentException("La durée est de 3, 6 ou 12 mois, ou illimitée");
+        }
+        String nom = required(commande.nom(), "Le nom du programme est requis");
+        ProgrammePortee portee = commande.portee() == null ? ProgrammePortee.TOUS : commande.portee();
+        Set<String> profils = normalize(commande.profils());
+        if (portee == ProgrammePortee.PROFIL && profils.isEmpty()) {
+            throw new IllegalArgumentException("Au moins un profil client est requis");
+        }
+        if (portee == ProgrammePortee.UNITE && commande.uniteId() == null) {
+            throw new IllegalArgumentException("L'unité qui porte le programme est requise");
+        }
+        if (portee != ProgrammePortee.PROFIL) {
+            profils = Set.of();
+        }
+        if (portee != ProgrammePortee.UNITE && commande.uniteId() != null) {
+            throw new IllegalArgumentException("L'unité ne se renseigne que pour un programme d'unité");
+        }
+        if (commande.fseId() == null) {
+            throw new IllegalArgumentException("Le FSE du programme est requis");
+        }
+        Programme programme = programmes.findById(programmeId)
+                .orElseThrow(() -> new NoSuchElementException("Programme introuvable"));
+        appliquer(programme, commande, nom, portee, profils);
+        programme.setValiditeMois(validiteMois);
+        Programme saved = programmes.save(programme);
+        return ProgrammeView.from(saved, paliers.findByProgramme_IdOrderBySeuilPointsAsc(programmeId));
+    }
+
+    private void appliquer(
+            Programme programme,
+            CreerProgramme commande,
+            String nom,
+            ProgrammePortee portee,
+            Set<String> profils
+    ) {
         programme.setNom(nom);
         programme.setPortee(portee);
         programme.setUniteId(portee == ProgrammePortee.UNITE ? commande.uniteId() : null);
         programme.setUniteNom(portee == ProgrammePortee.UNITE ? blank(commande.uniteNom()) : null);
+        programme.setFseId(commande.fseId());
+        programme.setFseNom(required(commande.fseNom(), "Le nom du FSE est requis"));
         programme.setPointsParMille(Math.max(0, commande.pointsParMille()));
         programme.setPointsParrain(Math.max(0, commande.pointsParrain()));
         programme.setPointsFilleul(Math.max(0, commande.pointsFilleul()));
-        programme.setStatut(ProgrammeStatut.ACTIF);
-        programme.setCreatedAt(Instant.now());
         programme.setProfils(profils);
-        Programme saved = programmes.save(programme);
-        List<Palier> niveaux = this.paliers.saveAll(niveaux(saved, commande.paliers()));
-        this.recompenses.saveAll(catalogue(saved));
-        return ProgrammeView.from(saved, niveaux);
     }
 
     /**
@@ -130,6 +198,14 @@ public class FideliteService {
             throw new IllegalArgumentException("L'unité est requise");
         }
         return views(programmes.findByUniteIdAndStatutOrderByCreatedAtDesc(uniteId, ProgrammeStatut.ACTIF));
+    }
+
+    @Transactional(readOnly = true)
+    public List<ClientView> clients(UUID programmeId) {
+        actif(programmeId);
+        return adhesions.findByProgramme_IdOrderByCreatedAtDesc(programmeId).stream()
+                .map(adhesion -> new ClientView(adhesion.getPartyId(), adhesion.getCreatedAt()))
+                .toList();
     }
 
     /** Le marchand inscrit un de ses clients. Le client rejoint lui-même un programme TOUS ou PROFIL. */
@@ -250,7 +326,7 @@ public class FideliteService {
     @Transactional(readOnly = true)
     public List<RecompenseView> recompenses(UUID programmeId) {
         actif(programmeId);
-        return recompenses.findByProgramme_IdOrderByPositionAsc(programmeId).stream()
+        return offres.findByProgramme_IdOrderByPositionAsc(programmeId).stream()
                 .map(RecompenseView::from)
                 .toList();
     }
@@ -266,26 +342,187 @@ public class FideliteService {
             throw new IllegalArgumentException("Le client doit d'abord adhérer au programme");
         }
         String normalized = code == null ? "" : code.trim();
-        Recompense recompense = recompenses.findByProgramme_IdAndCodeIgnoreCase(programmeId, normalized)
+        ProgrammeCatalogueRecompense offre = offres.findByProgramme_IdAndCatalogue_CodeIgnoreCase(programmeId, normalized)
                 .orElseThrow(() -> new NoSuchElementException("Récompense introuvable"));
+        CatalogueRecompense catalogue = offre.getCatalogue();
+        Instant maintenant = Instant.now();
+        if (offre.getValideDu() != null && maintenant.isBefore(offre.getValideDu())) {
+            throw new IllegalArgumentException("Cette récompense n'est pas encore disponible");
+        }
+        if (offre.getValideAu() != null && !maintenant.isBefore(offre.getValideAu())) {
+            throw new IllegalArgumentException("Cette récompense n'est plus disponible");
+        }
+        if (offre.getStockRestant() != null && offre.getStockRestant() <= 0) {
+            throw new IllegalArgumentException("Cette récompense n'est plus disponible");
+        }
         String reference = "ECHANGE:" + UUID.randomUUID();
         long restants = ledger.consommer(
                 programme.getTenantId(),
                 programmeId,
                 partyId,
-                recompense.getCout(),
-                recompense.getTitre(),
+                catalogue.getCout(),
+                catalogue.getTitre(),
                 reference);
+        if (offre.getStockRestant() != null) {
+            offre.setStockRestant(offre.getStockRestant() - 1);
+            offres.save(offre);
+        }
         Echange echange = new Echange();
-        echange.setRecompense(recompense);
+        echange.setRecompense(offre);
         echange.setProgramme(programme);
         echange.setPartyId(partyId);
-        echange.setPoints(recompense.getCout());
+        echange.setPoints(catalogue.getCout());
         echange.setStatut("FULFILLED");
         echange.setBusinessReference(reference);
         echange.setCreatedAt(Instant.now());
+        if (offre.getTauxCashback() != null) {
+            echange.setValeurXof(offre.getTauxCashback().multiply(BigDecimal.valueOf(catalogue.getCout())));
+        }
         echanges.save(echange);
-        return new EchangeView(recompense.getCode(), recompense.getTitre(), Math.toIntExact(restants));
+        if (commercial != null) {
+            commercial.usage(programme, offre.getMarchandId(), partyId, catalogue.getCout(), reference);
+        }
+        return new EchangeView(catalogue.getCode(), catalogue.getTitre(), Math.toIntExact(restants));
+    }
+
+    @Transactional
+    public void definirValidite(UUID programmeId, Integer mois) {
+        if (mois != null && mois != 3 && mois != 6 && mois != 12) {
+            throw new IllegalArgumentException("La durée est de 3, 6 ou 12 mois, ou illimitée");
+        }
+        Programme programme = programmes.findById(programmeId)
+                .orElseThrow(() -> new NoSuchElementException("Programme introuvable"));
+        programme.setValiditeMois(mois);
+        programmes.save(programme);
+    }
+
+    @Transactional
+    public RecompenseView ajouterRecompense(UUID programmeId, RecompenseDynamique saisie) {
+        Programme programme = actif(programmeId);
+        String code = required(saisie.code(), "Le code de la récompense est requis").toUpperCase(Locale.ROOT);
+        if (offres.findByProgramme_IdAndCatalogue_CodeIgnoreCase(programmeId, code).isPresent()) {
+            throw new IllegalArgumentException("Cette récompense existe déjà");
+        }
+        if (saisie.cout() <= 0) {
+            throw new IllegalArgumentException("Le coût est positif");
+        }
+        CatalogueRecompense catalogue = catalogues.findByTenantIdAndCodeIgnoreCase(programme.getTenantId(), code)
+                .orElseGet(() -> catalogues.save(nouveauCatalogue(programme, code, saisie)));
+        ProgrammeCatalogueRecompense offre = new ProgrammeCatalogueRecompense();
+        offre.setProgramme(programme);
+        offre.setCatalogue(catalogue);
+        offre.setPosition(offres.findByProgramme_IdOrderByPositionAsc(programmeId).size());
+        renseignerOffre(offre, saisie);
+        return RecompenseView.from(offres.save(offre));
+    }
+
+    @Transactional
+    public RecompenseView modifierRecompense(UUID programmeId, String codeActuel, RecompenseDynamique saisie) {
+        Programme programme = actif(programmeId);
+        ProgrammeCatalogueRecompense offre = offres.findByProgramme_IdAndCatalogue_CodeIgnoreCase(programmeId, codeActuel)
+                .orElseThrow(() -> new IllegalArgumentException("Cette récompense n'appartient pas à ce programme"));
+        String code = required(saisie.code(), "Le code de la récompense est requis").toUpperCase(Locale.ROOT);
+        if (!code.equalsIgnoreCase(offre.getCatalogue().getCode())
+                && offres.findByProgramme_IdAndCatalogue_CodeIgnoreCase(programmeId, code).isPresent()) {
+            throw new IllegalArgumentException("Cette récompense existe déjà");
+        }
+        if (saisie.cout() <= 0) {
+            throw new IllegalArgumentException("Le coût est positif");
+        }
+        CatalogueRecompense catalogue = catalogues.findByTenantIdAndCodeIgnoreCase(programme.getTenantId(), code)
+                .orElseGet(() -> {
+                    CatalogueRecompense created = nouveauCatalogue(programme, code, saisie);
+                    created.setIcone(offre.getCatalogue().getIcone());
+                    return catalogues.save(created);
+                });
+        renseignerCatalogue(catalogue, saisie);
+        offre.setCatalogue(catalogues.save(catalogue));
+        renseignerOffre(offre, saisie);
+        return RecompenseView.from(offres.save(offre));
+    }
+
+    @Transactional(readOnly = true)
+    public List<CatalogueView> catalogue(String tenantId) {
+        return catalogues.findByTenantIdOrderByCodeAsc(tenant(tenantId)).stream()
+                .map(CatalogueView::from)
+                .toList();
+    }
+
+    @Transactional
+    public CatalogueView creerCatalogue(String tenantId, CatalogueSaisie saisie) {
+        String tenant = tenant(tenantId);
+        String code = codeCatalogue(saisie.code());
+        if (catalogues.findByTenantIdAndCodeIgnoreCase(tenant, code).isPresent()) {
+            throw new IllegalArgumentException("Cette récompense existe déjà");
+        }
+        if (saisie.cout() <= 0) {
+            throw new IllegalArgumentException("Le coût est positif");
+        }
+        CatalogueRecompense row = new CatalogueRecompense();
+        row.setTenantId(tenant);
+        row.setCode(code);
+        row.setIcone("gift-outline");
+        ecrireCatalogue(row, saisie);
+        return CatalogueView.from(catalogues.save(row));
+    }
+
+    @Transactional
+    public CatalogueView modifierCatalogue(String tenantId, String codeActuel, CatalogueSaisie saisie) {
+        String tenant = tenant(tenantId);
+        CatalogueRecompense row = catalogues.findByTenantIdAndCodeIgnoreCase(tenant, codeActuel)
+                .orElseThrow(() -> new IllegalArgumentException("Récompense introuvable"));
+        String code = codeCatalogue(saisie.code());
+        if (!code.equalsIgnoreCase(row.getCode())
+                && catalogues.findByTenantIdAndCodeIgnoreCase(tenant, code).isPresent()) {
+            throw new IllegalArgumentException("Cette récompense existe déjà");
+        }
+        if (saisie.cout() <= 0) {
+            throw new IllegalArgumentException("Le coût est positif");
+        }
+        row.setCode(code);
+        ecrireCatalogue(row, saisie);
+        return CatalogueView.from(catalogues.save(row));
+    }
+
+    private static String codeCatalogue(String code) {
+        return required(code, "Le code de la récompense est requis").toUpperCase(Locale.ROOT);
+    }
+
+    private static void ecrireCatalogue(CatalogueRecompense row, CatalogueSaisie saisie) {
+        String type = saisie.type() == null || saisie.type().isBlank() ? "CATALOGUE" : saisie.type().trim().toUpperCase(Locale.ROOT);
+        row.setTitre(required(saisie.titre(), "Le titre est requis"));
+        row.setDescription(required(saisie.description(), "La description est requise"));
+        row.setCout(saisie.cout());
+        row.setCategorie(type);
+        row.setTypeRecompense(type);
+    }
+
+    private CatalogueRecompense nouveauCatalogue(Programme programme, String code, RecompenseDynamique saisie) {
+        CatalogueRecompense catalogue = new CatalogueRecompense();
+        catalogue.setTenantId(programme.getTenantId());
+        catalogue.setCode(code);
+        catalogue.setIcone("gift-outline");
+        renseignerCatalogue(catalogue, saisie);
+        return catalogue;
+    }
+
+    private void renseignerCatalogue(CatalogueRecompense catalogue, RecompenseDynamique saisie) {
+        String type = saisie.type() == null ? "CATALOGUE" : saisie.type().trim().toUpperCase(Locale.ROOT);
+        catalogue.setTitre(required(saisie.titre(), "Le titre est requis"));
+        catalogue.setDescription(required(saisie.description(), "La description est requise"));
+        catalogue.setCout(saisie.cout());
+        catalogue.setCategorie(type);
+        catalogue.setTypeRecompense(type);
+    }
+
+    private static void renseignerOffre(ProgrammeCatalogueRecompense offre, RecompenseDynamique saisie) {
+        offre.setStock(saisie.stock());
+        offre.setStockRestant(saisie.stock());
+        offre.setValideDu(saisie.valideDu());
+        offre.setValideAu(saisie.valideAu());
+        offre.setMarchandId(saisie.marchandId());
+        offre.setTauxCashback(saisie.tauxCashback());
+        offre.setFinanceurId(saisie.financeurId());
     }
 
     private List<ProgrammeView> views(List<Programme> found) {
@@ -352,24 +589,6 @@ public class FideliteService {
         return new Situation(programmeId, partyId, points, PalierView.from(courant), PalierView.from(suivant), reste);
     }
 
-    private List<Recompense> catalogue(Programme programme) {
-        List<Recompense> rows = new ArrayList<>();
-        int position = 0;
-        for (RecompenseSaisie saisie : RecompensesStandard.DEFAUT) {
-            Recompense recompense = new Recompense();
-            recompense.setProgramme(programme);
-            recompense.setCode(saisie.code());
-            recompense.setTitre(saisie.titre());
-            recompense.setDescription(saisie.description());
-            recompense.setCout(saisie.cout());
-            recompense.setIcone(saisie.icone());
-            recompense.setCategorie(saisie.categorie());
-            recompense.setPosition(position++);
-            rows.add(recompense);
-        }
-        return rows;
-    }
-
     private static List<String> avantages(List<String> values) {
         if (values == null) {
             return List.of();
@@ -409,6 +628,15 @@ public class FideliteService {
                 .orElseThrow(() -> new NoSuchElementException("Programme introuvable"));
         if (programme.getStatut() != ProgrammeStatut.ACTIF) {
             throw new IllegalArgumentException("Le programme est fermé");
+        }
+        return programme;
+    }
+
+    private Programme duTenant(String tenantId, UUID id) {
+        Programme programme = programmes.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Programme introuvable"));
+        if (!programme.getTenantId().equals(tenant(tenantId))) {
+            throw new NoSuchElementException("Programme introuvable");
         }
         return programme;
     }
@@ -475,7 +703,48 @@ public class FideliteService {
             int pointsParMille,
             int pointsParrain,
             int pointsFilleul,
-            List<PalierSaisie> paliers
+            List<PalierSaisie> paliers,
+            UUID fseId,
+            String fseNom
+    ) {
+    }
+
+    public record CatalogueSaisie(String code, String titre, String description, int cout, String type) {
+    }
+
+    public record CatalogueView(
+            String code,
+            String titre,
+            String description,
+            int cout,
+            String icone,
+            String categorie,
+            String type
+    ) {
+        static CatalogueView from(CatalogueRecompense row) {
+            return new CatalogueView(
+                    row.getCode(),
+                    row.getTitre(),
+                    row.getDescription(),
+                    row.getCout(),
+                    row.getIcone(),
+                    row.getCategorie(),
+                    row.getTypeRecompense());
+        }
+    }
+
+    public record RecompenseDynamique(
+            String code,
+            String titre,
+            String description,
+            int cout,
+            String type,
+            Integer stock,
+            Instant valideDu,
+            Instant valideAu,
+            UUID marchandId,
+            BigDecimal tauxCashback,
+            UUID financeurId
     ) {
     }
 
@@ -505,16 +774,31 @@ public class FideliteService {
             String description,
             int cout,
             String icone,
-            String categorie
+            String categorie,
+            String type,
+            Integer stockRestant,
+            Instant valideDu,
+            Instant valideAu,
+            UUID marchandId,
+            BigDecimal tauxCashback,
+            UUID financeurId
     ) {
-        static RecompenseView from(Recompense recompense) {
+        static RecompenseView from(ProgrammeCatalogueRecompense offre) {
+            CatalogueRecompense catalogue = offre.getCatalogue();
             return new RecompenseView(
-                    recompense.getCode(),
-                    recompense.getTitre(),
-                    recompense.getDescription(),
-                    recompense.getCout(),
-                    recompense.getIcone(),
-                    recompense.getCategorie());
+                    catalogue.getCode(),
+                    catalogue.getTitre(),
+                    catalogue.getDescription(),
+                    catalogue.getCout(),
+                    catalogue.getIcone(),
+                    catalogue.getCategorie(),
+                    catalogue.getTypeRecompense(),
+                    offre.getStockRestant(),
+                    offre.getValideDu(),
+                    offre.getValideAu(),
+                    offre.getMarchandId(),
+                    offre.getTauxCashback(),
+                    offre.getFinanceurId());
         }
     }
 
@@ -541,6 +825,9 @@ public class FideliteService {
     ) {
     }
 
+    public record ClientView(UUID partyId, Instant createdAt) {
+    }
+
     public record ProgrammeView(
             UUID id,
             String tenantId,
@@ -553,7 +840,15 @@ public class FideliteService {
             int pointsParrain,
             int pointsFilleul,
             ProgrammeStatut statut,
-            List<PalierView> paliers
+            List<PalierView> paliers,
+            Integer validiteMois,
+            UUID fseId,
+            String fseNom,
+            boolean referralKycRequired,
+            BigDecimal referralMinAmount,
+            int referralQualificationDays,
+            int referralMaxPerMonth,
+            String referralProducts
     ) {
         static ProgrammeView from(Programme programme, List<Palier> niveaux) {
             List<PalierView> views = niveaux.stream()
@@ -572,7 +867,93 @@ public class FideliteService {
                     programme.getPointsParrain(),
                     programme.getPointsFilleul(),
                     programme.getStatut(),
-                    views);
+                    views,
+                    programme.getValiditeMois(),
+                    programme.getFseId(),
+                    programme.getFseNom(),
+                    programme.isReferralKycRequired(),
+                    programme.getReferralMinAmount(),
+                    programme.getReferralQualificationDays(),
+                    programme.getReferralMaxPerMonth(),
+                    programme.getReferralProducts());
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<ParrainageSuivi> parrainagesDuProgramme(String tenantId, UUID programmeId) {
+        duTenant(tenantId, programmeId);
+        return parrainages.findByProgramme_IdOrderByCreatedAtDesc(programmeId).stream()
+                .map(ParrainageSuivi::from)
+                .toList();
+    }
+
+    @Transactional
+    public ProgrammeView regleParrainage(String tenantId, UUID programmeId, RegleParrainage regle) {
+        if (regle.montantMinimum() == null || regle.montantMinimum().signum() < 0) {
+            throw new IllegalArgumentException("Le montant minimum est requis");
+        }
+        if (regle.delaiJours() < 0 || regle.plafondMois() < 0) {
+            throw new IllegalArgumentException("Le délai et le plafond sont positifs ou nuls");
+        }
+        Programme programme = duTenant(tenantId, programmeId);
+        programme.setReferralKycRequired(regle.kycRequis());
+        programme.setReferralMinAmount(regle.montantMinimum());
+        programme.setReferralQualificationDays(regle.delaiJours());
+        programme.setReferralMaxPerMonth(regle.plafondMois());
+        String produits = regle.produits() == null ? "" : regle.produits().trim();
+        programme.setReferralProducts(produits.isEmpty() ? null : produits);
+        Programme saved = programmes.save(programme);
+        return ProgrammeView.from(saved, paliers.findByProgramme_IdOrderBySeuilPointsAsc(programmeId));
+    }
+
+    public record RegleParrainage(
+            boolean kycRequis,
+            BigDecimal montantMinimum,
+            int delaiJours,
+            int plafondMois,
+            String produits
+    ) {
+    }
+
+    @Transactional(readOnly = true)
+    public List<ParrainageSuivi> parrainages(String tenantId) {
+        return parrainages.findByProgramme_TenantIdOrderByCreatedAtDesc(tenant(tenantId)).stream()
+                .map(ParrainageSuivi::from)
+                .toList();
+    }
+
+    public record ParrainageSuivi(
+            UUID id,
+            UUID programmeId,
+            String programmeNom,
+            UUID parrainPartyId,
+            UUID filleulPartyId,
+            String code,
+            ParrainageStatut statut,
+            Instant createdAt,
+            Instant usedAt,
+            Instant qualifiedAt,
+            boolean kycApproved,
+            String rejectionReason,
+            UUID eligibleEventId,
+            Instant eligibleAt
+    ) {
+        static ParrainageSuivi from(Parrainage parrainage) {
+            return new ParrainageSuivi(
+                    parrainage.getId(),
+                    parrainage.getProgramme().getId(),
+                    parrainage.getProgramme().getNom(),
+                    parrainage.getParrainPartyId(),
+                    parrainage.getFilleulPartyId(),
+                    parrainage.getCode(),
+                    parrainage.getStatut(),
+                    parrainage.getCreatedAt(),
+                    parrainage.getUsedAt(),
+                    parrainage.getQualifiedAt(),
+                    parrainage.isKycApproved(),
+                    parrainage.getRejectionReason(),
+                    parrainage.getEligibleEventId(),
+                    parrainage.getEligibleAt());
         }
     }
 

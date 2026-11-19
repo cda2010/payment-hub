@@ -1,0 +1,121 @@
+server:
+  port: ${SERVER_PORT:8070}
+
+spring:
+  application:
+    name: payment-api-gateway
+  codec:
+    max-in-memory-size: 20MB
+  cloud:
+    gateway:
+      httpclient:
+        connect-timeout: 3000
+        response-timeout: 60s
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - http://localhost:4200
+              - http://127.0.0.1:4200
+              - http://localhost:4205
+              - http://127.0.0.1:4205
+              - http://localhost:4210
+              - http://127.0.0.1:4210
+              - http://localhost:4206
+              - http://127.0.0.1:4206
+              - http://localhost:4211
+              - http://127.0.0.1:4211
+              - http://localhost:4213
+              - http://127.0.0.1:4213
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
+      default-filters:
+        # Le navigateur parle à la porte. Les services ne voient pas son origine.
+        - RemoveRequestHeader=Origin
+        - RemoveRequestHeader=Referer
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      routes:
+        - id: identity
+          uri: ${IDENTITY_URL:http://127.0.0.1:8094}
+          predicates:
+            - Path=/api/v1/identity/**
+        - id: aliases
+          uri: ${ALIAS_URL:http://127.0.0.1:8097}
+          predicates:
+            - Path=/api/v1/aliases/**
+        - id: content
+          uri: ${CONTENT_URL:http://127.0.0.1:8098}
+          predicates:
+            - Path=/api/v1/content/**
+        - id: divers
+          uri: ${DIVERS_URL:http://127.0.0.1:8102}
+          predicates:
+            - Path=/api/v1/divers/**
+        - id: fidelite
+          uri: ${FIDELITE_URL:http://127.0.0.1:8103}
+          predicates:
+            - Path=/api/v1/fidelite/**
+        - id: network
+          uri: ${NETWORK_URL:http://127.0.0.1:8096}
+          predicates:
+            - Path=/api/v1/network/**
+        - id: documents
+          uri: ${DOCUMENTS_URL:http://127.0.0.1:8101}
+          predicates:
+            - Path=/api/v1/documents,/api/v1/documents/**
+        - id: commission
+          uri: ${COMMISSION_URL:http://127.0.0.1:8100}
+          predicates:
+            - Path=/api/v1/commission,/api/v1/commission/**
+        - id: rules
+          uri: ${RULES_URL:http://127.0.0.1:8099}
+          predicates:
+            - Path=/api/v1/rules,/api/v1/rules/**,/api/v1/rule-groups,/api/v1/rule-groups/**,/api/v1/limits,/api/v1/limits/**
+        - id: pricing
+          uri: ${PRICING_URL:http://127.0.0.1:8095}
+          predicates:
+            - Path=/api/v1/grilles,/api/v1/grilles/**,/api/v1/formules,/api/v1/formules/**,/api/v1/frais,/api/v1/frais/**,/api/v1/pricing,/api/v1/pricing/**
+        - id: content-admin
+          uri: ${CONTENT_URL:http://127.0.0.1:8098}
+          predicates:
+            - Path=/api/v1/admin/content,/api/v1/admin/content/**,/api/v1/admin/cms,/api/v1/admin/cms/**
+        - id: payment-engine
+          uri: ${ENGINE_URL:http://127.0.0.1:8080}
+          predicates:
+            - Path=/api/v1/**
+
+management:
+  server:
+    port: ${MANAGEMENT_PORT:8071}
+    address: 127.0.0.1
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+edge:
+  security:
+    keycloak:
+      enabled: ${KEYCLOAK_ENABLED:true}
+      issuer-uri: ${KEYCLOAK_ISSUER:http://localhost:8180/realms/payment}
+      jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:}
+    jwt:
+      secret: ${JWT_SECRET:change-me-to-a-very-long-secret-key-at-least-256-bits}
+      issuer: ${JWT_ISSUER:payment-gateway}

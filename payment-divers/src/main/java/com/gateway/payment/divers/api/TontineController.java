@@ -32,6 +32,13 @@ public class TontineController {
         return tontines.list(CurrentUser.username());
     }
 
+    /** Toutes les tontines, pour le backoffice. Le parcours client reste sur {@link #list()}. */
+    @GetMapping("/suivi")
+    public List<TontineView> suivi() {
+        CurrentUser.exigerExploitation();
+        return tontines.suivi();
+    }
+
     @GetMapping("/{id}")
     public TontineView get(@PathVariable UUID id) {
         return tontines.get(CurrentUser.username(), id);

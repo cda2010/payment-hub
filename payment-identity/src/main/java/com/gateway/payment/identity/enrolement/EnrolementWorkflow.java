@@ -28,6 +28,7 @@ public final class EnrolementWorkflow {
             case "PROPOSER" -> "SUITE".equals(cible) || "TERMINE".equals(cible);
             case "SUITE" -> "PRET".equals(cible) || "ADRESSE".equals(cible);
             case "ADRESSE" -> "PIECE".equals(cible);
+            case "ENTRE", "OUVERT", "TERMINE" -> "CONNEXION".equals(cible);
             case "PRET", "PIECE" -> "OUVERT".equals(cible);
             default -> false;
         };

@@ -13,6 +13,7 @@ Documents liés :
 | [`INTEGRATION.md`](INTEGRATION.md) | Référence détaillée du contrat `/api/v1/gateway` |
 | [`CAPABILITIES.md`](CAPABILITIES.md) | Concept, implémentation et liste des capabilities |
 | [`PERFORMANCE.md`](PERFORMANCE.md) | Plan de montée en charge (1000 tx/s, P99 < 1 s) |
+| [`FIDELITE.md`](FIDELITE.md) | Programme, campagne, mission, récompense, unité et FSE |
 | `architecture-plateforme.drawio` | Schéma de la plateforme |
 | `postman/` | Collections Postman et environnement local |
 

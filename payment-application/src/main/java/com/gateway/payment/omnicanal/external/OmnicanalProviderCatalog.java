@@ -35,13 +35,13 @@ import java.util.UUID;
 @Service
 public class OmnicanalProviderCatalog {
 
-    private final ExternalOmnicanalClient client;
+    private final AccesOmnicanal client;
     private final ExternalOmnicanalProperties properties;
     private final PaymentProviderRepository providers;
     private final ObjectMapper json;
 
     public OmnicanalProviderCatalog(
-            ExternalOmnicanalClient client,
+            AccesOmnicanal client,
             ExternalOmnicanalProperties properties,
             PaymentProviderRepository providers,
             ObjectMapper json

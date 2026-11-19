@@ -17,11 +17,11 @@ import java.util.UUID;
 @Component
 public class ExternalOmnicanalCompteSource implements OmnicanalCompteSource {
 
-    private final ExternalOmnicanalClient client;
+    private final AccesOmnicanal client;
     private final ExternalOmnicanalProperties properties;
 
     public ExternalOmnicanalCompteSource(
-            ExternalOmnicanalClient client,
+            AccesOmnicanal client,
             ExternalOmnicanalProperties properties
     ) {
         this.client = client;

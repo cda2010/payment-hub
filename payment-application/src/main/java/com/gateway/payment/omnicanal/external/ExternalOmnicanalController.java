@@ -9,17 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 /**
- * Entrée séparée vers l'omnicanal externe.
- * Les routes historiques {@code /api/boundaryByTypeMethode} et {@code /api/omnicanalPresentation}
- * continuent d'exécuter le moteur interne.
+ * Relais direct, hors parcours.
+ * L'enrôlement passe par le moteur {@code /api/v1/boundaryByTypeMethode}.
  */
 @RestController
 @RequestMapping("/api/v1/external-omnicanal")
 public class ExternalOmnicanalController {
 
-    private final ExternalOmnicanalClient client;
+    private final AccesOmnicanal client;
 
-    public ExternalOmnicanalController(ExternalOmnicanalClient client) {
+    public ExternalOmnicanalController(AccesOmnicanal client) {
         this.client = client;
     }
 

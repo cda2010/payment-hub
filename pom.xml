@@ -36,6 +36,7 @@
         <module>payment-inbox-kafka</module>
         <module>payment-application</module>
         <module>payment-channel-api</module>
+        <module>payment-api-gateway</module>
     </modules>
 
     <properties>

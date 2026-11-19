@@ -19,7 +19,10 @@ import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -48,6 +51,23 @@ public class TontineService {
     public List<TontineView> list(String username) {
         return members.findByUsernameOrderByTontine_CreatedAtDesc(username).stream()
                 .map(membership -> view(membership.getTontine(), username))
+                .toList();
+    }
+
+    /** Toutes les tontines, sans exiger que l'opérateur en soit membre. */
+    @Transactional(readOnly = true)
+    public List<TontineView> suivi() {
+        List<Tontine> toutes = tontines.findAllByOrderByCreatedAtDesc();
+        if (toutes.isEmpty()) {
+            return List.of();
+        }
+        List<UUID> ids = toutes.stream().map(Tontine::getId).toList();
+        Map<UUID, List<TontineMember>> parTontine = new LinkedHashMap<>();
+        for (TontineMember member : members.findByTontine_IdInOrderByTurnNoAsc(ids)) {
+            parTontine.computeIfAbsent(member.getTontine().getId(), ignored -> new ArrayList<>()).add(member);
+        }
+        return toutes.stream()
+                .map(tontine -> console(tontine, parTontine.getOrDefault(tontine.getId(), List.of())))
                 .toList();
     }
 
@@ -213,6 +233,42 @@ public class TontineService {
     private static Instant dueAt(Tontine tontine) {
         long days = tontine.getFrequency() == TontineFrequency.HEBDOMADAIRE ? 7 : 30;
         return Instant.now().plus(days, ChronoUnit.DAYS);
+    }
+
+    private static TontineView console(Tontine tontine, List<TontineMember> roster) {
+        List<MemberView> memberViews = roster.stream()
+                .map(member -> new MemberView(
+                        member.getId(),
+                        member.getDisplayName(),
+                        initials(member.getDisplayName()),
+                        member.isPaid(),
+                        member.getTurnNo(),
+                        false,
+                        member.isAdminMember() ? "admin" : "member"))
+                .toList();
+        return new TontineView(
+                tontine.getId(),
+                tontine.getName(),
+                tontine.getContribution(),
+                tontine.getFrequency(),
+                tontine.getRoundNo(),
+                roster.size(),
+                tontine.getInviteCode(),
+                beneficiaire(tontine, roster),
+                false,
+                "console",
+                tontine.getStatus(),
+                tontine.getCreatedAt(),
+                memberViews);
+    }
+
+    private static int beneficiaire(Tontine tontine, List<TontineMember> roster) {
+        for (int i = 0; i < roster.size(); i++) {
+            if (roster.get(i).getTurnNo() == tontine.getRoundNo()) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     private TontineView view(Tontine tontine, String username) {

@@ -14,4 +14,6 @@ public interface AdhesionRepository extends JpaRepository<Adhesion, UUID> {
     Optional<Adhesion> findByProgramme_IdAndPartyId(UUID programmeId, UUID partyId);
 
     List<Adhesion> findByPartyId(UUID partyId);
+
+    List<Adhesion> findByProgramme_IdOrderByCreatedAtDesc(UUID programmeId);
 }

@@ -54,6 +54,13 @@ public class Programme {
     @Column(name = "unite_nom", length = 160)
     private String uniteNom;
 
+    /** Unité de type FSE qui détient le programme. */
+    @Column(name = "fse_id")
+    private UUID fseId;
+
+    @Column(name = "fse_nom", length = 160)
+    private String fseNom;
+
     @Column(name = "points_par_mille", nullable = false)
     private int pointsParMille;
 
@@ -83,6 +90,10 @@ public class Programme {
     /** Produits ou services autorisés, séparés par des virgules. Vide : tous. */
     @Column(name = "referral_products", length = 400)
     private String referralProducts;
+
+    /** 3, 6, 12 ou nul pour une durée illimitée. */
+    @Column(name = "validite_mois")
+    private Integer validiteMois;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 16)

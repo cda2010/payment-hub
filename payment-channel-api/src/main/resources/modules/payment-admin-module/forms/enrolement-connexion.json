@@ -1,0 +1,15 @@
+{
+  "formio": {
+    "display": "form",
+    "title": "Connexion",
+    "components": [
+      {
+        "type": "password",
+        "key": "motDePasse",
+        "label": "Mot de passe",
+        "input": true,
+        "validate": { "required": true, "minLength": 8 }
+      }
+    ]
+  }
+}

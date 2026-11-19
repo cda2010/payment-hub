@@ -23,14 +23,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
- * Appelle l'omnicanal externe : jeton, puis {@code boundaryByTypeMethode} ou {@code omnicanalPresentation}.
- * Le parcours catalogue l'utilise quand {@code gateway.omnicanal.external.enabled} est vrai.
+ * Seule implémentation HTTP de {@link AccesOmnicanal}.
  */
 @Component
-public class ExternalOmnicanalClient {
+public class ExternalOmnicanalClient implements AccesOmnicanal {
 
     private static final Logger log = LoggerFactory.getLogger(ExternalOmnicanalClient.class);
 
@@ -63,6 +61,7 @@ public class ExternalOmnicanalClient {
 
     public Map<String, Object> boundary(String codeFse, String codeMethode, String otrParametre) {
         requireEnabled();
+        log.info("omnicanal externe {} / {} vers {}", codeFse, codeMethode, properties.getBaseUrl());
         try {
             Map<String, Object> body = http.post()
                     .uri(uri -> uri.path("/api/boundaryByTypeMethode")
@@ -218,13 +217,7 @@ public class ExternalOmnicanalClient {
     }
 
     public static String otrParametre(Map<String, String> params) {
-        if (params == null || params.isEmpty()) {
-            return "";
-        }
-        return params.entrySet().stream()
-                .filter(e -> StringUtils.hasText(e.getKey()))
-                .map(e -> e.getKey() + "=" + (e.getValue() == null ? "" : e.getValue()))
-                .collect(Collectors.joining("|"));
+        return AccesOmnicanal.otrParametre(params);
     }
 
     private void requireEnabled() {

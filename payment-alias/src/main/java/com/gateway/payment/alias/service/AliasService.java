@@ -26,12 +26,17 @@ public class AliasService {
     }
 
     @Transactional(readOnly = true)
-    public List<AliasDto> list(String tenantId, AliasOwnerKind ownerKind, UUID ownerId) {
+    public List<AliasDto> list(String tenantId, AliasOwnerKind ownerKind, UUID ownerId, String etiquette) {
         String t = tenant(tenantId);
+        String role = normaliserEtiquette(etiquette);
         if (ownerKind != null && ownerId != null) {
             return aliases.findByTenantIdAndOwnerKindAndOwnerIdAndActiveTrue(t, ownerKind, ownerId).stream()
+                    .filter(a -> role == null || role.equals(a.getEtiquette()))
                     .map(AliasDto::from)
                     .toList();
+        }
+        if (role != null) {
+            throw new IllegalArgumentException("ownerKind and ownerId required to filter by etiquette");
         }
         return aliases.findByTenantIdAndActiveTrueOrderByLabelAsc(t).stream()
                 .map(AliasDto::from)
@@ -73,8 +78,10 @@ public class AliasService {
                 .ownerKind(req.ownerKind())
                 .ownerId(req.ownerId())
                 .providerCode(blankToNull(req.providerCode()))
+                .etiquette(normaliserEtiquette(req.etiquette()))
                 .active(true)
                 .build();
+        occuperEtiquette(tenant, a.getOwnerKind(), a.getOwnerId(), a.getEtiquette(), null);
         return AliasDto.from(aliases.save(a));
     }
 
@@ -101,13 +108,49 @@ public class AliasService {
         if (req.ownerId() != null) {
             a.setOwnerId(req.ownerId());
         }
+        if (req.etiquette() != null) {
+            a.setEtiquette(normaliserEtiquette(req.etiquette()));
+        }
+        occuperEtiquette(a.getTenantId(), a.getOwnerKind(), a.getOwnerId(), a.getEtiquette(), a.getId());
         return AliasDto.from(aliases.save(a));
     }
 
     public void deactivate(UUID id) {
         AccountAlias a = aliases.findById(id).orElseThrow(() -> notFound(id));
         a.setActive(false);
+        a.setParDefaut(false);
         aliases.save(a);
+    }
+
+    /** Marque cet alias comme compte par défaut du propriétaire et retire le défaut précédent. */
+    public AliasDto definirDefaut(UUID id, UUID partyId, boolean backoffice) {
+        AccountAlias choisi = aliases.findById(id).orElseThrow(() -> notFound(id));
+        if (!choisi.isActive()) {
+            throw new IllegalArgumentException("Alias inactive");
+        }
+        if (!backoffice) {
+            if (choisi.getOwnerKind() != AliasOwnerKind.PARTY || partyId == null
+                    || !partyId.equals(choisi.getOwnerId())) {
+                throw new AccesRefuse("Ce compte n'appartient pas au client connecté.");
+            }
+        }
+        for (AccountAlias autre : aliases.findByTenantIdAndOwnerKindAndOwnerIdAndParDefautTrueAndActiveTrue(
+                choisi.getTenantId(), choisi.getOwnerKind(), choisi.getOwnerId())) {
+            if (!autre.getId().equals(choisi.getId())) {
+                autre.setParDefaut(false);
+                aliases.save(autre);
+            }
+        }
+        aliases.flush();
+        choisi.setParDefaut(true);
+        return AliasDto.from(aliases.save(choisi));
+    }
+
+    /** Le client connecté n'est pas le propriétaire de l'alias. */
+    public static class AccesRefuse extends RuntimeException {
+        public AccesRefuse(String message) {
+            super(message);
+        }
     }
 
     private static String tenant(String tenantId) {
@@ -118,6 +161,26 @@ public class AliasService {
         if (v == null || v.isBlank()) {
             throw new IllegalArgumentException(field + " required");
         }
+    }
+
+    private void occuperEtiquette(
+            String tenant, AliasOwnerKind kind, UUID ownerId, String etiquette, UUID saufId
+    ) {
+        if (etiquette == null || kind == null || ownerId == null) {
+            return;
+        }
+        aliases.findByTenantIdAndOwnerKindAndOwnerIdAndEtiquetteAndActiveTrue(tenant, kind, ownerId, etiquette)
+                .filter(existant -> saufId == null || !saufId.equals(existant.getId()))
+                .ifPresent(existant -> {
+                    throw new IllegalArgumentException("Etiquette already used: " + etiquette);
+                });
+    }
+
+    private static String normaliserEtiquette(String etiquette) {
+        if (etiquette == null || etiquette.isBlank()) {
+            return null;
+        }
+        return etiquette.trim().toUpperCase(Locale.ROOT);
     }
 
     private static String blankToNull(String v) {

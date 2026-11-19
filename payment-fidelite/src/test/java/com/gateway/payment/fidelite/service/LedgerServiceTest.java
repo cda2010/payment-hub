@@ -4,6 +4,7 @@ import com.gateway.payment.fidelite.domain.LoyaltyAccount;
 import com.gateway.payment.fidelite.domain.PointMovement;
 import com.gateway.payment.fidelite.domain.Programme;
 import com.gateway.payment.fidelite.repository.LoyaltyAccountRepository;
+import com.gateway.payment.fidelite.repository.PointLotRepository;
 import com.gateway.payment.fidelite.repository.PointMovementRepository;
 import com.gateway.payment.fidelite.repository.ProgrammeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,13 +32,14 @@ class LedgerServiceTest {
 
     @Mock LoyaltyAccountRepository accounts;
     @Mock PointMovementRepository movements;
+    @Mock PointLotRepository lots;
     @Mock ProgrammeRepository programmes;
 
     LedgerService ledger;
 
     @BeforeEach
     void setUp() {
-        ledger = new LedgerService(accounts, movements, programmes, null);
+        ledger = new LedgerService(accounts, movements, lots, programmes, null);
     }
 
     @Test

@@ -13,11 +13,15 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * Appelle l'omnicanal déjà exposé par la passerelle : GETINFOS (téléphone + indicatif)
- * ou GETINFOSCOMPTE (alias de compte dans un FSE).
+ * Demande la fiche au moteur de la passerelle (GETINFOS ou GETINFOSCOMPTE).
+ * Le moteur appelle l'omnicanal. Cette classe ne le contacte pas.
  */
 @Component
 public class InfosOmnicanal {
@@ -48,13 +52,14 @@ public class InfosOmnicanal {
             return Optional.empty();
         }
         String uri = base.replaceAll("/+$", "")
-                + "/api/v1/external-omnicanal/boundary?codeFSE=" + encoder(codeFse)
+                + "/api/v1/boundaryByTypeMethode?codeFSE=" + encoder(codeFse)
                 + "&codeMethode=" + methode
                 + "&otrParametre=" + encoder(parametres);
         try {
             HttpRequest request = HttpRequest.newBuilder(URI.create(uri))
-                    .timeout(Duration.ofSeconds(4))
+                    .timeout(Duration.ofSeconds(20))
                     .header("Accept", "application/json")
+                    .header("X-Api-Key", enrollment.getCanalApiKey())
                     .POST(HttpRequest.BodyPublishers.noBody())
                     .build();
             HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
@@ -70,11 +75,103 @@ public class InfosOmnicanal {
     }
 
     private Optional<Reconnaissance> lire(JsonNode corps, String numero) {
-        String nom = texte(corps, "nom", "nomClient", "customerName", "name");
+        if (corps == null || refuse(corps)) {
+            return Optional.empty();
+        }
+        String xml = texte(corps, "text");
+        Map<String, String> champs = xml != null && xml.contains("<COMMAND") ? champsXml(xml) : new LinkedHashMap<>();
+        String nom = champs.get("nom");
+        String prenom = champs.get("prenom");
+        if (nom == null) {
+            nom = texte(corps, "nom", "nomClient", "customerName", "name");
+            prenom = texte(corps, "prenom", "prenomClient");
+            if (nom != null) {
+                champs.put("nom", nom);
+                if (prenom != null) {
+                    champs.put("prenom", prenom);
+                }
+            }
+        }
         if (nom == null) {
             return Optional.empty();
         }
-        return Optional.of(new Reconnaissance(nom, texte(corps, "prenom", "prenomClient"), numero));
+        return Optional.of(new Reconnaissance(nom, prenom, numero, champs));
+    }
+
+    private static Map<String, String> champsXml(String xml) {
+        Map<String, String> champs = new LinkedHashMap<>();
+        poser(champs, "nom", balise(xml, "nom"));
+        poser(champs, "prenom", balise(xml, "prenom"));
+        poser(champs, "sexe", sexe(balise(xml, "sexe")));
+        poser(champs, "dateNaissance", date(balise(xml, "dateNaissance")));
+        poser(champs, "lieuNaissance", titre(balise(xml, "lieuNaissance")));
+        String piece = balise(xml, "piece");
+        String reference = balise(xml, "reference");
+        if (piece != null || reference != null) {
+            poser(champs, "piece", ((piece == null ? "" : piece) + " " + (reference == null ? "" : reference)).trim());
+        }
+        String telephone = balise(xml, "telephone");
+        String indicatif = balise(xml, "codeIndicatif");
+        if (telephone != null) {
+            poser(champs, "telephone", indicatif == null ? telephone : "+" + indicatif + " " + telephone);
+        }
+        poser(champs, "compte", balise(xml, "numeroCompte"));
+        poser(champs, "email", balise(xml, "email"));
+        poser(champs, "adresse", balise(xml, "adresse"));
+        return champs;
+    }
+
+    private static void poser(Map<String, String> champs, String cle, String valeur) {
+        if (valeur != null && !valeur.isBlank()) {
+            champs.put(cle, valeur.trim());
+        }
+    }
+
+    private static String sexe(String valeur) {
+        if (valeur == null) {
+            return null;
+        }
+        return switch (valeur.trim().toUpperCase()) {
+            case "M", "MASCULIN", "HOMME" -> "Masculin";
+            case "F", "FEMININ", "FÉMININ", "FEMME" -> "Féminin";
+            default -> titre(valeur);
+        };
+    }
+
+    private static String date(String valeur) {
+        if (valeur == null) {
+            return null;
+        }
+        Matcher trouve = Pattern.compile("(\\d{2})-(\\d{2})-(\\d{4})").matcher(valeur.trim());
+        return trouve.matches() ? trouve.group(1) + "/" + trouve.group(2) + "/" + trouve.group(3) : valeur.trim();
+    }
+
+    private static String titre(String valeur) {
+        if (valeur == null || valeur.isBlank()) {
+            return null;
+        }
+        String texte = valeur.trim().toLowerCase();
+        return Character.toUpperCase(texte.charAt(0)) + texte.substring(1);
+    }
+
+    /** codeErr différent de 0, ou un message « client inexistant » : le compte n'est pas reconnu. */
+    private static boolean refuse(JsonNode corps) {
+        String code = texte(corps, "codeErr");
+        if (code != null && !"0".equals(code)) {
+            return true;
+        }
+        JsonNode entite = corps.get("responseEntity");
+        String message = entite == null ? null : texte(entite, "msg");
+        return message != null && message.toLowerCase().contains("inexistant");
+    }
+
+    private static String balise(String xml, String nom) {
+        Matcher trouve = Pattern.compile("<" + Pattern.quote(nom) + ">([^<]*)</" + Pattern.quote(nom) + ">").matcher(xml);
+        if (!trouve.find()) {
+            return null;
+        }
+        String valeur = trouve.group(1).trim();
+        return valeur.isEmpty() ? null : valeur;
     }
 
     private static String texte(JsonNode noeud, String... cles) {
@@ -111,6 +208,6 @@ public class InfosOmnicanal {
         return URLEncoder.encode(valeur == null ? "" : valeur, StandardCharsets.UTF_8);
     }
 
-    public record Reconnaissance(String nom, String prenom, String numero) {
+    public record Reconnaissance(String nom, String prenom, String numero, Map<String, String> champs) {
     }
 }

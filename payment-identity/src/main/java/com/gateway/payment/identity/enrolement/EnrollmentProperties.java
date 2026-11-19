@@ -24,14 +24,30 @@ public class EnrollmentProperties {
 
     private String profilLimiteDmn = "payment-channel-api/src/main/resources/modules/payment-admin-module/decisions/enrolement-profil-limite.dmn";
 
+    private String profilOffreDmn = "payment-channel-api/src/main/resources/modules/payment-admin-module/decisions/enrolement-profil-offre.dmn";
+
     private String networkDbUrl = "jdbc:postgresql://localhost:5438/payment_network";
 
     private String networkDbUser = "network";
 
     private String networkDbPassword = "network";
 
-    /** Passerelle qui expose GETINFOS et GETINFOSCOMPTE. Vide : l'annuaire local répond. */
+    /** Passerelle : le moteur boundaryByTypeMethode. Vide : l'annuaire local répond. */
     private String omnicanalUrl = "http://127.0.0.1:8080";
+
+    /** Même clé que gateway.canal.api-key. Le moteur canal l'exige. */
+    private String canalApiKey = "change-me-mobile";
+
+    /** payment-alias : l'alias du compte reconnu y est créé. */
+    private String aliasUrl = "http://127.0.0.1:8097/api/v1/aliases";
+
+    private String keycloakUrl = "http://127.0.0.1:8180";
+
+    private String keycloakRealm = "payment";
+
+    private String keycloakAdmin = "admin";
+
+    private String keycloakAdminPassword = "admin";
 
     public boolean isExposeCode() {
         return exposeCode;
@@ -97,6 +113,14 @@ public class EnrollmentProperties {
         this.profilLimiteDmn = profilLimiteDmn;
     }
 
+    public String getProfilOffreDmn() {
+        return profilOffreDmn;
+    }
+
+    public void setProfilOffreDmn(String profilOffreDmn) {
+        this.profilOffreDmn = profilOffreDmn;
+    }
+
     public String getNetworkDbUrl() {
         return networkDbUrl;
     }
@@ -127,5 +151,53 @@ public class EnrollmentProperties {
 
     public void setOmnicanalUrl(String omnicanalUrl) {
         this.omnicanalUrl = omnicanalUrl;
+    }
+
+    public String getCanalApiKey() {
+        return canalApiKey;
+    }
+
+    public void setCanalApiKey(String canalApiKey) {
+        this.canalApiKey = canalApiKey;
+    }
+
+    public String getAliasUrl() {
+        return aliasUrl;
+    }
+
+    public void setAliasUrl(String aliasUrl) {
+        this.aliasUrl = aliasUrl;
+    }
+
+    public String getKeycloakUrl() {
+        return keycloakUrl;
+    }
+
+    public void setKeycloakUrl(String keycloakUrl) {
+        this.keycloakUrl = keycloakUrl;
+    }
+
+    public String getKeycloakRealm() {
+        return keycloakRealm;
+    }
+
+    public void setKeycloakRealm(String keycloakRealm) {
+        this.keycloakRealm = keycloakRealm;
+    }
+
+    public String getKeycloakAdmin() {
+        return keycloakAdmin;
+    }
+
+    public void setKeycloakAdmin(String keycloakAdmin) {
+        this.keycloakAdmin = keycloakAdmin;
+    }
+
+    public String getKeycloakAdminPassword() {
+        return keycloakAdminPassword;
+    }
+
+    public void setKeycloakAdminPassword(String keycloakAdminPassword) {
+        this.keycloakAdminPassword = keycloakAdminPassword;
     }
 }

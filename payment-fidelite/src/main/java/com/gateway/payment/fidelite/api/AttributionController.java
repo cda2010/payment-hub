@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -41,7 +43,15 @@ public class AttributionController {
     @PostMapping("/programmes/{id}/regles")
     @ResponseStatus(HttpStatus.CREATED)
     public ReglePubliee publier(@PathVariable UUID id, @RequestBody RegleRequest request) {
-        return attribution.publier(tenant(), id, request.code(), request.priority(), request.definition());
+        return attribution.publier(tenant(), id, request.code(), request.priority(), request.definition(),
+                request.debut(), request.fin());
+    }
+
+    /** Rejoue une définition sur l'historique. N'écrit rien. */
+    @PostMapping("/regles/rejouer")
+    public List<AttributionService.Replay> rejouer(@RequestBody ReplayRequest request) {
+        CurrentUser.exigerExploitation();
+        return attribution.rejouer(tenant(), request.definition(), request.depuis());
     }
 
     private static String tenant() {
@@ -52,6 +62,9 @@ public class AttributionController {
     public record SimulationRequest(String definition, Evenement event) {
     }
 
-    public record RegleRequest(String code, int priority, String definition) {
+    public record RegleRequest(String code, int priority, String definition, Instant debut, Instant fin) {
+    }
+
+    public record ReplayRequest(String definition, Instant depuis) {
     }
 }

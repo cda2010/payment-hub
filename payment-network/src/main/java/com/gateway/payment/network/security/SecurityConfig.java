@@ -68,6 +68,17 @@ public class SecurityConfig {
                         ).permitAll()
                         // Avant la lecture du corps : un client non autorisé reçoit 403, pas une erreur de validation.
                         .requestMatchers(HttpMethod.GET, "/api/v1/network/fse").permitAll()
+                        .requestMatchers(HttpMethod.POST,
+                                "/api/v1/network/points-de-vente/*/affectations",
+                                "/api/v1/network/affectations/*/desaffecter",
+                                "/api/v1/network/caisses/*/regulariser",
+                                "/api/v1/network/caisses/*/refuser")
+                        .hasAnyRole("ADMIN", "CONFIG_MANAGER", "OWNER")
+                        .requestMatchers(HttpMethod.POST,
+                                "/api/v1/network/points-de-vente/*/caisses",
+                                "/api/v1/network/caisses/*/fermer",
+                                "/api/v1/network/caisses/*/operations")
+                        .hasAnyRole("ADMIN", "CONFIG_MANAGER", "OWNER", "CASHIER")
                         .requestMatchers(HttpMethod.POST, "/api/v1/network/**").hasAnyRole(ECRITURE)
                         .requestMatchers(HttpMethod.PUT, "/api/v1/network/**").hasAnyRole(ECRITURE)
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/network/**").hasAnyRole(ECRITURE)

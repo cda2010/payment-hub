@@ -20,13 +20,16 @@ public final class AliasDtos {
             AliasOwnerKind ownerKind,
             UUID ownerId,
             String providerCode,
-            boolean active
+            String etiquette,
+            boolean active,
+            boolean parDefaut
     ) {
         public static AliasDto from(AccountAlias a) {
             return new AliasDto(
                     a.getId(), a.getTenantId(), a.getAliasCode(), a.getLabel(),
                     a.getAliasType(), a.getExternalRef(), a.getCurrency(),
-                    a.getOwnerKind(), a.getOwnerId(), a.getProviderCode(), a.isActive());
+                    a.getOwnerKind(), a.getOwnerId(), a.getProviderCode(), a.getEtiquette(), a.isActive(),
+                    a.isParDefaut());
         }
     }
 
@@ -39,7 +42,8 @@ public final class AliasDtos {
             String currency,
             AliasOwnerKind ownerKind,
             UUID ownerId,
-            String providerCode
+            String providerCode,
+            String etiquette
     ) {}
 
     public record AliasResolveDto(
@@ -50,13 +54,14 @@ public final class AliasDtos {
             String currency,
             String providerCode,
             AliasOwnerKind ownerKind,
-            UUID ownerId
+            UUID ownerId,
+            String etiquette
     ) {
         public static AliasResolveDto from(AccountAlias a) {
             return new AliasResolveDto(
                     a.getAliasCode(), a.getLabel(), a.getAliasType(),
                     a.getExternalRef(), a.getCurrency(), a.getProviderCode(),
-                    a.getOwnerKind(), a.getOwnerId());
+                    a.getOwnerKind(), a.getOwnerId(), a.getEtiquette());
         }
     }
 }

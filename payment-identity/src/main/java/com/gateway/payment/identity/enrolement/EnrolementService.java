@@ -45,6 +45,7 @@ public class EnrolementService {
     static final String PIECE = "PIECE";
     static final String OUVERT = "OUVERT";
     static final String TERMINE = "TERMINE";
+    static final String CONNEXION = "CONNEXION";
 
     private static final SecureRandom RANDOM = new SecureRandom();
     private static final int ESSAIS = 5;
@@ -53,6 +54,11 @@ public class EnrolementService {
             "arrondissement", "sector", "district", "street", "buildingNumber",
             "building", "floor", "unit", "postalCode", "landmark", "additionalInfo",
             "latitude", "longitude", "ville", "adresse");
+    private static final List<String> ADRESSE_FICHE = List.of(
+            "countryCode", "regionCode", "provinceCode", "communeCode", "city",
+            "arrondissement", "sector", "district", "street", "buildingNumber",
+            "building", "floor", "unit", "postalCode", "landmark", "additionalInfo",
+            "latitude", "longitude");
     private static final Map<String, String> ADRESSE_REQUISE = Map.of(
             "countryCode", "Pays",
             "regionCode", "Région",
@@ -75,6 +81,9 @@ public class EnrolementService {
     private final AnnuaireFse annuaire;
     private final InfosOmnicanal infos;
     private final LimiteEnrolement limites;
+    private final OffreEnrolement offre;
+    private final AliasPortefeuille alias;
+    private final ConnexionIdentite connexion;
 
     public EnrolementService(
             EnrolementCompteRepository comptes,
@@ -87,7 +96,10 @@ public class EnrolementService {
             EnrollmentProperties properties,
             AnnuaireFse annuaire,
             InfosOmnicanal infos,
-            LimiteEnrolement limites
+            LimiteEnrolement limites,
+            OffreEnrolement offre,
+            AliasPortefeuille alias,
+            ConnexionIdentite connexion
     ) {
         this.comptes = comptes;
         this.dossiers = dossiers;
@@ -100,6 +112,9 @@ public class EnrolementService {
         this.annuaire = annuaire;
         this.infos = infos;
         this.limites = limites;
+        this.offre = offre;
+        this.alias = alias;
+        this.connexion = connexion;
     }
 
     public List<ParcoursPays> pays() {
@@ -112,6 +127,22 @@ public class EnrolementService {
 
     public List<AnnuaireFse.Indicatif> indicatifs() {
         return annuaire.indicatifs();
+    }
+
+    /**
+     * Recherche GET INFOS : la fiche omnicanal du numéro, sans ouvrir de dossier d'enrôlement.
+     */
+    public Fiche rechercher(String codeFse, String indicatif, String telephone) {
+        String local = chiffres(telephone, "Le numéro de téléphone est requis");
+        String code = indicatif == null || indicatif.isBlank() ? "226" : indicatifChiffres(indicatif);
+        if (local.startsWith(code) && local.length() > code.length() + 5) {
+            local = local.substring(code.length());
+        }
+        String fse = codeFse == null || codeFse.isBlank() ? "0011" : codeFse.trim();
+        InfosOmnicanal.Reconnaissance reconnu = infos.getInfos(fse, code, local)
+                .orElseThrow(() -> new NoSuchElementException("Aucun compte pour ce numéro"));
+        Map<String, String> champs = reconnu.champs() == null ? Map.of() : reconnu.champs();
+        return new Fiche(reconnu.nom(), reconnu.prenom(), local, champs.get("compte"), lignes(champs));
     }
 
     @Transactional
@@ -174,7 +205,7 @@ public class EnrolementService {
         if (trouves.size() > 1) {
             return new Vue(null, "CHOIX", null, null, null, null, trouves.stream()
                     .map(compte -> new Vue.Choix(compte.getMaison(), libelle(compte.getMaison())))
-                    .toList(), EnrolementWorkflow.NOM);
+                    .toList(), EnrolementWorkflow.NOM, List.of(), false, null);
         }
         return emettre(trouves.getFirst(), saisi);
     }
@@ -211,6 +242,10 @@ public class EnrolementService {
         dossier.setCodeHash(null);
         dossier.setCodeExpireAt(null);
         passer(dossier, MONEY.equals(dossier.getOrigine()) ? ENTRE : DOSSIER);
+        if (ENTRE.equals(dossier.getStatut())) {
+            rattacherSiConnue(dossier);
+            poserAlias(dossier);
+        }
         return vue(dossier, null);
     }
 
@@ -420,6 +455,7 @@ public class EnrolementService {
             dossier.setSelfieDocumentId(documentId);
         }
         dossier.setUpdatedAt(Instant.now());
+        rattacherPieces(dossier);
         return vue(dossier, null);
     }
 
@@ -477,8 +513,12 @@ public class EnrolementService {
         compte.setTelephone(dossier.getTelephone());
         comptes.save(compte);
         dossier.setNumeroOuvert(numero);
-        limites.appliquer(partyId, immediat ? "CREATION" : "IDENTIFICATION");
+        String choix = immediat ? "CREATION" : "IDENTIFICATION";
+        limites.appliquer(partyId, choix);
+        offre.appliquer(partyId, choix);
+        rattacherPieces(dossier);
         passer(dossier, OUVERT);
+        passer(dossier, CONNEXION);
         return vue(dossier, null);
     }
 
@@ -501,7 +541,63 @@ public class EnrolementService {
             dossier.setPartyId(parties.save(party).getId());
         }
         limites.appliquer(dossier.getPartyId(), "REFUS");
+        offre.appliquer(dossier.getPartyId(), "REFUS");
+        rattacherPieces(dossier);
         passer(dossier, TERMINE);
+        passer(dossier, CONNEXION);
+        return vue(dossier, null);
+    }
+
+    /**
+     * Après le récap d'un compte reconnu. Si la personne n'est pas dans l'identité,
+     * elle est créée comme à l'ouverture d'un compte : fiche active, KYC LIGHT,
+     * profil de limite CREATION, et le numéro Coris Money déjà connu.
+     */
+    @Transactional
+    public Vue enregistrer(UUID id) {
+        Enrolement dossier = charger(id);
+        if (!ENTRE.equals(dossier.getStatut())) {
+            throw new IllegalArgumentException("Le compte n'est pas encore reconnu");
+        }
+        rattacherSiConnue(dossier);
+        if (dossier.getPartyId() == null) {
+            creerCommeOuverture(dossier);
+        } else {
+            offre.appliquer(dossier.getPartyId(), "CREATION");
+        }
+        poserAlias(dossier);
+        passer(dossier, CONNEXION);
+        return vue(dossier, null);
+    }
+
+    @Transactional
+    public Vue connecter(UUID id, String motDePasse) {
+        Enrolement dossier = charger(id);
+        if (!CONNEXION.equals(dossier.getStatut())
+                && !ENTRE.equals(dossier.getStatut())
+                && !OUVERT.equals(dossier.getStatut())
+                && !TERMINE.equals(dossier.getStatut())) {
+            throw new IllegalArgumentException("La connexion n'est pas encore ouverte");
+        }
+        if (dossier.getPartyId() == null) {
+            throw new IllegalArgumentException("La personne n'est pas encore enregistrée");
+        }
+        if (motDePasse == null || motDePasse.length() < 8) {
+            throw new IllegalArgumentException("Le mot de passe doit contenir au moins 8 caractères");
+        }
+        String email = dossier.getComplements() == null ? null : dossier.getComplements().get("email");
+        connexion.ouvrir(
+                dossier.getTenantId(),
+                dossier.getPartyId(),
+                dossier.getTelephone(),
+                dossier.getPrenom(),
+                dossier.getNom(),
+                email,
+                motDePasse
+        );
+        if (!CONNEXION.equals(dossier.getStatut())) {
+            passer(dossier, CONNEXION);
+        }
         return vue(dossier, null);
     }
 
@@ -537,6 +633,9 @@ public class EnrolementService {
         Enrolement dossier = nouveau(maison, null, saisi, saisi);
         dossier.setNom(reconnaissance.nom());
         dossier.setPrenom(reconnaissance.prenom());
+        if (reconnaissance.champs() != null && !reconnaissance.champs().isEmpty()) {
+            dossier.setComplements(new java.util.LinkedHashMap<>(reconnaissance.champs()));
+        }
         dossiers.save(dossier);
         return vue(dossier, codeEnClair(dossier));
     }
@@ -599,7 +698,7 @@ public class EnrolementService {
     private Vue vue(Enrolement dossier, String code) {
         if (code != null) {
             return new Vue(dossier.getId(), dossier.getStatut(), dossier.getOrigine(), null, null, code, List.of(),
-                    dossier.getWorkflowCode());
+                    dossier.getWorkflowCode(), List.of(), false, null);
         }
         String nom = null;
         if (dossier.getPartyId() != null && dossier.getPrenom() == null) {
@@ -614,7 +713,235 @@ public class EnrolementService {
                 dossier.getNumeroOuvert(),
                 code,
                 List.of(),
-                dossier.getWorkflowCode());
+                dossier.getWorkflowCode(),
+                recap(dossier),
+                dossier.getPartyId() != null,
+                identifiant(dossier));
+    }
+
+    private String identifiant(Enrolement dossier) {
+        if (CONNEXION.equals(dossier.getStatut())) {
+            return dossier.getTelephone();
+        }
+        if (dossier.getPartyId() == null) {
+            return null;
+        }
+        return connexion.identifiant(dossier.getTenantId(), dossier.getTelephone());
+    }
+
+    private void rattacherSiConnue(Enrolement dossier) {
+        if (dossier.getPartyId() != null) {
+            return;
+        }
+        IdentityParty party = trouverParty(dossier);
+        if (party == null) {
+            return;
+        }
+        dossier.setPartyId(party.getId());
+        dossier.setUpdatedAt(Instant.now());
+    }
+
+    private void creerCommeOuverture(Enrolement dossier) {
+        IdentityParty party = new IdentityParty();
+        party.setTenantId(dossier.getTenantId());
+        party.setCode("ENR-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
+        party.setKind(PartyKind.PERSON);
+        String affiche = dossier.getPrenom() == null ? dossier.getNom() : dossier.getPrenom() + " " + dossier.getNom();
+        party.setDisplayName(affiche == null || affiche.isBlank() ? dossier.getTelephone() : affiche.trim());
+        party.setPhone(dossier.getTelephone());
+        party.setKycLevel("LIGHT");
+        party.setCustomerStatus("ACTIVE");
+        party.setActive(true);
+        UUID partyId = parties.save(party).getId();
+        dossier.setPartyId(partyId);
+        String numero = numeroConnu(dossier);
+        if (!comptes.existsByTenantIdAndMaisonAndNumero(dossier.getTenantId(), MONEY, numero)) {
+            EnrolementCompte compte = new EnrolementCompte();
+            compte.setTenantId(dossier.getTenantId());
+            compte.setMaison(MONEY);
+            compte.setNumero(numero);
+            compte.setPartyId(partyId);
+            compte.setTelephone(dossier.getTelephone());
+            comptes.save(compte);
+        }
+        dossier.setNumeroOuvert(numero);
+        limites.appliquer(partyId, "CREATION");
+        offre.appliquer(partyId, "CREATION");
+        dossier.setUpdatedAt(Instant.now());
+    }
+
+    private IdentityParty trouverParty(Enrolement dossier) {
+        String tenant = dossier.getTenantId();
+        for (EnrolementCompte compte : comptes.findByTenantIdAndNumero(tenant, numeroConnu(dossier))) {
+            if (!MONEY.equals(compte.getMaison()) || compte.getPartyId() == null) {
+                continue;
+            }
+            IdentityParty party = parties.findById(compte.getPartyId()).orElse(null);
+            if (party != null) {
+                return party;
+            }
+        }
+        String attendu = nomAttendu(dossier);
+        if (attendu == null) {
+            return null;
+        }
+        for (IdentityParty party : parties.findByTenantIdAndPhone(tenant, dossier.getTelephone())) {
+            if (party.getDisplayName() != null && party.getDisplayName().trim().equalsIgnoreCase(attendu)) {
+                return party;
+            }
+        }
+        return null;
+    }
+
+    private static String nomAttendu(Enrolement dossier) {
+        if (dossier.getPrenom() == null) {
+            return dossier.getNom() == null ? null : dossier.getNom().trim();
+        }
+        return (dossier.getPrenom() + " " + dossier.getNom()).trim();
+    }
+
+    /** Numéro, validité et nationalité déclarés sur le dernier dossier de la personne. */
+    @Transactional(readOnly = true)
+    public PieceDeclaree pieceDeclaree(UUID partyId) {
+        for (Enrolement dossier : dossiers.findByPartyIdOrderByUpdatedAtDesc(partyId)) {
+            Map<String, String> complements = dossier.getComplements();
+            if (complements == null) {
+                continue;
+            }
+            String type = complements.get("typeDocument");
+            String numero = complements.get("numeroPiece");
+            if ((type == null || type.isBlank()) && (numero == null || numero.isBlank())) {
+                continue;
+            }
+            return new PieceDeclaree(
+                    vide(type),
+                    vide(numero),
+                    vide(complements.get("dateValidite")),
+                    vide(complements.get("nationalite"))
+            );
+        }
+        return new PieceDeclaree(null, null, null, null);
+    }
+
+    public record PieceDeclaree(String typeDocument, String numeroPiece, String dateValidite, String nationalite) {
+    }
+
+    /** État civil, adresse et comptes connus par les dossiers de la personne. */
+    @Transactional(readOnly = true)
+    public DossierFiche dossierFiche(UUID partyId) {
+        String nom = null;
+        String prenom = null;
+        String naissance = null;
+        String sexe = null;
+        String lieu = null;
+        String nationalite = null;
+        Map<String, String> adresse = new LinkedHashMap<>();
+        for (Enrolement dossier : dossiers.findByPartyIdOrderByUpdatedAtDesc(partyId)) {
+            if (nom == null) {
+                nom = vide(dossier.getNom());
+            }
+            if (prenom == null) {
+                prenom = vide(dossier.getPrenom());
+            }
+            if (naissance == null && dossier.getDateNaissance() != null) {
+                naissance = dossier.getDateNaissance().toString();
+            }
+            Map<String, String> complements = dossier.getComplements();
+            if (complements == null) {
+                continue;
+            }
+            if (sexe == null) {
+                sexe = vide(complements.get("sexe"));
+            }
+            if (lieu == null) {
+                lieu = vide(complements.get("lieuNaissance"));
+            }
+            if (nationalite == null) {
+                nationalite = vide(complements.get("nationalite"));
+            }
+            for (String cle : ADRESSE_FICHE) {
+                if (adresse.containsKey(cle)) {
+                    continue;
+                }
+                String valeur = vide(complements.get(cle));
+                if (valeur != null) {
+                    adresse.put(cle, valeur);
+                }
+            }
+        }
+        Map<String, CompteOuvert> comptes = new LinkedHashMap<>();
+        for (EnrolementCompte compte : this.comptes.findByPartyId(partyId)) {
+            String numero = vide(compte.getNumero());
+            if (numero == null) {
+                continue;
+            }
+            String maison = vide(compte.getMaison());
+            comptes.putIfAbsent((maison == null ? "" : maison) + "|" + numero, new CompteOuvert(maison, numero));
+        }
+        return new DossierFiche(nom, prenom, naissance, sexe, lieu, nationalite, adresse, List.copyOf(comptes.values()));
+    }
+
+    public record DossierFiche(
+            String nom,
+            String prenom,
+            String dateNaissance,
+            String sexe,
+            String lieuNaissance,
+            String nationalite,
+            Map<String, String> adresse,
+            List<CompteOuvert> comptes
+    ) {
+    }
+
+    public record CompteOuvert(String maison, String numero) {
+    }
+
+    private static String vide(String valeur) {
+        return valeur == null || valeur.isBlank() ? null : valeur.trim();
+    }
+
+    private void rattacherPieces(Enrolement dossier) {
+        if (dossier.getPartyId() == null) {
+            return;
+        }
+        coffre.attribuer(dossier.getRectoDocumentId(), dossier.getPartyId());
+        coffre.attribuer(dossier.getVersoDocumentId(), dossier.getPartyId());
+        coffre.attribuer(dossier.getSelfieDocumentId(), dossier.getPartyId());
+    }
+
+    private void poserAlias(Enrolement dossier) {
+        if (dossier.getPartyId() == null || dossier.getComplements() == null) {
+            return;
+        }
+        String compte = dossier.getComplements().get("compte");
+        if (compte == null || compte.isBlank()) {
+            return;
+        }
+        String libelle = dossier.getPrenom() == null ? dossier.getNom() : dossier.getPrenom() + " " + dossier.getNom();
+        alias.assurer(dossier.getTenantId(), dossier.getPartyId(), compte.trim(), libelle);
+    }
+
+    private static String numeroConnu(Enrolement dossier) {
+        String compte = dossier.getComplements() == null ? null : dossier.getComplements().get("compte");
+        if (compte != null && !compte.isBlank()) {
+            return compte.trim();
+        }
+        return dossier.getTelephone();
+    }
+
+    private static List<Vue.Ligne> recap(Enrolement dossier) {
+        Map<String, String> champs = dossier.getComplements();
+        if (champs == null || champs.isEmpty()) {
+            return List.of();
+        }
+        List<Vue.Ligne> lignes = new java.util.ArrayList<>();
+        for (Map.Entry<String, String> libelle : RECAP) {
+            String valeur = champs.get(libelle.getKey());
+            if (valeur != null && !valeur.isBlank()) {
+                lignes.add(new Vue.Ligne(libelle.getValue(), valeur));
+            }
+        }
+        return lignes;
     }
 
     private Enrolement charger(UUID id) {
@@ -706,6 +1033,9 @@ public class EnrolementService {
         }
     }
 
+    public record Fiche(String nom, String prenom, String telephone, String compte, List<Vue.Ligne> lignes) {
+    }
+
     public record Vue(
             UUID id,
             String etape,
@@ -714,9 +1044,39 @@ public class EnrolementService {
             String numeroCompte,
             String code,
             List<Choix> choix,
-            String workflow
+            String workflow,
+            List<Ligne> recap,
+            boolean connu,
+            String identifiant
     ) {
         public record Choix(String maison, String libelle) {
         }
+
+        public record Ligne(String libelle, String valeur) {
+        }
     }
+
+    private static List<Vue.Ligne> lignes(Map<String, String> champs) {
+        List<Vue.Ligne> lignes = new java.util.ArrayList<>();
+        for (Map.Entry<String, String> entree : RECAP) {
+            String valeur = champs.get(entree.getKey());
+            if (valeur != null && !valeur.isBlank()) {
+                lignes.add(new Vue.Ligne(entree.getValue(), valeur));
+            }
+        }
+        return lignes;
+    }
+
+    private static final List<Map.Entry<String, String>> RECAP = List.of(
+            Map.entry("nom", "Nom"),
+            Map.entry("prenom", "Prénom"),
+            Map.entry("sexe", "Sexe"),
+            Map.entry("dateNaissance", "Date de naissance"),
+            Map.entry("lieuNaissance", "Lieu de naissance"),
+            Map.entry("piece", "Pièce"),
+            Map.entry("telephone", "Téléphone"),
+            Map.entry("compte", "Compte"),
+            Map.entry("email", "E-mail"),
+            Map.entry("adresse", "Adresse")
+    );
 }

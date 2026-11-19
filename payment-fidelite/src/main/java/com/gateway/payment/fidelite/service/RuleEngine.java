@@ -39,7 +39,10 @@ public class RuleEngine {
         if (!covers(root.get("unite"), event)) {
             return Outcome.skipped("Unité destinataire différente");
         }
-        long points = calculate(root.get("calculation"), event);
+        if ("WINDOW".equals(text(root.get("calculation"), "type"))) {
+            return Outcome.skipped("Fenetre");
+        }
+        long points = calculate(root.get("calculation"), event) + bonus(root.get("bonus"), event);
         JsonNode limits = root.get("limits");
         if (limits != null && limits.hasNonNull("maxPointsPerTransaction")) {
             points = Math.min(points, limits.get("maxPointsPerTransaction").asLong());
@@ -92,7 +95,7 @@ public class RuleEngine {
         }
         String type = text(calculation, "type");
         if ("FIXED".equals(type)) {
-            return calculation.path("points").asLong(0);
+            return multiplier(calculation, calculation.path("points").asLong(0));
         }
         if (!"PROPORTIONAL".equals(type)) {
             return 0;
@@ -104,7 +107,34 @@ public class RuleEngine {
             return 0;
         }
         RoundingMode mode = rounding(text(calculation, "rounding"));
-        return amount.divide(unit, 0, mode).multiply(perUnit).setScale(0, mode).longValue();
+        long points = amount.divide(unit, 0, mode).multiply(perUnit).setScale(0, mode).longValue();
+        return multiplier(calculation, points);
+    }
+
+    private long multiplier(JsonNode calculation, long points) {
+        if (points <= 0 || calculation == null || !calculation.hasNonNull("multiplier")) {
+            return points;
+        }
+        BigDecimal factor = calculation.get("multiplier").decimalValue();
+        if (factor.signum() <= 0) {
+            return 0;
+        }
+        return BigDecimal.valueOf(points).multiply(factor).setScale(0, RoundingMode.FLOOR).longValue();
+    }
+
+    private long bonus(JsonNode bonuses, Evenement event) {
+        if (bonuses == null || !bonuses.isArray()) {
+            return 0;
+        }
+        long total = 0;
+        for (JsonNode bonus : bonuses) {
+            JsonNode when = bonus.get("when");
+            if (when != null && !when.isNull() && !matches(when, event)) {
+                continue;
+            }
+            total += bonus.path("points").asLong(0);
+        }
+        return total;
     }
 
     private boolean matches(JsonNode node, Evenement event) {

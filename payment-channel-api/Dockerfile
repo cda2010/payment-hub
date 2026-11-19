@@ -8,6 +8,7 @@ COPY payment-domain/pom.xml payment-domain/pom.xml
 COPY payment-orchestration/pom.xml payment-orchestration/pom.xml
 COPY payment-application/pom.xml payment-application/pom.xml
 COPY payment-channel-api/pom.xml payment-channel-api/pom.xml
+COPY payment-api-gateway/pom.xml payment-api-gateway/pom.xml
 COPY payment-domain/src payment-domain/src
 COPY payment-orchestration/src payment-orchestration/src
 COPY payment-application/src payment-application/src

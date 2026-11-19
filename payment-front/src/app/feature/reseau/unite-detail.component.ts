@@ -13,6 +13,9 @@ import { statutLabel, statutSeverity, typeIcon, typeLabel, typeSeverity } from '
 import { UniteAliasesComponent } from './unite-aliases.component';
 import { UniteFormDialogComponent } from './unite-form-dialog.component';
 import { UniteProfilsComponent } from './unite-profils.component';
+import { UniteAffectationsComponent } from './unite-affectations.component';
+
+import { UniteUtilisateursComponent } from './unite-utilisateurs.component';
 
 /** Fiche d'une unité : position dans l'arbre, unités rattachées et regroupements qui la couvrent ; ou fiche d'un regroupement. */
 @Component({
@@ -29,7 +32,9 @@ import { UniteProfilsComponent } from './unite-profils.component';
     RegroupementMembresComponent,
     UniteAliasesComponent,
     UniteFormDialogComponent,
-    UniteProfilsComponent
+    UniteAffectationsComponent,
+    UniteProfilsComponent,
+    UniteUtilisateursComponent
   ],
   template: `
     <div class="gw-console-page">
@@ -135,6 +140,8 @@ import { UniteProfilsComponent } from './unite-profils.component';
           </dl>
         </div>
 
+        <app-unite-utilisateurs [uniteId]="u.id" [peutEcrire]="peutEcrire()" />
+        <app-unite-affectations [uniteId]="u.id" [peutEcrire]="peutEcrire()" />
         <app-unite-profils [uniteId]="u.id" [peutEcrire]="peutEcrire()" kind="SERVICE" [montreOffre]="true" />
         <app-unite-profils [uniteId]="u.id" [peutEcrire]="peutEcrire()" kind="TARIFF" />
         <app-unite-profils [uniteId]="u.id" [peutEcrire]="peutEcrire()" kind="LIMIT" />

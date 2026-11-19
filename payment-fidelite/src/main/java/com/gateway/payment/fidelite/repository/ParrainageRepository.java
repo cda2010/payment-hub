@@ -2,6 +2,7 @@ package com.gateway.payment.fidelite.repository;
 
 import com.gateway.payment.fidelite.domain.Parrainage;
 import com.gateway.payment.fidelite.domain.ParrainageStatut;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.Instant;
@@ -10,6 +11,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ParrainageRepository extends JpaRepository<Parrainage, UUID> {
+
+    @EntityGraph(attributePaths = "programme")
+    List<Parrainage> findByProgramme_TenantIdOrderByCreatedAtDesc(String tenantId);
+
+    @EntityGraph(attributePaths = "programme")
+    List<Parrainage> findByProgramme_IdOrderByCreatedAtDesc(UUID programmeId);
 
     Optional<Parrainage> findByCodeIgnoreCase(String code);
 

@@ -34,6 +34,9 @@ class EnrolementServiceTest {
     @Mock CatalogueEnrolement catalogue;
     @Mock PiecesEnrolement pieces;
     @Mock LimiteEnrolement limites;
+    @Mock OffreEnrolement offre;
+    @Mock AliasPortefeuille alias;
+    @Mock ConnexionIdentite connexion;
 
     EnrolementService service;
     EnrolementCompte awa;
@@ -44,7 +47,7 @@ class EnrolementServiceTest {
         EnrollmentProperties properties = new EnrollmentProperties();
         properties.setExposeCode(true);
         service = new EnrolementService(comptes, dossiers, passages, parties, coffre, catalogue, pieces, properties,
-                new AnnuaireFse(properties), new InfosOmnicanal(properties, new ObjectMapper()), limites);
+                new AnnuaireFse(properties), new InfosOmnicanal(properties, new ObjectMapper()), limites, offre, alias, connexion);
         lenient().when(passages.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
         lenient().when(coffre.deposer(any(), any(), any(), any(), any(), any())).thenReturn(UUID.randomUUID());
         lenient().when(catalogue.pour(any())).thenReturn(parcours("BF", true));
@@ -137,7 +140,7 @@ class EnrolementServiceTest {
 
         EnrolementService.Vue ouvert = service.ouvrir(code.id());
 
-        assertThat(ouvert.etape()).isEqualTo("OUVERT");
+        assertThat(ouvert.etape()).isEqualTo("CONNEXION");
         assertThat(ouvert.numeroCompte()).startsWith("226");
     }
 

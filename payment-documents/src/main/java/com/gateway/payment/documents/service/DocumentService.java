@@ -118,6 +118,18 @@ public class DocumentService {
     }
 
     @Transactional
+    public DocumentView attach(UUID id, String ownerKind, String ownerId) {
+        if (!StringUtils.hasText(ownerKind) || !StringUtils.hasText(ownerId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ownerKind et ownerId requis");
+        }
+        StoredDocument doc = requireActive(id);
+        doc.setOwnerKind(ownerKind.trim().toUpperCase(Locale.ROOT));
+        doc.setOwnerId(ownerId.trim());
+        repository.save(doc);
+        return toView(doc);
+    }
+
+    @Transactional
     public DocumentView updateStatus(UUID id, String statusRaw) {
         StoredDocument doc = requireActive(id);
         DocumentStatus status;

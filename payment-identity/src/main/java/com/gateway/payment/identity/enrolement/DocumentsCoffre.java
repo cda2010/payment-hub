@@ -89,6 +89,25 @@ public class DocumentsCoffre implements CoffreDocuments {
         }
     }
 
+    @Override
+    public void attribuer(UUID documentId, UUID partyId) {
+        String url = enrollment.getDocumentsUrl();
+        if (url == null || url.isBlank() || documentId == null || partyId == null) {
+            return;
+        }
+        try {
+            http.patch()
+                    .uri(url.replaceAll("/+$", "") + "/" + documentId + "/owner")
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + jeton())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(Map.of("ownerKind", "PARTY", "ownerId", partyId.toString()))
+                    .retrieve()
+                    .toBodilessEntity();
+        } catch (Exception e) {
+            throw new IllegalStateException("Le document n'a pas été rattaché à la personne");
+        }
+    }
+
     private String jeton() {
         SecretKey cle = Keys.hmacShaKeyFor(security.jwt().secret().getBytes(StandardCharsets.UTF_8));
         Instant maintenant = Instant.now();

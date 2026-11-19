@@ -13,18 +13,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
-/** Récompense échangeable contre des points, dans un programme. */
 @Entity
 @Table(
-        name = "recompense",
-        uniqueConstraints = @UniqueConstraint(name = "recompense_programme_code_uk", columnNames = {"programme_id", "code"})
+        name = "coalition_membre",
+        uniqueConstraints = @UniqueConstraint(
+                name = "coalition_membre_pk",
+                columnNames = {"programme_id", "marchand_id"})
 )
 @Getter
 @Setter
 @NoArgsConstructor
-public class Recompense {
+public class CoalitionMembre {
 
     @Id
     @UuidGenerator
@@ -34,24 +36,9 @@ public class Recompense {
     @JoinColumn(name = "programme_id", nullable = false)
     private Programme programme;
 
-    @Column(nullable = false, length = 40)
-    private String code;
+    @Column(name = "marchand_id", nullable = false)
+    private UUID marchandId;
 
-    @Column(nullable = false, length = 120)
-    private String titre;
-
-    @Column(nullable = false, length = 240)
-    private String description;
-
-    @Column(nullable = false)
-    private int cout;
-
-    @Column(nullable = false, length = 80)
-    private String icone;
-
-    @Column(nullable = false, length = 24)
-    private String categorie;
-
-    @Column(nullable = false)
-    private int position;
+    @Column(name = "part_pct", nullable = false, precision = 6, scale = 2)
+    private BigDecimal partPct;
 }

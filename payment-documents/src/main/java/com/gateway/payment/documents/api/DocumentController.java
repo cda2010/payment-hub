@@ -1,6 +1,7 @@
 package com.gateway.payment.documents.api;
 
 import com.gateway.payment.documents.api.dto.DocumentDtos.DocumentView;
+import com.gateway.payment.documents.api.dto.DocumentDtos.OwnerUpdate;
 import com.gateway.payment.documents.api.dto.DocumentDtos.StatusUpdate;
 import com.gateway.payment.documents.api.dto.DocumentDtos.UploadMeta;
 import com.gateway.payment.documents.service.DocumentService;
@@ -83,8 +84,15 @@ public class DocumentController {
         return documents.listByOwner(ownerKind, ownerId);
     }
 
+    @PatchMapping("/{id}/owner")
+    @PreAuthorize("hasAnyRole('ADMIN','CONFIG_MANAGER','OPERATOR')")
+    @Operation(summary = "Rattacher le document à un propriétaire (personne, dossier…)")
+    public DocumentView attach(@PathVariable UUID id, @Valid @RequestBody OwnerUpdate body) {
+        return documents.attach(id, body.ownerKind(), body.ownerId());
+    }
+
     @PatchMapping("/{id}/status")
-    @PreAuthorize("hasAnyRole('ADMIN','CONFIG_MANAGER','OPERATOR','COMPLIANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN','CONFIG_MANAGER','OPERATOR','GROUP_ADMIN','COMPLIANCE')")
     @Operation(summary = "Mettre à jour le statut (VERIFIED / REJECTED)")
     public DocumentView updateStatus(@PathVariable UUID id, @Valid @RequestBody StatusUpdate body) {
         return documents.updateStatus(id, body.status());

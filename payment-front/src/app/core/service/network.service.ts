@@ -326,4 +326,91 @@ export class NetworkService {
   modele(objet: ObjetImport, format: FormatModele): Observable<Blob> {
     return this.http.get(`${this.base}/imports/modeles/${objet}`, { params: { format }, responseType: 'blob' });
   }
+
+  /** Personnes de l'unité : un administrateur, des employés (caissier ou un autre rôle). */
+  utilisateurs(uniteId: string): Observable<UtilisateurUnite[]> {
+    return this.http.get<UtilisateurUnite[]>(`${this.base}/unites/${uniteId}/utilisateurs`);
+  }
+
+  creerUtilisateur(uniteId: string, body: CreationUtilisateurRequest): Observable<UtilisateurUnite> {
+    return this.http.post<UtilisateurUnite>(`${this.base}/unites/${uniteId}/utilisateurs`, body);
+  }
+
+  activerUtilisateur(uniteId: string, utilisateurId: string): Observable<UtilisateurUnite> {
+    return this.http.post<UtilisateurUnite>(`${this.base}/unites/${uniteId}/utilisateurs/${utilisateurId}/activer`, {});
+  }
+
+  desactiverUtilisateur(uniteId: string, utilisateurId: string): Observable<UtilisateurUnite> {
+    return this.http.post<UtilisateurUnite>(`${this.base}/unites/${uniteId}/utilisateurs/${utilisateurId}/desactiver`, {});
+  }
+
+  reinitialiserMotDePasse(
+    uniteId: string,
+    utilisateurId: string,
+    body: { canal?: string; telephone?: string; email?: string } = {}
+  ): Observable<void> {
+    return this.http.post<void>(`${this.base}/unites/${uniteId}/utilisateurs/${utilisateurId}/mot-de-passe`, body);
+  }
+
+  pointsDeVente(uniteId: string): Observable<PointVente[]> {
+    return this.http.get<PointVente[]>(`${this.base}/unites/${uniteId}/points-de-vente`);
+  }
+
+  affectations(uniteId: string): Observable<AffectationCaissier[]> {
+    return this.http.get<AffectationCaissier[]>(`${this.base}/unites/${uniteId}/affectations`);
+  }
+
+  affecterCaissier(pointVenteId: string, body: { utilisateurId: string; debut: string; fin?: string }): Observable<AffectationCaissier> {
+    return this.http.post<AffectationCaissier>(`${this.base}/points-de-vente/${pointVenteId}/affectations`, body);
+  }
+
+  desaffecterCaissier(affectationId: string, motif: string): Observable<AffectationCaissier> {
+    return this.http.post<AffectationCaissier>(`${this.base}/affectations/${affectationId}/desaffecter`, { motif });
+  }
+}
+
+/** Personne rattachée à une unité du réseau. Le rôle est un code : ADMIN, CAISSIER, ou un autre. */
+export interface UtilisateurUnite {
+  id: string;
+  uniteId: string;
+  identifiant: string;
+  nom: string;
+  role: string;
+  statut: 'ACTIF' | 'INACTIF';
+  telephone?: string | null;
+  email?: string | null;
+  canal?: 'SMS' | 'EMAIL' | null;
+  nouveauCompte?: boolean;
+}
+
+export interface PointVente {
+  id: string;
+  uniteId: string;
+  code: string;
+  libelle: string;
+  statut: string;
+}
+
+export interface AffectationCaissier {
+  id: string;
+  pointVenteId: string;
+  pointCode: string;
+  pointLibelle: string;
+  utilisateurId: string;
+  login: string;
+  nom: string;
+  debut: string;
+  fin?: string | null;
+  motif?: string | null;
+  statut: 'ACTIF' | 'A_VENIR' | 'ECHUE' | 'CLOTUREE';
+  effective: boolean;
+}
+
+export interface CreationUtilisateurRequest {
+  identifiant: string;
+  nom: string;
+  role: string;
+  canal: 'SMS' | 'EMAIL';
+  telephone?: string;
+  email?: string;
 }

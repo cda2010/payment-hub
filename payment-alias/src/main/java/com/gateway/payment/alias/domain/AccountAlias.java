@@ -59,9 +59,18 @@ public class AccountAlias {
     @Column(name = "provider_code", length = 50)
     private String providerCode;
 
+    /** Rôle du compte : CPTEOPERATION, ou une autre étiquette. */
+    @Column(length = 40)
+    private String etiquette;
+
     @Column(nullable = false)
     @Builder.Default
     private boolean active = true;
+
+    /** Compte utilisé quand le client n'en choisit pas un autre. Un seul actif par propriétaire. */
+    @Column(name = "par_defaut", nullable = false)
+    @Builder.Default
+    private boolean parDefaut = false;
 
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;

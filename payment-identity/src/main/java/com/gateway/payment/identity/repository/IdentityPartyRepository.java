@@ -14,5 +14,7 @@ public interface IdentityPartyRepository extends JpaRepository<IdentityParty, UU
 
     Optional<IdentityParty> findByTenantIdAndCode(String tenantId, String code);
 
+    List<IdentityParty> findByTenantIdAndPhone(String tenantId, String phone);
+
     List<IdentityParty> findByTenantIdAndDisplayNameContainingIgnoreCase(String tenantId, String q);
 }

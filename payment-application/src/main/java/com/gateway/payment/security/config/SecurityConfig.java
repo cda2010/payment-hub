@@ -78,6 +78,8 @@ public class SecurityConfig {
                                 "/api/omnicanalPresentation",
                                 "/api/v1/canal/**"
                         ).permitAll()
+                        // Enrôlement : identity appelle GETINFOS sans jeton utilisateur.
+                        .requestMatchers(HttpMethod.POST, "/api/v1/external-omnicanal/boundary").permitAll()
                         // Catalogue publié : lu par les canaux (mobile, portails) avec le token de l'utilisateur final
                         .requestMatchers(HttpMethod.GET,
                                 "/api/v1/admin/catalog-services/published",

@@ -1,17 +1,39 @@
 package com.gateway.payment.divers.api;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Set;
 import java.util.UUID;
 
 public final class CurrentUser {
 
     public static final String PARTY_ID = "partyId";
 
+    private static final Set<String> EXPLOITATION = Set.of(
+            "ROLE_ADMIN",
+            "ROLE_DIRECTEUR",
+            "ROLE_RESPONSABLE_OPERATIONS",
+            "ROLE_CHEF_AGENCE",
+            "ROLE_AUDITOR",
+            "ROLE_OPERATOR",
+            "ROLE_CONFIG_MANAGER");
+
     private CurrentUser() {
+    }
+
+    /** Liste globale des tontines : réservée aux rôles d'exploitation du backoffice. */
+    public static void exigerExploitation() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean autorise = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(authority -> EXPLOITATION.contains(authority.getAuthority()));
+        if (!autorise) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Réservé à l'exploitation");
+        }
     }
 
     public static String username() {

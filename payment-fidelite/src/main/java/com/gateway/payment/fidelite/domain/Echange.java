@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -29,7 +30,7 @@ public class Echange {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "recompense_id", nullable = false)
-    private Recompense recompense;
+    private ProgrammeCatalogueRecompense recompense;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "programme_id", nullable = false)
@@ -49,4 +50,7 @@ public class Echange {
 
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
+
+    @Column(name = "valeur_xof", precision = 19, scale = 2)
+    private BigDecimal valeurXof;
 }

@@ -94,7 +94,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String username = StringUtils.hasText(jwt.getClaimAsString("preferred_username"))
                     ? jwt.getClaimAsString("preferred_username")
                     : jwt.getSubject();
-            return authentication(username, keycloakRoles(jwt));
+            return authentication(username, keycloakRoles(jwt), jwt.getClaimAsString("sid"));
         }
 
         Claims claims = Jwts.parser()
@@ -106,17 +106,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (!"access".equals(claims.get("type", String.class))) {
             return null;
         }
-        return authentication(claims.getSubject(), claims.get("roles") instanceof Collection<?> c ? c : List.of());
+        return authentication(
+                claims.getSubject(),
+                claims.get("roles") instanceof Collection<?> c ? c : List.of(),
+                claims.get("sid", String.class)
+        );
     }
 
-    private static UsernamePasswordAuthenticationToken authentication(String username, Collection<?> roles) {
+    private static UsernamePasswordAuthenticationToken authentication(
+            String username, Collection<?> roles, String sessionId
+    ) {
         List<SimpleGrantedAuthority> authorities = roles.stream()
                 .filter(Objects::nonNull)
                 .map(String::valueOf)
                 .filter(role -> !TECHNICAL_ROLES.contains(role) && !role.startsWith("default-roles-"))
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .toList();
-        return new UsernamePasswordAuthenticationToken(username, null, authorities);
+        return new UsernamePasswordAuthenticationToken(username, sessionId, authorities);
     }
 
     /** Claim {@code roles} (mapper du realm), à défaut {@code realm_access.roles}. */

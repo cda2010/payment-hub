@@ -1,7 +1,7 @@
 package com.gateway.payment.catalog.omnicanal;
 
 import com.gateway.payment.common.domain.PaymentStatus;
-import com.gateway.payment.omnicanal.external.ExternalOmnicanalClient;
+import com.gateway.payment.omnicanal.external.AccesOmnicanal;
 import com.gateway.payment.omnicanal.external.ExternalPresentationRequest;
 import com.gateway.payment.omnicanal.external.ExternalPresentationRequest.ExternalParam;
 import com.gateway.payment.payment.domain.PaymentTransaction;
@@ -32,9 +32,9 @@ public class ExternalOmnicanalCatalogGateway {
     private static final String ACCOUNT_WITHDRAWAL = "009";
     private static final String CASH_TO_ACCOUNT = "003";
 
-    private final ExternalOmnicanalClient client;
+    private final AccesOmnicanal client;
 
-    public ExternalOmnicanalCatalogGateway(ExternalOmnicanalClient client) {
+    public ExternalOmnicanalCatalogGateway(AccesOmnicanal client) {
         this.client = client;
     }
 
@@ -71,7 +71,7 @@ public class ExternalOmnicanalCatalogGateway {
             }
             params = solde;
         }
-        Map<String, Object> body = client.boundary(codeFse, typeMethode, ExternalOmnicanalClient.otrParametre(params));
+        Map<String, Object> body = client.boundary(codeFse, typeMethode, AccesOmnicanal.otrParametre(params));
         return toResult(body, operationCode, typeMethode, codeFse, false);
     }
 

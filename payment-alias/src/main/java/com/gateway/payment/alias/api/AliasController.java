@@ -3,10 +3,13 @@ package com.gateway.payment.alias.api;
 import com.gateway.payment.alias.api.dto.AliasDtos.*;
 import com.gateway.payment.alias.domain.AliasOwnerKind;
 import com.gateway.payment.alias.service.AliasService;
+import com.gateway.payment.alias.service.AliasService.AccesRefuse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,9 +34,10 @@ public class AliasController {
     public List<AliasDto> list(
             @RequestParam(required = false) String tenantId,
             @RequestParam(required = false) AliasOwnerKind ownerKind,
-            @RequestParam(required = false) UUID ownerId
+            @RequestParam(required = false) UUID ownerId,
+            @RequestParam(required = false) String etiquette
     ) {
-        return aliases.list(tenantId, ownerKind, ownerId);
+        return wrapIllegal(() -> aliases.list(tenantId, ownerKind, ownerId, etiquette));
     }
 
     @GetMapping("/{id}")
@@ -56,9 +60,16 @@ public class AliasController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAnyRole('ADMIN','CONFIG_MANAGER','OPERATOR','GROUP_ADMIN')")
-    @Operation(summary = "Créer un alias (ownerKind = PARTY | ORG | UNITE)")
+    @Operation(summary = "Créer un alias (ownerKind = PARTY | ORG | UNITE | POINT_VENTE), avec une étiquette")
     public AliasDto create(@RequestBody AliasRequest body) {
         return wrapIllegal(() -> aliases.create(body));
+    }
+
+    @PostMapping("/{id}/defaut")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Définir cet alias comme compte par défaut de son propriétaire")
+    public AliasDto definirDefaut(@PathVariable UUID id, Authentication auth) {
+        return wrapIllegal(() -> aliases.definirDefaut(id, partyId(auth), backoffice(auth)));
     }
 
     @PutMapping("/{id}")
@@ -79,6 +90,27 @@ public class AliasController {
         });
     }
 
+    private static boolean backoffice(Authentication auth) {
+        if (auth == null) {
+            return false;
+        }
+        for (GrantedAuthority droit : auth.getAuthorities()) {
+            String role = droit.getAuthority();
+            if ("ROLE_ADMIN".equals(role) || "ROLE_CONFIG_MANAGER".equals(role)
+                    || "ROLE_OPERATOR".equals(role) || "ROLE_GROUP_ADMIN".equals(role)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static UUID partyId(Authentication auth) {
+        if (auth == null || !(auth.getCredentials() instanceof UUID id)) {
+            return null;
+        }
+        return id;
+    }
+
     private <T> T wrap(java.util.concurrent.Callable<T> call) {
         try {
             return call.call();
@@ -94,6 +126,8 @@ public class AliasController {
             return call.call();
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AccesRefuse e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {

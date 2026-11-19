@@ -6,10 +6,13 @@ import com.gateway.payment.approval.domain.ApprovalInstance;
 import com.gateway.payment.approval.domain.ApprovalInstanceStatus;
 import com.gateway.payment.approval.domain.ApprovalStepInstance;
 import com.gateway.payment.approval.domain.ApprovalStepStatus;
+import com.gateway.payment.approval.model.ApprovalAssignment;
 import com.gateway.payment.approval.model.ApprovalDecideResult;
 import com.gateway.payment.approval.model.ApprovalLevel;
 import com.gateway.payment.approval.model.ApprovalPolicy;
 import com.gateway.payment.approval.model.ApprovalProfile;
+import com.gateway.payment.bc.IdentityBcClient;
+import com.gateway.payment.bc.IdentityBcClient.OrgApproval;
 import com.gateway.payment.approval.repository.ApprovalDecisionRepository;
 import com.gateway.payment.approval.repository.ApprovalInstanceRepository;
 import com.gateway.payment.approval.repository.ApprovalStepInstanceRepository;
@@ -29,6 +32,7 @@ import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HexFormat;
 import java.util.List;
@@ -51,6 +55,7 @@ public class ApprovalEngine {
     private final ApprovalDecisionRepository decisionRepository;
     private final DmnEvaluateService dmnEvaluateService;
     private final ApprovalIdentitySupport identitySupport;
+    private final IdentityBcClient identityClient;
     private final ObjectProvider<com.gateway.payment.inbox.PartyActionProducer> partyActionProducer;
 
     public ApprovalEngine(
@@ -60,6 +65,7 @@ public class ApprovalEngine {
             ApprovalDecisionRepository decisionRepository,
             ObjectProvider<DmnEvaluateService> dmnEvaluateService,
             ApprovalIdentitySupport identitySupport,
+            IdentityBcClient identityClient,
             ObjectProvider<com.gateway.payment.inbox.PartyActionProducer> partyActionProducer
     ) {
         this.catalogSupport = catalogSupport;
@@ -68,6 +74,7 @@ public class ApprovalEngine {
         this.decisionRepository = decisionRepository;
         this.dmnEvaluateService = dmnEvaluateService.getIfAvailable();
         this.identitySupport = identitySupport;
+        this.identityClient = identityClient;
         this.partyActionProducer = partyActionProducer;
     }
 
@@ -84,15 +91,30 @@ public class ApprovalEngine {
         Map<String, Object> catalogCfg = context.get("catalogConfiguration") instanceof Map<?, ?> m
                 ? (Map<String, Object>) m
                 : Map.of();
-        ApprovalPolicy policy = catalogSupport.parsePolicy(catalogCfg);
+        ApprovalPolicy parsed = catalogSupport.parsePolicy(catalogCfg);
+        Optional<OrgApproval> organisation = corporateApproval(tx, context);
+        final ApprovalPolicy policy = organisation.isPresent() ? organisationPolicy(parsed) : parsed;
 
-        if (!policy.enabled()) {
+        if (organisation.isEmpty() && !policy.enabled()) {
             applyNoApproval(processVarsOut, context);
             return new ResolvedApproval(policy, ApprovalProfile.none(DmnTransferApprovalConfig.PROFILE_NO_APPROVAL), null);
         }
+        if (organisation.isPresent() && !organisation.get().requiresApproval()) {
+            applyNoApproval(processVarsOut, context);
+            log.info("Approval organisation sans circuit paymentId={} org={} rule={}",
+                    tx.getPaymentId(), organisation.get().orgCode(), organisation.get().ruleCode());
+            return new ResolvedApproval(policy, ApprovalProfile.none(DmnTransferApprovalConfig.PROFILE_NO_APPROVAL), null);
+        }
 
-        String profileCode = resolveProfileCode(tx, context, policy);
-        ApprovalProfile profile = catalogSupport.loadProfile(profileCode);
+        String profileCode = organisation
+                .map(OrgApproval::profileCode)
+                .orElseGet(() -> resolveProfileCode(tx, context, policy));
+        ApprovalProfile loaded = catalogSupport.loadProfile(profileCode);
+        ApprovalProfile profile = organisation.map(org -> overlayAssignees(loaded, org)).orElse(loaded);
+        if (organisation.isPresent()) {
+            log.info("Approval organisation paymentId={} org={} rule={} profile={}",
+                    tx.getPaymentId(), organisation.get().orgCode(), organisation.get().ruleCode(), profile.code());
+        }
         String fingerprint = computeFingerprint(context, policy.criticalFields(), tx);
         String initiatedBy = str(context.get(DmnTransferApprovalConfig.CTX_INITIATED_BY));
 
@@ -301,6 +323,70 @@ public class ApprovalEngine {
 
     public Optional<ApprovalInstance> findByPaymentId(String paymentId) {
         return instanceRepository.findByPaymentId(paymentId);
+    }
+
+    /**
+     * Lancement CORPORATE avec un nœud d'organisation : la politique Identity remplace le DMN du produit.
+     * Sans politique prioritaire, l'appelant retombe sur la règle du produit.
+     */
+    private Optional<OrgApproval> corporateApproval(PaymentTransaction tx, Map<String, Object> context) {
+        String audience = firstNonBlank(str(context.get("audience")), str(context.get("productAudience")));
+        if (!"CORPORATE".equalsIgnoreCase(audience)) {
+            return Optional.empty();
+        }
+        UUID orgNodeId = uuid(context.get("orgNodeId"));
+        if (orgNodeId == null) {
+            return Optional.empty();
+        }
+        String product = firstNonBlank(
+                str(context.get("catalogServiceCode")),
+                str(context.get("catalogProductCode")),
+                tx.getServiceType() != null ? tx.getServiceType().name() : null);
+        if (!StringUtils.hasText(product)) {
+            return Optional.empty();
+        }
+        BigDecimal amount = firstPositive(
+                tx.getAmount(),
+                toDecimal(context.get("amount")),
+                toDecimal(context.get("amountDue")));
+        return identityClient.resolveCorporateApproval(
+                orgNodeId,
+                product,
+                amount,
+                integer(context.get("lineCount")),
+                longValue(context.get("maxLineAmount")));
+    }
+
+    private static ApprovalPolicy organisationPolicy(ApprovalPolicy product) {
+        return new ApprovalPolicy(
+                StringUtils.hasText(product.code()) ? product.code() : "ORGANIZATION",
+                true,
+                product.strategy(),
+                product.dmnDecisionKey(),
+                product.initiatorCanApprove(),
+                product.sameUserAcrossLevelsAllowed(),
+                product.formKey(),
+                product.criticalFields());
+    }
+
+    /** Les rôles CHECKER / ADMIN de l'organisation remplacent les groupes du profil catalogue. */
+    private static ApprovalProfile overlayAssignees(ApprovalProfile profile, OrgApproval organisation) {
+        if (organisation.rolesByLevel() == null || organisation.rolesByLevel().isEmpty() || profile.levels().isEmpty()) {
+            return profile;
+        }
+        List<ApprovalLevel> levels = new ArrayList<>();
+        for (ApprovalLevel level : profile.levels()) {
+            String role = organisation.rolesByLevel().get(level.level());
+            if (!StringUtils.hasText(role)) {
+                levels.add(level);
+                continue;
+            }
+            levels.add(new ApprovalLevel(
+                    level.level(),
+                    level.requiredApprovals(),
+                    List.of(ApprovalAssignment.role(role.trim()))));
+        }
+        return new ApprovalProfile(profile.code(), profile.strategy(), levels);
     }
 
     private String resolveProfileCode(PaymentTransaction tx, Map<String, Object> context, ApprovalPolicy policy) {
@@ -536,6 +622,45 @@ public class ApprovalEngine {
             }
         }
         return null;
+    }
+
+    private static UUID uuid(Object v) {
+        if (v == null) {
+            return null;
+        }
+        try {
+            return UUID.fromString(String.valueOf(v).trim());
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+
+    private static Integer integer(Object v) {
+        if (v == null) {
+            return null;
+        }
+        if (v instanceof Number n) {
+            return n.intValue();
+        }
+        try {
+            return Integer.parseInt(String.valueOf(v).trim());
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    private static Long longValue(Object v) {
+        if (v == null) {
+            return null;
+        }
+        if (v instanceof Number n) {
+            return n.longValue();
+        }
+        try {
+            return Long.parseLong(String.valueOf(v).trim());
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     private static String str(Object v) {

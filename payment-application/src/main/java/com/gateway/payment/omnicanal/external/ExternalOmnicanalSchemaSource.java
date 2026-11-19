@@ -22,11 +22,11 @@ import java.util.UUID;
 @Component
 public class ExternalOmnicanalSchemaSource implements OmnicanalSchemaSource {
 
-    private final ExternalOmnicanalClient client;
+    private final AccesOmnicanal client;
     private final ExternalOmnicanalProperties properties;
 
     public ExternalOmnicanalSchemaSource(
-            ExternalOmnicanalClient client,
+            AccesOmnicanal client,
             ExternalOmnicanalProperties properties
     ) {
         this.client = client;

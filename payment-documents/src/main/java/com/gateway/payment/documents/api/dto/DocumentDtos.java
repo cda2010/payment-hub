@@ -27,6 +27,12 @@ public final class DocumentDtos {
     ) {
     }
 
+    public record OwnerUpdate(
+            @NotBlank @Size(max = 32) String ownerKind,
+            @NotBlank @Size(max = 128) String ownerId
+    ) {
+    }
+
     public record DocumentView(
             UUID id,
             String tenantId,

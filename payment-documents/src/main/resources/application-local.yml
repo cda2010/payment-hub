@@ -4,6 +4,11 @@ spring:
     username: documents
     password: documents
 
+# spring-boot:run a pour répertoire le module : les fichiers déjà déposés sont à la racine du dépôt.
+documents:
+  storage:
+    dir: ../data/documents
+
 inbox:
   kafka:
     enabled: true

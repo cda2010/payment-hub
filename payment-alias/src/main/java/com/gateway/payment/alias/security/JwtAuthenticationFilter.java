@@ -94,7 +94,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String username = StringUtils.hasText(jwt.getClaimAsString("preferred_username"))
                     ? jwt.getClaimAsString("preferred_username")
                     : jwt.getSubject();
-            return authentication(username, keycloakRoles(jwt));
+            return authentication(username, keycloakRoles(jwt), partyId(jwt.getClaim("party_id")));
         }
 
         Claims claims = Jwts.parser()
@@ -106,17 +106,34 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (!"access".equals(claims.get("type", String.class))) {
             return null;
         }
-        return authentication(claims.getSubject(), claims.get("roles") instanceof Collection<?> c ? c : List.of());
+        return authentication(claims.getSubject(), claims.get("roles") instanceof Collection<?> c ? c : List.of(),
+                partyId(claims.get("party_id")));
     }
 
-    private static UsernamePasswordAuthenticationToken authentication(String username, Collection<?> roles) {
+    private static UsernamePasswordAuthenticationToken authentication(
+            String username, Collection<?> roles, java.util.UUID partyId
+    ) {
         List<SimpleGrantedAuthority> authorities = roles.stream()
                 .filter(Objects::nonNull)
                 .map(String::valueOf)
                 .filter(role -> !TECHNICAL_ROLES.contains(role) && !role.startsWith("default-roles-"))
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .toList();
-        return new UsernamePasswordAuthenticationToken(username, null, authorities);
+        return new UsernamePasswordAuthenticationToken(username, partyId, authorities);
+    }
+
+    private static java.util.UUID partyId(Object claim) {
+        if (claim == null) {
+            return null;
+        }
+        String valeur = claim instanceof Collection<?> valeurs && !valeurs.isEmpty()
+                ? String.valueOf(valeurs.iterator().next())
+                : String.valueOf(claim);
+        try {
+            return java.util.UUID.fromString(valeur.trim());
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     /** Claim {@code roles} (mapper du realm), à défaut {@code realm_access.roles}. */

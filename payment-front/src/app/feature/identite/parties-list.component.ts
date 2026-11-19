@@ -1,6 +1,6 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
@@ -41,9 +41,9 @@ const STATUTS = [
     <div class="gw-console-page">
       <div class="gw-page-header">
         <div>
-          <h1>Identités</h1>
+          <h1>{{ titre() }}</h1>
           <p class="subtitle">
-            Parties du référentiel — chaque identité a des profils d’offre et des alias de comptes
+            {{ sousTitre() }}
             @if (!loading()) {
               · <strong>{{ total() }}</strong> résultat(s)
             }
@@ -51,7 +51,7 @@ const STATUTS = [
         </div>
         <div class="header-actions">
           @if (peutEcrire()) {
-            <button pButton type="button" icon="pi pi-plus" label="Nouvelle identité" (click)="ouvrirForm(null)"></button>
+            <button pButton type="button" icon="pi pi-plus" [label]="libelleCreation()" (click)="ouvrirForm(null)"></button>
           }
         </div>
       </div>
@@ -63,16 +63,18 @@ const STATUTS = [
           placeholder="Code, nom, téléphone, e-mail…"
           [(ngModel)]="filtre.texte"
         />
-        <p-dropdown
-          name="kind"
-          [options]="kinds"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Type"
-          [showClear]="true"
-          [(ngModel)]="filtre.kind"
-          styleClass="filtre-dd"
-        />
+        @if (!kindFixe) {
+          <p-dropdown
+            name="kind"
+            [options]="kinds"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Type"
+            [showClear]="true"
+            [(ngModel)]="filtre.kind"
+            styleClass="filtre-dd"
+          />
+        }
         <p-dropdown
           name="active"
           [options]="statuts"
@@ -172,7 +174,12 @@ const STATUTS = [
       </div>
     </div>
 
-    <app-party-form-dialog [(visible)]="formVisible" [party]="edition" (saved)="apresSauve($event)" />
+    <app-party-form-dialog
+      [(visible)]="formVisible"
+      [party]="edition"
+      [kindImpose]="kindFixe"
+      (saved)="apresSauve($event)"
+    />
   `,
   styles: `
     .filtres { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
@@ -196,6 +203,7 @@ export class PartiesListComponent implements OnInit {
   private readonly aliasesApi = inject(AliasService);
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   readonly loading = signal(true);
   readonly error = signal<string | null>(null);
@@ -209,6 +217,8 @@ export class PartiesListComponent implements OnInit {
   readonly statuts = STATUTS;
 
   filtre: FiltreParties = {};
+  kindFixe: PartyKind | null = null;
+  private listePrete = false;
   formVisible = false;
   edition: Party | null = null;
   first = 0;
@@ -216,7 +226,32 @@ export class PartiesListComponent implements OnInit {
   private tri: PageRequeteParties['tri'] = null;
   private sens: PageRequeteParties['sens'] = null;
 
+  titre(): string {
+    return this.kindFixe === 'ORGANIZATION'
+      ? 'Entreprises'
+      : this.kindFixe === 'PERSON'
+        ? 'Clients physiques'
+        : 'Identités';
+  }
+
+  sousTitre(): string {
+    return this.kindFixe === 'ORGANIZATION'
+      ? 'Organisations du référentiel — hiérarchie et règles d’approbation sur la fiche'
+      : this.kindFixe === 'PERSON'
+        ? 'Personnes physiques du référentiel — profils d’offre et alias de comptes'
+        : 'Parties du référentiel';
+  }
+
   ngOnInit(): void {
+    this.route.data.subscribe(() => {
+      const kind = (this.route.snapshot.data['partyKind'] as PartyKind | undefined) ?? null;
+      this.kindFixe = kind;
+      this.filtre = { ...this.filtre, kind: kind ?? undefined };
+      if (this.listePrete) {
+        this.rechercher();
+      }
+      this.listePrete = true;
+    });
     this.aliasesApi.lister().subscribe({
       next: (list) => {
         const map: Record<string, AccountAlias[]> = {};
@@ -251,8 +286,12 @@ export class PartiesListComponent implements OnInit {
   }
 
   effacer(): void {
-    this.filtre = {};
+    this.filtre = { kind: this.kindFixe ?? undefined };
     this.rechercher();
+  }
+
+  libelleCreation(): string {
+    return this.kindFixe === 'ORGANIZATION' ? 'Nouvelle entreprise' : 'Nouveau client';
   }
 
   ouvrirForm(p: Party | null): void {
@@ -281,7 +320,8 @@ export class PartiesListComponent implements OnInit {
       tri: this.tri,
       sens: this.sens
     };
-    this.identity.rechercherParties(this.filtre, page).subscribe({
+    const filtre = this.kindFixe ? { ...this.filtre, kind: this.kindFixe } : this.filtre;
+    this.identity.rechercherParties(filtre, page).subscribe({
       next: (p) => {
         this.parties.set(p.contenu);
         this.total.set(p.total);

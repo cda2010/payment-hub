@@ -23,6 +23,7 @@ import com.gateway.payment.orchestration.service.SchemaLegExecutorService;
 import com.gateway.payment.payment.domain.PaymentTransaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -45,22 +46,29 @@ public class CanalPresentationService {
     private final SchemaLegExecutorService legExecutor;
     private final SpecDrivenTransferExecutor specDrivenTransferExecutor;
     private final CanalIdempotencyService idempotencyService;
+    private final OmnicanalExternePort externe;
 
     public CanalPresentationService(
             ChannelPayloadValidator validator,
             LegCompilerService legCompilerService,
             SchemaLegExecutorService legExecutor,
             SpecDrivenTransferExecutor specDrivenTransferExecutor,
-            CanalIdempotencyService idempotencyService
+            CanalIdempotencyService idempotencyService,
+            ObjectProvider<OmnicanalExternePort> externe
     ) {
         this.validator = validator;
         this.legCompilerService = legCompilerService;
         this.legExecutor = legExecutor;
         this.specDrivenTransferExecutor = specDrivenTransferExecutor;
         this.idempotencyService = idempotencyService;
+        this.externe = externe.getIfAvailable();
     }
 
     public CanalTransferResponse boundaryByTypeMethode(String codeFse, String codeMethode, String otrParametre) {
+        if (externe != null && externe.enabled()) {
+            log.info("boundary externe {} / {}", codeFse, codeMethode);
+            return depuisExterne(externe.boundary(codeFse, codeMethode, otrParametre));
+        }
         InterfaceUtilisateur iface = validator.validateBoundaryByTypeMethode(codeFse, codeMethode, otrParametre);
         Map<String, String> userParams = CanalParamParser.parseOtrParametre(otrParametre);
         userParams.putIfAbsent("codeFse", codeFse);
@@ -105,6 +113,42 @@ public class CanalPresentationService {
                 "typeMethode", codeMethode
         ));
         return response;
+    }
+
+    /** Conserve la fiche renvoyée par l'omnicanal (XML, codeErr, message). */
+    private static CanalTransferResponse depuisExterne(Map<String, Object> body) {
+        Map<String, Object> payload = body == null ? Map.of() : body;
+        CanalTransferResponse response = new CanalTransferResponse();
+        response.setCodeErr(codeErr(payload));
+        response.setMsg(texte(payload.get("msg")));
+        response.setText(texte(payload.get("text")));
+        response.setResponseEntity(payload.get("responseEntity"));
+        if (!StringUtils.hasText(response.getCodeErr())) {
+            response.setCodeErr("0");
+        }
+        return response;
+    }
+
+    private static String codeErr(Map<String, Object> payload) {
+        String code = texte(payload.get("codeErr"));
+        if (payload.get("responseEntity") instanceof Map<?, ?> entite) {
+            String interne = texte(entite.get("codeErr"));
+            if (interne != null && !"0".equals(interne)) {
+                return interne;
+            }
+            if (code == null) {
+                return interne;
+            }
+        }
+        return code;
+    }
+
+    private static String texte(Object valeur) {
+        if (valeur == null) {
+            return null;
+        }
+        String texte = String.valueOf(valeur).trim();
+        return texte.isEmpty() ? null : texte;
     }
 
     public CanalTransferResponse omnicanalPresentation(

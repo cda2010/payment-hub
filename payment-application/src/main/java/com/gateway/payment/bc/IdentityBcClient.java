@@ -12,7 +12,10 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -39,6 +42,48 @@ public class IdentityBcClient {
 
     public boolean enabled() {
         return properties.identityEnabled();
+    }
+
+    /**
+     * Politique d'organisation pour un lancement corporate.
+     * Vide si Identity n'a pas de règle prioritaire, ou s'il est injoignable : le produit décide alors.
+     */
+    public Optional<OrgApproval> resolveCorporateApproval(
+            UUID orgNodeId,
+            String productCode,
+            BigDecimal amount,
+            Integer lineCount,
+            Long maxLineAmount
+    ) {
+        if (!enabled() || orgNodeId == null || !StringUtils.hasText(productCode)) {
+            return Optional.empty();
+        }
+        long amountValue = amount == null ? 0L : amount.longValue();
+        try {
+            Map<?, ?> body = http.get()
+                    .uri(uri -> {
+                        var b = uri.path("/api/v1/identity/org-nodes/{id}/approval-resolution")
+                                .queryParam("productCode", productCode.trim())
+                                .queryParam("amount", amountValue);
+                        if (lineCount != null) {
+                            b.queryParam("lineCount", lineCount);
+                        }
+                        if (maxLineAmount != null) {
+                            b.queryParam("maxLineAmount", maxLineAmount);
+                        }
+                        return b.build(orgNodeId);
+                    })
+                    .headers(this::auth)
+                    .retrieve()
+                    .body(Map.class);
+            return Optional.ofNullable(parseApproval(body));
+        } catch (HttpStatusCodeException e) {
+            log.warn("payment-identity résolution approbation {} → {}", orgNodeId, e.getStatusCode().value());
+            return Optional.empty();
+        } catch (Exception e) {
+            log.warn("payment-identity résolution approbation injoignable: {}", e.getMessage());
+            return Optional.empty();
+        }
     }
 
     public Optional<PartyProfile> getParty(UUID partyId) {
@@ -100,6 +145,42 @@ public class IdentityBcClient {
 
     private static String str(Object o) {
         return o == null ? null : String.valueOf(o);
+    }
+
+    private static OrgApproval parseApproval(Map<?, ?> body) {
+        if (body == null || !Boolean.TRUE.equals(body.get("applied"))) {
+            return null;
+        }
+        String profile = str(body.get("profileCode"));
+        if (!StringUtils.hasText(profile)) {
+            return null;
+        }
+        Map<Integer, String> roles = new LinkedHashMap<>();
+        Object rawLevels = body.get("levels");
+        if (rawLevels instanceof List<?> list) {
+            for (Object item : list) {
+                if (!(item instanceof Map<?, ?> level)) {
+                    continue;
+                }
+                int number = level.get("level") instanceof Number n ? n.intValue() : 0;
+                String role = str(level.get("role"));
+                if (number > 0 && StringUtils.hasText(role)) {
+                    roles.put(number, role);
+                }
+            }
+        }
+        return new OrgApproval(profile, str(body.get("orgCode")), str(body.get("ruleCode")), Map.copyOf(roles));
+    }
+
+    public record OrgApproval(
+            String profileCode,
+            String orgCode,
+            String ruleCode,
+            Map<Integer, String> rolesByLevel
+    ) {
+        public boolean requiresApproval() {
+            return profileCode != null && !"NO_APPROVAL".equalsIgnoreCase(profileCode);
+        }
     }
 
     public record PartyProfile(

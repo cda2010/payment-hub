@@ -1,9 +1,16 @@
 package com.gateway.payment.identity.api;
 
+import com.gateway.payment.identity.api.dto.ApprovalDtos.ApprovalPolicyDto;
+import com.gateway.payment.identity.api.dto.ApprovalDtos.ApprovalPolicyRequest;
+import com.gateway.payment.identity.api.dto.ApprovalDtos.ApprovalResolutionDto;
 import com.gateway.payment.identity.api.dto.IdentityDtos.*;
 import com.gateway.payment.identity.domain.IdentityAudience;
 import com.gateway.payment.identity.domain.PartyKind;
 import com.gateway.payment.identity.domain.ProfileKind;
+import com.gateway.payment.identity.enrolement.EnrolementService;
+import com.gateway.payment.identity.enrolement.EnrolementService.DossierFiche;
+import com.gateway.payment.identity.enrolement.EnrolementService.PieceDeclaree;
+import com.gateway.payment.identity.service.ApprovalPolicyService;
 import com.gateway.payment.identity.service.IdentityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,9 +31,17 @@ import java.util.UUID;
 public class IdentityController {
 
     private final IdentityService identity;
+    private final EnrolementService enrolement;
+    private final ApprovalPolicyService approvals;
 
-    public IdentityController(IdentityService identity) {
+    public IdentityController(
+            IdentityService identity,
+            EnrolementService enrolement,
+            ApprovalPolicyService approvals
+    ) {
         this.identity = identity;
+        this.enrolement = enrolement;
+        this.approvals = approvals;
     }
 
     // ——— Parties (clients / organisations) ———
@@ -61,6 +76,20 @@ public class IdentityController {
     @Operation(summary = "Détail d'une party")
     public PartyDto getParty(@PathVariable UUID id) {
         return wrap(() -> identity.getParty(id));
+    }
+
+    @GetMapping("/parties/{id}/piece")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Pièce d'identité déclarée pendant l'enrôlement")
+    public PieceDeclaree pieceDeclaree(@PathVariable UUID id) {
+        return enrolement.pieceDeclaree(id);
+    }
+
+    @GetMapping("/parties/{id}/dossier")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "État civil, adresse et comptes ouverts issus de l'enrôlement")
+    public DossierFiche dossier(@PathVariable UUID id) {
+        return enrolement.dossierFiche(id);
     }
 
     @PostMapping("/parties")
@@ -316,6 +345,33 @@ public class IdentityController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return wrap(() -> identity.offreUnite(id, date));
+    }
+
+    @GetMapping("/approval-policies")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Politiques d'approbation d'un tenant, avec le code du nœud")
+    public List<ApprovalPolicyDto> approvalPolicies(@RequestParam(required = false) String tenantId) {
+        return approvals.list(tenantId);
+    }
+
+    @GetMapping("/org-nodes/{id}/approval-resolution")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Politique d'organisation applicable à un produit (remontée vers les parents)")
+    public ApprovalResolutionDto resolveApproval(
+            @PathVariable UUID id,
+            @RequestParam String productCode,
+            @RequestParam(defaultValue = "0") long amount,
+            @RequestParam(required = false) Integer lineCount,
+            @RequestParam(required = false) Long maxLineAmount
+    ) {
+        return approvals.resolve(id, productCode, amount, lineCount, maxLineAmount);
+    }
+
+    @PutMapping("/org-nodes/{id}/approval-policy")
+    @PreAuthorize("hasAnyRole('ADMIN','CONFIG_MANAGER','OPERATOR','GROUP_ADMIN')")
+    @Operation(summary = "Enregistrer la politique d'approbation d'un nœud")
+    public ApprovalPolicyDto saveApprovalPolicy(@PathVariable UUID id, @RequestBody ApprovalPolicyRequest body) {
+        return wrapIllegal(() -> approvals.save(id, body));
     }
 
     private void wrapVoid(Runnable call) {

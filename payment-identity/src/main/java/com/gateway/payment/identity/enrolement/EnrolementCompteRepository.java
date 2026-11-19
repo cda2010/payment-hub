@@ -9,5 +9,9 @@ public interface EnrolementCompteRepository extends JpaRepository<EnrolementComp
 
     List<EnrolementCompte> findByTenantIdAndNumero(String tenantId, String numero);
 
+    List<EnrolementCompte> findByTenantIdAndTelephone(String tenantId, String telephone);
+
     boolean existsByTenantIdAndMaisonAndNumero(String tenantId, String maison, String numero);
+
+    List<EnrolementCompte> findByPartyId(UUID partyId);
 }

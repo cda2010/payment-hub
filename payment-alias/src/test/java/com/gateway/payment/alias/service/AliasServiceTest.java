@@ -13,6 +13,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,7 +46,7 @@ class AliasServiceTest {
 
         AliasDto dto = service.create(new AliasRequest(
                 null, "alias-ms", "Till Sahel", AliasType.TILL, "TILL-MS", "XOF",
-                AliasOwnerKind.UNITE, uniteId, "CORIS_MONEY"));
+                AliasOwnerKind.UNITE, uniteId, "CORIS_MONEY", null));
 
         assertThat(dto.ownerKind()).isEqualTo(AliasOwnerKind.UNITE);
         assertThat(dto.ownerId()).isEqualTo(uniteId);
@@ -68,7 +69,7 @@ class AliasServiceTest {
 
         AliasDto dto = service.create(new AliasRequest(
                 "CORIS_DEMO", "ALIAS-AWA", "Wallet", AliasType.WALLET, "W-1", "XOF",
-                AliasOwnerKind.PARTY, partyId, "CORIS_MONEY"));
+                AliasOwnerKind.PARTY, partyId, "CORIS_MONEY", null));
 
         assertThat(dto.ownerKind()).isEqualTo(AliasOwnerKind.PARTY);
         assertThat(dto.ownerId()).isEqualTo(partyId);
@@ -79,9 +80,51 @@ class AliasServiceTest {
         when(repo.existsByTenantIdAndAliasCode("CORIS_DEMO", "X")).thenReturn(true);
         assertThatThrownBy(() -> service.create(new AliasRequest(
                 null, "X", "L", AliasType.IBAN, "ref", "XOF",
-                AliasOwnerKind.ORG, UUID.randomUUID(), null)))
+                AliasOwnerKind.ORG, UUID.randomUUID(), null, null)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("already exists");
+    }
+
+    @Test
+    void etiquetteEstLeRoleDuCompte() {
+        UUID pointId = UUID.randomUUID();
+        when(repo.existsByTenantIdAndAliasCode("CORIS_DEMO", "ALIAS-PV-01")).thenReturn(false);
+        when(repo.findByTenantIdAndOwnerKindAndOwnerIdAndEtiquetteAndActiveTrue(
+                "CORIS_DEMO", AliasOwnerKind.POINT_VENTE, pointId, "CPTEOPERATION"))
+                .thenReturn(Optional.empty());
+        when(repo.save(any())).thenAnswer(inv -> inv.getArgument(0));
+
+        AliasDto dto = service.create(new AliasRequest(
+                null, "alias-pv-01", "Caisse", AliasType.TILL, "CPT-01", "XOF",
+                AliasOwnerKind.POINT_VENTE, pointId, "CORIS_MONEY", "cpteoperation"));
+
+        assertThat(dto.etiquette()).isEqualTo("CPTEOPERATION");
+        assertThat(dto.ownerKind()).isEqualTo(AliasOwnerKind.POINT_VENTE);
+    }
+
+    @Test
+    void leDefautRemplaceLePrecedentEtResteReserveAuProprietaire() {
+        UUID partyId = UUID.randomUUID();
+        UUID autre = UUID.randomUUID();
+        UUID courantId = UUID.randomUUID();
+        UUID nouveauId = UUID.randomUUID();
+        AccountAlias courant = AccountAlias.builder()
+                .id(courantId).tenantId("CORIS_DEMO").ownerKind(AliasOwnerKind.PARTY).ownerId(partyId)
+                .active(true).parDefaut(true).build();
+        AccountAlias choisi = AccountAlias.builder()
+                .id(nouveauId).tenantId("CORIS_DEMO").ownerKind(AliasOwnerKind.PARTY).ownerId(partyId)
+                .active(true).parDefaut(false).build();
+        when(repo.findById(nouveauId)).thenReturn(Optional.of(choisi));
+        when(repo.findByTenantIdAndOwnerKindAndOwnerIdAndParDefautTrueAndActiveTrue(
+                "CORIS_DEMO", AliasOwnerKind.PARTY, partyId)).thenReturn(List.of(courant));
+        when(repo.save(any())).thenAnswer(inv -> inv.getArgument(0));
+
+        AliasDto dto = service.definirDefaut(nouveauId, partyId, false);
+
+        assertThat(dto.parDefaut()).isTrue();
+        assertThat(courant.isParDefaut()).isFalse();
+        assertThatThrownBy(() -> service.definirDefaut(nouveauId, autre, false))
+                .isInstanceOf(AliasService.AccesRefuse.class);
     }
 
     @Test

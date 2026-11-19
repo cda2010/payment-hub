@@ -6,4 +6,7 @@ import java.util.UUID;
 public interface CoffreDocuments {
 
     UUID deposer(String tenantId, UUID dossierId, String face, String typeDocument, String contentType, byte[] contenu);
+
+    /** Le document déposé sur le dossier devient celui de la personne. */
+    void attribuer(UUID documentId, UUID partyId);
 }

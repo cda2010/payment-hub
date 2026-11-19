@@ -535,6 +535,29 @@ services:
       timeout: 5s
       retries: 10
 
+  api-gateway:
+    build:
+      context: .
+      dockerfile: payment-api-gateway/Dockerfile
+    environment:
+      IDENTITY_URL: http://identity:8094
+      ALIAS_URL: http://alias:8097
+      CONTENT_URL: http://content:8098
+      DIVERS_URL: http://divers:8102
+      FIDELITE_URL: http://fidelite:8103
+      NETWORK_URL: http://network:8096
+      ENGINE_URL: http://backend:8080
+    ports:
+      - "8070:8070"
+    depends_on:
+      - backend
+      - identity
+      - alias
+      - content
+      - divers
+      - fidelite
+      - network
+
 volumes:
   gateway_pg_data:
   identity_pg_data:

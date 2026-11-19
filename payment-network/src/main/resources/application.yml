@@ -63,3 +63,6 @@ network:
       issuer: ${JWT_ISSUER:payment-gateway}
     cors:
       allowed-origins: ${CORS_ORIGINS:http://localhost:4200,http://127.0.0.1:4200,http://localhost:4210,http://127.0.0.1:4210,http://localhost:8100,http://127.0.0.1:8100}
+  envoi:
+    sms-url: ${NETWORK_SMS_URL:}
+    mail-url: ${NETWORK_MAIL_URL:}

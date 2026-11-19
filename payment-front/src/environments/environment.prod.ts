@@ -5,6 +5,7 @@ export const environment = {
   pricingApiUrl: '/api/v1',
   networkApiUrl: '/api/v1/network',
   identityApiUrl: '/api/v1/identity',
+  documentsApiUrl: '/api/v1/documents',
   aliasApiUrl: '/api/v1/aliases',
   commissionApiUrl: '/api/v1/commission',
   rulesApiUrl: '/api/v1/rules',

@@ -41,4 +41,13 @@ public interface LoyaltyAccountRepository extends JpaRepository<LoyaltyAccount, 
               and a.balance >= :points
             """)
     int consume(@Param("id") UUID id, @Param("tenant") String tenant, @Param("points") long points);
+
+    @Modifying(flushAutomatically = true)
+    @Query("""
+            update LoyaltyAccount a
+            set a.balance = a.balance - :points, a.version = a.version + 1
+            where a.id = :id and a.tenantId = :tenant
+              and a.balance - a.reservedBalance >= :points
+            """)
+    int debit(@Param("id") UUID id, @Param("tenant") String tenant, @Param("points") long points);
 }

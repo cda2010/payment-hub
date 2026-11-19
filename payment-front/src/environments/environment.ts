@@ -10,6 +10,8 @@ export const environment = {
   networkApiUrl: '/api/v1/network',
   /** Identité (payment-identity) : parties et profils d'offre — port 8094 via le proxy. */
   identityApiUrl: '/api/v1/identity',
+  /** Coffre documentaire (payment-documents) — port 8101 via le proxy. */
+  documentsApiUrl: '/api/v1/documents',
   /** Alias de comptes (payment-alias) : Party / Org / Unité network — port 8097 via le proxy. */
   aliasApiUrl: '/api/v1/aliases',
   /** Commissionnement (payment-commission) : grilles / formules / simulations — port 8098 via le proxy. */
